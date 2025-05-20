@@ -1,0 +1,12 @@
+﻿@page "/perks"
+
+<h3>Perks</h3>
+
+@if (PerkItems is not null)
+{	
+	@foreach (var perk in PerkItems)
+	{
+		<p>@perk.Id</p>
+		<button @onclick="_ => AddModItem(perk)">Add</button>
+	}
+}

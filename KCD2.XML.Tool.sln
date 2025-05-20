@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCD2.XML.Tool", "KCD2.XML.Tool\KCD2.XML.Tool.csproj", "{55656B9D-13C4-1E83-EF3A-78371634B1E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCD2.XML.Tool.Shared", "KCD2.XML.Tool.Shared\KCD2.XML.Tool.Shared.csproj", "{30B5E17C-3D43-3226-50F2-54848179590C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55656B9D-13C4-1E83-EF3A-78371634B1E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55656B9D-13C4-1E83-EF3A-78371634B1E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55656B9D-13C4-1E83-EF3A-78371634B1E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55656B9D-13C4-1E83-EF3A-78371634B1E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30B5E17C-3D43-3226-50F2-54848179590C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30B5E17C-3D43-3226-50F2-54848179590C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30B5E17C-3D43-3226-50F2-54848179590C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30B5E17C-3D43-3226-50F2-54848179590C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7DCDC71C-A4A9-4896-924D-9ECDBE6AC762}
+	EndGlobalSection
+EndGlobal
