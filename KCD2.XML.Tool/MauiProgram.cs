@@ -1,6 +1,10 @@
 ﻿using KCD2.XML.Tool.Shared;
 using KCD2.XML.Tool.Shared.Adapter;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using MudBlazor.Services;
 
 namespace KCD2.XML.Tool
 {
@@ -14,14 +18,36 @@ namespace KCD2.XML.Tool
 				.ConfigureFonts(fonts =>
 				{
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+					fonts.AddFont("19_Kingdom Come Display Medium.ttf", "Kingdom Come Display Medium");
+					fonts.AddFont("25_Kingdom_Light.ttf", "Kingdom Light");
+					fonts.AddFont("6_Kingdom Come Regular.ttf", "Kingdom Come Regular");
+					fonts.AddFont("8_Warhorse Manuscript.ttf", "Warhorse Manuscript");
 				});
 
 			builder.Services.AddMauiBlazorWebView();
+			builder.Services.AddMudServices();
 
 
 			builder.Services.AddSingleton<IXmlAdapter>(new XmlAdapter(ToolRessources.Keys.TablesPath()));
 			builder.Services.AddSingleton<ModItemService>();
 
+//			builder.ConfigureLifecycleEvents(events =>
+//			{
+//#if WINDOWS
+//				events.AddWindows(windows =>
+//				{
+//					windows.OnWindowCreated(window =>
+//					{
+//						var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+//						var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
+//						var appWindow = AppWindow.GetFromWindowId(windowId);
+
+//						// Titelleiste und Fensterrahmen ausblenden
+//						appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+//					});
+//				});
+//#endif
+//			});
 
 #if DEBUG
 			builder.Services.AddBlazorWebViewDeveloperTools();

@@ -1,4 +1,5 @@
 ﻿using KCD2.XML.Tool.Shared.Models;
+using System.IO;
 using System.IO.Compression;
 using System.Xml;
 using System.Xml.Linq;
@@ -19,6 +20,24 @@ namespace KCD2.XML.Tool.Shared.Adapter
 		{
 			await Task.Yield();
 
+
+			InitializePerks();
+			InitializeBuffs();
+			InitializeLocalizations();
+		}
+
+		private void InitializeLocalizations()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void InitializeBuffs()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void InitializePerks()
+		{
 			string path = string.Empty;
 
 			using (FileStream zipToOpen = new FileStream(zipPath, FileMode.Open))
