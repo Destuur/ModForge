@@ -10,13 +10,17 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="1" Gutters="false">
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudImage Src="images/kcd_logo.png" Height="76" ObjectPosition="ObjectPosition.Center" Class="pt-1" />
         <MudText Typo="Typo.h5">XML Tool</MudText>
         <MudSpacer />
         <MudToggleIconButton Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledChanged="ToggleDarkMode" Color="Color.Inherit" Edge="Edge.End" Class="mr-1" />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" Class="mr-2" />
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
     </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <NavMenu/>
+    </MudDrawer>
     <MudMainContent>
         @Body
     </MudMainContent>
@@ -25,6 +29,12 @@
 @code {
     private bool _isDarkMode;
     private MudThemeProvider? _mudThemeProvider;
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
 
     public void ToggleDarkMode()
     {

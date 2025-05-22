@@ -1,0 +1,7 @@
+﻿<MudTextField @bind-Value="@name" Label="Name der Mod" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" OnKeyUp="GetModId" Required="true"></MudTextField>
+<MudTextField @bind-Value="@description" Label="Beschreibung" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+<MudTextField @bind-Value="@author" Label="Author" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+<MudTextField @bind-Value="@version" T="string" Immediate="true" Validation="@(new Func<string, string>(ValidateVersion))" Required="true" Label="Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+<MudTextField @bind-Value="@createdOn" Label="Created On" T="DateTime" Format="s" InputType="InputType.DateTimeLocal" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+<MudTextField @bind-Value="@modId" Label="Mod ID" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Required="true"></MudTextField>
+<MudSwitch T="bool" @bind-Value="@modifiesLevel" Label="Modifies Level" Margin="Margin.Dense"></MudSwitch>

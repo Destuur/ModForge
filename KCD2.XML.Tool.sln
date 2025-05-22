@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCD2.XML.Tool", "KCD2.XML.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCD2.XML.Tool.Shared", "KCD2.XML.Tool.Shared\KCD2.XML.Tool.Shared.csproj", "{30B5E17C-3D43-3226-50F2-54848179590C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCD2.XML.Tool.UI", "KCD2.XML.Tool.UI\KCD2.XML.Tool.UI.csproj", "{94F038E6-4FAE-46D8-B215-29B4467919E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{30B5E17C-3D43-3226-50F2-54848179590C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30B5E17C-3D43-3226-50F2-54848179590C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30B5E17C-3D43-3226-50F2-54848179590C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94F038E6-4FAE-46D8-B215-29B4467919E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94F038E6-4FAE-46D8-B215-29B4467919E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94F038E6-4FAE-46D8-B215-29B4467919E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94F038E6-4FAE-46D8-B215-29B4467919E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

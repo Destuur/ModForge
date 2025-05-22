@@ -40,14 +40,15 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+        <DefaultLanguage>en</DefaultLanguage>
     </PropertyGroup>
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+        <MauiIcon Include="Resources\AppIcon\xmltoolicon2.png" ForegroundFile="Resources\AppIcon\xmltoolicon2.png" Color="#00FFFFFF" />
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#00FFFFFF" BaseSize="128,128" />
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
@@ -60,14 +61,21 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="Resources\AppIcon\xmltoolicon.ico">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Include="Resources\AppIcon\xmltoolicon.png">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
         <PackageReference Include="MudBlazor" Version="8.6.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\KCD2.XML.Tool.Shared\KCD2.XML.Tool.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -76,6 +84,10 @@
 
     <ItemGroup>
       <None Include="wwwroot\images\kcd_logo.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\KCD2.XML.Tool.UI\KCD2.XML.Tool.UI.csproj" />
     </ItemGroup>
 
 </Project>
