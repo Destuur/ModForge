@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KCD2.XML.Tool.Shared.Services;
+using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +18,11 @@ namespace KCD2.XML.Tool.UI.ModSettingComponents
 		private DateTime createdOn = DateTime.Now;
 		private string modId = string.Empty;
 		private bool modifiesLevel;
-		private List<string> supportsVersions = new();
+
+		private SupportedGameVersionRow? supportedGameVersionRow;
+
+		[Inject]
+		public ModService? ModService { get; set; }
 
 		public void GetModId()
 		{
@@ -25,23 +31,39 @@ namespace KCD2.XML.Tool.UI.ModSettingComponents
 				return;
 			}
 
-			var modIdStrings = name.ToLower().Split(' ');
+			var modIdStrings = name.Trim().ToLower().Split(' ');
 			modId = string.Join('_', modIdStrings);
 			StateHasChanged();
 		}
 
-		private string ValidateVersion(string value)
+		public async Task SaveMod()
+		{
+			if (string.IsNullOrEmpty(name) ||
+				string.IsNullOrEmpty(modId) ||
+				ModService is null)
+			{
+				return;
+			}
+
+			if (supportedGameVersionRow is null)
+			{
+				return;
+			}
+
+			supportedGameVersionRow.SaveMod();
+			await ModService.SaveMod(name, description, author, version, createdOn, modId, modifiesLevel);
+		}
+
+		private string ValidateModName(string value)
 		{
 			if (string.IsNullOrWhiteSpace(value))
-				return "Version darf nicht leer sein.";
+				return "Der Name darf nicht leer sein.";
 
-			// Erlaubt entweder:
-			// - 1.2.3   → drei Zahlen mit Punkten
-			// - 1.2*    → zwei Zahlen mit Punkt und danach ein Stern
-			var regex = new Regex(@"^\d+\.\d+(\.\d+|\*)$");
+			// Nur Buchstaben und Leerzeichen erlaubt
+			var regex = new Regex(@"^[a-zA-Z\s]+$");
 
 			if (!regex.IsMatch(value))
-				return "Ungültiges Format. Erlaubt sind: 1.2.3 oder 1.2*";
+				return "Der Name darf nur Buchstaben und Leerzeichen enthalten. Keine Zahlen oder Sonderzeichen.";
 
 			return null;
 		}

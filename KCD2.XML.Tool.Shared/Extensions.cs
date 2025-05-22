@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace KCD2.XML.Tool.Shared
@@ -27,6 +28,6 @@ namespace KCD2.XML.Tool.Shared
 			path = pathWithoutXmlFile;
 
 			return path;
-		}
+		}		
 	}
 }

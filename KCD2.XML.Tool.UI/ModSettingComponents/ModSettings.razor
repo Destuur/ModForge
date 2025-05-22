@@ -1,13 +1,14 @@
 ﻿<MudGrid Spacing="4" Class="px-4">
 	<MudItem lg="4">
-        <ModSettingIconPicker></ModSettingIconPicker>
+		<ModSettingIconPicker @ref="modSettingIconPicker"></ModSettingIconPicker>
 	</MudItem>
-	<MudItem lg="11">
-		<ModSettingForm></ModSettingForm>
+	<MudItem lg="12">
+		<ModSettingForm @ref="modSettingForm"></ModSettingForm>
 	</MudItem>
 </MudGrid>
 
 <MudStack Row="true" Class="px-4 mt-4">
 	<MudButton FullWidth="true" Variant="Variant.Outlined">Abbrechen</MudButton>
-	<MudButton FullWidth="true" Variant="Variant.Filled">Speichern</MudButton>
+	<MudButton FullWidth="true" Variant="Variant.Filled" OnClick="SaveMod">Speichern</MudButton>
+	<MudButton FullWidth="true" Variant="Variant.Filled" OnClick="GenerateMod">Mod erstellen</MudButton>
 </MudStack>

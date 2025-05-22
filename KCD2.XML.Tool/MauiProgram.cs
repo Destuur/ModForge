@@ -1,9 +1,8 @@
 ﻿using KCD2.XML.Tool.Shared;
 using KCD2.XML.Tool.Shared.Adapter;
+using KCD2.XML.Tool.Shared.Mods;
+using KCD2.XML.Tool.Shared.Services;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.LifecycleEvents;
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
 using MudBlazor.Services;
 
 namespace KCD2.XML.Tool
@@ -29,25 +28,26 @@ namespace KCD2.XML.Tool
 
 
 			builder.Services.AddSingleton<IXmlAdapter>(new XmlAdapter(ToolRessources.Keys.TablesPath()));
-			builder.Services.AddSingleton<ModItemService>();
+			builder.Services.AddSingleton<ModService>();
+			builder.Services.AddSingleton<ModCollection>();
 
-//			builder.ConfigureLifecycleEvents(events =>
-//			{
-//#if WINDOWS
-//				events.AddWindows(windows =>
-//				{
-//					windows.OnWindowCreated(window =>
-//					{
-//						var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-//						var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
-//						var appWindow = AppWindow.GetFromWindowId(windowId);
+			//			builder.ConfigureLifecycleEvents(events =>
+			//			{
+			//#if WINDOWS
+			//				events.AddWindows(windows =>
+			//				{
+			//					windows.OnWindowCreated(window =>
+			//					{
+			//						var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+			//						var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
+			//						var appWindow = AppWindow.GetFromWindowId(windowId);
 
-//						// Titelleiste und Fensterrahmen ausblenden
-//						appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
-//					});
-//				});
-//#endif
-//			});
+			//						// Titelleiste und Fensterrahmen ausblenden
+			//						appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+			//					});
+			//				});
+			//#endif
+			//			});
 
 #if DEBUG
 			builder.Services.AddBlazorWebViewDeveloperTools();

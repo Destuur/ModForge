@@ -12,6 +12,6 @@
 		public string ModId() => "test_mod";
 		public string TablesPath() => "G:\\SteamLibrary\\steamapps\\common\\KingdomComeDeliverance2\\Data\\Tables.pak";
 		public string LocalizationPath() => "G:\\SteamLibrary\\steamapps\\common\\KingdomComeDeliverance2\\Localization\\";
-		public string ModPath() => "G:\\SteamLibrary\\steamapps\\common\\KingdomComeDeliverance2\\Mods\\" + ModId();
+		public string ModPath() => "G:\\SteamLibrary\\steamapps\\common\\KingdomComeDeliverance2\\Mods\\";
 	}
 }

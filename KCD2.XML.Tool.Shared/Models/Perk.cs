@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using KCD2.XML.Tool.Shared.Mods;
+using System.Xml.Linq;
 
 namespace KCD2.XML.Tool.Shared.Models
 {

@@ -1,4 +1,6 @@
-﻿namespace KCD2.XML.Tool.Shared.Models
+﻿using KCD2.XML.Tool.Shared.Mods;
+
+namespace KCD2.XML.Tool.Shared.Models
 {
 	public class Localization : IModItem
 	{

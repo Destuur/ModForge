@@ -1,0 +1,23 @@
+﻿@if (ModService is not null)
+{	
+	<MudList T="string" Dense="true" ReadOnly="true">
+		@foreach (var modVersion in ModService.GetAllSupportedVersions())
+		{
+			<MudListItem Dense="true">
+				<MudStack Row="true" Justify="Justify.Center">
+					<MudIconButton OnClick="(_ => RemoveVersion(modVersion))" Class="ml-1" Style="height:fit-content;align-self: center" Icon="@Icons.Material.Outlined.Remove" Variant="Variant.Outlined" Size="Size.Small" ButtonType="ButtonType.Button" Edge="Edge.Start" />
+					<MudField Label="@("Version" + $" {(ModService.GetAllSupportedVersions().IndexOf(modVersion) + 1)}")" Variant="Variant.Outlined" Margin="Margin.Dense">@modVersion</MudField>
+				</MudStack>
+			</MudListItem>
+		}
+
+		<MudListItem Class="pa-0">
+			<MudStack Row="true" Justify="Justify.Center">
+				<MudTextField @bind-Text="supportedGameVersion" T="string" Immediate="true" Validation="@(new Func<string, string>(ValidateVersion))" Required="true" Label="Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+				<MudIconButton OnClick="AddVersion" Class="ml-1" Style="height:fit-content;align-self: center" Icon="@Icons.Material.Outlined.Add" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" ButtonType="ButtonType.Button" Edge="Edge.Start" />
+			</MudStack>
+		</MudListItem>
+	</MudList>
+}
+
+

@@ -1,4 +1,4 @@
-﻿using KCD2.XML.Tool.Shared.Models;
+﻿using KCD2.XML.Tool.Shared.Mods;
 
 namespace KCD2.XML.Tool.Shared.Adapter
 {
@@ -9,5 +9,6 @@ namespace KCD2.XML.Tool.Shared.Adapter
 		Task<List<IModItem>> GetModItems();
 		Task<IModItem> GetModItem(string id);
 		Task<bool> WriteModItems(IEnumerable<IModItem> modItems);
+		Task<bool> WriteModManifest(ModDescription modDescription);
 	}
 }

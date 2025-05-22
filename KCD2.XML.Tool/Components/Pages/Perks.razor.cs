@@ -1,6 +1,6 @@
-﻿using KCD2.XML.Tool.Shared;
-using KCD2.XML.Tool.Shared.Adapter;
-using KCD2.XML.Tool.Shared.Models;
+﻿using KCD2.XML.Tool.Shared.Adapter;
+using KCD2.XML.Tool.Shared.Mods;
+using KCD2.XML.Tool.Shared.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace KCD2.XML.Tool.Components.Pages
@@ -11,7 +11,7 @@ namespace KCD2.XML.Tool.Components.Pages
 		public IXmlAdapter? Adapter { get; private set; }
 		public IEnumerable<IModItem>? PerkItems { get; private set; }
 		[Inject]
-		public ModItemService? Service { get; private set; }
+		public ModService? Service { get; private set; }
 
 		public void AddModItem(IModItem item)
 		{

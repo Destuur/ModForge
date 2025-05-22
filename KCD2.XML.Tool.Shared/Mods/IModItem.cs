@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace KCD2.XML.Tool.Shared.Models
+namespace KCD2.XML.Tool.Shared.Mods
 {
 	public interface IModItem
 	{

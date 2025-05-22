@@ -1,4 +1,5 @@
 ﻿using KCD2.XML.Tool.Shared.Models;
+using KCD2.XML.Tool.Shared.Mods;
 using System.IO;
 using System.IO.Compression;
 using System.Xml;
@@ -172,6 +173,48 @@ namespace KCD2.XML.Tool.Shared.Adapter
 				{
 					writer.WriteLine($"    </perks>");
 					writer.WriteLine($"</database>");
+				}
+			}
+
+			return true;
+		}
+
+		public async Task<bool> WriteModManifest(ModDescription modDescription)
+		{
+			await Task.Yield();
+
+			if (modDescription is null)
+			{
+				return false;
+			}
+
+			var path = ToolRessources.Keys.ModPath() + $"\\{modDescription.ModId}";
+
+			Directory.CreateDirectory(path + "\\Data");
+			Directory.CreateDirectory(path + "\\Localization");
+
+			if (File.Exists(Path.Combine(path, "mod.manifest")) == false)
+			{
+				using (StreamWriter writer = new StreamWriter(Path.Combine(path, "mod.manifest")))
+				{
+					writer.WriteLine($"<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+					writer.WriteLine($"<kcd_mod xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
+					writer.WriteLine($"	<info>");
+					writer.WriteLine($"		<name>{modDescription.Name}</name>");
+					writer.WriteLine($"		<description>{modDescription.Description}</description>");
+					writer.WriteLine($"		<author>{modDescription.Author}</author>");
+					writer.WriteLine($"		<version>{modDescription.ModVersion}</version>");
+					writer.WriteLine($"		<created_on>{modDescription.CreatedOn}</created_on>");
+					writer.WriteLine($"		<modid>{modDescription.ModId}</modid>");
+					writer.WriteLine($"		<modifies_level>{modDescription.ModifiesLevel}</modifies_level>");
+					writer.WriteLine($"	</info>");
+					writer.WriteLine($"	<supports>");
+					foreach (var version in modDescription.SupportsGameVersions)
+					{
+						writer.WriteLine($"		<kcd_version>{version}</kcd_version>");
+					}
+					writer.WriteLine($"	</supports>");
+					writer.WriteLine($"</kcd_mod>");
 				}
 			}
 
