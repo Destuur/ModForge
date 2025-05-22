@@ -1,12 +1,5 @@
-﻿@page "/perks"
+﻿@page "/perks/{ModId}"
 
-<h3>Perks</h3>
+<MudText Typo="Typo.h3" Class="pl-4 py-2">Perks auswählen</MudText>
 
-@if (PerkItems is not null)
-{	
-	@foreach (var perk in PerkItems)
-	{
-		<p>@perk.Id</p>
-		<button @onclick="_ => AddModItem(perk)">Add</button>
-	}
-}
+<PerkList PerkItems="PerkItems"></PerkList>

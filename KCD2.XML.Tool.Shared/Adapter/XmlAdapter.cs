@@ -1,5 +1,6 @@
 ﻿using KCD2.XML.Tool.Shared.Models;
 using KCD2.XML.Tool.Shared.Mods;
+using KCD2.XML.Tool.Shared.Services;
 using System.IO;
 using System.IO.Compression;
 using System.Xml;
@@ -9,12 +10,14 @@ namespace KCD2.XML.Tool.Shared.Adapter
 {
 	public class XmlAdapter : IXmlAdapter
 	{
-		private readonly string zipPath;
+		private string tablesPath => ToolRessources.Keys.TablesPath();
+		private string localizationsPath => ToolRessources.Keys.LocalizationPath();
+		private readonly LocalizationService localizationService;
 		private List<IModItem> modItems = new();
 
-		public XmlAdapter(string zipPath)
+		public XmlAdapter(LocalizationService localizationService)
 		{
-			this.zipPath = zipPath;
+			this.localizationService = localizationService;
 		}
 
 		public async Task Initialize()
@@ -23,13 +26,60 @@ namespace KCD2.XML.Tool.Shared.Adapter
 
 
 			InitializePerks();
-			InitializeBuffs();
+
+			//TODO: Buffs und Localizations initializieren!
+			//InitializeBuffs();
 			InitializeLocalizations();
 		}
 
 		private void InitializeLocalizations()
 		{
-			throw new NotImplementedException();
+			string path = string.Empty;
+
+			using (FileStream zipToOpen = new FileStream(localizationsPath, FileMode.Open))
+			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
+			{
+				foreach (var archiveEntry in archive.Entries)
+				{
+
+					path = Extensions.GetEntryPath(archiveEntry);
+
+					if (archiveEntry.FullName.Contains("text"))
+					{
+						using (Stream stream = archiveEntry.Open())
+						{
+							try
+							{
+								XDocument doc = XDocument.Load(stream);
+
+								var entries = doc.Root!.Elements("Row").Select(row =>
+								{
+									var cells = row.Elements("Cell").ToList();
+
+									return new
+									{
+										Key = cells.ElementAtOrDefault(0)?.Value,
+										Value = cells.ElementAtOrDefault(2)?.Value
+									};
+								})
+								.Where(e => !string.IsNullOrEmpty(e.Key) && !string.IsNullOrEmpty(e.Value))
+								.ToList();
+
+								foreach (var entry in entries)
+								{
+									var localization = Localization.GetLocalization(entry.Key, entry.Value, path);
+
+									localizationService.AddLocalization(localization);
+								}
+							}
+							catch (Exception ex)
+							{
+								Console.WriteLine($"Fehler beim Parsen von {archiveEntry.FullName}: {ex.Message}");
+							}
+						}
+					}
+				}
+			}
 		}
 
 		private void InitializeBuffs()
@@ -41,7 +91,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 		{
 			string path = string.Empty;
 
-			using (FileStream zipToOpen = new FileStream(zipPath, FileMode.Open))
+			using (FileStream zipToOpen = new FileStream(tablesPath, FileMode.Open))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
 			{
 				foreach (var entry in archive.Entries)
@@ -49,7 +99,9 @@ namespace KCD2.XML.Tool.Shared.Adapter
 
 					path = Extensions.GetEntryPath(entry);
 
-					if (entry.FullName.Contains("perk"))
+					if (entry.FullName.Contains("perk__combat") ||
+						entry.FullName.Contains("perk__hardcore") ||
+						entry.FullName.Contains("perk__kcd2"))
 					{
 						using (Stream stream = entry.Open())
 						{
@@ -206,7 +258,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 					writer.WriteLine($"		<version>{modDescription.ModVersion}</version>");
 					writer.WriteLine($"		<created_on>{modDescription.CreatedOn}</created_on>");
 					writer.WriteLine($"		<modid>{modDescription.ModId}</modid>");
-					writer.WriteLine($"		<modifies_level>{modDescription.ModifiesLevel}</modifies_level>");
+					writer.WriteLine($"		<modifies_level>{modDescription.ModifiesLevel.ToString().ToLower()}</modifies_level>");
 					writer.WriteLine($"	</info>");
 					writer.WriteLine($"	<supports>");
 					foreach (var version in modDescription.SupportsGameVersions)

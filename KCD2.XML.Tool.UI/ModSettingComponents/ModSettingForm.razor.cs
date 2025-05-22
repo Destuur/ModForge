@@ -14,12 +14,18 @@ namespace KCD2.XML.Tool.UI.ModSettingComponents
 		private string name = string.Empty;
 		private string description = string.Empty;
 		private string author = string.Empty;
-		private string version = string.Empty;
-		private DateTime createdOn = DateTime.Now;
+		private string version = "1.0";
+		private DateTime createdOn = DateTime.Now.Date;
 		private string modId = string.Empty;
 		private bool modifiesLevel;
 
 		private SupportedGameVersionRow? supportedGameVersionRow;
+
+		public ModSettingForm()
+		{
+			var currentTime = DateTime.Now;
+			createdOn = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day);
+		}
 
 		[Inject]
 		public ModService? ModService { get; set; }

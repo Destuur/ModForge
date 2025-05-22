@@ -24,5 +24,10 @@ namespace KCD2.XML.Tool.Shared.Mods
 
 			Items.Add(mod);
 		}
+
+		internal ModDescription? GetMod(string modId)
+		{
+			return Items.FirstOrDefault(x => x.ModId == modId);
+		}
 	}
 }

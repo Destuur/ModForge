@@ -22,6 +22,23 @@ namespace KCD2.XML.Tool.Shared.Services
 			this.modCollection = modCollection;
 		}
 
+		public ModDescription GetMod()
+		{
+			return mod!;
+		}
+
+		public async Task SetMod(string modId)
+		{
+			await Task.Yield();
+
+			if (string.IsNullOrEmpty(modId))
+			{
+				return;
+			}
+
+			mod = modCollection.GetMod(modId);
+		}
+
 		public async Task SaveMod(string name, string description, string author, string version, DateTime createdOn, string modId, bool modifiesLevel)
 		{
 			await Task.Yield();
@@ -34,21 +51,22 @@ namespace KCD2.XML.Tool.Shared.Services
 			mod.Description = description;
 			mod.Author = author;
 			mod.ModVersion = version;
-			mod.CreatedOn = XmlConvert.ToString(createdOn, XmlDateTimeSerializationMode.Utc);
+			mod.CreatedOn = createdOn.ToString("yyyy-MM-dd");
 			mod.ModId = modId;
 			mod.ModifiesLevel = modifiesLevel;
 
 			modCollection.AddMod(mod);
 		}
 
-		public async Task GenerateMod()
+		public async Task<ModDescription> GenerateMod()
 		{
 			if (mod is null)
 			{
-				return;
+				return null!;
 			}
 
 			await adapter.WriteModManifest(mod);
+			return mod;
 		}
 
 		public List<string> GetAllSupportedVersions()

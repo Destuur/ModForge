@@ -26,9 +26,9 @@ namespace KCD2.XML.Tool
 			builder.Services.AddMauiBlazorWebView();
 			builder.Services.AddMudServices();
 
-
-			builder.Services.AddSingleton<IXmlAdapter>(new XmlAdapter(ToolRessources.Keys.TablesPath()));
+			builder.Services.AddSingleton<IXmlAdapter, XmlAdapter>();
 			builder.Services.AddSingleton<ModService>();
+			builder.Services.AddSingleton<LocalizationService>();
 			builder.Services.AddSingleton<ModCollection>();
 
 			//			builder.ConfigureLifecycleEvents(events =>

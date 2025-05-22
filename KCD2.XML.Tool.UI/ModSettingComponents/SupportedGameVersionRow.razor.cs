@@ -9,6 +9,7 @@ namespace KCD2.XML.Tool.UI.ModSettingComponents
 	public partial class SupportedGameVersionRow
 	{
 		private string? supportedGameVersion = "0.0.0";
+		private bool isNotSupported = true;
 
 		[Inject]
 		public ModService? ModService { get; set; }
@@ -32,6 +33,11 @@ namespace KCD2.XML.Tool.UI.ModSettingComponents
 			}
 
 			if (supportedGameVersion == "0.0.0")
+			{
+				return;
+			}
+
+			if (isNotSupported)
 			{
 				return;
 			}

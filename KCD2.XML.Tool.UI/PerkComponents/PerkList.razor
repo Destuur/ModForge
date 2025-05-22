@@ -1,0 +1,11 @@
+﻿@if (PerkItems is not null)
+{
+	<MudList T="IModItem">
+
+		@foreach (var perk in PerkItems)
+		{
+			<PerkListItem Perk="perk"></PerkListItem>
+		}
+
+	</MudList>
+}

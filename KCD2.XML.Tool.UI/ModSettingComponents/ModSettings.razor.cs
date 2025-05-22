@@ -12,6 +12,8 @@ namespace KCD2.XML.Tool.UI.ModSettingComponents
 
 		[Inject]
 		public ModService? ModService { get; set; }
+		[Inject]
+		public NavigationManager? Navigation { get; set; }
 
 		public async Task SaveMod()
 		{
@@ -29,7 +31,9 @@ namespace KCD2.XML.Tool.UI.ModSettingComponents
 			await modSettingIconPicker!.SaveMod();
 			await modSettingForm!.SaveMod();
 
-			await ModService.GenerateMod();
+			var mod = await ModService.GenerateMod();
+
+			Navigation!.NavigateTo($"perks/{mod.ModId}");
 		}
 	}
 }

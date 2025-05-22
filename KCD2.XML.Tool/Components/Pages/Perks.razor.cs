@@ -9,19 +9,17 @@ namespace KCD2.XML.Tool.Components.Pages
 	{
 		[Inject]
 		public IXmlAdapter? Adapter { get; private set; }
-		public IEnumerable<IModItem>? PerkItems { get; private set; }
 		[Inject]
 		public ModService? Service { get; private set; }
-
-		public void AddModItem(IModItem item)
-		{
-			Service!.AddItem(item);
-		}
+		public IEnumerable<IModItem>? PerkItems { get; private set; }
+		[Parameter]
+		public string? ModId { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
 			await Adapter!.Initialize();
 			PerkItems = await Adapter.GetModItems();
+			await Service.SetMod(ModId);
 			await base.OnInitializedAsync();
 		}
 	}

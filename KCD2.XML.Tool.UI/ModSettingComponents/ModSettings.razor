@@ -1,8 +1,8 @@
 ﻿<MudGrid Spacing="4" Class="px-4">
-	<MudItem lg="4">
+	<MudItem lg="3">
 		<ModSettingIconPicker @ref="modSettingIconPicker"></ModSettingIconPicker>
 	</MudItem>
-	<MudItem lg="12">
+	<MudItem lg="9">
 		<ModSettingForm @ref="modSettingForm"></ModSettingForm>
 	</MudItem>
 </MudGrid>
@@ -10,5 +10,5 @@
 <MudStack Row="true" Class="px-4 mt-4">
 	<MudButton FullWidth="true" Variant="Variant.Outlined">Abbrechen</MudButton>
 	<MudButton FullWidth="true" Variant="Variant.Filled" OnClick="SaveMod">Speichern</MudButton>
-	<MudButton FullWidth="true" Variant="Variant.Filled" OnClick="GenerateMod">Mod erstellen</MudButton>
+	<MudButton FullWidth="true" Variant="Variant.Filled" OnClick="GenerateMod">Mod Manifest erstellen</MudButton>
 </MudStack>

@@ -8,8 +8,8 @@ namespace KCD2.XML.Tool.Shared.Models
 		public string Id { get; private set; } = string.Empty;
 		public string Path { get; private set; } = string.Empty;
 		public Dictionary<string, string> Attributes { get; set; } = new();
-		public IEnumerable<IModItem>? Buffs { get; private set; }
-		public IEnumerable<IModItem>? Localizations { get; private set; }
+		public List<Buff>? Buffs { get; private set; } = new();
+		public List<Localization>? Localizations { get; private set; } = new();
 
 		public static Perk GetPerk(XElement element, string path)
 		{

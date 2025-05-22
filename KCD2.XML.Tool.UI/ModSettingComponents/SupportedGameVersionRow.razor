@@ -1,6 +1,8 @@
 ﻿@if (ModService is not null)
-{	
-	<MudList T="string" Dense="true" ReadOnly="true">
+{
+	<MudSwitch Class="py-2" Size="Size.Medium" T="bool" Color="Color.Primary" @bind-Value="@isNotSupported" Label="@(isNotSupported ? "Continue Without Defining Supported Game Versions" : "Define Supported Game Versions")"></MudSwitch>
+
+	<MudList T="string" Dense="true" ReadOnly="true" Disabled="@isNotSupported">
 		@foreach (var modVersion in ModService.GetAllSupportedVersions())
 		{
 			<MudListItem Dense="true">
@@ -13,8 +15,8 @@
 
 		<MudListItem Class="pa-0">
 			<MudStack Row="true" Justify="Justify.Center">
-				<MudTextField @bind-Text="supportedGameVersion" T="string" Immediate="true" Validation="@(new Func<string, string>(ValidateVersion))" Required="true" Label="Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-				<MudIconButton OnClick="AddVersion" Class="ml-1" Style="height:fit-content;align-self: center" Icon="@Icons.Material.Outlined.Add" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" ButtonType="ButtonType.Button" Edge="Edge.Start" />
+				<MudTextField Disabled="@isNotSupported" @bind-Text="supportedGameVersion" T="string" Immediate="true" Validation="@(new Func<string, string>(ValidateVersion))" Label="Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+				<MudIconButton Disabled="@isNotSupported" OnClick="AddVersion" Class="ml-1" Style="height:fit-content;align-self: center" Icon="@Icons.Material.Outlined.Add" Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" ButtonType="ButtonType.Button" Edge="Edge.Start" />
 			</MudStack>
 		</MudListItem>
 	</MudList>

@@ -1,11 +1,25 @@
 ﻿using KCD2.XML.Tool.Shared.Mods;
+using System.Xml.Linq;
 
 namespace KCD2.XML.Tool.Shared.Models
 {
 	public class Localization : IModItem
 	{
-		public string Id { get; } = string.Empty;
-		public string Path { get; private set; } = string.Empty;
-		public Dictionary<string, string> Attributes { get; } = new();
+		public Localization(string id, string value, string path)
+		{
+			Id = id;
+			Value = value;
+			Path = path;
+		}
+
+		public string Id { get; private set; }
+		public string Path { get; private set; }
+		public string Value { get; private set; }
+
+
+		internal static Localization GetLocalization(string id, string value, string path)
+		{
+			return new Localization(id, value, path);
+		}
 	}
 }
