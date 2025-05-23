@@ -2,8 +2,16 @@
 {
 	<MudList T="IModItem">
 
-		@foreach (var perk in PerkItems)
+		@foreach (var perkItem in PerkItems)
 		{
+			@if (perkItem is not Perk perk)
+			{
+				continue;
+			}
+			@if (perk.Localizations.Count == 0)
+			{
+				continue;
+			}
 			<PerkListItem Perk="perk"></PerkListItem>
 		}
 

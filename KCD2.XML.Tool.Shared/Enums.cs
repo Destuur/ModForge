@@ -26,7 +26,7 @@ namespace KCD2.XML.Tool.Shared
 		Ukrainian
 	}
 
-	public enum BuffAiTagId
+	public enum BuffAiTag
 	{
 		alcohol_mood,
 		alcohol_drunk,
@@ -48,7 +48,7 @@ namespace KCD2.XML.Tool.Shared
 		TargetExclusive
 	}
 
-	public enum BuffLifetimeId
+	public enum BuffLifetime
 	{
 		ShortTerm,
 		LongTerm
@@ -63,11 +63,19 @@ namespace KCD2.XML.Tool.Shared
 		Perk
 	}
 
-	public enum BuffUiVisibilityId
+	public enum BuffUiVisibility
 	{
 		None,
 		HUD,
 		Inventory,
 		All
+	}
+
+	public enum PerkVisibility
+	{
+		SystemHidden,
+		GameplayHidden,
+		Visible,
+		Obsolete,
 	}
 }

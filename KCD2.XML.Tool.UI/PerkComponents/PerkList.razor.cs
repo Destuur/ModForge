@@ -1,4 +1,5 @@
-﻿using KCD2.XML.Tool.Shared.Mods;
+﻿using KCD2.XML.Tool.Shared.Models;
+using KCD2.XML.Tool.Shared.Mods;
 using KCD2.XML.Tool.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -11,8 +12,15 @@ namespace KCD2.XML.Tool.UI.PerkComponents
 {
 	public partial class PerkList
 	{
+		private ModDescription? mod;
+		private string descAttribute = "perk_ui_desc";
+		private string loreDescAttribute = "perk_ui_lore_desc";
+		private string nameAttribute = "perk_ui_name";
+
 		[Inject]
-		public ModService? Service { get; private set; }
+		public LocalizationService? LocalizationService { get; set; }
+		[Inject]
+		public ModService? ModService { get; private set; }
 		[Parameter]
 		public IEnumerable<IModItem>? PerkItems { get; set; }
 
@@ -23,7 +31,38 @@ namespace KCD2.XML.Tool.UI.PerkComponents
 
 		public void AddModItem(IModItem item)
 		{
-			Service!.AddItem(item);
+			ModService!.AddItem(item);
+		}
+
+		protected override async Task OnParametersSetAsync()
+		{
+			await base.OnParametersSetAsync();
+
+			if (PerkItems is null)
+			{
+				return;
+			}
+
+			foreach (var perkItem in PerkItems)
+			{
+				if (perkItem is Perk perk)
+				{
+					if (perk.Attributes.TryGetValue(descAttribute, out string perkDesc))
+					{
+						perk.Localizations.Add(LocalizationService!.GetLocalization(descAttribute, perkDesc));
+					}
+
+					if (perk.Attributes.TryGetValue(loreDescAttribute, out string perkLoreDesc))
+					{
+						perk.Localizations.Add(LocalizationService!.GetLocalization(loreDescAttribute, perkLoreDesc));
+					}
+
+					if (perk.Attributes.TryGetValue(nameAttribute, out string perkName))
+					{
+						perk.Localizations.Add(LocalizationService!.GetLocalization(nameAttribute, perkName));
+					}
+				}
+			}
 		}
 	}
 }

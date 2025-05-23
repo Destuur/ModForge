@@ -15,6 +15,7 @@ namespace KCD2.XML.Tool.Shared.Models
 		public string Id { get; private set; }
 		public string Path { get; private set; }
 		public string Value { get; private set; }
+		public string Attribute { get; set; } = string.Empty;
 
 
 		internal static Localization GetLocalization(string id, string value, string path)

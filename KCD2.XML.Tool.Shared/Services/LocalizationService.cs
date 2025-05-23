@@ -18,9 +18,10 @@ namespace KCD2.XML.Tool.Shared.Services
 			deLocalizations.Add(localization);
 		}
 
-		public Localization GetLocalization(string id)
+		public Localization GetLocalization(string attribute, string id)
 		{
 			var localization = deLocalizations.FirstOrDefault(x => x.Id == id);
+			localization.Attribute = attribute;
 			return localization;
 		}
 	}

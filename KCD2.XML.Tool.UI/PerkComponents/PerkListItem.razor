@@ -1,4 +1,4 @@
-﻿@if (Perk is Perk perk)
+﻿@if (Perk is not null)
 {	
 	<MudListItem T="IModItem">
 		<MudGrid>
@@ -6,18 +6,16 @@
 				<MudImage Src="@mod!.ImagePath" Height="50" />
 			</MudItem>
 			<MudItem>
-				@if (perk.Localizations!.Count != 0)
+				@if (Perk.Localizations!.Count == 0)
 				{
-					@foreach (var localization in perk.Localizations.Reverse<Localization>())
-					{
-						<MudText>@(localization.Id.Contains("lore") ? $"Lore Beschreibung:" : $"Beschreibung:")</MudText>
-						<MudText GutterBottom="true">@(localization.Id.Contains("lore") ? $"{localization.Value}" : $"{localization.Value}")</MudText>
-					}
+					@* <MudText>@(perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute).Value)</MudText> *@
+					return;					
 				}
-				else
-				{
-					<MudText>@(perk.Attributes["perk_name"])</MudText>
-				}
+
+				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute).Value)</MudText>
+				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == descAttribute).Value)</MudText>
+				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == descAttribute).Value)</MudText>
+
 			</MudItem>
 		</MudGrid>
 	</MudListItem>

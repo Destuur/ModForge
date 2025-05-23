@@ -41,15 +41,14 @@ namespace KCD2.XML.Tool.Shared.Adapter
 			{
 				foreach (var archiveEntry in archive.Entries)
 				{
-
-					path = Extensions.GetEntryPath(archiveEntry);
-
 					if (archiveEntry.FullName.Contains("text"))
 					{
 						using (Stream stream = archiveEntry.Open())
 						{
 							try
 							{
+								//path = Extensions.GetEntryPath(archiveEntry);
+
 								XDocument doc = XDocument.Load(stream);
 
 								var entries = doc.Root!.Elements("Row").Select(row =>
@@ -67,7 +66,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 
 								foreach (var entry in entries)
 								{
-									var localization = Localization.GetLocalization(entry.Key, entry.Value, path);
+									var localization = Localization.GetLocalization(entry.Key, entry.Value, archiveEntry.FullName);
 
 									localizationService.AddLocalization(localization);
 								}
@@ -96,8 +95,10 @@ namespace KCD2.XML.Tool.Shared.Adapter
 			{
 				foreach (var entry in archive.Entries)
 				{
-
-					path = Extensions.GetEntryPath(entry);
+					if (entry.FullName.EndsWith(".tbl"))
+					{
+						continue;
+					}
 
 					if (entry.FullName.Contains("perk__combat") ||
 						entry.FullName.Contains("perk__hardcore") ||
@@ -107,11 +108,19 @@ namespace KCD2.XML.Tool.Shared.Adapter
 						{
 							try
 							{
+								//path = Extensions.GetEntryPath(entry);
+
 								XDocument doc = XDocument.Load(stream);
 
 								foreach (var perkElement in doc.Descendants("perk"))
 								{
-									var perk = Perk.GetPerk(perkElement, path);
+									var perk = Perk.GetPerk(perkElement, entry.FullName);
+
+									//TODO: Platzhalter - löschen
+									if (perk.Attributes.Count >= 11)
+									{
+										continue;
+									}
 
 									modItems.Add(perk);
 								}
