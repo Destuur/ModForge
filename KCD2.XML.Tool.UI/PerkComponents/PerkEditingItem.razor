@@ -1,0 +1,19 @@
+﻿
+<MudGrid Spacing="5" Justify="Justify.FlexStart" Class="pa-4">
+
+	@foreach (var attribute in Perk.Attributes)
+	{
+		<MudItem lg="6">
+			<MudTextField Margin="Margin.Dense" Value="attribute.Value" Label="@(attribute.Key)" Variant="Variant.Outlined"></MudTextField>
+		</MudItem>
+	}
+
+	@foreach (var localization in Perk.Localizations)
+	{
+		<MudItem lg="6">
+			<MudTextField Margin="Margin.Dense" AutoGrow="true" Value="localization.Value" Label="@(localization.Id)" Variant="Variant.Outlined"></MudTextField>
+		</MudItem>
+	}
+
+</MudGrid>
+

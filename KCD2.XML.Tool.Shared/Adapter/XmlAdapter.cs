@@ -12,7 +12,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 	public class XmlAdapter : IXmlAdapter
 	{
 		private string tablePath => ToolResources.Keys.TablesPath();
-		private string localizationPath => ToolResources.Keys.LocalizationPath();
+		private string localizationPath => ToolResources.Keys.EnglishLocalizationPath();
 		private string iconPath => ToolResources.Keys.IconPath();
 		private readonly LocalizationService localizationService;
 		private readonly IconService iconService;
@@ -41,7 +41,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 
 		private void InitializeLocalizations()
 		{
-			if (localizationService.IsFilled(Language.German))
+			if (localizationService.IsFilled(Language.English))
 			{
 				return;
 			}

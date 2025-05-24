@@ -1,6 +1,6 @@
 ﻿<MudStack Spacing="0">
-	<MudTextField @bind-Value="@name" Validation="@(new Func<string, string>(ValidateModName))" Label="Name der Mod" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" OnKeyUp="GetModId" Required="true"></MudTextField>
-	<MudTextField @bind-Value="@description" Label="Beschreibung" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+	<MudTextField @bind-Value="@name" Validation="@(new Func<string, string>(ValidateModName))" Label="Mod Name" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" OnKeyUp="GetModId" Required="true"></MudTextField>
+	<MudTextField @bind-Value="@description" Label="Description" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
 	<MudTextField @bind-Value="@author" Label="Author" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
 	<MudTextField @bind-Value="@version" Label="Mod Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
 	<MudTextField @bind-Value="@createdOn" Label="Created On" Format="yyyy-MM-dd" InputType="InputType.Date" Variant="Variant.Outlined" Margin="Margin.Dense"/>

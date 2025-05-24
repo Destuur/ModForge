@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace KCD2.XML.Tool.UI.PerkComponents
 {
@@ -23,6 +24,8 @@ namespace KCD2.XML.Tool.UI.PerkComponents
 		public ModService? ModService { get; set; }
 		[Inject]
 		public LocalizationService? LocalizationService { get; set; }
+		[Inject]
+		public NavigationManager? NavigationManager { get; set; }
 		[Parameter]
 		public Perk? Perk { get; set; }
 
@@ -30,6 +33,11 @@ namespace KCD2.XML.Tool.UI.PerkComponents
 		{
 			base.OnInitialized();
 			mod = ModService!.GetMod();
+		}
+		private void EditPerk(MouseEventArgs args)
+		{
+			NavigationManager.NavigateTo($"editing/perk/{Perk.Id}");
+			//NavigationManager.NavigateTo($"");
 		}
 	}
 }
