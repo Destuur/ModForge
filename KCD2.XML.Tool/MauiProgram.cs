@@ -2,7 +2,9 @@
 using KCD2.XML.Tool.Shared.Adapter;
 using KCD2.XML.Tool.Shared.Mods;
 using KCD2.XML.Tool.Shared.Services;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Hosting;
 using MudBlazor.Services;
 
 namespace KCD2.XML.Tool
@@ -27,8 +29,11 @@ namespace KCD2.XML.Tool
 			builder.Services.AddMudServices();
 
 			builder.Services.AddSingleton<IXmlAdapter, XmlAdapter>();
+			builder.Services.AddSingleton<OrchestrationService>();
 			builder.Services.AddSingleton<ModService>();
 			builder.Services.AddSingleton<LocalizationService>();
+			builder.Services.AddSingleton<IconService>();
+			builder.Services.AddSingleton<PerkService>();
 			builder.Services.AddSingleton<ModCollection>();
 
 			//			builder.ConfigureLifecycleEvents(events =>

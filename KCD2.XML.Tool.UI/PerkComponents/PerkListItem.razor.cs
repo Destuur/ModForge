@@ -29,25 +29,7 @@ namespace KCD2.XML.Tool.UI.PerkComponents
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
-
 			mod = ModService!.GetMod();
-			if (Perk is Perk perk)
-			{
-				if (perk.Attributes.TryGetValue(descAttribute, out string perkDesc))
-				{
-					perk.Localizations.Add(LocalizationService!.GetLocalization(descAttribute, perkDesc));
-				}
-
-				if (perk.Attributes.TryGetValue(loreDescAttribute, out string perkLoreDesc))
-				{
-					perk.Localizations.Add(LocalizationService!.GetLocalization(loreDescAttribute, perkLoreDesc));
-				}
-
-				if (perk.Attributes.TryGetValue(nameAttribute, out string perkName))
-				{
-					perk.Localizations.Add(LocalizationService!.GetLocalization(nameAttribute, perkName));
-				}
-			}
 		}
 	}
 }

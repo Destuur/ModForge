@@ -1,23 +1,29 @@
 ﻿using KCD2.XML.Tool.Shared.Models;
 using KCD2.XML.Tool.Shared.Mods;
 using KCD2.XML.Tool.Shared.Services;
-using System.IO;
 using System.IO.Compression;
 using System.Xml;
 using System.Xml.Linq;
+using FreeImageAPI;
+
 
 namespace KCD2.XML.Tool.Shared.Adapter
 {
 	public class XmlAdapter : IXmlAdapter
 	{
-		private string tablesPath => ToolRessources.Keys.TablesPath();
-		private string localizationsPath => ToolRessources.Keys.LocalizationPath();
+		private string tablePath => ToolResources.Keys.TablesPath();
+		private string localizationPath => ToolResources.Keys.LocalizationPath();
+		private string iconPath => ToolResources.Keys.IconPath();
 		private readonly LocalizationService localizationService;
+		private readonly IconService iconService;
+		private readonly PerkService perkService;
 		private List<IModItem> modItems = new();
 
-		public XmlAdapter(LocalizationService localizationService)
+		public XmlAdapter(LocalizationService localizationService, IconService iconService, PerkService perkService)
 		{
 			this.localizationService = localizationService;
+			this.iconService = iconService;
+			this.perkService = perkService;
 		}
 
 		public async Task Initialize()
@@ -29,14 +35,20 @@ namespace KCD2.XML.Tool.Shared.Adapter
 
 			//TODO: Buffs und Localizations initializieren!
 			//InitializeBuffs();
+			//InitializeIcons();
 			InitializeLocalizations();
 		}
 
 		private void InitializeLocalizations()
 		{
+			if (localizationService.IsFilled(Language.German))
+			{
+				return;
+			}
+
 			string path = string.Empty;
 
-			using (FileStream zipToOpen = new FileStream(localizationsPath, FileMode.Open))
+			using (FileStream zipToOpen = new FileStream(localizationPath, FileMode.Open))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
 			{
 				foreach (var archiveEntry in archive.Entries)
@@ -88,9 +100,13 @@ namespace KCD2.XML.Tool.Shared.Adapter
 
 		private void InitializePerks()
 		{
+			if (modItems.Count != 0)
+			{
+				return;
+			}
 			string path = string.Empty;
 
-			using (FileStream zipToOpen = new FileStream(tablesPath, FileMode.Open))
+			using (FileStream zipToOpen = new FileStream(tablePath, FileMode.Open))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
 			{
 				foreach (var entry in archive.Entries)
@@ -122,7 +138,8 @@ namespace KCD2.XML.Tool.Shared.Adapter
 										continue;
 									}
 
-									modItems.Add(perk);
+									perkService.AddPerk(perk);
+									//modItems.Add(perk);
 								}
 							}
 							catch (Exception ex)
@@ -169,12 +186,12 @@ namespace KCD2.XML.Tool.Shared.Adapter
 		public async Task<bool> WriteModItems(IEnumerable<IModItem> modItems)
 		{
 			await Task.Yield();
-			Directory.CreateDirectory(ToolRessources.Keys.ModPath() + "\\Data");
-			Directory.CreateDirectory(ToolRessources.Keys.ModPath() + "\\Localization");
+			Directory.CreateDirectory(ToolResources.Keys.ModPath() + "\\Data");
+			Directory.CreateDirectory(ToolResources.Keys.ModPath() + "\\Localization");
 
 
 
-			var path = ToolRessources.Keys.ModPath();
+			var path = ToolResources.Keys.ModPath();
 
 			if (File.Exists(Path.Combine(path, "mod.manifest")) == false)
 			{
@@ -188,7 +205,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 					writer.WriteLine($"		<author>Destuur</author>");
 					writer.WriteLine($"		<version>1.0</version>");
 					writer.WriteLine($"		<created_on>{XmlConvert.ToString(DateTime.Now, XmlDateTimeSerializationMode.Utc)}</created_on>");
-					writer.WriteLine($"		<modid>{ToolRessources.Keys.ModId()}</modid>");
+					writer.WriteLine($"		<modid>{ToolResources.Keys.ModId()}</modid>");
 					writer.WriteLine($"		<modifies_level>false</modifies_level>");
 					writer.WriteLine($"	</info>");
 					writer.WriteLine($"</kcd_mod>");
@@ -197,11 +214,11 @@ namespace KCD2.XML.Tool.Shared.Adapter
 
 			foreach (var item in modItems)
 			{
-				Directory.CreateDirectory(ToolRessources.Keys.ModPath() + "\\Data\\" + item.Path);
+				Directory.CreateDirectory(ToolResources.Keys.ModPath() + "\\Data\\" + item.Path);
 
-				File.Delete(Path.Combine(ToolRessources.Keys.ModPath() + "\\Data\\" + item.Path, "perk__" + ToolRessources.Keys.ModId() + ".xml"));
+				File.Delete(Path.Combine(ToolResources.Keys.ModPath() + "\\Data\\" + item.Path, "perk__" + ToolResources.Keys.ModId() + ".xml"));
 
-				using (StreamWriter writer = new StreamWriter(Path.Combine(ToolRessources.Keys.ModPath() + "\\Data\\" + item.Path, "perk__" + ToolRessources.Keys.ModId() + ".xml")))
+				using (StreamWriter writer = new StreamWriter(Path.Combine(ToolResources.Keys.ModPath() + "\\Data\\" + item.Path, "perk__" + ToolResources.Keys.ModId() + ".xml")))
 				{
 					writer.WriteLine($"<?xml version=\"1.0\" encoding=\"us-ascii\"?>");
 					writer.WriteLine($"<database xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" name=\"barbora\" xsi:noNamespaceSchemaLocation=\"../database.xsd\">");
@@ -211,7 +228,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 
 			foreach (var item in modItems)
 			{
-				using (StreamWriter writer = File.AppendText(Path.Combine(ToolRessources.Keys.ModPath() + "\\Data\\" + item.Path, "perk__" + ToolRessources.Keys.ModId() + ".xml")))
+				using (StreamWriter writer = File.AppendText(Path.Combine(ToolResources.Keys.ModPath() + "\\Data\\" + item.Path, "perk__" + ToolResources.Keys.ModId() + ".xml")))
 				{
 					if (item is Perk perk)
 					{
@@ -230,7 +247,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 
 			foreach (var item in modItems)
 			{
-				using (StreamWriter writer = File.AppendText(Path.Combine(ToolRessources.Keys.ModPath() + "\\Data\\" + item.Path, "perk__" + ToolRessources.Keys.ModId() + ".xml")))
+				using (StreamWriter writer = File.AppendText(Path.Combine(ToolResources.Keys.ModPath() + "\\Data\\" + item.Path, "perk__" + ToolResources.Keys.ModId() + ".xml")))
 				{
 					writer.WriteLine($"    </perks>");
 					writer.WriteLine($"</database>");
@@ -249,7 +266,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 				return false;
 			}
 
-			var path = ToolRessources.Keys.ModPath() + $"\\{modDescription.ModId}";
+			var path = ToolResources.Keys.ModPath() + $"\\{modDescription.ModId}";
 
 			Directory.CreateDirectory(path + "\\Data");
 			Directory.CreateDirectory(path + "\\Localization");

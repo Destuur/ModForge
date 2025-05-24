@@ -1,22 +1,23 @@
 ﻿@if (Perk is not null)
 {	
-	<MudListItem T="IModItem">
-		<MudGrid>
-			<MudItem lg="12">
-				<MudImage Src="@mod!.ImagePath" Height="50" />
-			</MudItem>
-			<MudItem>
+	<MudItem xs="3">
+		<MudCard Class="mudcard no-select card-hover-effect">
+			<MudCardContent>
+				<MudContainer Class="d-flex justify-center align-center">
+					<MudImage Class="card-image" ObjectPosition="ObjectPosition.Center" Src="images/Icons/Trigger_icon.png" Height="50"/>	
+				</MudContainer>
+
 				@if (Perk.Localizations!.Count == 0)
 				{
 					@* <MudText>@(perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute).Value)</MudText> *@
 					return;					
 				}
 
-				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute).Value)</MudText>
-				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == descAttribute).Value)</MudText>
-				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == descAttribute).Value)</MudText>
+				<MudText Align="Align.Center">@(Perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute)!.Value)</MudText>
+				@* <MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == descAttribute)!.Value)</MudText>
+				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == loreDescAttribute)!.Value)</MudText> *@
 
-			</MudItem>
-		</MudGrid>
-	</MudListItem>
+			</MudCardContent>
+		</MudCard>
+	</MudItem>
 }

@@ -1,19 +1,21 @@
 ﻿@if (PerkItems is not null)
 {
-	<MudList T="IModItem">
+	<MudTextField @bind-Value="SearchPerk" Immediate="true" OnKeyUp="SearchPerks"></MudTextField>
 
-		@foreach (var perkItem in PerkItems)
-		{
-			@if (perkItem is not Perk perk)
-			{
-				continue;
-			}
-			@if (perk.Localizations.Count == 0)
-			{
-				continue;
-			}
-			<PerkListItem Perk="perk"></PerkListItem>
-		}
+	<MudGrid class="px-4" Spacing="6" Justify="Justify.SpaceEvenly">		
 
-	</MudList>
+			@foreach (var perkItem in PerkItems)
+			{
+				@if (perkItem is not Perk perk)
+				{
+					continue;
+				}
+				@if (perk.Localizations.Count == 0)
+				{
+					continue;
+				}
+				<PerkListItem Perk="perk"></PerkListItem>
+			}
+
+	</MudGrid>
 }

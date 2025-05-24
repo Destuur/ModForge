@@ -92,6 +92,7 @@ namespace KCD2.XML.Tool.UI.ModSettingComponents
 			ModService.RemoveSupportedVersion(modVersion);
 		}
 
+		// TODO: Versionsnummer kann mit 0.0.0134124 eingegeben werden.
 		public string ValidateVersion(string value)
 		{
 			if (string.IsNullOrWhiteSpace(value))

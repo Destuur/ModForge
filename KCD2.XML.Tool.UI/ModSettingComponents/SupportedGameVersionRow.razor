@@ -3,15 +3,6 @@
 	<MudSwitch Class="py-2" Size="Size.Medium" T="bool" Color="Color.Primary" @bind-Value="@isNotSupported" Label="@(isNotSupported ? "Continue Without Defining Supported Game Versions" : "Define Supported Game Versions")"></MudSwitch>
 
 	<MudList T="string" Dense="true" ReadOnly="true" Disabled="@isNotSupported">
-		@foreach (var modVersion in ModService.GetAllSupportedVersions())
-		{
-			<MudListItem Dense="true">
-				<MudStack Row="true" Justify="Justify.Center">
-					<MudIconButton OnClick="(_ => RemoveVersion(modVersion))" Class="ml-1" Style="height:fit-content;align-self: center" Icon="@Icons.Material.Outlined.Remove" Variant="Variant.Outlined" Size="Size.Small" ButtonType="ButtonType.Button" Edge="Edge.Start" />
-					<MudField Label="@("Version" + $" {(ModService.GetAllSupportedVersions().IndexOf(modVersion) + 1)}")" Variant="Variant.Outlined" Margin="Margin.Dense">@modVersion</MudField>
-				</MudStack>
-			</MudListItem>
-		}
 
 		<MudListItem Class="pa-0">
 			<MudStack Row="true" Justify="Justify.Center">
@@ -19,6 +10,17 @@
 				<MudIconButton Disabled="@isNotSupported" OnClick="AddVersion" Class="ml-1" Style="height:fit-content;align-self: center" Icon="@Icons.Material.Outlined.Add" Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" ButtonType="ButtonType.Button" Edge="Edge.Start" />
 			</MudStack>
 		</MudListItem>
+
+		@foreach (var modVersion in ModService.GetAllSupportedVersions())
+		{
+			<MudListItem Gutters="false" Dense="true">
+				<MudStack Row="true" Justify="Justify.Center">
+					<MudField Label="@("Version" + $" {(ModService.GetAllSupportedVersions().IndexOf(modVersion) + 1)}")" Variant="Variant.Outlined" Margin="Margin.Dense">@modVersion</MudField>
+					<MudIconButton OnClick="(_ => RemoveVersion(modVersion))" Class="ml-1" Style="height:fit-content;align-self: center" Icon="@Icons.Material.Outlined.Remove" Variant="Variant.Outlined" Size="Size.Medium" ButtonType="ButtonType.Button" Edge="Edge.Start" />
+				</MudStack>
+			</MudListItem>
+		}
+
 	</MudList>
 }
 

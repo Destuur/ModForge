@@ -86,3 +86,51 @@ h1:focus {
         padding-left: env(safe-area-inset-left);
     }
 }
+
+.mudcard {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease ;
+    border-radius: 12px;
+}
+
+.mudcard:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.mudcard:active {
+    transform: scale(0.99);
+    opacity: 0.8;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.no-select {
+    user-select: none;
+    -webkit-user-select: none; /* für Safari */
+    -ms-user-select: none; /* für IE/Edge */
+}
+
+.card-hover-effect {
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.card-hover-effect:hover .card-image {
+    animation: spin 10s linear infinite;
+    filter: drop-shadow(0 0 4px gold);
+}
+
+.card-image {
+    transition: filter 0.5s ease;
+    display: block;
+    margin: auto;
+}
+
+/* Keyframes für die Drehung */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
