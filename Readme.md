@@ -1,4 +1,4 @@
-# KCD2 ModCrafter
+# KCD2 ModForge
 
 > ?? **Notice:** This application is currently in active development and not yet available to the public. A first public release is planned once core functionality is stable.
 
