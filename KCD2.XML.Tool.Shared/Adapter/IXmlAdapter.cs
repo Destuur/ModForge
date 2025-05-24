@@ -8,7 +8,7 @@ namespace KCD2.XML.Tool.Shared.Adapter
 		Task Deinitialize();
 		Task<List<IModItem>> GetModItems();
 		Task<IModItem> GetModItem(string id);
-		Task<bool> WriteModItems(IEnumerable<IModItem> modItems);
+		Task<bool> WriteModItems(ModDescription mod);
 		Task<bool> WriteModManifest(ModDescription modDescription);
 	}
 }

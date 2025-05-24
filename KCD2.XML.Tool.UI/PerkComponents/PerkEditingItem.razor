@@ -4,16 +4,22 @@
 	@foreach (var attribute in Perk.Attributes)
 	{
 		<MudItem lg="6">
-			<MudTextField Margin="Margin.Dense" Value="attribute.Value" Label="@(attribute.Key)" Variant="Variant.Outlined"></MudTextField>
+			<MudTextField Immediate="true" Margin="Margin.Dense" Value="attribute.Value" Label="@(attribute.Key)" Variant="Variant.Outlined"></MudTextField>
 		</MudItem>
 	}
 
 	@foreach (var localization in Perk.Localizations)
 	{
 		<MudItem lg="6">
-			<MudTextField Margin="Margin.Dense" AutoGrow="true" Value="localization.Value" Label="@(localization.Id)" Variant="Variant.Outlined"></MudTextField>
+			<MudTextField Immediate="true" Margin="Margin.Dense" AutoGrow="true" @bind-Value="localization.Value" Label="@(localization.Id)" Variant="Variant.Outlined"></MudTextField>
 		</MudItem>
 	}
 
 </MudGrid>
 
+<MudButton OnClick="SavePerk">Save</MudButton>
+
+<MudStack Row="true" Class="px-4 mt-4">
+	<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Error">Cancel</MudButton>
+	<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="SavePerk">Save</MudButton>
+</MudStack>

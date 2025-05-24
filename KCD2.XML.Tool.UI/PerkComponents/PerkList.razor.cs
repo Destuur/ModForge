@@ -41,6 +41,7 @@ namespace KCD2.XML.Tool.UI.PerkComponents
 
 		public void SearchPerks()
 		{
+			PerkItems = PerkService.GetAllPerks();
 			if (string.IsNullOrEmpty(SearchPerk))
 			{
 				PerkItems = PerkService.GetAllPerks();

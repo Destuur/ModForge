@@ -31,7 +31,7 @@ namespace KCD2.XML.Tool.Components.Pages
 				return;
 			}
 
-			Adapter.WriteModItems(ModItems);
+			//Adapter.WriteModItems(ModItems);
 		}
 
 		protected override void OnInitialized()

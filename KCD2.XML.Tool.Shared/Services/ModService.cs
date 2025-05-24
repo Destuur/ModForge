@@ -127,5 +127,10 @@ namespace KCD2.XML.Tool.Shared.Services
 
 			mod!.ImagePath = path;
 		}
+
+		public async Task ExportMod()
+		{
+			await adapter.WriteModItems(mod);
+		}
 	}
 }
