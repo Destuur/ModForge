@@ -2,7 +2,7 @@
 
 > ?? **Notice:** This application is currently in active development and not yet available to the public. A first public release is planned once core functionality is stable.
 
-**KCD2 ModCrafter** is a powerful WPF application with a Blazor/MudBlazor frontend designed to help modders of *Kingdom Come: Deliverance 2* easily read, edit, and export XML-based game files into fully playable mods.
+**KCD2 ModCrafter** is a WPF application with a Blazor/MudBlazor frontend designed to help modders of *Kingdom Come: Deliverance 2* easily read, edit, and export XML-based game files into fully playable mods.
 
 ---
 
