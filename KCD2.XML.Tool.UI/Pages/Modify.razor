@@ -1,0 +1,23 @@
+﻿@page "/modify"
+
+<h3>Modify</h3>
+
+<button @onclick="WriteXml">Save</button>
+
+@if (ModItems is not null)
+{	
+	@foreach (var item in ModItems)
+	{
+		<p>@item.Id</p>
+
+		if (item is Perk perk)
+		{
+			@foreach (var perkAttribute in perk.Attributes)
+			{
+				<p>@perkAttribute.Key</p>
+				<input placeholder="@perkAttribute.Value" />
+				<br />
+			}
+		}
+	}
+}
