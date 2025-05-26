@@ -63,3 +63,4 @@ Feel free to open issues or pull requests on GitHub.
 ## License
 
 This project is licensed under the [MIT License](Licence).
+You are free to use, modify, and distribute this software, provided that the original copyright and license notice are retained.
