@@ -59,3 +59,7 @@ Contributions, bug reports, and feature requests are very welcome!
 Feel free to open issues or pull requests on GitHub.
 
 ---
+
+## License
+
+This project is licensed under the [MIT License](Licence).
