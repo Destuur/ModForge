@@ -1,4 +1,4 @@
-﻿namespace KCD2.ModForge.Shared.Models
+﻿namespace KCD2.ModForge.Shared.Models.ModItems
 {
 	public class Icon
 	{

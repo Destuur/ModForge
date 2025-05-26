@@ -1,4 +1,5 @@
-﻿@if (PerkItems is not null)
+﻿@using KCD2.ModForge.Shared.Models.ModItems
+@if (PerkItems is not null)
 {
 	<MudTextField @bind-Value="SearchPerk" Immediate="true" Label="Search" OnKeyUp="SearchPerks" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
 

@@ -1,4 +1,27 @@
 ﻿@page "/settings"
 
-<h3>Settings</h3>
+<MudGrid Class="px-4" Spacing="2">
 
+	<MudItem Class="pt-4">
+		<MudText Typo="Typo.h3">Settings</MudText>
+	</MudItem>
+
+	<MudItem md="12">
+		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Label="User Name" @bind-Value="UserConfigurationService!.Current!.UserName" />
+	</MudItem>
+
+	<MudItem md="12">
+		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Label="Choose Game Directory" ReadOnly="true" @bind-Value="UserConfigurationService.Current!.GameDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectGameDirectory" Style="cursor: pointer;" />
+	</MudItem>
+
+	<MudItem md="12">
+		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Label="Output Folder - Nexus Mods/Steam Workshop" ReadOnly="true" @bind-Value="UserConfigurationService.Current!.NexusModsDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectNexusModsDirectory" Style="cursor: pointer;" />
+	</MudItem>
+
+	<MudItem md="12">
+		<MudStack Row="true" Class="mt-2">
+			<MudButton Color="Color.Error" FullWidth="true" Variant="Variant.Outlined">Cancel</MudButton>
+			<MudButton Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="UserConfigurationService.Save">Save</MudButton>
+		</MudStack>
+	</MudItem>
+</MudGrid>

@@ -1,9 +1,11 @@
 ﻿using KCD2.ModForge.Shared.Adapter;
 using KCD2.ModForge.Shared.Mods;
 using KCD2.ModForge.Shared.Services;
+using KCD2.ModForge.Wpf.Services;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using System.Windows;
+using System.Windows.Input;
 
 namespace KCD2.ModForge.Wpf
 {
@@ -18,6 +20,8 @@ namespace KCD2.ModForge.Wpf
 			serviceCollection.AddWpfBlazorWebView();
 			serviceCollection.AddMudServices();
 			serviceCollection.AddSingleton<IXmlAdapter, XmlAdapter>();
+			serviceCollection.AddSingleton<IFolderPickerService, FolderPickerService>();
+			serviceCollection.AddSingleton<UserConfigurationService>();
 			serviceCollection.AddSingleton<OrchestrationService>();
 			serviceCollection.AddSingleton<ModService>();
 			serviceCollection.AddSingleton<LocalizationService>();
@@ -27,6 +31,29 @@ namespace KCD2.ModForge.Wpf
 			Resources.Add("services", serviceCollection.BuildServiceProvider());
 
 			InitializeComponent();
+		}
+
+		private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			if (e.ChangedButton == MouseButton.Left)
+				this.DragMove();
+		}
+
+		private void Minimize_Click(object sender, RoutedEventArgs e)
+		{
+			this.WindowState = WindowState.Minimized;
+		}
+
+		private void MaximizeRestore_Click(object sender, RoutedEventArgs e)
+		{
+			this.WindowState = this.WindowState == WindowState.Maximized
+				? WindowState.Normal
+				: WindowState.Maximized;
+		}
+
+		private void Close_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
 		}
 	}
 }

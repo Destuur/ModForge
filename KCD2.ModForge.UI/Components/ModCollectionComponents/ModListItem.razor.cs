@@ -12,5 +12,10 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 	{
 		[Parameter]
 		public ModDescription? Mod { get; set; }
+
+		public string RandomText()
+		{
+			return "Scheiße geil!";
+		}
 	}
 }

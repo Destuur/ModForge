@@ -1,4 +1,4 @@
-﻿using KCD2.ModForge.Shared.Models;
+﻿using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;

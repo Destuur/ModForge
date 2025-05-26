@@ -1,14 +1,23 @@
-﻿<MudGrid Spacing="4" Class="px-4">
-	<MudItem sm="3" xs="12">
+﻿<MudGrid Spacing="2" Class="px-4">
+
+	<MudItem Class="pt-4" xs="12" md="12">
+		<MudText Typo="Typo.h3">Create New Mod</MudText>
+	</MudItem>
+
+	<MudItem md="3" sm="12" xs="12">
 		<ModSettingIconPicker @ref="modSettingIconPicker"></ModSettingIconPicker>
 	</MudItem>
-	<MudItem sm="9" xs="12">
+
+	<MudItem md="9" sm="12" xs="12">
 		<ModSettingForm @ref="modSettingForm"></ModSettingForm>
 	</MudItem>
-</MudGrid>
 
-<MudStack Row="true" Class="px-4 mt-4">
-	<MudButton Color="Color.Error" FullWidth="true" Variant="Variant.Outlined">Cancel</MudButton>
-	<MudButton Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="SaveMod">Save</MudButton>
-	<MudButton Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="GenerateMod">Save and Create Mod.Manifest</MudButton>
-</MudStack>
+	<MudItem xs="12">
+		<MudStack Row="true" Class="px-4 mt-4">
+			<MudButton Color="Color.Error" FullWidth="true" Variant="Variant.Outlined">Cancel</MudButton>
+			<MudButton Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="SaveMod">Save</MudButton>
+			<MudButton Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="GenerateMod">Save and Create Mod.Manifest</MudButton>
+		</MudStack>
+	</MudItem>
+
+</MudGrid>

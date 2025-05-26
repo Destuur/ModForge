@@ -9,13 +9,12 @@
 @* Needed for snackbars *@
 <MudSnackbarProvider />
 
-<MudLayout>
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudImage Src="images/mod_crafter.png" Height="40" ObjectPosition="ObjectPosition.Center" Class="pl-2" />
+<MudLayout Style="--mud-appbar-height: 40px;">
+    <MudAppBar Dense="true" Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Size="Size.Small" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
-        <MudToggleIconButton Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledChanged="ToggleDarkMode" Color="Color.Inherit" Edge="Edge.End" Class="mr-1" />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
+        <MudToggleIconButton Icon="@Icons.Material.Filled.LightMode" Size="Size.Small" ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledChanged="ToggleDarkMode" Color="Color.Inherit" Edge="Edge.End" Class="mr-1" />
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Color="Color.Inherit" Edge="Edge.End" />
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu/>

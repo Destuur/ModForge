@@ -7,12 +7,46 @@
         xmlns:local="clr-namespace:KCD2.ModForge.Wpf"
         xmlns:pages="clr-namespace:KCD2.ModForge.UI.Pages;assembly=KCD2.ModForge.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <blazor:BlazorWebView HostPage="wwwroot/index.html" Services="{DynamicResource services}">
-            <blazor:BlazorWebView.RootComponents>
-                <blazor:RootComponent Selector="#app" ComponentType="{x:Type pages:App}" />
-            </blazor:BlazorWebView.RootComponents>
-        </blazor:BlazorWebView>
-    </Grid>
+        Title="ModForge" Width="1024" Height="700" WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="CanResize">
+
+    <Border Background="#1E1E1E"
+            CornerRadius="8"
+            BorderBrush="#333"
+            BorderThickness="1"
+            Padding="0"
+            SnapsToDevicePixels="True">
+        <!--Effect="{DynamicResource {x:Static SystemParameters.DropShadowKey}}"-->
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <!-- Custom Titlebar -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- 🧭 Titlebar -->
+            <Grid Grid.Row="0" Background="#27272f" MouseDown="TitleBar_MouseDown">
+                <DockPanel>
+                    <TextBlock Text="ModForge" 
+                           VerticalAlignment="Center" 
+                           Foreground="#c1c1c4"
+                           FontWeight="Bold"
+                           FontSize="14"
+                           Margin="12,0,0,0"/>
+
+                    <!-- Control Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+                        <Button Click="Minimize_Click" Style="{StaticResource TitlebarButtonStyle}" ToolTip="Minimieren">─</Button>
+                        <Button Click="MaximizeRestore_Click" Style="{StaticResource TitlebarButtonStyle}" ToolTip="Maximieren">☐</Button>
+                        <Button Click="Close_Click" Style="{StaticResource CloseButtonStyle}" ToolTip="Schließen">✕</Button>
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
+            <blazor:BlazorWebView Grid.Row="1" HostPage="wwwroot/index.html" Services="{DynamicResource services}">
+                <blazor:BlazorWebView.RootComponents>
+                    <blazor:RootComponent Selector="#app" ComponentType="{x:Type pages:App}" />
+                </blazor:BlazorWebView.RootComponents>
+            </blazor:BlazorWebView>
+        </Grid>
+    </Border>
 </Window>

@@ -1,7 +1,7 @@
 ﻿using KCD2.ModForge.Shared.Mods;
 using System.Xml.Linq;
 
-namespace KCD2.ModForge.Shared.Models
+namespace KCD2.ModForge.Shared.Models.ModItems
 {
 	public class Perk : IModItem
 	{

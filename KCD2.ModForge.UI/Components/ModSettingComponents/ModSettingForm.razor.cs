@@ -20,6 +20,7 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 		private bool modifiesLevel;
 
 		private SupportedGameVersionRow? supportedGameVersionRow;
+		private UserConfigurationService? userConfigurationService;
 
 		public ModSettingForm()
 		{
@@ -29,6 +30,16 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 
 		[Inject]
 		public ModService? ModService { get; set; }
+		[Inject]
+		public UserConfigurationService? UserConfigurationService
+		{
+			get => userConfigurationService;
+			set
+			{
+				userConfigurationService = value;
+				author = userConfigurationService.Current.UserName;
+			}
+		}
 
 		public void GetModId()
 		{

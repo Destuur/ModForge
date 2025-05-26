@@ -1,12 +1,15 @@
 ﻿@if(Mods is not null)
 {
-	<MudList T="ModDescription">
+	<MudList Dense="true" T="ModDescription">
 
 		@foreach (var mod in Mods)
 		{
-			<MudListItem>
-				<ModListItem Mod="mod"></ModListItem>
-			</MudListItem>
+			<MudPaper>
+				<MudListItem Dense="true" Gutters="false">
+					<ModListItem Mod="mod"></ModListItem>
+				</MudListItem>
+			</MudPaper>
+			
 		}
 
 	</MudList>
