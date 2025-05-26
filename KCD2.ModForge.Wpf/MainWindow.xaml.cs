@@ -1,6 +1,6 @@
-﻿using KCD2.XML.Tool.Shared.Adapter;
-using KCD2.XML.Tool.Shared.Mods;
-using KCD2.XML.Tool.Shared.Services;
+﻿using KCD2.ModForge.Shared.Adapter;
+using KCD2.ModForge.Shared.Mods;
+using KCD2.ModForge.Shared.Services;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using System.Windows;

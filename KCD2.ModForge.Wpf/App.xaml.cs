@@ -1,11 +1,4 @@
-﻿using KCD2.XML.Tool.Shared.Adapter;
-using KCD2.XML.Tool.Shared.Mods;
-using KCD2.XML.Tool.Shared.Services;
-using Microsoft.Extensions.DependencyInjection;
-using MudBlazor.Services;
-using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 
 namespace KCD2.ModForge.Wpf
 {

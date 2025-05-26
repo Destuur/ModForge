@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:blazor="clr-namespace:Microsoft.AspNetCore.Components.WebView.Wpf;assembly=Microsoft.AspNetCore.Components.WebView.Wpf"
         xmlns:local="clr-namespace:KCD2.ModForge.Wpf"
-        xmlns:pages="clr-namespace:KCD2.XML.Tool.UI.Pages;assembly=KCD2.XML.Tool.UI"
+        xmlns:pages="clr-namespace:KCD2.ModForge.UI.Pages;assembly=KCD2.ModForge.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
