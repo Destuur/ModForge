@@ -27,54 +27,55 @@ namespace KCD2.ModForge.Shared.Adapter
 			throw new NotImplementedException();
 		}
 
-		public Task<IList<T>> GetAllElements()
+		public async Task<IList<T>> GetAllElements()
 		{
-			string path = string.Empty;
+			//string path = string.Empty;
 
-			using (FileStream zipToOpen = new FileStream(tablePath, FileMode.Open))
-			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
-			{
-				foreach (var entry in archive.Entries)
-				{
-					if (entry.FullName.EndsWith(".tbl"))
-					{
-						continue;
-					}
+			//using (FileStream zipToOpen = new FileStream(tablePath, FileMode.Open))
+			//using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
+			//{
+			//	foreach (var entry in archive.Entries)
+			//	{
+			//		if (entry.FullName.EndsWith(".tbl"))
+			//		{
+			//			continue;
+			//		}
 
-					if (entry.FullName.Contains("perk__combat") ||
-						entry.FullName.Contains("perk__hardcore") ||
-						entry.FullName.Contains("perk__kcd2"))
-					{
-						using (Stream stream = entry.Open())
-						{
-							try
-							{
-								//path = Extensions.GetEntryPath(entry);
+			//		if (entry.FullName.Contains("perk__combat") ||
+			//			entry.FullName.Contains("perk__hardcore") ||
+			//			entry.FullName.Contains("perk__kcd2"))
+			//		{
+			//			using (Stream stream = entry.Open())
+			//			{
+			//				try
+			//				{
+			//					path = Extensions.GetEntryPath(entry);
 
-								XDocument doc = XDocument.Load(stream);
+			//					XDocument doc = XDocument.Load(stream);
 
-								foreach (var perkElement in doc.Descendants("perk"))
-								{
-									var perk = Perk.GetPerk(perkElement, entry.FullName);
+			//					foreach (var perkElement in doc.Descendants("perk"))
+			//					{
+			//						var perk = Perk.GetPerk(perkElement, entry.FullName);
 
-									//TODO: Platzhalter - löschen
-									if (perk.Attributes.Count >= 11)
-									{
-										continue;
-									}
+			//						//TODO: Platzhalter - löschen
+			//						if (perk.Attributes.Count >= 11)
+			//						{
+			//							continue;
+			//						}
 
-									perkService.AddPerk(perk);
-									//modItems.Add(perk);
-								}
-							}
-							catch (Exception ex)
-							{
-								Console.WriteLine($"Fehler beim Parsen von {entry.FullName}: {ex.Message}");
-							}
-						}
-					}
-				}
-			}
+			//						perkService.AddPerk(perk);
+			//						modItems.Add(perk);
+			//					}
+			//				}
+			//				catch (Exception ex)
+			//				{
+			//					Console.WriteLine($"Fehler beim Parsen von {entry.FullName}: {ex.Message}");
+			//				}
+			//			}
+			//		}
+			//	}
+			//}
+			return new List<T>();
 		}
 
 		public Task<T> GetElement(string id)

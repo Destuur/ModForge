@@ -1,8 +1,8 @@
 ﻿namespace KCD2.ModForge.Shared.Models.Attributes
 {
-	public class Autolearnable : IAttribute
+	public class IsPersistent : IAttribute
 	{
-		public Autolearnable(string name, object value)
+		public IsPersistent(string name, object value)
 		{
 			Name = name;
 			Value = bool.Parse(value.ToString() ?? "false");
