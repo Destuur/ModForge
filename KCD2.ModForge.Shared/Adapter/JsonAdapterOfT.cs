@@ -22,7 +22,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			throw new NotImplementedException();
 		}
 
-		public Task<IList<T>> GetAllElements()
+		public Task<IList<T>> ReadAsync()
 		{
 			throw new NotImplementedException();
 		}

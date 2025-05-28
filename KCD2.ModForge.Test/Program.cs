@@ -1,5 +1,11 @@
 ﻿using KCD2.ModForge.Shared;
+using KCD2.ModForge.Shared.Adapter;
+using KCD2.ModForge.Shared.Factories;
 using KCD2.ModForge.Shared.Models.Attributes;
+using KCD2.ModForge.Shared.Models.ModItems;
+using KCD2.ModForge.Shared.Models.User;
+using KCD2.ModForge.Shared.Services;
+using System.Diagnostics;
 
 namespace KCD2.ModForge.Test
 {
@@ -20,6 +26,19 @@ namespace KCD2.ModForge.Test
 			var buffParams = new BuffParams("test", "ewd*0.85,dew*2");
 			var buffParamsName = buffParams.Name;
 			var buffParamsValue = buffParams.Value;
+
+			var watch = Stopwatch.StartNew();
+			var userService = new UserConfigurationService();
+			var path = PathFactory.CreateLocalizationPath(userService.Current.GameDirectory, Language.German);
+
+			var xmlPerkAdapter = new XmlAdapter<Perk>(userService);
+			var perks = xmlPerkAdapter.ReadAsync().Result;
+
+			var xmlBuffAdapter = new XmlAdapter<Buff>(userService);
+			var buffs = xmlBuffAdapter.ReadAsync().Result;
+			watch.Stop();
+
+			Console.WriteLine(path);
 
 
 			Console.ReadLine();

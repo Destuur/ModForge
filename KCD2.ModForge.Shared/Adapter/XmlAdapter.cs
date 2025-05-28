@@ -1,4 +1,5 @@
-﻿using KCD2.ModForge.Shared.Models.ModItems;
+﻿using KCD2.ModForge.Shared.Models;
+using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Mods;
 using KCD2.ModForge.Shared.Services;
 using System.IO.Compression;
@@ -128,16 +129,16 @@ namespace KCD2.ModForge.Shared.Adapter
 
 								foreach (var perkElement in doc.Descendants("perk"))
 								{
-									var perk = Perk.GetPerk(perkElement, entry.FullName);
+									//var perk = Perk.GetPerk(perkElement, entry.FullName);
 
-									//TODO: Platzhalter - löschen
-									if (perk.Attributes.Count >= 11)
-									{
-										continue;
-									}
+									////TODO: Platzhalter - löschen
+									//if (perk.Attributes.Count >= 11)
+									//{
+									//	continue;
+									//}
 
-									perkService.AddPerk(perk);
-									//modItems.Add(perk);
+									//perkService.AddPerk(perk);
+									////modItems.Add(perk);
 								}
 							}
 							catch (Exception ex)
@@ -247,13 +248,13 @@ namespace KCD2.ModForge.Shared.Adapter
 			using (StreamWriter writer = File.AppendText(Path.Combine(ToolResources.Keys.ModPath() + modId + "\\Data\\" + perk.Path, "perk__" + ToolResources.Keys.ModId() + ".xml")))
 			{
 				// Dictionary in XAttribute-Liste umwandeln
-				var attributes = perk.Attributes.Select(kv => new XAttribute(kv.Key, kv.Value));
+				//var attributes = perk.Attributes.Select(kv => new XAttribute(kv.Key, kv.Value));
 
-				// Ein XElement mit diesen Attributen erstellen
-				var element = new XElement("perk", attributes);
+				//// Ein XElement mit diesen Attributen erstellen
+				//var element = new XElement("perk", attributes);
 
-				// In eine Datei oder einen Stream schreiben
-				writer.WriteLine($"        {element}");
+				//// In eine Datei oder einen Stream schreiben
+				//writer.WriteLine($"        {element}");
 			}
 
 			using (StreamWriter writer = File.AppendText(Path.Combine(ToolResources.Keys.ModPath() + modId + "\\Data\\" + perk.Path, "perk__" + ToolResources.Keys.ModId() + ".xml")))

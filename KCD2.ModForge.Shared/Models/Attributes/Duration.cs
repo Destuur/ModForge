@@ -5,11 +5,11 @@
 		public Duration(string name, object value)
 		{
 			Name = name;
-			Value = int.Parse(value.ToString() ?? "0");
+			Value = double.Parse(value.ToString() ?? "0");
 		}
 
 		public string Name { get; }
-		public int Value { get; protected set; }
+		public double Value { get; protected set; }
 		object IAttribute.Value => Value;
 	}
 }

@@ -7,7 +7,7 @@ namespace KCD2.ModForge.Shared.Adapter
 	{
 		Task Initialize();
 		Task Deinitialize();
-		Task<IList<T>> GetAllElements();
+		Task<IList<T>> ReadAsync();
 		Task<T> GetElement(string id);
 		Task<bool> WriteElement(IModItem modItem);
 		Task<bool> WriteElements(IEnumerable<IModItem> modItem);

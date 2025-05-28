@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace KCD2.ModForge.Shared
+namespace KCD2.ModForge.Shared.Factories
 {
 	// TODO: Factory fertig bauen
 	public static class AttributeFactory
@@ -22,7 +22,7 @@ namespace KCD2.ModForge.Shared
 			var typeExpression = Expression.Parameter(typeof(string), nameof(name));
 			var valueExpression = Expression.Parameter(typeof(object), nameof(value));
 
-			var constructor = foundType!.GetConstructors().FirstOrDefault();
+			var constructor = foundType.GetConstructors().FirstOrDefault();
 
 			var newExpression = Expression.New(constructor!, typeExpression, valueExpression);
 

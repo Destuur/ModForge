@@ -1,4 +1,4 @@
-﻿using KCD2.ModForge.Shared.Models.ModItems;
+﻿using KCD2.ModForge.Shared.Models;
 
 namespace KCD2.ModForge.Shared.Services
 {
@@ -15,7 +15,6 @@ namespace KCD2.ModForge.Shared.Services
 		public Localization GetLocalization(string attribute, string id)
 		{
 			var localization = deLocalizations.FirstOrDefault(x => x.Id == id);
-			localization.Attribute = attribute;
 			return localization;
 		}
 

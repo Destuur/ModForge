@@ -1,8 +1,9 @@
-﻿using KCD2.ModForge.Shared.Mods;
+﻿using KCD2.ModForge.Shared.Models.Attributes;
+using KCD2.ModForge.Shared.Mods;
 
-namespace KCD2.ModForge.Shared.Models.ModItems
+namespace KCD2.ModForge.Shared.Models
 {
-	public class Localization : IModItem
+	public class Localization
 	{
 		public Localization(string id, string value, string path)
 		{
@@ -14,8 +15,6 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 		public string Id { get; private set; }
 		public string Path { get; private set; }
 		public string Value { get; set; }
-		public string Attribute { get; set; } = string.Empty;
-
 
 		internal static Localization GetLocalization(string id, string value, string path)
 		{
