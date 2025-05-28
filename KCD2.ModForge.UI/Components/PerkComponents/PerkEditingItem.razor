@@ -11,7 +11,7 @@
 	@foreach (var localization in Perk.Localizations)
 	{
 		<MudItem lg="6">
-			<MudTextField Immediate="true" Margin="Margin.Dense" AutoGrow="true" @bind-Value="localization.Value" Label="@(localization.Id)" Variant="Variant.Outlined"></MudTextField>
+			<MudTextField Immediate="true" Margin="Margin.Dense" AutoGrow="true" @bind-Value="localization.Description" Label="@(localization.Language)" Variant="Variant.Outlined"></MudTextField>
 		</MudItem>
 	}
 

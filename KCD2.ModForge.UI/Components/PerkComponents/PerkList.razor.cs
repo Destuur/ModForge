@@ -52,7 +52,7 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 			{
 				var filtered = perks.Where(x =>
 				(!string.IsNullOrEmpty(x.Id) && x.Id.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase)) ||
-				(x.Localizations.Any(x => x.Value.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase))) ||
+				(x.Localizations.Any(x => x.Description.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase))) ||
 				(x.Buffs.Any(x => x.Id.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase)))
 				).ToList();
 

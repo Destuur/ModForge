@@ -9,6 +9,6 @@ namespace KCD2.ModForge.Shared.Mods
 		public string Path { get; }
 		public IList<IAttribute> Attributes { get; }
 		public IList<IModItem> ModItems { get; }
-		public IList<Localization> Localizations { get; }
+		public Localization Localization { get; }
 	}
 }

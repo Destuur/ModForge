@@ -75,12 +75,12 @@ namespace KCD2.ModForge.Shared.Adapter
 								.Where(e => !string.IsNullOrEmpty(e.Key) && !string.IsNullOrEmpty(e.Value))
 								.ToList();
 
-								foreach (var entry in entries)
-								{
-									var localization = Localization.GetLocalization(entry.Key, entry.Value, archiveEntry.FullName);
+								//foreach (var entry in entries)
+								//{
+								//	var localization = Localization.GetLocalization(entry.Key, entry.Value, archiveEntry.FullName);
 
-									localizationService.AddLocalization(localization);
-								}
+								//	localizationService.AddLocalization(localization);
+								//}
 							}
 							catch (Exception ex)
 							{
@@ -188,16 +188,16 @@ namespace KCD2.ModForge.Shared.Adapter
 
 			foreach (var modItem in mod.ModItems)
 			{
-				if (modItem is Perk perk)
-				{
-					foreach (var localization in perk.Localizations)
-					{
-						await AppendLocalization(mod.ModId, localization, "text__");
-					}
+				//if (modItem is Perk perk)
+				//{
+				//	foreach (var localization in perk.Localizations)
+				//	{
+				//		await AppendLocalization(mod.ModId, localization, "text__");
+				//	}
 
-					await WritePerk(mod.ModId, perk, "perk__");
-					continue;
-				}
+				//	await WritePerk(mod.ModId, perk, "perk__");
+				//	continue;
+				//}
 			}
 
 			var sourceFolder = Path.Combine(ToolResources.Keys.ModPath() + "\\" + mod.ModId + "\\Localization\\German_xml");
@@ -287,17 +287,17 @@ namespace KCD2.ModForge.Shared.Adapter
 			var doc = XDocument.Load(localizationPath);
 			var root = doc.Element("Table");
 
-			if (root != null)
-			{
-				var newRow = new XElement("Row",
-					new XElement("Cell", localization.Id),
-					new XElement("Cell", "Nonsense"),
-					new XElement("Cell", localization.Value) // z. B. mit &amp;nbsp; vorbereiten
-				);
+			//if (root != null)
+			//{
+			//	var newRow = new XElement("Row",
+			//		new XElement("Cell", localization.Language),
+			//		new XElement("Cell", "Nonsense"),
+			//		new XElement("Cell", localization.Description) // z. B. mit &amp;nbsp; vorbereiten
+			//	);
 
-				root.Add(newRow);
-				doc.Save(localizationPath);
-			}
+			//	root.Add(newRow);
+			//	doc.Save(localizationPath);
+			//}
 		}
 
 		public async Task<bool> WriteModManifest(ModDescription modDescription)

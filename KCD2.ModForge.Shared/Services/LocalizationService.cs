@@ -14,7 +14,7 @@ namespace KCD2.ModForge.Shared.Services
 
 		public Localization GetLocalization(string attribute, string id)
 		{
-			var localization = deLocalizations.FirstOrDefault(x => x.Id == id);
+			var localization = deLocalizations.FirstOrDefault();
 			return localization;
 		}
 

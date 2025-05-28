@@ -23,6 +23,6 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 		public string Path { get; private set; } = string.Empty;
 		public IList<IModItem> ModItems { get; } = new List<IModItem>();
 		public IList<IAttribute> Attributes { get; } = new List<IAttribute>();
-		public IList<Localization> Localizations { get; } = new List<Localization>();
+		public Localization Localization { get; } = new();
 	}
 }
