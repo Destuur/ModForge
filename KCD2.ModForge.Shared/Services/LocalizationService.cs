@@ -1,4 +1,4 @@
-﻿using KCD2.ModForge.Shared.Models;
+﻿using KCD2.ModForge.Shared.Models.Localizations;
 
 namespace KCD2.ModForge.Shared.Services
 {

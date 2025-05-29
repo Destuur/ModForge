@@ -5,21 +5,23 @@ using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Models.User;
 using KCD2.ModForge.Shared.Mods;
 using System;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace KCD2.ModForge.Shared.Services
 {
 	public class XmlToJsonService
 	{
-		private readonly XmlAdapter<Perk> perkAdapter;
-		private readonly XmlAdapter<Buff> buffAdapter;
+		private readonly XmlAdapterOfT<Perk> perkAdapter;
+		private readonly XmlAdapterOfT<Buff> buffAdapter;
 		private readonly LocalizationAdapter localizationAdapter;
 		private Dictionary<string, Dictionary<string, string>> localizationCache;
 		private readonly JsonAdapterOfT<Perk> jsonPerkAdapter;
 		private readonly JsonAdapterOfT<Buff> jsonBuffAdapter;
 		private readonly UserConfigurationService userConfigurationService;
 
-		public XmlToJsonService(XmlAdapter<Perk> perkAdapter, XmlAdapter<Buff> buffAdapter, LocalizationAdapter localizationAdapter, JsonAdapterOfT<Perk> jsonPerkAdapter, JsonAdapterOfT<Buff> jsonBuffAdapter, UserConfigurationService userConfigurationService)
+		// TODO: Weitere Abstraktion einfügen. IModItemSource(?)
+		public XmlToJsonService(XmlAdapterOfT<Perk> perkAdapter, XmlAdapterOfT<Buff> buffAdapter, LocalizationAdapter localizationAdapter, JsonAdapterOfT<Perk> jsonPerkAdapter, JsonAdapterOfT<Buff> jsonBuffAdapter, UserConfigurationService userConfigurationService)
 		{
 			this.perkAdapter = perkAdapter;
 			this.buffAdapter = buffAdapter;
@@ -46,20 +48,48 @@ namespace KCD2.ModForge.Shared.Services
 			return;
 		}
 
-		public async Task ExportXmlToJsonAsync()
+		public async Task ConvertXmlToJsonAsync()
 		{
+			var watch = Stopwatch.StartNew();
 			await InitializeExport();
 			await AssignLocalizations();
 			await jsonPerkAdapter.WriteElements(Perks);
 			await jsonBuffAdapter.WriteElements(Buffs);
+			watch.Stop();
 		}
 
-		public async Task<IEnumerable<Perk>> ReadPerkJsonFile(string filePath)
+		public async Task<bool> TryReadJsonFiles()
+		{
+			var perkPath = Path.Combine(
+							Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+							"ModForge", $"perks.json");
+			var buffPath = Path.Combine(
+				Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+				"ModForge", $"buffs.json");
+
+			if (File.Exists(perkPath) == false)
+			{
+				return false;
+			}
+
+			if (File.Exists(buffPath) == false)
+			{
+				return false;
+			}
+
+			var perks = await ReadPerkJsonFile(perkPath);
+			var buffs = await ReadBuffJsonFile(buffPath);
+			Perks = perks.ToList();
+			Buffs = buffs.ToList();
+			return true;
+		}
+
+		private async Task<IEnumerable<Perk>> ReadPerkJsonFile(string filePath)
 		{
 			return await jsonPerkAdapter.ReadAsync(filePath);
 		}
 
-		public async Task<IEnumerable<Buff>> ReadBuffJsonFile(string filePath)
+		private async Task<IEnumerable<Buff>> ReadBuffJsonFile(string filePath)
 		{
 			return await jsonBuffAdapter.ReadAsync(filePath);
 		}

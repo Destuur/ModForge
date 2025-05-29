@@ -2,7 +2,7 @@
 using KCD2.ModForge.Shared.Mods;
 using System.Text.Json.Serialization;
 
-namespace KCD2.ModForge.Shared.Models
+namespace KCD2.ModForge.Shared.Models.Localizations
 {
 	public class Localization
 	{
@@ -11,14 +11,16 @@ namespace KCD2.ModForge.Shared.Models
 
 		}
 
-		public Localization(Dictionary<string, string> names, Dictionary<string, string> descriptions, Dictionary<string, string> loreDescriptions)
+		public Localization(Dictionary<string, string> names, Dictionary<string, string> defaultDescription, Dictionary<string, string> descriptions, Dictionary<string, string> loreDescriptions)
 		{
 			Names = names;
+			DefaultDescription = defaultDescription;
 			Descriptions = descriptions;
 			LoreDescriptions = loreDescriptions;
 		}
 
 		public Dictionary<string, string>? Names { get; } = new();
+		public Dictionary<string, string>? DefaultDescription { get; } = new();
 		public Dictionary<string, string>? Descriptions { get; } = new();
 		public Dictionary<string, string>? LoreDescriptions { get; } = new();
 
@@ -26,16 +28,13 @@ namespace KCD2.ModForge.Shared.Models
 		public string? GetName(string language) =>
 			Names.TryGetValue(language, out var value) ? value : null;
 
+		public string? GetDefault(string language) =>
+			DefaultDescription.TryGetValue(language, out var value) ? value : null;
+
 		public string? GetDescription(string language) =>
 			Descriptions.TryGetValue(language, out var value) ? value : null;
 
 		public string? GetLoreDescription(string language) =>
 			LoreDescriptions.TryGetValue(language, out var value) ? value : null;
-	}
-
-	public class LocalizationEntry
-	{
-		public string Key { get; set; } = string.Empty;
-		public string Text { get; set; } = string.Empty;
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Adapter;
-using KCD2.ModForge.Shared.Mods;
+using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -15,22 +15,10 @@ namespace KCD2.ModForge.UI.Pages
 
 		[Inject]
 		public ModService? Service { get; init; }
-		[Inject]
-		public IXmlAdapter? Adapter { get; init; }
 		public IEnumerable<IModItem>? ModItems { get; set; }
 
 		public void WriteXml()
 		{
-			if (Adapter is null)
-			{
-				return;
-			}
-
-			if (ModItems is null)
-			{
-				return;
-			}
-
 			//Adapter.WriteModItems(ModItems);
 		}
 

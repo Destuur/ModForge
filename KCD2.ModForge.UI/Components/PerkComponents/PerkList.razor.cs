@@ -48,16 +48,16 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 				return;
 			}
 
-			if (PerkItems is IEnumerable<Perk> perks)
-			{
-				var filtered = perks.Where(x =>
-				(!string.IsNullOrEmpty(x.Id) && x.Id.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase)) ||
-				(x.Localizations.Any(x => x.Description.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase))) ||
-				(x.Buffs.Any(x => x.Id.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase)))
-				).ToList();
+			//if (PerkItems is IEnumerable<Perk> perks)
+			//{
+			//	var filtered = perks.Where(x =>
+			//	(!string.IsNullOrEmpty(x.Id) && x.Id.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase)) ||
+			//	(x.Localizations.Any(x => x.Description.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase))) ||
+			//	(x.Buffs.Any(x => x.Id.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase)))
+			//	).ToList();
 
-				PerkItems = filtered;
-			}
+			//	PerkItems = filtered;
+			//}
 		}
 
 		protected override async Task OnInitializedAsync()
@@ -75,26 +75,26 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 				return;
 			}
 
-			foreach (var perkItem in PerkItems)
-			{
-				if (perkItem is Perk perk)
-				{
-					if (perk.Attributes.TryGetValue(descAttribute, out string perkDesc))
-					{
-						perk.Localizations.Add(LocalizationService!.GetLocalization(descAttribute, perkDesc));
-					}
+			//foreach (var perkItem in PerkItems)
+			//{
+			//	if (perkItem is Perk perk)
+			//	{
+			//		if (perk.Attributes.TryGetValue(descAttribute, out string perkDesc))
+			//		{
+			//			perk.Localizations.Add(LocalizationService!.GetLocalization(descAttribute, perkDesc));
+			//		}
 
-					if (perk.Attributes.TryGetValue(loreDescAttribute, out string perkLoreDesc))
-					{
-						perk.Localizations.Add(LocalizationService!.GetLocalization(loreDescAttribute, perkLoreDesc));
-					}
+			//		if (perk.Attributes.TryGetValue(loreDescAttribute, out string perkLoreDesc))
+			//		{
+			//			perk.Localizations.Add(LocalizationService!.GetLocalization(loreDescAttribute, perkLoreDesc));
+			//		}
 
-					if (perk.Attributes.TryGetValue(nameAttribute, out string perkName))
-					{
-						perk.Localizations.Add(LocalizationService!.GetLocalization(nameAttribute, perkName));
-					}
-				}
-			}
+			//		if (perk.Attributes.TryGetValue(nameAttribute, out string perkName))
+			//		{
+			//			perk.Localizations.Add(LocalizationService!.GetLocalization(nameAttribute, perkName));
+			//		}
+			//	}
+			//}
 		}
 	}
 }

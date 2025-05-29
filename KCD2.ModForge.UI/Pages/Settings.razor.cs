@@ -9,6 +9,8 @@ namespace KCD2.ModForge.UI.Pages
 		public IFolderPickerService? FolderPickerService { get; set; }
 		[Inject]
 		public UserConfigurationService? UserConfigurationService { get; set; }
+		[Inject]
+		public XmlToJsonService? XmlToJsonService { get; set; }
 
 		private async Task SelectGameDirectory()
 		{
@@ -44,6 +46,15 @@ namespace KCD2.ModForge.UI.Pages
 			{
 				UserConfigurationService.Current!.NexusModsDirectory = selected;
 			}
+		}
+
+		public async Task ParseXmlFiles()
+		{
+			if (XmlToJsonService is null)
+			{
+				return;
+			}
+			await XmlToJsonService.ConvertXmlToJsonAsync();
 		}
 	}
 }

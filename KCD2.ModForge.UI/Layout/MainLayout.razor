@@ -1,12 +1,7 @@
 ﻿@inherits LayoutComponentBase
-@* Required *@
 <MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
 <MudPopoverProvider />
-
-@* Needed for dialogs *@
 <MudDialogProvider />
-
-@* Needed for snackbars *@
 <MudSnackbarProvider />
 
 <MudLayout Style="--mud-appbar-height: 40px;">
@@ -14,9 +9,11 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Size="Size.Small" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
         <MudToggleIconButton Icon="@Icons.Material.Filled.LightMode" Size="Size.Small" ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledChanged="ToggleDarkMode" Color="Color.Inherit" Edge="Edge.End" Class="mr-1" />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Color="Color.Inherit" Edge="Edge.End" />
+        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+            <MudMenuItem Onclick="ImportGameData" Label="Import Game Data"  />
+        </MudMenu>
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Overlay="true" OverlayAutoClose="true" Variant="DrawerVariant.Temporary" Elevation="2">
         <NavMenu/>
     </MudDrawer>
     <MudMainContent>
@@ -28,31 +25,9 @@
         {
             @Body
         }
-    </MudMainContent>
+
+        <LoadingOverlay IsVisible="@isLoading"></LoadingOverlay>
+
+    </MudMainContent>  
+    <StartupLoader />
 </MudLayout>
-
-@code {
-    private bool _isDarkMode;
-    private MudThemeProvider? _mudThemeProvider;
-    bool _drawerOpen = true;
-    private bool _isLoaded = false;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            _isLoaded = true;
-            _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
-            StateHasChanged();
-        }
-    }
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
-
-    public void ToggleDarkMode()
-    {
-        _isDarkMode = !_isDarkMode;
-    }
-}

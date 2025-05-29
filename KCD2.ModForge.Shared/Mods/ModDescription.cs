@@ -1,4 +1,6 @@
-﻿namespace KCD2.ModForge.Shared.Mods
+﻿using KCD2.ModForge.Shared.Models.ModItems;
+
+namespace KCD2.ModForge.Shared.Mods
 {
 	public class ModDescription
 	{

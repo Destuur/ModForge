@@ -14,7 +14,20 @@
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="initial-loader" style="
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #27272f;
+        color: #c1c1c4;
+        font-size: 2.5rem;
+        z-index: 9999;">
+        Load ModForge
+    </div>
+
+    <div id="app">Lade Blazor-Komponenten...</div>
 
     <div id="blazor-error-ui" data-nosnippet>
         An unhandled error has occurred.
@@ -25,7 +38,14 @@
     <script src="_framework/blazor.webview.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script src="js/folder.js"></script>
-
+    <script>
+        window.removeInitialLoader = function () {
+            const loader = document.getElementById('initial-loader');
+            if (loader) {
+                loader.remove();
+            }
+        };
+    </script>
 </body>
 
 </html>

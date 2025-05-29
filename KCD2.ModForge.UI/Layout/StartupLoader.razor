@@ -1,0 +1,54 @@
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+@if (!_hidden)
+{
+    <MudOverlay Visible="true" DarkBackground="true" ZIndex="5000" class="@GetOverlayClass()">
+        <MudCard class="@GetCardClass()" style="min-width: 320px; text-align: center;">
+            <MudText Typo="Typo.h6" class="@GetTextClass()">@_loadingText</MudText>
+        </MudCard>
+    </MudOverlay>
+
+}
+
+@code {
+    private bool _hidden = false;
+    private string _loadingText = "Starte Anwendung...";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Task.Delay(1000); // mindestens 1 Sekunde anzeigen
+
+            // Optional: Lade-Status ändern, z.B. für mehrstufigen Text
+            //_loadingText = "Lade Daten...";
+            //StateHasChanged();
+            //await Task.Delay(1000);
+
+            // Starte Fade-Out Animation (CSS Klasse macht den Effekt)
+            _hidden = true;
+
+            // Animation dauert z.B. 800ms, warte vor dem Entfernen
+            await Task.Delay(2000);
+
+            await JS.InvokeVoidAsync("removeInitialLoader");
+            StateHasChanged();
+        }
+    }
+    private string GetOverlayClass()
+    {
+        return _hidden ? "fade-overlay fade-out" : "fade-overlay";
+    }
+
+    private string GetCardClass()
+    {
+        return _hidden ? "p-6 fade-card fade-out" : "p-6 fade-card";
+    }
+
+    private string GetTextClass()
+    {
+        return _hidden ? "loading-text fade-out" : "loading-text";
+    }
+
+}

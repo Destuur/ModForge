@@ -16,7 +16,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			PreserveReferencesHandling = PreserveReferencesHandling.None
 		};
 
-		public JsonAdapterOfT(string filePath)
+		public JsonAdapterOfT()
 		{
 			//var json = File.ReadAllText(filePath);
 			//data = JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
@@ -50,16 +50,6 @@ namespace KCD2.ModForge.Shared.Adapter
 			}
 		}
 
-		public Task<T> GetElement(string id)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<bool> WriteElement(T modItem)
-		{
-			throw new NotImplementedException();
-		}
-
 		public async Task<bool> WriteElements(IEnumerable<T> modItems)
 		{
 			var json = JsonConvert.SerializeObject(modItems, settings);
@@ -71,6 +61,16 @@ namespace KCD2.ModForge.Shared.Adapter
 			Directory.CreateDirectory(Path.GetDirectoryName(configFile)!);
 			File.WriteAllText(configFile, json);
 			return true;
+		}
+
+		public Task<T> GetElement(string id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<bool> WriteElement(T modItem)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

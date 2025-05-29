@@ -88,20 +88,20 @@ h1:focus {
 }
 
 .mudcard {
-    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease ;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     border-radius: 12px;
 }
 
-.mudcard:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
+    .mudcard:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
 
-.mudcard:active {
-    transform: scale(0.99);
-    opacity: 0.8;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
+    .mudcard:active {
+        transform: scale(0.99);
+        opacity: 0.8;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
 
 .no-select {
     user-select: none;
@@ -113,10 +113,10 @@ h1:focus {
     transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.card-hover-effect:hover .card-image {
-    animation: spin 10s linear infinite;
-    filter: drop-shadow(0 0 4px gold);
-}
+    .card-hover-effect:hover .card-image {
+        animation: spin 10s linear infinite;
+        filter: drop-shadow(0 0 4px gold);
+    }
 
 .card-image {
     transition: filter 0.5s ease;
@@ -134,3 +134,169 @@ h1:focus {
         transform: rotate(360deg);
     }
 }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* halbtransparentes Schwarz */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-container {
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: white;
+    text-align: center;
+    min-width: 300px; /* 👈 Mindestbreite */
+    max-width: 350px; /* optional */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem; /* 👈 gleichmäßiger Abstand zwischen Spinner und Text */
+}
+
+
+/* z. B. in site.css oder style block */
+
+.status-text-container {
+    height: 2rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%, black 60%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 40%, black 60%, transparent 100%);
+}
+
+.slide-in {
+    animation: slideInRight 0.5s ease forwards;
+}
+
+.slide-out {
+    animation: slideOutLeft 0.5s ease forwards;
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+#initial-loader {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #ccc;
+    border-top-color: #1976d2; /* MudBlazor Primary */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.loader-text {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fade-overlay {
+    transition: opacity 0.8s ease;
+    opacity: 1;
+}
+
+    .fade-overlay.fade-out {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+.fade-card {
+    transition: transform 0.8s ease, opacity 0.8s ease;
+    transform: scale(1);
+    opacity: 1;
+}
+
+    .fade-card.fade-out {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+.loading-text {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+    .loading-text.fade-out {
+        opacity: 0;
+        transform: scale(0.7) translateY(10px);
+    }
+
+
+@keyframes fadeBack {
+    0%
+
+{
+    opacity: 1;
+    transform: scale(1);
+}
+
+100% {
+    opacity: 0;
+    transform: scale(0.7) translateY(20px);
+}
+
+}
+
+.loading-text {
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+    .loading-text.fade-out {
+        animation: fadeBack 0.8s forwards;
+    }

@@ -1,5 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Models.Attributes;
-using KCD2.ModForge.Shared.Mods;
+using KCD2.ModForge.Shared.Models.Localizations;
 
 namespace KCD2.ModForge.Shared.Models.ModItems
 {
@@ -23,10 +23,24 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 			Attributes = attributes.ToList();
 		}
 
+		public Buff(string id, string path, IList<IAttribute> attributes, IList<IModItem> modItems, Localization localization)
+		{
+			Id = id;
+			Path = path;
+			Attributes = attributes;
+			ModItems = modItems;
+			Localization = localization;
+		}
+
 		public string Id { get; set; } = string.Empty;
 		public string Path { get; set; } = string.Empty;
 		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
 		public IList<IModItem> ModItems { get; set; } = new List<IModItem>();
 		public Localization Localization { get; set; } = new();
+
+		public static Buff GetDeepCopy(Buff buff)
+		{
+			return new Buff(buff.Id, buff.Path, buff.Attributes.ToList(), buff.ModItems.ToList(), buff.Localization);
+		}
 	}
 }

@@ -2,7 +2,6 @@
 using KCD2.ModForge.Shared.Models.Attributes;
 using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Models.User;
-using KCD2.ModForge.Shared.Mods;
 using KCD2.ModForge.Shared.Services;
 using System.IO.Compression;
 using System.Text.Json;
@@ -11,12 +10,12 @@ using System.Xml.Linq;
 
 namespace KCD2.ModForge.Shared.Adapter
 {
-	public class XmlAdapter<T> : IModItemAdapter<T>
+	public class XmlAdapterOfT<T> : IModItemAdapter<T>
 		where T : IModItem
 	{
 		private readonly UserConfigurationService userConfigurationService;
 
-		public XmlAdapter(UserConfigurationService userConfigurationService)
+		public XmlAdapterOfT(UserConfigurationService userConfigurationService)
 		{
 			this.userConfigurationService = userConfigurationService;
 		}

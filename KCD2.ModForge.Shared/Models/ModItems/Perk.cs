@@ -1,5 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Models.Attributes;
-using KCD2.ModForge.Shared.Mods;
+using KCD2.ModForge.Shared.Models.Localizations;
 using Newtonsoft.Json;
 
 namespace KCD2.ModForge.Shared.Models.ModItems
@@ -37,5 +37,10 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 		public IList<IModItem> ModItems { get; set; } = new List<IModItem>();
 		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
 		public Localization Localization { get; set; } = new();
+
+		public static Perk GetDeepCopy(Perk perk)
+		{
+			return new Perk(perk.Id, perk.Path, perk.ModItems.ToList(), perk.Attributes.ToList(), perk.Localization);
+		}
 	}
 }

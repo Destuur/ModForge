@@ -34,10 +34,10 @@ namespace KCD2.ModForge.Test
 			var gameDirectory = userService.Current.GameDirectory;
 			var path = PathFactory.CreateLocalizationPath(gameDirectory, Language.German);
 
-			var xmlPerkAdapter = new XmlAdapter<Perk>(userService);
+			var xmlPerkAdapter = new XmlAdapterOfT<Perk>(userService);
 			var perks = xmlPerkAdapter.ReadAsync("").Result;
 
-			var xmlBuffAdapter = new XmlAdapter<Buff>(userService);
+			var xmlBuffAdapter = new XmlAdapterOfT<Buff>(userService);
 			var buffs = xmlBuffAdapter.ReadAsync("").Result;
 
 			var localizationAdapter = new LocalizationAdapter(userService);
@@ -60,19 +60,13 @@ namespace KCD2.ModForge.Test
 
 		private static async void ImportJson(XmlToJsonService xmlToJsonService)
 		{
-			var perkPath = Path.Combine(
-				Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-				"ModForge", $"perks.json");
-			var buffPath = Path.Combine(
-				Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-				"ModForge", $"buffs.json");
-			var perks = await xmlToJsonService.ReadPerkJsonFile(perkPath);
-			var buffs = await xmlToJsonService.ReadBuffJsonFile(buffPath);
+			var perks = await xmlToJsonService.ReadPerkJsonFile();
+			var buffs = await xmlToJsonService.ReadBuffJsonFile();
 		}
 
 		private static async void ExportXmlToJson(XmlToJsonService xmlToJsonService)
 		{
-			await xmlToJsonService.ExportXmlToJsonAsync();
+			await xmlToJsonService.ConvertXmlToJsonAsync();
 		}
 	}
 }

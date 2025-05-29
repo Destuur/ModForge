@@ -1,4 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Adapter;
+using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Mods;
 
 namespace KCD2.ModForge.Shared.Services
@@ -6,12 +7,10 @@ namespace KCD2.ModForge.Shared.Services
 	public class ModService
 	{
 		private ModDescription? mod = new();
-		private readonly IXmlAdapter adapter;
 		private readonly ModCollection modCollection;
 
-		public ModService(IXmlAdapter adapter, ModCollection modCollection)
+		public ModService(ModCollection modCollection)
 		{
-			this.adapter = adapter;
 			this.modCollection = modCollection;
 		}
 
@@ -58,7 +57,7 @@ namespace KCD2.ModForge.Shared.Services
 				return null!;
 			}
 
-			await adapter.WriteModManifest(mod);
+			//await adapter.WriteModManifest(mod);
 			return mod;
 		}
 
@@ -123,7 +122,7 @@ namespace KCD2.ModForge.Shared.Services
 
 		public async Task ExportMod()
 		{
-			await adapter.WriteModItems(mod);
+			//await adapter.WriteModItems(mod);
 		}
 	}
 }

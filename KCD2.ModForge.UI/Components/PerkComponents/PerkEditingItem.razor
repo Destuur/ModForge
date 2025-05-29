@@ -3,17 +3,17 @@
 
 	@foreach (var attribute in Perk.Attributes)
 	{
-		<MudItem lg="6">
+		@* <MudItem lg="6">
 			<MudTextField Immediate="true" Margin="Margin.Dense" Value="attribute.Value" Label="@(attribute.Key)" Variant="Variant.Outlined"></MudTextField>
-		</MudItem>
+		</MudItem> *@
 	}
 
-	@foreach (var localization in Perk.Localizations)
+	@* @foreach (var localization in Perk.Localization)
 	{
 		<MudItem lg="6">
 			<MudTextField Immediate="true" Margin="Margin.Dense" AutoGrow="true" @bind-Value="localization.Description" Label="@(localization.Language)" Variant="Variant.Outlined"></MudTextField>
 		</MudItem>
-	}
+	} *@
 
 </MudGrid>
 

@@ -7,14 +7,14 @@
 					<MudImage Class="card-image" ObjectPosition="ObjectPosition.Center" Src="images/Icons/Trigger_icon.png" Height="50"/>	
 				</MudContainer>
 
-				@if (Perk.Localizations!.Count == 0)
+				@* @if (Perk.Localizations!.Count == 0)
 				{
-					@* <MudText>@(perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute).Value)</MudText> *@
+					<MudText>@(perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute).Value)</MudText>
 					return;					
 				}
 
 				<MudText Align="Align.Center">@(Perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute)!.Value)</MudText>
-				@* <MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == descAttribute)!.Value)</MudText>
+				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == descAttribute)!.Value)</MudText>
 				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == loreDescAttribute)!.Value)</MudText> *@
 
 			</MudCardContent>

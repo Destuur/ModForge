@@ -8,8 +8,6 @@ namespace KCD2.ModForge.UI.Pages
 	public partial class Perks
 	{
 		[Inject]
-		public IXmlAdapter? Adapter { get; private set; }
-		[Inject]
 		public ModService? ModService { get; private set; }
 		[Parameter]
 		public string? ModId { get; set; }

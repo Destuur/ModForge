@@ -1,4 +1,5 @@
-﻿using KCD2.ModForge.Shared.Adapter;
+﻿using KCD2.ModForge.Shared;
+using KCD2.ModForge.Shared.Adapter;
 using KCD2.ModForge.Shared.Mods;
 using KCD2.ModForge.Shared.Services;
 using KCD2.ModForge.Wpf.Services;
@@ -17,22 +18,20 @@ namespace KCD2.ModForge.Wpf
 		public MainWindow()
 		{
 			var serviceCollection = new ServiceCollection();
+
 			serviceCollection.AddWpfBlazorWebView();
-			serviceCollection.AddMudServices();
-			serviceCollection.AddSingleton<IXmlAdapter, XmlAdapter>();
-			serviceCollection.AddSingleton<IFolderPickerService, FolderPickerService>();
-			serviceCollection.AddSingleton<UserConfigurationService>();
-			serviceCollection.AddSingleton<OrchestrationService>();
-			serviceCollection.AddSingleton<ModService>();
-			serviceCollection.AddSingleton<LocalizationService>();
-			serviceCollection.AddSingleton<IconService>();
-			serviceCollection.AddSingleton<PerkService>();
-			serviceCollection.AddSingleton<ModCollection>();
+
+			serviceCollection.AddMudServices()
+				.AddModForgeServices()
+				.AddModForgeAdapters()
+				.AddSingleton<IFolderPickerService, FolderPickerService>();
+
 			Resources.Add("services", serviceCollection.BuildServiceProvider());
 
 			InitializeComponent();
 		}
 
+		#region WPF Window Methods
 		private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			if (e.ChangedButton == MouseButton.Left)
@@ -55,5 +54,6 @@ namespace KCD2.ModForge.Wpf
 		{
 			this.Close();
 		}
+		#endregion
 	}
 }
