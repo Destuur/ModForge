@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public double Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public double Value { get; set; }
+		object IAttribute.Value { get => Value; set => Value = double.Parse(value.ToString() ?? "0"); }
 	}
 }

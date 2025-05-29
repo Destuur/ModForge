@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public BuffUiType Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public BuffUiType Value { get; set; }
+		object IAttribute.Value { get => Value; set => Value = (BuffUiType)Enum.Parse(typeof(BuffUiType), value.ToString() ?? "0"); }
 	}
 }

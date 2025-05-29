@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public PerkVisibility Value { get; }
-		object IAttribute.Value => Value;
+		public PerkVisibility Value { get; set; }
+		object IAttribute.Value { get; set; }
 	}
 }

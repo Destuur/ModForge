@@ -9,8 +9,8 @@
 		}
 
 		public string Name { get; }
-		public IList<BuffParam> Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public IList<BuffParam> Value { get; set; }
+		object IAttribute.Value { get => Value; set => Value = ParseBuffParams(value); }
 
 		private static MathOperation ParseOperation(string op)
 		{

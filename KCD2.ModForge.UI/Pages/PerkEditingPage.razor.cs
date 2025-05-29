@@ -26,7 +26,8 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
-			perk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == PerkId)!;
+			var tempPerk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == PerkId)!;
+			perk = Perk.GetDeepCopy(tempPerk);
 		}
 	}
 }

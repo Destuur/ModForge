@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public BuffUiVisibility Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public BuffUiVisibility Value { get; set; }
+		object IAttribute.Value { get => Value; set => Value = (BuffUiVisibility)Enum.Parse(typeof(BuffUiVisibility), value.ToString() ?? string.Empty); }
 	}
 }

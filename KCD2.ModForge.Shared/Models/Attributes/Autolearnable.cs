@@ -10,6 +10,6 @@
 
 		public string Name { get; }
 		public bool Value { get; set; }
-		object IAttribute.Value => Value;
+		object IAttribute.Value { get => Value; set => Value = bool.Parse(value.ToString() ?? "false"); }
 	}
 }

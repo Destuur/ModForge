@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public bool Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public bool Value { get; set; }
+		object IAttribute.Value { get => Value; set => Value = bool.Parse(value.ToString() ?? "false"); }
 	}
 }

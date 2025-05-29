@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public StatType Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public StatType Value { get; set; }
+		object IAttribute.Value { get; set; }
 	}
 }

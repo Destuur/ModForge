@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public int Value { get; }
-		object IAttribute.Value => Value;
+		public int Value { get; set; }
+		object IAttribute.Value { get; set; }
 	}
 }

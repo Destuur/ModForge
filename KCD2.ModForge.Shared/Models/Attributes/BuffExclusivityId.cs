@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public BuffExclusivity Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public BuffExclusivity Value { get; set; }
+		object IAttribute.Value { get => Value; set => Value = (BuffExclusivity)Enum.Parse(typeof(BuffExclusivity), value.ToString() ?? string.Empty); }
 	}
 }

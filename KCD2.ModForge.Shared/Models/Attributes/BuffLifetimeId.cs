@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public BuffLifetime Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public BuffLifetime Value { get; set; }
+		object IAttribute.Value { get => Value; set => Value = (BuffLifetime)Enum.Parse(typeof(BuffLifetime), value.ToString() ?? string.Empty); }
 	}
 }

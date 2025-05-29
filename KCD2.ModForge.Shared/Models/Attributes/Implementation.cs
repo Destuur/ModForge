@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public string Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public string Value { get; set; }
+		object IAttribute.Value { get => Value; set => Value = value.ToString() ?? "Cpp:BasicTimed"; }
 	}
 }

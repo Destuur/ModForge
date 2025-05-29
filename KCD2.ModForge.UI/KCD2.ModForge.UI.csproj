@@ -21,7 +21,6 @@
 
 
 	<ItemGroup>
-	  <Folder Include="Components\AttributeComponents\" />
 	  <Folder Include="Components\Dialogs\" />
 	</ItemGroup>
 

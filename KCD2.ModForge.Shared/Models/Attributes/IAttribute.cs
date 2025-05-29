@@ -3,6 +3,6 @@
 	public interface IAttribute
 	{
 		string Name { get; }
-		object Value { get; }
+		object Value { get; set; }
 	}
 }

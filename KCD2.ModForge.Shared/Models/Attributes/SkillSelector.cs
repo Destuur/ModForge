@@ -9,7 +9,7 @@
 		}
 
 		public string Name { get; }
-		public SkillType Value { get; protected set; }
-		object IAttribute.Value => Value;
+		public SkillType Value { get; set; }
+		object IAttribute.Value { get => Value; set => Value = (SkillType)Enum.Parse(typeof(SkillType), value.ToString() ?? "4"); }
 	}
 }

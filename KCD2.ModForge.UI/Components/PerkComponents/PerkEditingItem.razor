@@ -4,7 +4,9 @@
 	@foreach (var attribute in Perk.Attributes)
 	{
 		<MudItem lg="6">
-			<MudTextField Immediate="true" Margin="Margin.Dense" Value="attribute.Value" Label="@(attribute.Name)" Variant="Variant.Outlined"></MudTextField>
+			<CascadingValue Value="attribute">
+				<AttributeSelector></AttributeSelector>
+			</CascadingValue>
 		</MudItem>
 	}
 

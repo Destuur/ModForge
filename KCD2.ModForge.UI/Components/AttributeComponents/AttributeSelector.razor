@@ -1,0 +1,24 @@
+﻿@if (Attribute is not null)
+{
+    @switch (Attribute.Value)
+    {
+        case bool:
+            <BoolAttribute />
+            break;
+        case Enum:
+            <EnumAttribute />
+            break;
+        case double:
+            <DoubleAttribute />
+            break;
+        case int:
+            <IntAttribute />
+            break;
+        case string:
+            <StringAttribute />
+            break;
+        default:
+            <MudText>Unknown attribute type</MudText>
+            break;
+    }
+}

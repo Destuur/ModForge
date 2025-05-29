@@ -10,6 +10,6 @@
 
 		public string Name { get; }
 		public GameMode Value { get; set; }
-		object IAttribute.Value => Value;
+		object IAttribute.Value { get => Value; set => Value = (GameMode)Enum.Parse(typeof(GameMode), value.ToString() ?? "1"); }
 	}
 }
