@@ -9,8 +9,8 @@ namespace KCD2.ModForge.Shared.Adapter
 
 		public JsonAdapterOfT(string filePath)
 		{
-			var json = File.ReadAllText(filePath);
-			data = JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
+			//var json = File.ReadAllText(filePath);
+			//data = JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
 		}
 
 		public Task Initialize()

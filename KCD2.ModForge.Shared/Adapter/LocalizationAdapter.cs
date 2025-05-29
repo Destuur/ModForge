@@ -1,10 +1,31 @@
-﻿using System.IO.Compression;
+﻿using KCD2.ModForge.Shared.Factories;
+using KCD2.ModForge.Shared.Services;
+using System.IO.Compression;
 using System.Xml.Linq;
 
 namespace KCD2.ModForge.Shared.Adapter
 {
 	public class LocalizationAdapter
 	{
+		private HashSet<string> relevantFiles = new HashSet<string>
+		{
+			"text_ui_soul.xml",
+			//"text_ui_tutorials.xml",
+			//"text_ui_quest.xml",
+			//"text_ui_misc.xml",
+			//"text_ui_minigames.xml",
+			"text_ui_menus.xml",
+			"text_ui_items.xml",
+			//"text_ui_ingame.xml",
+			//"text_ui_dialog.xml"
+		};
+		private readonly UserConfigurationService userConfigurationService;
+
+		public LocalizationAdapter(UserConfigurationService userConfigurationService)
+		{
+			this.userConfigurationService = userConfigurationService;
+		}
+
 		public static readonly Dictionary<string, string> LanguageMap = new()
 		{
 			{ "English", "en" },
@@ -24,15 +45,10 @@ namespace KCD2.ModForge.Shared.Adapter
 			{ "Ukrainian", "uk" },
 			{ "Arabic", "ar" }
 		};
-		HashSet<string> relevantFiles = new HashSet<string>
+
+		public Dictionary<string, Dictionary<string, string>> LoadAllLocalizationsFromPaks()
 		{
-			"text_ui_soul.xml",
-		};
-
-
-
-		public Dictionary<string, Dictionary<string, string>> LoadAllLocalizationsFromPaks(IEnumerable<string> pakPaths)
-		{
+			var pakPaths = PathFactory.CreatePakPaths(userConfigurationService.Current.GameDirectory);
 			var result = new Dictionary<string, Dictionary<string, string>>();
 
 			foreach (var pakPath in pakPaths)
