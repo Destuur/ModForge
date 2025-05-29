@@ -30,7 +30,7 @@
             _hidden = true;
 
             // Animation dauert z.B. 800ms, warte vor dem Entfernen
-            await Task.Delay(2000);
+            await Task.Delay(800);
 
             await JS.InvokeVoidAsync("removeInitialLoader");
             StateHasChanged();

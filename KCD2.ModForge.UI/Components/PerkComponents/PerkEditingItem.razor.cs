@@ -7,10 +7,10 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 {
 	public partial class PerkEditingItem
 	{
-		[Parameter]
-		public Perk? Perk { get; set; }
 		[Inject]
 		public ModService? ModService { get; set; }
+		[Parameter]
+		public Perk Perk { get; set; }
 
 		private async Task SavePerk(MouseEventArgs args)
 		{

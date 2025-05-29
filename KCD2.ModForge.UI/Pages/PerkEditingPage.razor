@@ -1,5 +1,14 @@
 ﻿@page "/editing/perk/{PerkId}"
 
-<h3>Edit Perk</h3>
+<MudGrid Class="px-4" Spacing="2">
 
-<PerkEditingItem Perk="perk"></PerkEditingItem>
+	<MudItem Class="pt-4 pl-4">
+		<MudText Typo="Typo.h4">Edit Perk</MudText>
+	</MudItem>
+
+	<MudItem xs="12" sm="12" md="12">
+		<PerkEditingItem Perk="perk"></PerkEditingItem>
+	</MudItem>
+
+
+</MudGrid>

@@ -1,21 +1,22 @@
 ﻿@if (Perk is not null)
-{	
-	<MudItem xs="3">
+{
+	<MudItem xs="12" sm="12" md="12">
 		<MudCard Class="mudcard no-select card-hover-effect" @onclick="EditPerk">
 			<MudCardContent>
-				<MudContainer Class="d-flex justify-center align-center">
-					<MudImage Class="card-image" ObjectPosition="ObjectPosition.Center" Src="images/Icons/Trigger_icon.png" Height="50"/>	
-				</MudContainer>
 
-				@* @if (Perk.Localizations!.Count == 0)
+				@if (Perk.Localization == null ||
+					(Perk.Localization.Names == null ||
+					Perk.Localization.Names.Count == 0))
 				{
-					<MudText>@(perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute).Value)</MudText>
-					return;					
+					<MudText>No localization data available</MudText>
+				}
+				else
+				{
+					<MudText Typo="Typo.subtitle1">@(Perk.Localization.GetName(languageKey) ?? "No Name")</MudText>
+					<MudText Typo="Typo.body2">@(Perk.Localization.GetDescription(languageKey) ?? "No Description")</MudText>
+					<MudText Typo="Typo.body2">@(Perk.Localization.GetLoreDescription(languageKey) ?? "No Lore")</MudText>
 				}
 
-				<MudText Align="Align.Center">@(Perk.Localizations.FirstOrDefault(x => x.Attribute == nameAttribute)!.Value)</MudText>
-				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == descAttribute)!.Value)</MudText>
-				<MudText>@(Perk.Localizations.FirstOrDefault(x => x.Attribute == loreDescAttribute)!.Value)</MudText> *@
 
 			</MudCardContent>
 		</MudCard>

@@ -16,16 +16,17 @@ namespace KCD2.ModForge.UI.Pages
 		[Parameter]
 		public string PerkId { get; set; }
 		[Inject]
-		public PerkService? PerkService { get; set; }
+		public XmlToJsonService XmlToJsonService { get; set; }
 
-		protected override async Task OnInitializedAsync()
+		protected override void OnInitialized()
 		{
-			await base.OnInitializedAsync();
-			if (PerkService is null)
+			base.OnInitialized();
+			if (XmlToJsonService is null)
 			{
 				return;
 			}
-			perk = PerkService.GetPerk(PerkId);
+
+			perk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == PerkId)!;
 		}
 	}
 }

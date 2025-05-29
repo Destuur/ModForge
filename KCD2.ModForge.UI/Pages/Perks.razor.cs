@@ -14,9 +14,12 @@ namespace KCD2.ModForge.UI.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
-			//await Adapter!.Initialize();
-			//PerkItems = await Adapter.GetModItems();
-			await ModService.SetMod(ModId);
+			if (ModService is null ||
+				string.IsNullOrEmpty(ModId))
+			{
+				return;
+			}
+			ModService.TrySetMod(ModId);
 			await base.OnInitializedAsync();
 		}
 	}

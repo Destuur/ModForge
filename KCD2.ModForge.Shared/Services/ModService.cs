@@ -19,16 +19,15 @@ namespace KCD2.ModForge.Shared.Services
 			return mod!;
 		}
 
-		public async Task SetMod(string modId)
+		public bool TrySetMod(string modId)
 		{
-			await Task.Yield();
-
 			if (string.IsNullOrEmpty(modId))
 			{
-				return;
+				return false;
 			}
 
 			mod = modCollection.GetMod(modId);
+			return true;
 		}
 
 		public async Task SaveMod(string name, string description, string author, string version, DateTime createdOn, string modId, bool modifiesLevel)

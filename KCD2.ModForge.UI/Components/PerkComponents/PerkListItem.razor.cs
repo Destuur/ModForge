@@ -9,9 +9,7 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 	public partial class PerkListItem
 	{
 		private ModDescription? mod;
-		private string descAttribute = "perk_ui_desc";
-		private string loreDescAttribute = "perk_ui_lore_desc";
-		private string nameAttribute = "perk_ui_name";
+		private string languageKey = "en";
 
 		[Inject]
 		public ModService? ModService { get; set; }
@@ -27,10 +25,14 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 			base.OnInitialized();
 			mod = ModService!.GetMod();
 		}
+
 		private void EditPerk(MouseEventArgs args)
 		{
+			if (NavigationManager is null)
+			{
+				return;
+			}
 			NavigationManager.NavigateTo($"editing/perk/{Perk.Id}");
-			//NavigationManager.NavigateTo($"");
 		}
 	}
 }

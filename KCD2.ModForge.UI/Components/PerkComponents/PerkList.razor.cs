@@ -14,24 +14,22 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 	public partial class PerkList
 	{
 		private ModDescription? mod;
-		private string descAttribute = "perk_ui_desc";
-		private string loreDescAttribute = "perk_ui_lore_desc";
-		private string nameAttribute = "perk_ui_name";
+		private string languageKey = "en";
 
 		[Inject]
-		public PerkService? PerkService { get; set; }
+		public ModService? ModService { get; set; }
 		[Inject]
-		public LocalizationService? LocalizationService { get; set; }
-		[Inject]
-		public IconService? IconService { get; set; }
-		[Inject]
-		public ModService? ModService { get; private set; }
-		public IEnumerable<IModItem>? PerkItems { get; set; }
-		public string SearchPerk { get; set; }
+		public XmlToJsonService? XmlToJsonService { get; set; }
+		public IList<Perk> PerkItems { get; set; } = new List<Perk>();
+		public string? SearchPerk { get; set; }
 
 		public IEnumerable<IModItem> TakePerkItems(int count)
 		{
-			return PerkItems!.Take(count);
+			if (XmlToJsonService is null)
+			{
+				return null!;
+			}
+			return XmlToJsonService.Perks!.ToList().Take(count);
 		}
 
 		public void AddModItem(IModItem item)
@@ -41,29 +39,47 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 
 		public void SearchPerks()
 		{
-			PerkItems = PerkService.GetAllPerks();
-			if (string.IsNullOrEmpty(SearchPerk))
+			if (XmlToJsonService is null)
 			{
-				PerkItems = PerkService.GetAllPerks();
 				return;
 			}
 
-			//if (PerkItems is IEnumerable<Perk> perks)
-			//{
-			//	var filtered = perks.Where(x =>
-			//	(!string.IsNullOrEmpty(x.Id) && x.Id.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase)) ||
-			//	(x.Localizations.Any(x => x.Description.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase))) ||
-			//	(x.Buffs.Any(x => x.Id.Contains(SearchPerk, StringComparison.OrdinalIgnoreCase)))
-			//	).ToList();
+			if (string.IsNullOrEmpty(SearchPerk))
+			{
+				PerkItems = XmlToJsonService.Perks.ToList();
+				return;
+			}
 
-			//	PerkItems = filtered;
-			//}
+			string filter = SearchPerk;
+
+			var filtered = XmlToJsonService.Perks.Where(x =>
+				(!string.IsNullOrEmpty(x.Id) && x.Id.Contains(filter, StringComparison.OrdinalIgnoreCase))
+				|| (x.Localization.Names != null &&
+					x.Localization.Names.TryGetValue(languageKey, out var name) &&
+					!string.IsNullOrEmpty(name) &&
+					name.Contains(filter, StringComparison.OrdinalIgnoreCase))
+				|| (x.Localization.Descriptions != null &&
+					x.Localization.Descriptions.TryGetValue(languageKey, out var desc) &&
+					!string.IsNullOrEmpty(desc) &&
+					desc.Contains(filter, StringComparison.OrdinalIgnoreCase))
+				|| (x.Localization.LoreDescriptions != null &&
+					x.Localization.LoreDescriptions.TryGetValue(languageKey, out var lore) &&
+					!string.IsNullOrEmpty(lore) &&
+					lore.Contains(filter, StringComparison.OrdinalIgnoreCase))
+			);
+
+			PerkItems = filtered.ToList();
 		}
 
 		protected override async Task OnInitializedAsync()
 		{
+			if (XmlToJsonService is null)
+			{
+				return;
+			}
+
 			await base.OnInitializedAsync();
-			PerkItems = PerkService!.GetAllPerks();
+			PerkItems = XmlToJsonService.Perks.ToList();
 		}
 
 		protected override async Task OnParametersSetAsync()
@@ -74,27 +90,6 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 			{
 				return;
 			}
-
-			//foreach (var perkItem in PerkItems)
-			//{
-			//	if (perkItem is Perk perk)
-			//	{
-			//		if (perk.Attributes.TryGetValue(descAttribute, out string perkDesc))
-			//		{
-			//			perk.Localizations.Add(LocalizationService!.GetLocalization(descAttribute, perkDesc));
-			//		}
-
-			//		if (perk.Attributes.TryGetValue(loreDescAttribute, out string perkLoreDesc))
-			//		{
-			//			perk.Localizations.Add(LocalizationService!.GetLocalization(loreDescAttribute, perkLoreDesc));
-			//		}
-
-			//		if (perk.Attributes.TryGetValue(nameAttribute, out string perkName))
-			//		{
-			//			perk.Localizations.Add(LocalizationService!.GetLocalization(nameAttribute, perkName));
-			//		}
-			//	}
-			//}
 		}
 	}
 }
