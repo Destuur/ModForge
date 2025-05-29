@@ -5,10 +5,10 @@ namespace KCD2.ModForge.Shared.Mods
 {
 	public interface IModItem
 	{
-		public string Id { get; }
-		public string Path { get; }
-		public IList<IAttribute> Attributes { get; }
-		public IList<IModItem> ModItems { get; }
-		public Localization Localization { get; }
+		public string Id { get; set; }
+		public string Path { get; set; }
+		public IList<IAttribute> Attributes { get; set; }
+		public IList<IModItem> ModItems { get; set; }
+		public Localization Localization { get; set; }
 	}
 }

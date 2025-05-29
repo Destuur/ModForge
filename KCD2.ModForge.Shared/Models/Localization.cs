@@ -1,13 +1,27 @@
 ﻿using KCD2.ModForge.Shared.Models.Attributes;
 using KCD2.ModForge.Shared.Mods;
+using System.Text.Json.Serialization;
 
 namespace KCD2.ModForge.Shared.Models
 {
 	public class Localization
 	{
-		public Dictionary<string, string> Names { get; } = new();
-		public Dictionary<string, string> Descriptions { get; } = new();
-		public Dictionary<string, string> LoreDescriptions { get; } = new();
+		public Localization()
+		{
+
+		}
+
+		public Localization(Dictionary<string, string> names, Dictionary<string, string> descriptions, Dictionary<string, string> loreDescriptions)
+		{
+			Names = names;
+			Descriptions = descriptions;
+			LoreDescriptions = loreDescriptions;
+		}
+
+		public Dictionary<string, string>? Names { get; } = new();
+		public Dictionary<string, string>? Descriptions { get; } = new();
+		public Dictionary<string, string>? LoreDescriptions { get; } = new();
+
 
 		public string? GetName(string language) =>
 			Names.TryGetValue(language, out var value) ? value : null;

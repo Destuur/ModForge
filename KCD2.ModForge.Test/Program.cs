@@ -29,24 +29,28 @@ namespace KCD2.ModForge.Test
 			var buffParamsName = buffParams.Name;
 			var buffParamsValue = buffParams.Value;
 
-			var watch = Stopwatch.StartNew();
+			var exportWatch = Stopwatch.StartNew();
 			var userService = new UserConfigurationService();
 			var gameDirectory = userService.Current.GameDirectory;
 			var path = PathFactory.CreateLocalizationPath(gameDirectory, Language.German);
 
 			var xmlPerkAdapter = new XmlAdapter<Perk>(userService);
-			var perks = xmlPerkAdapter.ReadAsync().Result;
+			var perks = xmlPerkAdapter.ReadAsync("").Result;
 
 			var xmlBuffAdapter = new XmlAdapter<Buff>(userService);
-			var buffs = xmlBuffAdapter.ReadAsync().Result;
+			var buffs = xmlBuffAdapter.ReadAsync("").Result;
 
 			var localizationAdapter = new LocalizationAdapter(userService);
 
 
-			var xmlToJsonService = new XmlToJsonService(xmlPerkAdapter, xmlBuffAdapter, localizationAdapter, new JsonAdapterOfT<IModItem>("test"), userService);
-			WaitOnService(xmlToJsonService);
+			var xmlToJsonService = new XmlToJsonService(xmlPerkAdapter, xmlBuffAdapter, localizationAdapter, new JsonAdapterOfT<Perk>("test"), new JsonAdapterOfT<Buff>("test"), userService);
 
-			watch.Stop();
+			//ExportXmlToJson(xmlToJsonService);
+			//exportWatch.Stop();
+
+			var importWatch = Stopwatch.StartNew();
+			ImportJson(xmlToJsonService);
+			importWatch.Stop();
 
 			Console.WriteLine(path);
 
@@ -54,10 +58,21 @@ namespace KCD2.ModForge.Test
 			Console.ReadLine();
 		}
 
-		private static async void WaitOnService(XmlToJsonService xmlToJsonService)
+		private static async void ImportJson(XmlToJsonService xmlToJsonService)
 		{
-			await xmlToJsonService.InitializeAsync();
-			await xmlToJsonService.AssignLocalizations();
+			var perkPath = Path.Combine(
+				Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+				"ModForge", $"perks.json");
+			var buffPath = Path.Combine(
+				Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+				"ModForge", $"buffs.json");
+			var perks = await xmlToJsonService.ReadPerkJsonFile(perkPath);
+			var buffs = await xmlToJsonService.ReadBuffJsonFile(buffPath);
+		}
+
+		private static async void ExportXmlToJson(XmlToJsonService xmlToJsonService)
+		{
+			await xmlToJsonService.ExportXmlToJsonAsync();
 		}
 	}
 }

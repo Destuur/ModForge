@@ -31,7 +31,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			throw new NotImplementedException();
 		}
 
-		public async Task<IList<T>> ReadAsync()
+		public async Task<IList<T>> ReadAsync(string path)
 		{
 			var filePath = PathFactory.CreateTablesPath(userConfigurationService.Current!.GameDirectory);
 			var modItemPath = string.Empty;
@@ -155,12 +155,12 @@ namespace KCD2.ModForge.Shared.Adapter
 			throw new NotImplementedException();
 		}
 
-		public Task<bool> WriteElement(IModItem modItem)
+		public Task<bool> WriteElement(T modItem)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task<bool> WriteElements(IEnumerable<IModItem> modItem)
+		public Task<bool> WriteElements(IEnumerable<T> modItem)
 		{
 			throw new NotImplementedException();
 		}

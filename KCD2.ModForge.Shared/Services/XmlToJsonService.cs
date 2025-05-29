@@ -2,8 +2,10 @@
 using KCD2.ModForge.Shared.Models;
 using KCD2.ModForge.Shared.Models.Attributes;
 using KCD2.ModForge.Shared.Models.ModItems;
+using KCD2.ModForge.Shared.Models.User;
 using KCD2.ModForge.Shared.Mods;
 using System;
+using System.Text.Json;
 
 namespace KCD2.ModForge.Shared.Services
 {
@@ -13,38 +15,53 @@ namespace KCD2.ModForge.Shared.Services
 		private readonly XmlAdapter<Buff> buffAdapter;
 		private readonly LocalizationAdapter localizationAdapter;
 		private Dictionary<string, Dictionary<string, string>> localizationCache;
-		private readonly JsonAdapterOfT<IModItem> jsonAdapter;
+		private readonly JsonAdapterOfT<Perk> jsonPerkAdapter;
+		private readonly JsonAdapterOfT<Buff> jsonBuffAdapter;
 		private readonly UserConfigurationService userConfigurationService;
 
-		public XmlToJsonService(XmlAdapter<Perk> perkAdapter, XmlAdapter<Buff> buffAdapter, LocalizationAdapter localizationAdapter, JsonAdapterOfT<IModItem> jsonAdapter, UserConfigurationService userConfigurationService)
+		public XmlToJsonService(XmlAdapter<Perk> perkAdapter, XmlAdapter<Buff> buffAdapter, LocalizationAdapter localizationAdapter, JsonAdapterOfT<Perk> jsonPerkAdapter, JsonAdapterOfT<Buff> jsonBuffAdapter, UserConfigurationService userConfigurationService)
 		{
 			this.perkAdapter = perkAdapter;
 			this.buffAdapter = buffAdapter;
 			this.localizationAdapter = localizationAdapter;
-			this.jsonAdapter = jsonAdapter;
+			this.jsonPerkAdapter = jsonPerkAdapter;
+			this.jsonBuffAdapter = jsonBuffAdapter;
 			this.userConfigurationService = userConfigurationService;
 		}
 
 		public IList<Perk> Perks { get; private set; }
 		public IList<Buff> Buffs { get; private set; }
 
-		public async Task InitializeAsync()
+		private async Task InitializeExport()
 		{
-			Perks = await perkAdapter.ReadAsync();
-			Buffs = await buffAdapter.ReadAsync();
+			Perks = await perkAdapter.ReadAsync("");
+			Buffs = await buffAdapter.ReadAsync("");
 			localizationCache = localizationAdapter.LoadAllLocalizationsFromPaks();
 		}
 
-		public async Task AssignLocalizations()
+		private async Task AssignLocalizations()
 		{
 			await AssignPerkLocalizations();
 			await AssignBuffLocalizations();
 			return;
 		}
 
-		public async Task WriteAsync()
+		public async Task ExportXmlToJsonAsync()
 		{
-			jsonAdapter.
+			await InitializeExport();
+			await AssignLocalizations();
+			await jsonPerkAdapter.WriteElements(Perks);
+			await jsonBuffAdapter.WriteElements(Buffs);
+		}
+
+		public async Task<IEnumerable<Perk>> ReadPerkJsonFile(string filePath)
+		{
+			return await jsonPerkAdapter.ReadAsync(filePath);
+		}
+
+		public async Task<IEnumerable<Buff>> ReadBuffJsonFile(string filePath)
+		{
+			return await jsonBuffAdapter.ReadAsync(filePath);
 		}
 
 		private Task AssignPerkLocalizations()
@@ -96,7 +113,7 @@ namespace KCD2.ModForge.Shared.Services
 			return Task.CompletedTask;
 		}
 
-		string? GetAttributeValue(IEnumerable<IAttribute> attributes, params string[] names)
+		private string? GetAttributeValue(IEnumerable<IAttribute> attributes, params string[] names)
 		{
 			foreach (var name in names)
 			{

@@ -1,11 +1,15 @@
 ﻿using KCD2.ModForge.Shared.Models.Attributes;
 using KCD2.ModForge.Shared.Mods;
-using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace KCD2.ModForge.Shared.Models.ModItems
 {
 	public class Perk : IModItem
 	{
+		public Perk()
+		{
+
+		}
 		public Perk(string path)
 		{
 			Id = Guid.NewGuid().ToString();
@@ -19,10 +23,19 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 			Attributes = attributes.ToList();
 		}
 
-		public string Id { get; private set; } = string.Empty;
-		public string Path { get; private set; } = string.Empty;
-		public IList<IModItem> ModItems { get; } = new List<IModItem>();
-		public IList<IAttribute> Attributes { get; } = new List<IAttribute>();
-		public Localization Localization { get; } = new();
+		public Perk(string id, string path, IEnumerable<IModItem> modItems, IEnumerable<IAttribute> attributes, Localization localization)
+		{
+			Id = id;
+			Path = path;
+			ModItems = modItems.ToList();
+			Attributes = attributes.ToList();
+			Localization = localization;
+		}
+
+		public string Id { get; set; } = string.Empty;
+		public string Path { get; set; } = string.Empty;
+		public IList<IModItem> ModItems { get; set; } = new List<IModItem>();
+		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
+		public Localization Localization { get; set; } = new();
 	}
 }

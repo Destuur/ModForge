@@ -5,6 +5,11 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 {
 	public class Buff : IModItem
 	{
+		public Buff()
+		{
+
+		}
+
 		public Buff(string path)
 		{
 			Id = Guid.NewGuid().ToString();
@@ -17,10 +22,11 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 			Path = path;
 			Attributes = attributes.ToList();
 		}
-		public string Id { get; } = string.Empty;
-		public string Path { get; private set; } = string.Empty;
-		public IList<IAttribute> Attributes { get; }
-		public IList<IModItem> ModItems { get; }
-		public Localization Localization { get; } = new();
+
+		public string Id { get; set; } = string.Empty;
+		public string Path { get; set; } = string.Empty;
+		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
+		public IList<IModItem> ModItems { get; set; } = new List<IModItem>();
+		public Localization Localization { get; set; } = new();
 	}
 }

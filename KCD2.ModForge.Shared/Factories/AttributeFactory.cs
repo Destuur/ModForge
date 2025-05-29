@@ -22,7 +22,7 @@ namespace KCD2.ModForge.Shared.Factories
 			var typeExpression = Expression.Parameter(typeof(string), nameof(name));
 			var valueExpression = Expression.Parameter(typeof(object), nameof(value));
 
-			var constructor = foundType.GetConstructors().FirstOrDefault();
+			var constructor = foundType.GetConstructors().FirstOrDefault(ctor => ctor.GetParameters().Length == 2);
 
 			var newExpression = Expression.New(constructor!, typeExpression, valueExpression);
 
