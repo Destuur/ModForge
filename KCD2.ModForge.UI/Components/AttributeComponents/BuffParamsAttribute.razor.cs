@@ -1,6 +1,4 @@
-﻿using KCD2.ModForge.Shared.Models.Attributes;
-using Microsoft.AspNetCore.Components;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,16 +8,8 @@ using System.Threading.Tasks;
 
 namespace KCD2.ModForge.UI.Components.AttributeComponents
 {
-	public partial class IntAttribute
+	public partial class BuffParamsAttribute
 	{
-		[CascadingParameter]
-		public IAttribute Attribute { get; set; }
-		int CurrentValue
-		{
-			get => (int)Attribute.Value;
-			set => Attribute.Value = value;
-		}
-
 		private string FormatLabel(string raw)
 		{
 			if (string.IsNullOrWhiteSpace(raw))

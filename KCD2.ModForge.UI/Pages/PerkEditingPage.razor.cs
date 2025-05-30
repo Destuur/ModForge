@@ -11,12 +11,14 @@ namespace KCD2.ModForge.UI.Pages
 {
 	public partial class PerkEditingPage
 	{
-		private Perk perk;
+		private Perk perkCopy;
 
 		[Parameter]
-		public string PerkId { get; set; }
+		public string Id { get; set; }
 		[Inject]
 		public XmlToJsonService XmlToJsonService { get; set; }
+		[Inject]
+		public NavigationManager NavigationManager { get; set; }
 
 		protected override void OnInitialized()
 		{
@@ -26,8 +28,8 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
-			var tempPerk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == PerkId)!;
-			perk = Perk.GetDeepCopy(tempPerk);
+			var tempPerk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == Id)!;
+			perkCopy = Perk.GetDeepCopy(tempPerk);
 		}
 	}
 }

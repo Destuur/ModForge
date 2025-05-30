@@ -17,6 +17,9 @@
         case string:
             <StringAttribute />
             break;
+        case IList<BuffParam>:
+            <BuffParamsAttribute />
+            break;
         default:
             <MudText>Unknown attribute type</MudText>
             break;

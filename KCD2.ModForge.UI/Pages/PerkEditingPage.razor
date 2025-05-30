@@ -1,14 +1,12 @@
-﻿@page "/editing/perk/{PerkId}"
+﻿@page "/editing/perk/{Id}"
 
-<MudGrid Class="px-4" Spacing="2">
-
-	<MudItem Class="pt-4 pl-4">
-		<MudText Typo="Typo.h4">Edit Perk</MudText>
+	<MudItem>
+		<MudTabs>
+			<MudTabPanel Text="Perk">
+				<PerkEditingItem Perk="perkCopy"></PerkEditingItem>
+			</MudTabPanel>
+			<MudTabPanel Text="Perk Localization">
+				<LocalizationComponent ModItem="perkCopy"></LocalizationComponent>
+			</MudTabPanel>
+		</MudTabs>
 	</MudItem>
-
-	<MudItem xs="12" sm="12" md="12">
-		<PerkEditingItem Perk="perk"></PerkEditingItem>
-	</MudItem>
-
-
-</MudGrid>

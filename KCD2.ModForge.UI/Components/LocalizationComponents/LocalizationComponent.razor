@@ -1,0 +1,33 @@
+﻿@using KCD2.ModForge.Shared.Adapter
+@if (ModItem is not null)
+{
+	<MudStack Row="true">
+		@foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
+		{
+			<MudButton Color="@(SelectedLanguageCodes.Contains(languageKey) ? Color.Primary : Color.Default)"
+					   Variant="@(SelectedLanguageCodes.Contains(languageKey) ? Variant.Filled : Variant.Outlined)"
+					   OnClick="@(() => AddLanguageKey(languageKey))">
+				@(languageKey)
+			</MudButton>
+		}
+	</MudStack>
+
+	<MudDivider Class="my-4" />
+
+	@if (SelectedLanguageCodes.Count == 0)
+	{
+		<MudText Color="Color.Secondary">Keine Sprache ausgewählt.</MudText>
+	}
+	else
+	{
+		@foreach (var code in SelectedLanguageCodes)
+		{
+			<MudPaper Class="pa-2 my-2" Elevation="1">
+				<MudText Typo="Typo.subtitle2">@ModItem.Localization.GetName(code)</MudText>
+				<MudText Typo="Typo.body2">@ModItem.Localization.GetDescription(code)</MudText>
+				<MudText Typo="Typo.body2">@ModItem.Localization.GetLoreDescription(code)</MudText>
+			</MudPaper>
+		}
+	}
+}
+

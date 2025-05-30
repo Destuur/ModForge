@@ -1,4 +1,15 @@
 ﻿@if (Attribute is not null)
 {
-	<MudTextField @bind-Value="Attribute.Value">@Attribute.Value.ToString()</MudTextField>
+    @if (enumNames.Any())
+    {
+        <MudSelect T="string" @bind-Value="CurrentEnumString" FullWidth="true" Margin="Margin.Dense" Variant="Variant.Outlined" Label="@GetTypeLabel()">
+            @foreach (var enumName in enumNames)
+            {
+                <MudSelectItem T="string" Value="@enumName">
+                    @enumDisplayNames[enumName]
+                </MudSelectItem>
+            }
+        </MudSelect>
+    }
+
 }

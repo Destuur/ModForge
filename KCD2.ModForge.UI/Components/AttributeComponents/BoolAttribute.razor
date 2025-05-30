@@ -1,4 +1,7 @@
 ﻿@if (Attribute is not null)
 {
-    <MudSwitch @bind-Value="CurrentValue" Label="@Attribute.Name" Color="Color.Primary" />
+    <MudSelect T="string" @bind-Value="CurrentValueString" Label="@FormatLabel(Attribute.Name)" Dense="true" FullWidth="true" Margin="Margin.Dense" Variant="Variant.Outlined">
+        <MudSelectItem T="string" Value="@("True")">True</MudSelectItem>
+        <MudSelectItem T="string" Value="@("False")">False</MudSelectItem>
+    </MudSelect>
 }
