@@ -27,11 +27,17 @@ namespace KCD2.ModForge.Shared.Factories
 
 		public static T CreateModItem(XElement element, string path)
 		{
-			IEnumerable<IAttribute> attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value));
+			try
+			{
+				IEnumerable<IAttribute> attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value));
+				var modItem = BuildAttribute(path, attributes).Invoke(path, attributes);
 
-			var modItem = BuildAttribute(path, attributes).Invoke(path, attributes);
-
-			return modItem;
+				return modItem;
+			}
+			catch (Exception e)
+			{
+				throw new Exception();
+			}
 		}
 	}
 }

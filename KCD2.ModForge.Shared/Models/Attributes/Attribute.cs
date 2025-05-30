@@ -1,18 +1,31 @@
-﻿namespace KCD2.ModForge.Shared.Models.Attributes
+﻿using KCD2.ModForge.Shared.Factories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KCD2.ModForge.Shared.Models.Attributes
 {
-	public class BuffParams : IAttribute
+	public class Attribute<T> : IAttribute
 	{
-		public BuffParams(string name, object value)
+		public Attribute() { }
+
+		public Attribute(string name, T value)
 		{
 			Name = name;
-			Value = ParseBuffParams(value);
+			Value = value;
 		}
 
-		public string Name { get; }
-		public IList<BuffParam> Value { get; set; }
-		object IAttribute.Value { get => Value; set => Value = ParseBuffParams(value); }
+		public string Name { get; set; }
+		public T Value { get; set; }
+		object IAttribute.Value
+		{
+			get => Value;
+			set => Value = (T)value;
+		}
 
-		private static MathOperation ParseOperation(string op)
+		private MathOperation ParseOperation(string op)
 		{
 			return op switch
 			{

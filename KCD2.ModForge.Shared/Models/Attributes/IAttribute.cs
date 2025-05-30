@@ -2,7 +2,7 @@
 {
 	public interface IAttribute
 	{
-		string Name { get; }
+		string Name { get; set; }
 		object Value { get; set; }
 	}
 }

@@ -117,7 +117,7 @@
 		ForcedDrunkeness = 21
 	}
 
-	public enum PerkVisibility
+	public enum Visibility
 	{
 		SystemHidden,
 		GameplayHidden,
@@ -125,7 +125,7 @@
 		Obsolete,
 	}
 
-	public enum SkillType
+	public enum SkillSelector
 	{
 		Stealth = 0,
 		HorseRiding = 1,
@@ -145,7 +145,7 @@
 		Scholarship = 26,
 	}
 
-	public enum StatType
+	public enum StatSelector
 	{
 		Strength,
 		Agility,
@@ -154,7 +154,7 @@
 		Prestige = 9
 	}
 
-	public enum GameMode
+	public enum ExcludeInGameMode
 	{
 		normal = 1,
 		hardcore = 2
