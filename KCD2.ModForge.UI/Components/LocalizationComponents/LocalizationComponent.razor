@@ -23,9 +23,20 @@
 		@foreach (var code in SelectedLanguageCodes)
 		{
 			<MudPaper Class="pa-2 my-2" Elevation="1">
-				<MudText Typo="Typo.subtitle2">@ModItem.Localization.GetName(code)</MudText>
-				<MudText Typo="Typo.body2">@ModItem.Localization.GetDescription(code)</MudText>
-				<MudText Typo="Typo.body2">@ModItem.Localization.GetLoreDescription(code)</MudText>
+
+				@if (editMode == false)
+				{					
+					<MudText Typo="Typo.subtitle2">@ModItem.Localization.GetName(code)</MudText>
+					<MudText Typo="Typo.body2">@ModItem.Localization.GetDescription(code)</MudText>
+					<MudText Typo="Typo.body2">@ModItem.Localization.GetLoreDescription(code)</MudText>
+				}
+				else
+				{
+					<MudTextField Value="name" ValueChanged="@(() => ModItem.Localization.SetName(code, name))" T="string" HelperText="@ModItem.Localization.GetName(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+					<MudTextField Value="name" ValueChanged="@(() => ModItem.Localization.SetDescription(code, description))" T="string" HelperText="@ModItem.Localization.GetDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+					<MudTextField Value="name" ValueChanged="@(() => ModItem.Localization.SetLoreDescription(code, loreDescription))" T="string" HelperText="@ModItem.Localization.GetLoreDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+				}
+
 			</MudPaper>
 		}
 	}

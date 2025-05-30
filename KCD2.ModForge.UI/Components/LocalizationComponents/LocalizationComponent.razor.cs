@@ -11,6 +11,12 @@ namespace KCD2.ModForge.UI.Components.LocalizationComponents
 {
 	public partial class LocalizationComponent
 	{
+		//TODO: Toggle Modus und speichern von Localizations
+		private bool editMode = true;
+		private string name;
+		private string description;
+		private string loreDescription;
+
 		[Parameter]
 		public IModItem ModItem { get; set; }
 		public List<string> SelectedLanguageCodes { get; set; } = new();
