@@ -3,6 +3,7 @@ using KCD2.ModForge.Shared.Factories;
 using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Mods;
 using KCD2.ModForge.Shared.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace KCD2.ModForge.Shared
 			services.AddSingleton<IconService>();
 			services.AddSingleton<LocalizationService>();
 			services.AddSingleton<ModService>();
+			services.AddScoped<NavigationService>();
 			services.AddSingleton<OrchestrationService>();
 			services.AddSingleton<PerkService>();
 			services.AddSingleton<UserConfigurationService>();

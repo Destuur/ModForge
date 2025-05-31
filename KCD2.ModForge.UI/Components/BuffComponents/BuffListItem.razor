@@ -1,0 +1,24 @@
+﻿@if (Buff is not null)
+{
+	<MudItem xs="12" sm="12" md="12">
+		<MudCard Class="mudcard no-select card-hover-effect" @onclick="EditBuff">
+			<MudCardContent>
+
+				@if (Buff.Localization == null ||
+							(Buff.Localization.Names == null ||
+							Buff.Localization.Names.Count == 0))
+				{
+					<MudText>No localization data available</MudText>
+				}
+				else
+				{
+					<MudText Typo="Typo.subtitle1">@(Buff.Localization.GetName(languageKey) ?? "No Name")</MudText>
+					<MudText Typo="Typo.body2">@(Buff.Localization.GetDescription(languageKey) ?? "No Description")</MudText>
+					<MudText Typo="Typo.body2">@(Buff.Localization.GetLoreDescription(languageKey) ?? "No Lore")</MudText>
+				}
+
+
+			</MudCardContent>
+		</MudCard>
+	</MudItem>
+}

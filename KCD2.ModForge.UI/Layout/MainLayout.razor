@@ -5,29 +5,35 @@
 <MudSnackbarProvider />
 
 <MudLayout Style="--mud-appbar-height: 40px;">
-    <MudAppBar Dense="true" Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Size="Size.Small" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-        <MudToggleIconButton Icon="@Icons.Material.Filled.LightMode" Size="Size.Small" ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledChanged="ToggleDarkMode" Color="Color.Inherit" Edge="Edge.End" Class="mr-1" />
-        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
-            <MudMenuItem Onclick="ImportGameData" Label="Import Game Data"  />
-        </MudMenu>
-    </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Overlay="true" OverlayAutoClose="true" Variant="DrawerVariant.Temporary" Elevation="2">
-        <NavMenu/>
-    </MudDrawer>
-    <MudMainContent>
-        @if (!_isLoaded)
-        {
-            <div class="loading-screen">Lädt...</div>
-        }
-        else
-        {
-            @Body
-        }
+	<MudAppBar Dense="true" Elevation="1">
+		<MudIconButton Icon="@Icons.Material.Filled.Menu" Size="Size.Small" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+		<MudIconButton Class="ml-4" Icon="@Icons.Material.Outlined.ArrowBack" Size="Size.Small" Disabled="@(!NavigationService.CanGoBack)" OnClick="NavigationService.GoBack" />
+		<MudIconButton Class="mr-4" Icon="@Icons.Material.Outlined.ArrowForward" Size="Size.Small" Disabled="@(!NavigationService.CanGoForward)" OnClick="NavigationService.GoForward" />
+		
+		@* TODO: Überlegen, wie man den Modnamen hier hin bekommt, sobald man Edit Mod startet. *@		
+		@* <MudText>Edit: @ModName</MudText> *@
 
-        <LoadingOverlay IsVisible="@isLoading"></LoadingOverlay>
+		<MudSpacer />
+		<MudToggleIconButton Icon="@Icons.Material.Filled.LightMode" Size="Size.Small" ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledChanged="ToggleDarkMode" Color="Color.Inherit" Edge="Edge.End" Class="mr-1" />
+		<MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+			<MudMenuItem Onclick="ImportGameData" Label="Import Game Data" />
+		</MudMenu>
+	</MudAppBar>
+	<MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Overlay="true" OverlayAutoClose="true" Variant="DrawerVariant.Temporary" Elevation="2">
+		<NavMenu />
+	</MudDrawer>
+	<MudMainContent>
+		@if (!_isLoaded)
+		{
+			<div class="loading-screen">Lädt...</div>
+		}
+		else
+		{
+			@Body
+		}
 
-    </MudMainContent>  
-    <StartupLoader />
+		<LoadingOverlay IsVisible="@isLoading"></LoadingOverlay>
+
+	</MudMainContent>
+	<StartupLoader />
 </MudLayout>

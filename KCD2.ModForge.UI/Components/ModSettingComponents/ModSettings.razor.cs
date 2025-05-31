@@ -13,7 +13,7 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 		[Inject]
 		public ModService? ModService { get; set; }
 		[Inject]
-		public NavigationManager? Navigation { get; set; }
+		public NavigationService? Navigation { get; set; }
 
 		public async Task SaveMod()
 		{

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace KCD2.ModForge.UI.Pages
 {
-	public partial class PerkEditingPage
+	public partial class BuffEditingPage
 	{
-		private Perk perkCopy;
+		private Buff buffCopy;
 
 		[Parameter]
 		public string Id { get; set; }
@@ -28,8 +28,8 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
-			var tempPerk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == Id)!;
-			perkCopy = Perk.GetDeepCopy(tempPerk);
+			var tempBuff = XmlToJsonService.Buffs!.FirstOrDefault(x => x.Id == Id)!;
+			buffCopy = Buff.GetDeepCopy(tempBuff);
 		}
 	}
 }

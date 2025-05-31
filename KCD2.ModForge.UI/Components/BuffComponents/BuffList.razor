@@ -1,20 +1,20 @@
 ﻿@using KCD2.ModForge.Shared.Models.ModItems
-@if (PerkItems is not null)
+@if (BuffItems is not null)
 {
 
 	<MudGrid class="px-4" Spacing="2" Justify="Justify.FlexStart">
 		<MudItem>
 			<MudStack Row="true">
-				<MudTextField @bind-Value="SearchPerk" Immediate="true" Label="Search" OnKeyUp="SearchPerks" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
+				<MudTextField @bind-Value="SearchBuff" Immediate="true" Label="Search" OnKeyUp="SearchBuffs" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
 				@* <MudSelect>
 					<MudSelectItem ></MudSelectItem>
 				</MudSelect> *@
 			</MudStack>
 		</MudItem>
 
-		@foreach (var perkItem in PerkItems)
+		@foreach (var buffItem in BuffItems)
 		{
-			@if (perkItem is not Perk perk)
+			@if (buffItem is not Buff buff)
 			{
 				continue;
 			}
@@ -22,7 +22,7 @@
 				{
 					continue;
 				} *@
-			<PerkListItem Perk="perk"></PerkListItem>
+			<BuffListItem Buff="buff"></BuffListItem>
 		}
 
 	</MudGrid>

@@ -4,9 +4,9 @@ using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace KCD2.ModForge.UI.Components.PerkComponents
+namespace KCD2.ModForge.UI.Components.BuffComponents
 {
-	public partial class PerkListItem
+	public partial class BuffListItem
 	{
 		private ModDescription? mod;
 		private string languageKey = "en";
@@ -18,7 +18,7 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 		[Inject]
 		public NavigationService? NavigationService { get; set; }
 		[Parameter]
-		public Perk? Perk { get; set; }
+		public Buff? Buff { get; set; }
 
 		protected override void OnInitialized()
 		{
@@ -26,13 +26,13 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 			mod = ModService!.GetMod();
 		}
 
-		private void EditPerk(MouseEventArgs args)
+		private void EditBuff(MouseEventArgs args)
 		{
 			if (NavigationService is null)
 			{
 				return;
 			}
-			NavigationService.NavigateTo($"editing/perk/{Perk.Id}");
+			NavigationService.NavigateTo($"editing/buff/{Buff.Id}");
 		}
 	}
 }

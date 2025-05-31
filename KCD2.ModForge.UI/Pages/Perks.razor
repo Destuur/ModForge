@@ -1,5 +1,17 @@
 ﻿@page "/perks/{ModId}"
 
-<MudText Typo="Typo.h4" Class="pl-4 py-2">Choose Perk To Edit</MudText>
+<MudTabs>
+	<MudTabPanel Text="Perks">
+		<PerkList></PerkList>
+	</MudTabPanel>
+	<MudTabPanel Text="Buffs">
+		<BuffList></BuffList>
+	</MudTabPanel>
+	<MudTabPanel Disabled="true" Text="Items">
+		<MudText>Items</MudText>
+	</MudTabPanel>
+	<MudTabPanel Disabled="true" Text="STORM">
+		<MudText>STORM Editing</MudText>
+	</MudTabPanel>
+</MudTabs>
 
-<PerkList></PerkList>

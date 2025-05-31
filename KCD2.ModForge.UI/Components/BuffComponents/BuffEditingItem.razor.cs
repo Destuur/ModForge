@@ -4,20 +4,20 @@ using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace KCD2.ModForge.UI.Components.PerkComponents
+namespace KCD2.ModForge.UI.Components.BuffComponents
 {
-	public partial class PerkEditingItem
+	public partial class BuffEditingItem
 	{
-		private IEnumerable<IAttribute> sortedAttributes => Perk.Attributes.OrderBy(x => x.Value.GetType().Name);
+		private IEnumerable<IAttribute> sortedAttributes => Buff.Attributes.OrderBy(x => x.Value.GetType().Name).Reverse();
 
 		[Inject]
 		public ModService? ModService { get; set; }
 		[Parameter]
-		public Perk Perk { get; set; }
+		public Buff Buff { get; set; }
 
-		private async Task SavePerk(MouseEventArgs args)
+		private async Task SaveBuff(MouseEventArgs args)
 		{
-			if (Perk is null)
+			if (Buff is null)
 			{
 				return;
 			}
@@ -27,7 +27,7 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 				return;
 			}
 
-			ModService.AddItem(Perk);
+			ModService.AddItem(Buff);
 			await ModService.ExportMod();
 		}
 

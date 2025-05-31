@@ -1,0 +1,12 @@
+﻿@page "/editing/buff/{Id}"
+
+	<MudItem>
+		<MudTabs>
+			<MudTabPanel Text="Buff">
+				<BuffEditingItem Buff="buffCopy"></BuffEditingItem>
+			</MudTabPanel>
+			<MudTabPanel Text="Buff Localization">
+				<LocalizationComponent ModItem="buffCopy"></LocalizationComponent>
+			</MudTabPanel>
+		</MudTabs>
+	</MudItem>
