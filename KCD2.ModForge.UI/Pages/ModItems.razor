@@ -1,0 +1,36 @@
+﻿@page "/perks/{ModId}"
+
+<div class="tabs-container" id="unique_id_scroll_section">
+    <div class="tabs-header">
+        <MudTabs ActivePanelIndex="@selectedTab">
+            <MudTabPanel Text="Perks" />
+            <MudTabPanel Text="Buffs" />
+            <MudTabPanel Disabled="true" Text="Items" />
+            <MudTabPanel Disabled="true" Text="Recipes" />
+            <MudTabPanel Disabled="true" Text="STORM" />
+        </MudTabs>
+    </div>
+
+    <div class="tabs-content">
+        @if (selectedTab == 0)
+        {
+            <PerkList />
+        }
+        else if (selectedTab == 1)
+        {
+            <BuffList />
+        }
+        else if (selectedTab == 2)
+        {
+            <MudText>Items</MudText>
+        }
+        else if (selectedTab == 3)
+        {
+            <MudText>Recipes</MudText>
+        }
+        else if (selectedTab == 4)
+        {
+            <MudText>STORM</MudText>
+        }
+    </div>
+</div>

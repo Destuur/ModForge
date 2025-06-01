@@ -1,12 +1,13 @@
-﻿using KCD2.ModForge.Shared.Adapter;
-using KCD2.ModForge.Shared.Mods;
-using KCD2.ModForge.Shared.Services;
+﻿using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace KCD2.ModForge.UI.Pages
 {
-	public partial class Perks
+	public partial class ModItems
 	{
+		private int selectedTab = 0;
+
 		[Inject]
 		public ModService? ModService { get; private set; }
 		[Parameter]

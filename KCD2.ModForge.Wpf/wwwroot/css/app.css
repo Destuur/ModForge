@@ -93,14 +93,15 @@ h1:focus {
 }
 
     .mudcard:hover {
-        transform: scale(1.02);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        transform: scale(1.0);
+        opacity: 0.8;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
     }
 
     .mudcard:active {
         transform: scale(0.99);
-        opacity: 0.8;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0.6;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
 
 .no-select {
@@ -279,18 +280,15 @@ h1:focus {
 
 
 @keyframes fadeBack {
-    0%
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
 
-{
-    opacity: 1;
-    transform: scale(1);
-}
-
-100% {
-    opacity: 0;
-    transform: scale(0.7) translateY(20px);
-}
-
+    100% {
+        opacity: 0;
+        transform: scale(0.7) translateY(20px);
+    }
 }
 
 .loading-text {
@@ -300,3 +298,18 @@ h1:focus {
     .loading-text.fade-out {
         animation: fadeBack 0.8s forwards;
     }
+
+
+.tabs-header {
+    position: sticky;
+    top: 0; /* oder top: 64px, wenn du eine AppBar hast */
+    z-index: 10;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Optional: falls du Tabs-Inhalte in fester Höhe scrollen willst */
+.tabs-content {
+    overflow-y: auto;
+    max-height: calc(100vh - 64px - 24px); /* AppBar + Tab-Höhe abziehen */
+}
