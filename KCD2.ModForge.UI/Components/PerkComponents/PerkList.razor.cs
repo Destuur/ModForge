@@ -34,7 +34,7 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 
 		public void AddModItem(IModItem item)
 		{
-			ModService!.AddItem(item);
+			ModService!.AddModItem(item);
 		}
 
 		public void SearchPerks()

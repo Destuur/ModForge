@@ -7,8 +7,8 @@
 <MudLayout Style="--mud-appbar-height: 40px;">
 	<MudAppBar Dense="true" Elevation="1">
 		<MudIconButton Icon="@Icons.Material.Filled.Menu" Size="Size.Small" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-		<MudIconButton Class="ml-4" Icon="@Icons.Material.Outlined.ArrowBack" Size="Size.Small" Disabled="@(!NavigationService.CanGoBack)" OnClick="NavigationService.GoBack" />
-		<MudIconButton Class="mr-4" Icon="@Icons.Material.Outlined.ArrowForward" Size="Size.Small" Disabled="@(!NavigationService.CanGoForward)" OnClick="NavigationService.GoForward" />
+		<MudIconButton Class="ml-4" Icon="@Icons.Material.Outlined.ArrowBack" Size="Size.Small" Disabled="@(!NavigationService.CanGoBack)" OnClick="NavigationService.GoBackAsync" />
+		<MudIconButton Class="mr-4" Icon="@Icons.Material.Outlined.ArrowForward" Size="Size.Small" Disabled="@(!NavigationService.CanGoForward)" OnClick="NavigationService.GoForwardAsync" />
 		
 		@* TODO: Überlegen, wie man den Modnamen hier hin bekommt, sobald man Edit Mod startet. *@		
 		@* <MudText>Edit: @ModName</MudText> *@

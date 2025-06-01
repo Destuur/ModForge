@@ -26,13 +26,13 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 			mod = ModService!.GetMod();
 		}
 
-		private void EditPerk(MouseEventArgs args)
+		private async Task EditPerk(MouseEventArgs args)
 		{
 			if (NavigationService is null)
 			{
 				return;
 			}
-			NavigationService.NavigateTo($"editing/perk/{Perk.Id}");
+			await NavigationService.NavigateToAsync($"editing/perk/{Perk.Id}");
 		}
 	}
 }

@@ -19,6 +19,11 @@ namespace KCD2.ModForge.Shared.Services
 			return mod!;
 		}
 
+		public void ClearMod()
+		{
+			mod = new();
+		}
+
 		public bool TrySetMod(string modId)
 		{
 			if (string.IsNullOrEmpty(modId))
@@ -92,20 +97,25 @@ namespace KCD2.ModForge.Shared.Services
 			return mod!.ModItems;
 		}
 
-		public bool AddItem(IModItem item)
+		public bool AddModItem(IModItem item)
 		{
 			if (item is null)
 			{
 				return false;
 			}
 
-			if (mod!.ModItems.Contains(item))
+			if (mod!.ModItems.FirstOrDefault(x => x.Id == item.Id) is null)
 			{
-				return false;
+				mod!.ModItems.Add(item);
+				return true;
 			}
-
-			mod!.ModItems.Add(item);
-			return true;
+			else
+			{
+				var oldItem = mod!.ModItems.FirstOrDefault(x => x.Id == item.Id);
+				mod.ModItems.Remove(oldItem!);
+				mod.ModItems.Add(item);
+				return true;
+			}
 		}
 
 		public async Task AddModIcon(string path)

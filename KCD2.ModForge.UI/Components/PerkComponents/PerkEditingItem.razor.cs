@@ -8,37 +8,13 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 {
 	public partial class PerkEditingItem
 	{
-		private IEnumerable<IAttribute> sortedAttributes => Perk.Attributes.OrderBy(x => x.Value.GetType().Name);
+		private IEnumerable<IAttribute> sortedAttributes => EditingPerk.Attributes.OrderBy(x => x.Value.GetType().Name);
 
 		[Inject]
 		public ModService? ModService { get; set; }
 		[Parameter]
-		public Perk Perk { get; set; }
-
-		private async Task SavePerk(MouseEventArgs args)
-		{
-			if (Perk is null)
-			{
-				return;
-			}
-
-			if (ModService is null)
-			{
-				return;
-			}
-
-			ModService.AddItem(Perk);
-			await ModService.ExportMod();
-		}
-
-		private void ChangeAttribute(KeyValuePair<string, string> keyValuePair)
-		{
-
-		}
-
-		private void ChangeLocalization(string value)
-		{
-
-		}
+		public Perk EditingPerk { get; set; }
+		[Parameter]
+		public Perk OriginalPerk { get; set; }
 	}
 }

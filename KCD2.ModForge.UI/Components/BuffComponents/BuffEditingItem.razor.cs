@@ -27,7 +27,7 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 				return;
 			}
 
-			ModService.AddItem(Buff);
+			ModService.AddModItem(Buff);
 			await ModService.ExportMod();
 		}
 

@@ -5,14 +5,13 @@
 	</MudItem>
 
 	<MudItem md="9" sm="12" xs="12">
-		<ModSettingForm @ref="modSettingForm"></ModSettingForm>
+		<ModSettingForm OnValidityChanged="UpdateChildValidity" @ref="modSettingForm"></ModSettingForm>
 	</MudItem>
 
 	<MudItem xs="12">
-		<MudStack Row="true" Class="px-4 mt-4">
-			<MudButton Color="Color.Error" FullWidth="true" Variant="Variant.Outlined">Cancel</MudButton>
-			<MudButton Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="SaveMod">Save</MudButton>
-			<MudButton Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="GenerateMod">Save and Create Mod.Manifest</MudButton>
+		<MudStack Row="true" Class="mt-4">
+			<MudButton Color="Color.Error" FullWidth="true" Variant="Variant.Outlined" OnClick="Cancel">Cancel</MudButton>
+			<MudButton Disabled="!isChildValid" Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="StartModding">Start Modding</MudButton>
 		</MudStack>
 	</MudItem>
 

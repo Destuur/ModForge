@@ -3,10 +3,15 @@
 	<MudItem>
 		<MudTabs>
 			<MudTabPanel Text="Perk">
-				<PerkEditingItem Perk="perkCopy"></PerkEditingItem>
+				<PerkEditingItem EditingPerk="editingPerk" OriginalPerk="originalPerk"></PerkEditingItem>
 			</MudTabPanel>
 			<MudTabPanel Text="Perk Localization">
-				<LocalizationComponent ModItem="perkCopy"></LocalizationComponent>
+			<LocalizationComponent EditingModItem="editingPerk" OriginalModItem="originalPerk"></LocalizationComponent>
 			</MudTabPanel>
 		</MudTabs>
 	</MudItem>
+
+<MudStack Row="true" Class="px-4 mt-4">
+	<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
+	<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="SavePerk">Save</MudButton>
+</MudStack>

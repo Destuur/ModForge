@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace KCD2.ModForge.UI.Pages
 {
-	public partial class Home
+	public partial class ModDashboard
 	{
 		protected override async Task OnInitializedAsync()
 		{

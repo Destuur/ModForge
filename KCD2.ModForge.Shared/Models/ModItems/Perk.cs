@@ -10,9 +10,16 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 		{
 
 		}
+
 		public Perk(string path)
 		{
 			Id = Guid.NewGuid().ToString();
+			Path = path;
+		}
+
+		public Perk(string id, string path)
+		{
+			Id = id;
 			Path = path;
 		}
 
@@ -40,7 +47,7 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 
 		public static Perk GetDeepCopy(Perk perk)
 		{
-			return new Perk(perk.Id, perk.Path, perk.ModItems.ToList(), perk.Attributes.ToList(), perk.Localization);
+			return new Perk(perk.Id, perk.Path, perk.ModItems.ToList(), perk.Attributes.Select(attr => attr.DeepClone()).ToList(), perk.Localization.DeepClone());
 		}
 	}
 }

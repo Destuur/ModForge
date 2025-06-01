@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace KCD2.ModForge.UI.Components.ModSettingComponents
 {
@@ -40,16 +41,20 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 				author = userConfigurationService.Current.UserName;
 			}
 		}
+		[Parameter]
+		public EventCallback<bool> OnValidityChanged { get; set; }
+
+		private void Validate()
+		{
+			bool isValid = !string.IsNullOrEmpty(name) || !string.IsNullOrWhiteSpace(name) && ValidateModName(name) == string.Empty;
+			OnValidityChanged.InvokeAsync(isValid);
+		}
 
 		public void GetModId()
 		{
-			if (string.IsNullOrEmpty(name))
-			{
-				return;
-			}
-
 			var modIdStrings = name.Trim().ToLower().Split(' ');
 			modId = string.Join('_', modIdStrings);
+			Validate();
 			StateHasChanged();
 		}
 
@@ -74,15 +79,24 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 		private string ValidateModName(string value)
 		{
 			if (string.IsNullOrWhiteSpace(value))
-				return "Der Name darf nicht leer sein.";
+			{
+				return "The mod name can't be empty.";
+			}
 
 			// Nur Buchstaben und Leerzeichen erlaubt
 			var regex = new Regex(@"^[a-zA-Z\s]+$");
 
 			if (!regex.IsMatch(value))
-				return "Der Name darf nur Buchstaben und Leerzeichen enthalten. Keine Zahlen oder Sonderzeichen.";
+			{
+				return "The mod name may only contain letters and spaces. No numbers or special characters allowed.";
+			}
 
-			return null;
+			return string.Empty;
+		}
+
+		protected override void OnInitialized()
+		{
+			Validate();
 		}
 	}
 }

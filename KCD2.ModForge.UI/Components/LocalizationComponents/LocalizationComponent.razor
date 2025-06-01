@@ -1,5 +1,5 @@
 ﻿@using KCD2.ModForge.Shared.Adapter
-@if (ModItem is not null)
+@if (EditingModItem is not null)
 {
 	<MudStack Row="true">
 		@foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
@@ -25,16 +25,16 @@
 			<MudPaper Class="pa-2 my-2" Elevation="1">
 
 				@if (editMode == false)
-				{					
-					<MudText Typo="Typo.subtitle2">@ModItem.Localization.GetName(code)</MudText>
-					<MudText Typo="Typo.body2">@ModItem.Localization.GetDescription(code)</MudText>
-					<MudText Typo="Typo.body2">@ModItem.Localization.GetLoreDescription(code)</MudText>
+				{
+					<MudText Typo="Typo.subtitle2">@EditingModItem.Localization.GetName(code)</MudText>
+					<MudText Typo="Typo.body2">@EditingModItem.Localization.GetDescription(code)</MudText>
+					<MudText Typo="Typo.body2">@EditingModItem.Localization.GetLoreDescription(code)</MudText>
 				}
 				else
 				{
-					<MudTextField Value="name" ValueChanged="@(() => ModItem.Localization.SetName(code, name))" T="string" HelperText="@ModItem.Localization.GetName(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
-					<MudTextField Value="name" ValueChanged="@(() => ModItem.Localization.SetDescription(code, description))" T="string" HelperText="@ModItem.Localization.GetDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
-					<MudTextField Value="name" ValueChanged="@(() => ModItem.Localization.SetLoreDescription(code, loreDescription))" T="string" HelperText="@ModItem.Localization.GetLoreDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+					<MudTextField Immediate="true" @bind-Value="name[code]" OnKeyUp="@(() => EditingModItem.Localization.SetName(code, name[code]))" T="string" HelperText="@OriginalModItem.Localization.GetName(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+					<MudTextField Immediate="true" @bind-Value="description[code]" OnKeyUp="@(() => EditingModItem.Localization.SetDescription(code, description[code]))" T="string" HelperText="@OriginalModItem.Localization.GetDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+					<MudTextField Immediate="true" @bind-Value="loreDescription[code]" OnKeyUp="@(() => EditingModItem.Localization.SetLoreDescription(code, loreDescription[code]))" T="string" HelperText="@OriginalModItem.Localization.GetLoreDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
 				}
 
 			</MudPaper>

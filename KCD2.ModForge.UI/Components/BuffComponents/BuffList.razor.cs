@@ -28,7 +28,7 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 
 		public void AddModItem(IModItem item)
 		{
-			ModService!.AddItem(item);
+			ModService!.AddModItem(item);
 		}
 
 		public void SearchBuffs()

@@ -13,12 +13,14 @@ namespace KCD2.ModForge.UI.Components.LocalizationComponents
 	{
 		//TODO: Toggle Modus und speichern von Localizations
 		private bool editMode = true;
-		private string name;
-		private string description;
-		private string loreDescription;
+		private Dictionary<string, string> name = new();
+		private Dictionary<string, string> description = new();
+		private Dictionary<string, string> loreDescription = new();
 
 		[Parameter]
-		public IModItem ModItem { get; set; }
+		public IModItem EditingModItem { get; set; }
+		[Parameter]
+		public IModItem OriginalModItem { get; set; }
 		public List<string> SelectedLanguageCodes { get; set; } = new();
 
 		public void AddLanguageKey(string key)
@@ -30,6 +32,9 @@ namespace KCD2.ModForge.UI.Components.LocalizationComponents
 			else
 			{
 				SelectedLanguageCodes.Add(key);
+				name.TryAdd(key, string.Empty);
+				description.TryAdd(key, string.Empty);
+				loreDescription.TryAdd(key, string.Empty);
 			}
 			StateHasChanged();
 		}

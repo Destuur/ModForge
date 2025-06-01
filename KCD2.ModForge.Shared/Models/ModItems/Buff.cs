@@ -16,6 +16,12 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 			Path = path;
 		}
 
+		public Buff(string id, string path)
+		{
+			Id = id;
+			Path = path;
+		}
+
 		public Buff(string path, IEnumerable<IAttribute> attributes)
 		{
 			Id = attributes.FirstOrDefault(attr => attr.Name == "buff_id")?.Value.ToString() ?? string.Empty;

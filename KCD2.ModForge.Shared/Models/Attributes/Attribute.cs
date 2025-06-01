@@ -25,6 +25,11 @@ namespace KCD2.ModForge.Shared.Models.Attributes
 			set => Value = (T)value;
 		}
 
+		public IAttribute DeepClone()
+		{
+			return new Attribute<T>(Name, Value);
+		}
+
 		private MathOperation ParseOperation(string op)
 		{
 			return op switch

@@ -26,13 +26,13 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 			mod = ModService!.GetMod();
 		}
 
-		private void EditBuff(MouseEventArgs args)
+		private async Task EditBuff(MouseEventArgs args)
 		{
 			if (NavigationService is null)
 			{
 				return;
 			}
-			NavigationService.NavigateTo($"editing/buff/{Buff.Id}");
+			await NavigationService.NavigateToAsync($"editing/buff/{Buff.Id}");
 		}
 	}
 }

@@ -4,5 +4,7 @@
 	{
 		string Name { get; set; }
 		object Value { get; set; }
+
+		IAttribute DeepClone();
 	}
 }

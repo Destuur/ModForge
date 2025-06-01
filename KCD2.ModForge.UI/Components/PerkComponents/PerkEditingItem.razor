@@ -9,16 +9,4 @@
 		</MudItem>
 	}
 
-	@* @foreach (var localization in Perk.Localization)
-	{
-		<MudItem lg="6">
-			<MudTextField Immediate="true" Margin="Margin.Dense" AutoGrow="true" @bind-Value="localization.Description" Label="@(localization.Language)" Variant="Variant.Outlined"></MudTextField>
-		</MudItem>
-	} *@
-
 </MudGrid>
-
-<MudStack Row="true" Class="px-4 mt-4">
-	<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Error">Cancel</MudButton>
-	<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="SavePerk">Save</MudButton>
-</MudStack>
