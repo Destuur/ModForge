@@ -1,4 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Factories;
+using KCD2.ModForge.Shared.Models.Attributes;
 using KCD2.ModForge.Shared.Models.Localizations;
 using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Models.Mods;
@@ -8,7 +9,7 @@ using System.Xml.Linq;
 
 namespace KCD2.ModForge.Shared.Adapter
 {
-	public class XmlAdapterOfT<T> : IModItemAdapter<T>
+	public partial class XmlAdapterOfT<T> : IModItemAdapter<T>
 		where T : IModItem
 	{
 		private readonly UserConfigurationService userConfigurationService;
@@ -18,18 +19,19 @@ namespace KCD2.ModForge.Shared.Adapter
 			this.userConfigurationService = userConfigurationService;
 		}
 
-		public void Initialize()
+		public Task Initialize()
 		{
-			return;
+			return Task.CompletedTask;
 		}
 
-		public void Deinitialize()
+		public Task Deinitialize()
 		{
-			return;
+			return Task.CompletedTask;
 		}
 
-		public IList<T> ReadModItems(string path)
+		public async Task<IList<T>> ReadModItems(string path)
 		{
+			await Task.Yield();
 			var filePath = PathFactory.CreateTablesPath(userConfigurationService.Current!.GameDirectory);
 			var modItemPath = string.Empty;
 			var foundModItems = new List<T>();
@@ -74,12 +76,6 @@ namespace KCD2.ModForge.Shared.Adapter
 								foreach (var perkElement in doc.Descendants("perk"))
 								{
 									var modItem = ModItemFactory<T>.CreateModItem(perkElement, entry.FullName);
-
-									//TODO: Platzhalter - löschen
-									//if (modItem.Attributes.Count >= 11)
-									//{
-									//	continue;
-									//}
 
 									foundModItems.Add(modItem);
 								}
@@ -147,23 +143,30 @@ namespace KCD2.ModForge.Shared.Adapter
 			return modItemPath;
 		}
 
-		public T GetModItem(string id)
+
+		public Task<IList<T>> ReadAsync(string path)
 		{
 			throw new NotImplementedException();
 		}
 
-		public bool WriteModItem(T modItem)
+		Task<T> IModItemAdapter<T>.GetModItem(string id)
 		{
 			throw new NotImplementedException();
 		}
 
-		public bool WriteModItems(IEnumerable<T> modItem)
+		public Task<bool> WriteElement(T modItem)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<bool> WriteElements(IEnumerable<T> modItem)
 		{
 			throw new NotImplementedException();
 		}
 
 		public bool WriteModItems(ModDescription mod)
 		{
+			WriteModManifest(mod);
 			CreateLocalization(mod);
 			AppendLocalization(mod);
 
@@ -210,23 +213,32 @@ namespace KCD2.ModForge.Shared.Adapter
 
 		private bool WriteBuff(string modId, Buff buff)
 		{
-			var buffDirectory = Path.Combine(ToolResources.Keys.ModPath(), modId, "Data", buff.Path);
+			string directoryUpToRpg = buff.Path.Substring(0, buff.Path.IndexOf("rpg") + "rpg".Length);
+			var buffDirectory = Path.Combine(ToolResources.Keys.ModPath(), modId, "Data", directoryUpToRpg);
 			var buffFile = Path.Combine(buffDirectory, "buff__" + modId + ".xml");
 
-			// Zielverzeichnis sicherstellen
 			Directory.CreateDirectory(buffDirectory);
 
-			// Existierende Datei löschen
 			if (File.Exists(buffFile))
 				File.Delete(buffFile);
 
-			// Buff-Attribute in XAttributes umwandeln
-			var attributes = buff.Attributes.Select(kv => new XAttribute(kv.Name, kv.Value));
+			var attributes = new List<XAttribute>();
 
-			// buff-Element erstellen
+			foreach (var kv in buff.Attributes)
+			{
+				if (kv.Name == "buff_params" && kv.Value is List<BuffParam> list)
+				{
+					string serialized = BuffParamSerializer.ToAttributeString(list);
+					attributes.Add(new XAttribute(kv.Name, serialized));
+				}
+				else
+				{
+					attributes.Add(new XAttribute(kv.Name, kv.Value?.ToString() ?? string.Empty));
+				}
+			}
+
 			var buffElement = new XElement("buff", attributes);
 
-			// Ganze XML-Struktur aufbauen
 			var doc = new XDocument(
 				new XDeclaration("1.0", "us-ascii", null),
 				new XElement("database",
@@ -240,15 +252,14 @@ namespace KCD2.ModForge.Shared.Adapter
 				)
 			);
 
-			// Speichern
 			doc.Save(buffFile);
-
 			return true;
 		}
 
 		private bool WritePerk(string modId, Perk perk)
 		{
-			var perkDirectory = Path.Combine(ToolResources.Keys.ModPath(), modId, "Data", perk.Path);
+			string directoryUpToRpg = perk.Path.Substring(0, perk.Path.IndexOf("rpg") + "rpg".Length);
+			var perkDirectory = Path.Combine(ToolResources.Keys.ModPath(), modId, "Data", directoryUpToRpg);
 			var perkFile = Path.Combine(perkDirectory, "perk__" + modId + ".xml");
 
 			// Ordner erstellen
@@ -395,7 +406,7 @@ namespace KCD2.ModForge.Shared.Adapter
 		{
 			return new XElement("Row",
 				new XElement("Cell", id),
-				new XElement("Cell", "Nonsense"), // ggf. später anpassen
+				new XElement("Cell", ""), // TODO: Default Wert hinzufügen.
 				new XElement("Cell", value?.Replace(" ", "&nbsp;")) // z. B. Encoding vorbereiten
 			);
 		}

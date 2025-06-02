@@ -19,6 +19,18 @@ namespace KCD2.ModForge.Shared.Models.Mods
 			Items.Add(mod);
 		}
 
+		public void RemoveMod(ModDescription mod)
+		{
+			if (mod is null)
+				return;
+
+			var itemToRemove = Items.FirstOrDefault(item => item.ModId == mod.ModId);
+			if (itemToRemove != null)
+			{
+				Items.Remove(itemToRemove);
+			}
+		}
+
 		internal ModDescription? GetMod(string modId)
 		{
 			return Items.FirstOrDefault(x => x.ModId == modId);

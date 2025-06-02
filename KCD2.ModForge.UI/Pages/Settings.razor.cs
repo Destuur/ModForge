@@ -48,13 +48,13 @@ namespace KCD2.ModForge.UI.Pages
 			}
 		}
 
-		public async Task ParseXmlFiles()
+		public void ParseXmlFiles()
 		{
 			if (XmlToJsonService is null)
 			{
 				return;
 			}
-			await XmlToJsonService.ConvertXmlToJsonAsync();
+			XmlToJsonService.ConvertXmlToJsonAsync();
 		}
 	}
 }

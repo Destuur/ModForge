@@ -25,7 +25,7 @@ namespace KCD2.ModForge.UI.Pages
 		[Inject]
 		public IDialogService DialogService { get; set; }
 
-		private async Task SavePerk(MouseEventArgs args)
+		private void SaveItem()
 		{
 			var modPerk = new Perk(originalPerk.Id, originalPerk.Path);
 			if (editingPerk is null || originalPerk is null)
@@ -38,14 +38,22 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
-			modPerk.Attributes = GetChangedAttributes();
+			modPerk.Attributes = GetEssentialAttributes();
 			modPerk.Localization = GetChangedLocalizations();
+			modPerk.Name = originalPerk.Localization.GetName("en");
 			ModService.AddModItem(modPerk);
+		}
+
+		private async Task SavePerk()
+		{
+			SaveItem();
 			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
 		}
 
 		private async Task Checkout()
 		{
+			SaveItem();
+
 			var parameters = new DialogParameters<MoreModItemsDialog>
 			{
 				{ x => x.ContentText, "Though have yanked enough pizzles? Leave then, and create your mod!" },
@@ -102,7 +110,7 @@ namespace KCD2.ModForge.UI.Pages
 			return modDictionary;
 		}
 
-		private IList<IAttribute> GetChangedAttributes()
+		private IList<IAttribute> GetEssentialAttributes()
 		{
 			var modList = new List<IAttribute>();
 			foreach (var originalAttribute in originalPerk.Attributes)
@@ -116,6 +124,12 @@ namespace KCD2.ModForge.UI.Pages
 
 				if (editingPerk is null)
 				{
+					continue;
+				}
+
+				if (editingAttribute.Name == "perk_id")
+				{
+					modList.Add(editingAttribute);
 					continue;
 				}
 

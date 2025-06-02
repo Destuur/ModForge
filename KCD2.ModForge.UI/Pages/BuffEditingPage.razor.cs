@@ -25,7 +25,7 @@ namespace KCD2.ModForge.UI.Pages
 		[Inject]
 		public IDialogService DialogService { get; set; }
 
-		private async Task SaveBuff()
+		private void SaveItem()
 		{
 			var modBuff = new Buff(originalBuff.Id, originalBuff.Path);
 			if (editingBuff is null || originalBuff is null)
@@ -38,14 +38,22 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
-			modBuff.Attributes = GetChangedAttributes();
+			modBuff.Attributes = GetEssentialAttributes();
 			modBuff.Localization = GetChangedLocalizations();
+			modBuff.Name = originalBuff.Localization.GetName("en");
 			ModService.AddModItem(modBuff);
+		}
+
+		private async Task SaveBuff()
+		{
+			SaveItem();
 			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
 		}
 
 		private async Task Checkout()
 		{
+			SaveItem();
+
 			var parameters = new DialogParameters<MoreModItemsDialog>
 			{
 				{ x => x.ContentText, "Though have yanked enough pizzles? Leave then, and create your mod!" },
@@ -102,7 +110,7 @@ namespace KCD2.ModForge.UI.Pages
 			return modDictionary;
 		}
 
-		private IList<IAttribute> GetChangedAttributes()
+		private IList<IAttribute> GetEssentialAttributes()
 		{
 			var modList = new List<IAttribute>();
 			foreach (var originalAttribute in originalBuff.Attributes)
@@ -116,6 +124,12 @@ namespace KCD2.ModForge.UI.Pages
 
 				if (editingBuff is null)
 				{
+					continue;
+				}
+
+				if (editingAttribute.Name == "buff_id")
+				{
+					modList.Add(editingAttribute);
 					continue;
 				}
 

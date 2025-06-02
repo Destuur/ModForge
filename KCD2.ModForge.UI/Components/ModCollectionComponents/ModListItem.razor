@@ -1,20 +1,24 @@
 ﻿@if (Mod is not null)
 {
-    <MudGrid Justify="Justify.SpaceEvenly" Spacing="2">                
+    <MudGrid Justify="Justify.SpaceBetween" Spacing="2">                
         <!-- Bild oder Icon -->
-        <MudItem xs="3" lg="2" Class="ml-n6">
+        <MudItem xs="2" lg="2" Class="ml-n6">
             <MudImage ObjectPosition="ObjectPosition.Center" Fluid="true" Src="@Mod.ImagePath" />
         </MudItem>
 
         <!-- Mod-Infos -->
-    <MudItem xs="6" lg="7">
+    <MudItem xs="6" lg="6">
             <MudText Typo="Typo.h6">@Mod.Name</MudText>
             <MudText Typo="Typo.subtitle2" Class="text-secondary">v @Mod.ModVersion by @Mod.Author</MudText>
-        <MudText Typo="Typo.subtitle1" Class="text-secondary">@(string.IsNullOrEmpty(Mod.Description) ? RandomText() : Mod.Description)</MudText>
+            <MudText Typo="Typo.subtitle1" Class="text-secondary">@(string.IsNullOrEmpty(Mod.Description) ? "This spot was reserved for greatness, but someone was too busy with their pizzle-yanking duties." : Mod.Description)</MudText>
         </MudItem>
 
         <MudItem xs="3" lg="3" Class="pr-4">
             <MudText Align="Align.Right" Typo="Typo.body2" Class="text-secondary">Last edited: @Mod.CreatedOn</MudText>
+        </MudItem>
+
+        <MudItem xs="1" lg="1">
+            <MudIconButton Color="Color.Secondary" Edge="Edge.End" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => OnDelete.InvokeAsync(Mod))" />
         </MudItem>
 
     </MudGrid>

@@ -1,4 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Models.Mods;
+using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace KCD2.ModForge.UI.Components.ModCollectionComponents
@@ -7,10 +8,9 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 	{
 		[Parameter]
 		public ModDescription? Mod { get; set; }
-
-		public string RandomText()
-		{
-			return "Scheiße geil!";
-		}
+		[Inject]
+		public ModService ModService { get; set; }
+		[Parameter]
+		public EventCallback<ModDescription> OnDelete { get; set; }
 	}
 }

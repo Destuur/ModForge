@@ -2,11 +2,11 @@
 {
 	public interface IModItemAdapter<T>
 	{
-		void Initialize();
-		void Deinitialize();
-		IList<T> ReadModItems(string path);
-		T GetModItem(string id);
-		bool WriteModItem(T modItem);
-		bool WriteModItems(IEnumerable<T> modItem);
+		Task Initialize();
+		Task Deinitialize();
+		Task<IList<T>> ReadAsync(string path);
+		Task<T> GetModItem(string id);
+		Task<bool> WriteElement(T modItem);
+		Task<bool> WriteElements(IEnumerable<T> modItem);
 	}
 }

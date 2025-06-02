@@ -5,7 +5,15 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 {
 	public partial class ModCollectionComponent
 	{
-		[Inject]
+		[Parameter]
 		public ModCollection? Mods { get; set; }
+
+		private void DeleteMod(ModDescription mod)
+		{
+			if (mod == null) return;
+
+			Mods.Remove(mod);
+			StateHasChanged(); // UI aktualisieren
+		}
 	}
 }

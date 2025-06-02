@@ -1,44 +1,54 @@
 ﻿@using KCD2.ModForge.Shared.Adapter
 @if (EditingModItem is not null)
 {
-	<MudStack Row="true">
-		@foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
-		{
-			<MudButton Color="@(SelectedLanguageCodes.Contains(languageKey) ? Color.Primary : Color.Default)"
-					   Variant="@(SelectedLanguageCodes.Contains(languageKey) ? Variant.Filled : Variant.Outlined)"
-					   OnClick="@(() => AddLanguageKey(languageKey))">
-				@(languageKey)
-			</MudButton>
-		}
-	</MudStack>
-
-	<MudDivider Class="my-4" />
-
-	@if (SelectedLanguageCodes.Count == 0)
-	{
-		<MudText Color="Color.Secondary">Keine Sprache ausgewählt.</MudText>
-	}
-	else
-	{
-		@foreach (var code in SelectedLanguageCodes)
-		{
-			<MudPaper Class="pa-2 my-2" Elevation="1">
-
-				@if (editMode == false)
+	<MudGrid Spacing="5" Justify="Justify.SpaceBetween" Class="pa-4">
+		<MudItem lg="12">
+			<MudStack Row="true" Justify="Justify.SpaceBetween">
+				@foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
 				{
-					<MudText Typo="Typo.subtitle2">@EditingModItem.Localization.GetName(code)</MudText>
-					<MudText Typo="Typo.body2">@EditingModItem.Localization.GetDescription(code)</MudText>
-					<MudText Typo="Typo.body2">@EditingModItem.Localization.GetLoreDescription(code)</MudText>
+					<MudButton Color="@(SelectedLanguageCodes.Contains(languageKey) ? Color.Primary : Color.Default)"
+							   Variant="@(SelectedLanguageCodes.Contains(languageKey) ? Variant.Filled : Variant.Outlined)"
+							   OnClick="@(() => AddLanguageKey(languageKey))">
+						@(LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key)
+					</MudButton>
 				}
-				else
-				{
-					<MudTextField Immediate="true" @bind-Value="name[code]" OnKeyUp="@(() => EditingModItem.Localization.SetName(code, name[code]))" T="string" HelperText="@OriginalModItem.Localization.GetName(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
-					<MudTextField Immediate="true" @bind-Value="description[code]" OnKeyUp="@(() => EditingModItem.Localization.SetDescription(code, description[code]))" T="string" HelperText="@OriginalModItem.Localization.GetDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
-					<MudTextField Immediate="true" @bind-Value="loreDescription[code]" OnKeyUp="@(() => EditingModItem.Localization.SetLoreDescription(code, loreDescription[code]))" T="string" HelperText="@OriginalModItem.Localization.GetLoreDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
-				}
+			</MudStack>
+		</MudItem>
 
-			</MudPaper>
+		<MudDivider Class="mt-4" />
+
+
+
+		@if (SelectedLanguageCodes.Count == 0)
+		{
+			<MudItem>
+				<MudText Color="Color.Secondary">Keine Sprache ausgewählt.</MudText>
+			</MudItem>
 		}
-	}
+		else
+		{
+			@foreach (var code in SelectedLanguageCodes)
+			{
+				<MudItem lg="12">
+					<MudPaper Class="pa-2 my-2" Elevation="1">
+
+						@if (editMode == false)
+						{
+							<MudText Typo="Typo.subtitle2">@EditingModItem.Localization.GetName(code)</MudText>
+							<MudText Typo="Typo.body2">@EditingModItem.Localization.GetDescription(code)</MudText>
+							<MudText Typo="Typo.body2">@EditingModItem.Localization.GetLoreDescription(code)</MudText>
+						}
+						else
+						{
+							<MudTextField Immediate="true" @bind-Value="name[code]" OnKeyUp="@(() => EditingModItem.Localization.SetName(code, name[code]))" T="string" HelperText="@OriginalModItem.Localization.GetName(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+							<MudTextField Immediate="true" @bind-Value="description[code]" OnKeyUp="@(() => EditingModItem.Localization.SetDescription(code, description[code]))" T="string" HelperText="@OriginalModItem.Localization.GetDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+							<MudTextField Immediate="true" @bind-Value="loreDescription[code]" OnKeyUp="@(() => EditingModItem.Localization.SetLoreDescription(code, loreDescription[code]))" T="string" HelperText="@OriginalModItem.Localization.GetLoreDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+						}
+
+					</MudPaper>
+				</MudItem>
+			}
+		}
+	</MudGrid>
 }
 

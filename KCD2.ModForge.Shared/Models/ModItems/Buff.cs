@@ -40,6 +40,7 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 
 		public string Id { get; set; } = string.Empty;
 		public string Path { get; set; } = string.Empty;
+		public string Name { get; set; }
 		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
 		public IList<IModItem> ModItems { get; set; } = new List<IModItem>();
 		public Localization Localization { get; set; } = new();

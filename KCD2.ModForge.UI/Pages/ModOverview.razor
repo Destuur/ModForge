@@ -1,13 +1,30 @@
 ﻿@page "/modoverview"
+@using KCD2.ModForge.Shared.Models.ModItems
 
-@if(mod is not null)
+@if (mod is not null)
 {
-	<MudGrid>
+	<MudGrid Class="pa-4" Spacing="2">
 
 		@foreach (var modItem in mod.ModItems)
-	{
-		<MudText>@modItem</MudText>
-	}
+		{
+			<MudItem>
+
+				@if (modItem is Perk perk)
+				{
+					<PerkListItem Perk="perk" Placeholder="@perk.Name"></PerkListItem>
+				}
+
+				@if (modItem is Buff buff)
+				{
+					<BuffListItem Buff="buff" Placeholder="@buff.Name"></BuffListItem>
+				}
+
+			</MudItem>
+		}
 
 	</MudGrid>
+
+	<MudStack Row="true" Class="px-4 mt-4">
+		<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="ExportMod">Create Mod</MudButton>
+	</MudStack>
 }

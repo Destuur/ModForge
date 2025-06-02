@@ -15,7 +15,10 @@ namespace KCD2.ModForge.Shared.Factories
 			var pathExpression = Expression.Parameter(typeof(string), nameof(path));
 			var attributesExpression = Expression.Parameter(typeof(IEnumerable<IAttribute>), nameof(attributes));
 
-			var constructor = type.GetConstructors().FirstOrDefault(ctor => ctor.GetParameters().Length == 2);
+			var constructor = type.GetConstructor(new[] { typeof(string), typeof(IEnumerable<IAttribute>) });
+
+			if (constructor == null)
+				throw new InvalidOperationException($"Kein passender Konstruktor in {type.Name} gefunden. Erwartet: (string, IEnumerable<IAttribute>)");
 
 			var newExpression = Expression.New(constructor!, pathExpression, attributesExpression);
 

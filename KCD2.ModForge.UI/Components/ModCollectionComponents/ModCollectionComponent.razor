@@ -4,9 +4,9 @@
 
 		@foreach (var mod in Mods)
 		{
-			<MudPaper>
+			<MudPaper Class="my-2">
 				<MudListItem Dense="true" Gutters="false">
-					<ModListItem Mod="mod"></ModListItem>
+					<ModListItem Mod="mod" OnDelete="DeleteMod"></ModListItem>
 				</MudListItem>
 			</MudPaper>
 			

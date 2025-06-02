@@ -1,22 +1,58 @@
-﻿using KCD2.ModForge.Shared.Adapter;
-using KCD2.ModForge.Shared.Models.ModItems;
+﻿using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Models.Mods;
+using Newtonsoft.Json;
 
 namespace KCD2.ModForge.Shared.Services
 {
 	public class ModService
 	{
 		private ModDescription? mod = new();
-		private readonly ModCollection modCollection;
-
-		public ModService(ModCollection modCollection)
+		private ModCollection modCollection;
+		private string modCollectionFile;
+		private readonly JsonSerializerSettings settings = new()
 		{
-			this.modCollection = modCollection;
+			TypeNameHandling = TypeNameHandling.All,
+			Formatting = Formatting.Indented,
+			PreserveReferencesHandling = PreserveReferencesHandling.None
+		};
+
+		public ModService()
+		{
+			modCollectionFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ModForge", "modcollection.json");
+			Load();
+		}
+
+		public void Load()
+		{
+			if (File.Exists(modCollectionFile))
+			{
+				var json = File.ReadAllText(modCollectionFile);
+				modCollection = JsonConvert.DeserializeObject<ModCollection>(json, settings)
+						  ?? new ModCollection();
+			}
+			else
+			{
+				modCollection = new ModCollection();
+			}
+		}
+
+		public void Save()
+		{
+			var json = JsonConvert.SerializeObject(modCollection, settings);
+
+			Directory.CreateDirectory(Path.GetDirectoryName(modCollectionFile)!);
+			File.WriteAllText(modCollectionFile, json);
+			Load();
 		}
 
 		public ModDescription GetMod()
 		{
 			return mod!;
+		}
+
+		public ModCollection GetAllMods()
+		{
+			return modCollection;
 		}
 
 		public ModDescription Mod
@@ -74,6 +110,7 @@ namespace KCD2.ModForge.Shared.Services
 			mod.ModifiesLevel = modifiesLevel;
 
 			modCollection.AddMod(mod);
+			Save();
 		}
 
 		public async Task<ModDescription> GenerateMod()
@@ -84,6 +121,7 @@ namespace KCD2.ModForge.Shared.Services
 			}
 
 			//await adapter.WriteModManifest(mod);
+			Save();
 			return mod;
 		}
 
@@ -149,6 +187,12 @@ namespace KCD2.ModForge.Shared.Services
 			}
 
 			mod!.ImagePath = path;
+		}
+
+		public void RemoveMod(ModDescription mod)
+		{
+			modCollection.RemoveMod(mod);
+			Save();
 		}
 
 		public async Task ExportMod()

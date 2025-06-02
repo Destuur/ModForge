@@ -19,6 +19,8 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 		public NavigationService? NavigationService { get; set; }
 		[Parameter]
 		public Buff? Buff { get; set; }
+		[Parameter]
+		public string Placeholder { get; set; } = "No localization data available";
 
 		protected override void OnInitialized()
 		{

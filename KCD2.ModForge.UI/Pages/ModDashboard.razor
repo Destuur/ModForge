@@ -1,14 +1,18 @@
 ﻿@page "/"
 
-<MudGrid Class="px-4" Spacing="2">
+@if (ModService is not null)
+{
+	<MudGrid Class="px-4" Spacing="2">
 
-	<MudItem Class="pt-4 pl-4">
-		<MudText Typo="Typo.h4">Recent Projects</MudText>
-	</MudItem>
+		<MudItem Class="pt-4 pl-4">
+			<MudText Typo="Typo.h4">Recent Projects</MudText>
+		</MudItem>
 
-	<MudItem xs="12" sm="12" md="12">
-		<ModCollectionComponent></ModCollectionComponent>
-	</MudItem>
+		<MudItem xs="12" sm="12" md="12">
+			<ModCollectionComponent Mods="modCollection"></ModCollectionComponent>
+		</MudItem>
 
 
-</MudGrid>
+	</MudGrid>
+}
+
