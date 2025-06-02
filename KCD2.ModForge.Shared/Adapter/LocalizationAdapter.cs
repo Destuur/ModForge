@@ -42,8 +42,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			{ "Japanese", "ja" },
 			{ "Turkish", "tr" },
 			{ "Portuguese", "pt" },
-			{ "Ukrainian", "uk" },
-			{ "Arabic", "ar" }
+			{ "Ukrainian", "uk" }
 		};
 
 		public Dictionary<string, Dictionary<string, string>> LoadAllLocalizationsFromPaks()

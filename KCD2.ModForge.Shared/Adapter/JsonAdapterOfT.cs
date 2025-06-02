@@ -22,16 +22,16 @@ namespace KCD2.ModForge.Shared.Adapter
 				"ModForge", $"{typeof(T).Name.ToLower()}s.json");
 		}
 
-		public Task Initialize()
+		public void Initialize()
 		{
 			throw new NotImplementedException();
 		}
-		public Task Deinitialize()
+		public void Deinitialize()
 		{
 			throw new NotImplementedException();
 		}
 
-		public async Task<IList<T>> ReadAsync(string filePath)
+		public IList<T> ReadModItems(string filePath)
 		{
 			if (File.Exists(filePath))
 			{
@@ -47,7 +47,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			}
 		}
 
-		public async Task<bool> WriteElements(IEnumerable<T> modItems)
+		public bool WriteModItems(IEnumerable<T> modItems)
 		{
 			var json = JsonConvert.SerializeObject(modItems, settings);
 			//var json = JsonSerializer.Serialize(modItems, new JsonSerializerOptions
@@ -60,12 +60,12 @@ namespace KCD2.ModForge.Shared.Adapter
 			return true;
 		}
 
-		public Task<T> GetElement(string id)
+		public T GetModItem(string id)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task<bool> WriteElement(T modItem)
+		public bool WriteModItem(T modItem)
 		{
 			throw new NotImplementedException();
 		}

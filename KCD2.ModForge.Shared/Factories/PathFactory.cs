@@ -34,9 +34,14 @@ namespace KCD2.ModForge.Shared.Factories
 			var allLanguages = Enum.GetValues(typeof(Language)).Cast<Language>();
 			foreach (var language in allLanguages)
 			{
-				pakPaths.Add(PathFactory.CreateLocalizationPath(prefix, language));
+				pakPaths.Add(CreateLocalizationPath(prefix, language));
 			}
 			return pakPaths;
+		}
+
+		public static string CreatePerkPath(string prefix, string modId)
+		{
+			return Path.Combine(prefix, $"Mods\\{modId}\\");
 		}
 	}
 }

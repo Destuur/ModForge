@@ -31,8 +31,8 @@ namespace KCD2.ModForge.Shared.Services
 
 		private async Task InitializeExport()
 		{
-			Perks = await perkAdapter.ReadAsync("");
-			Buffs = await buffAdapter.ReadAsync("");
+			Perks = await perkAdapter.ReadModItems("");
+			Buffs = await buffAdapter.ReadModItems("");
 			localizationCache = localizationAdapter.LoadAllLocalizationsFromPaks();
 		}
 

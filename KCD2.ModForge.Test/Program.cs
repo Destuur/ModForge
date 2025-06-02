@@ -35,10 +35,10 @@ namespace KCD2.ModForge.Test
 			var path = PathFactory.CreateLocalizationPath(gameDirectory, Language.German);
 
 			var xmlPerkAdapter = new XmlAdapterOfT<Perk>(userService);
-			var perks = xmlPerkAdapter.ReadAsync("").Result;
+			var perks = xmlPerkAdapter.ReadModItems("").Result;
 
 			var xmlBuffAdapter = new XmlAdapterOfT<Buff>(userService);
-			var buffs = xmlBuffAdapter.ReadAsync("").Result;
+			var buffs = xmlBuffAdapter.ReadModItems("").Result;
 
 			var localizationAdapter = new LocalizationAdapter(userService);
 

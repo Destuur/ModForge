@@ -1,11 +1,9 @@
 ﻿using KCD2.ModForge.Shared.Factories;
-using KCD2.ModForge.Shared.Models.Attributes;
+using KCD2.ModForge.Shared.Models.Localizations;
 using KCD2.ModForge.Shared.Models.ModItems;
-using KCD2.ModForge.Shared.Models.User;
+using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
 using System.IO.Compression;
-using System.Text.Json;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace KCD2.ModForge.Shared.Adapter
@@ -20,17 +18,17 @@ namespace KCD2.ModForge.Shared.Adapter
 			this.userConfigurationService = userConfigurationService;
 		}
 
-		public Task Initialize()
+		public void Initialize()
 		{
-			throw new NotImplementedException();
+			return;
 		}
 
-		public Task Deinitialize()
+		public void Deinitialize()
 		{
-			throw new NotImplementedException();
+			return;
 		}
 
-		public async Task<IList<T>> ReadAsync(string path)
+		public IList<T> ReadModItems(string path)
 		{
 			var filePath = PathFactory.CreateTablesPath(userConfigurationService.Current!.GameDirectory);
 			var modItemPath = string.Empty;
@@ -149,19 +147,299 @@ namespace KCD2.ModForge.Shared.Adapter
 			return modItemPath;
 		}
 
-		public Task<T> GetElement(string id)
+		public T GetModItem(string id)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task<bool> WriteElement(T modItem)
+		public bool WriteModItem(T modItem)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task<bool> WriteElements(IEnumerable<T> modItem)
+		public bool WriteModItems(IEnumerable<T> modItem)
 		{
 			throw new NotImplementedException();
 		}
+
+		public bool WriteModItems(ModDescription mod)
+		{
+			CreateLocalization(mod);
+			AppendLocalization(mod);
+
+			foreach (var modItem in mod.ModItems)
+			{
+				if (modItem is Perk perk)
+				{
+					WritePerk(mod.ModId, perk);
+				}
+
+				if (modItem is Buff buff)
+				{
+					WriteBuff(mod.ModId, buff);
+				}
+			}
+			return true;
+		}
+
+		private void CreatePak(string sourceFolder, string localizationPakFile)
+		{
+			if (File.Exists(localizationPakFile))
+				File.Delete(localizationPakFile);
+
+			using (FileStream fs = new FileStream(localizationPakFile, FileMode.CreateNew))
+			using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create))
+			{
+				var files = Directory.GetFiles(sourceFolder, "*", SearchOption.AllDirectories);
+
+				foreach (var file in files)
+				{
+					// Pfad innerhalb des Archives, relativ zum sourceDir
+					string entryName = Path.GetRelativePath(sourceFolder, file).Replace('\\', '/');
+
+					var entry = archive.CreateEntry(entryName, CompressionLevel.NoCompression);
+
+					using (var entryStream = entry.Open())
+					using (var fileStream = File.OpenRead(file))
+					{
+						fileStream.CopyTo(entryStream);
+					}
+				}
+			}
+		}
+
+		private bool WriteBuff(string modId, Buff buff)
+		{
+			var buffDirectory = Path.Combine(ToolResources.Keys.ModPath(), modId, "Data", buff.Path);
+			var buffFile = Path.Combine(buffDirectory, "buff__" + modId + ".xml");
+
+			// Zielverzeichnis sicherstellen
+			Directory.CreateDirectory(buffDirectory);
+
+			// Existierende Datei löschen
+			if (File.Exists(buffFile))
+				File.Delete(buffFile);
+
+			// Buff-Attribute in XAttributes umwandeln
+			var attributes = buff.Attributes.Select(kv => new XAttribute(kv.Name, kv.Value));
+
+			// buff-Element erstellen
+			var buffElement = new XElement("buff", attributes);
+
+			// Ganze XML-Struktur aufbauen
+			var doc = new XDocument(
+				new XDeclaration("1.0", "us-ascii", null),
+				new XElement("database",
+					new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+					new XAttribute("name", "barbora"),
+					new XAttribute(XNamespace.Get("http://www.w3.org/2001/XMLSchema-instance") + "noNamespaceSchemaLocation", "../database.xsd"),
+					new XElement("buffs",
+						new XAttribute("version", "1"),
+						buffElement
+					)
+				)
+			);
+
+			// Speichern
+			doc.Save(buffFile);
+
+			return true;
+		}
+
+		private bool WritePerk(string modId, Perk perk)
+		{
+			var perkDirectory = Path.Combine(ToolResources.Keys.ModPath(), modId, "Data", perk.Path);
+			var perkFile = Path.Combine(perkDirectory, "perk__" + modId + ".xml");
+
+			// Ordner erstellen
+			Directory.CreateDirectory(perkDirectory);
+
+			// Wenn Datei existiert, löschen
+			if (File.Exists(perkFile))
+				File.Delete(perkFile);
+
+			// Attribute aus dem Perk-Modell übernehmen
+			var attributes = perk.Attributes.Select(kv => new XAttribute(kv.Name, kv.Value));
+
+			// Perk-Element erzeugen
+			var perkElement = new XElement("perk", attributes);
+
+			// Ganze XML-Struktur aufbauen
+			var doc = new XDocument(
+				new XDeclaration("1.0", "us-ascii", null),
+				new XElement("database",
+					new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+					new XAttribute("name", "barbora"),
+					new XAttribute(XNamespace.Get("http://www.w3.org/2001/XMLSchema-instance") + "noNamespaceSchemaLocation", "../database.xsd"),
+					new XElement("perks",
+						new XAttribute("version", "1"),
+						perkElement
+					)
+				)
+			);
+
+			// XML-Datei speichern
+			doc.Save(perkFile);
+
+			return true;
+		}
+
+		private bool CreateLocalization(ModDescription mod)
+		{
+			string localizationPath;
+			Dictionary<string, string> names;
+			Dictionary<string, string> descriptions;
+			Dictionary<string, string> loreDescriptions;
+
+			foreach (var moditem in mod.ModItems)
+			{
+				if (moditem.Localization.Names.Count == 0 &&
+					moditem.Localization.Descriptions.Count == 0 &&
+					moditem.Localization.LoreDescriptions.Count == 0)
+				{
+					continue;
+				}
+
+				names = moditem.Localization.Names;
+				descriptions = moditem.Localization.Descriptions;
+				loreDescriptions = moditem.Localization.LoreDescriptions;
+
+				var allLanguages = names.Keys
+					.Union(descriptions.Keys)
+					.Union(loreDescriptions.Keys)
+					.Distinct();
+
+				foreach (var languageKey in allLanguages)
+				{
+					var language = LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key;
+					localizationPath = Path.Combine(ToolResources.Keys.ModPath(), mod.ModId, "Localization", language + "_xml", "text__" + mod.ModId + ".xml");
+
+					var directory = Path.GetDirectoryName(localizationPath);
+
+					if (!Directory.Exists(directory))
+					{
+						Directory.CreateDirectory(directory);
+					}
+
+					var doc = new XDocument(new XElement("Table"));
+					doc.Save(localizationPath);
+				}
+			}
+			return true;
+		}
+
+		private bool AppendLocalization(ModDescription mod)
+		{
+			var modifiedLocalizationFolders = new HashSet<string>();
+
+			foreach (var modItem in mod.ModItems)
+			{
+				var loc = modItem.Localization;
+
+				if (loc.Names.Count == 0 &&
+					   loc.Descriptions.Count == 0 &&
+					   loc.LoreDescriptions.Count == 0)
+				{
+					continue;
+				}
+
+				var allLanguages = loc.Names.Keys
+					.Union(loc.Descriptions.Keys)
+					.Union(loc.LoreDescriptions.Keys)
+					.Distinct();
+
+				foreach (var languageKey in allLanguages)
+				{
+					var language = LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key;
+					if (language == null)
+						continue;
+
+					var localizationFolder = Path.Combine(ToolResources.Keys.ModPath(), mod.ModId, "Localization", language + "_xml");
+					var localizationPath = Path.Combine(localizationFolder, "text__" + mod.ModId + ".xml");
+
+					if (!File.Exists(localizationPath))
+						continue;
+
+					var doc = XDocument.Load(localizationPath);
+					var root = doc.Element("Table");
+
+					if (root == null)
+						continue;
+
+					if (loc.Names.TryGetValue(languageKey, out var nameValue))
+						root.Add(CreateRow(modItem.Id + "_name", nameValue));
+
+					if (loc.Descriptions.TryGetValue(languageKey, out var descValue))
+						root.Add(CreateRow(modItem.Id + "_desc", descValue));
+
+					if (loc.LoreDescriptions.TryGetValue(languageKey, out var loreValue))
+						root.Add(CreateRow(modItem.Id + "_lore", loreValue));
+
+					doc.Save(localizationPath);
+
+					modifiedLocalizationFolders.Add(localizationFolder); // merken
+				}
+			}
+
+			// Jetzt alle geänderten Ordner packen
+			foreach (var folder in modifiedLocalizationFolders)
+			{
+				var pakPath = folder + ".pak";
+				CreatePak(folder, pakPath);
+			}
+
+			return true;
+		}
+
+		private XElement CreateRow(string id, string value)
+		{
+			return new XElement("Row",
+				new XElement("Cell", id),
+				new XElement("Cell", "Nonsense"), // ggf. später anpassen
+				new XElement("Cell", value?.Replace(" ", "&nbsp;")) // z. B. Encoding vorbereiten
+			);
+		}
+
+		public bool WriteModManifest(ModDescription mod)
+		{
+			if (mod is null)
+				return false;
+
+			var path = Path.Combine(ToolResources.Keys.ModPath(), mod.ModId);
+
+			// Verzeichnisse anlegen
+			Directory.CreateDirectory(Path.Combine(path, "Data"));
+			Directory.CreateDirectory(Path.Combine(path, "Localization"));
+
+			var manifestPath = Path.Combine(path, "mod.manifest");
+
+			if (File.Exists(manifestPath))
+				return true;
+
+			// XML-Struktur aufbauen
+			var doc = new XDocument(
+				new XDeclaration("1.0", "utf-8", null),
+				new XElement("kcd_mod",
+					new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
+					new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+					new XElement("info",
+						new XElement("name", mod.Name),
+						new XElement("description", mod.Description),
+						new XElement("author", mod.Author),
+						new XElement("version", mod.ModVersion),
+						new XElement("created_on", mod.CreatedOn),
+						new XElement("modid", mod.ModId),
+						new XElement("modifies_level", mod.ModifiesLevel.ToString().ToLower())
+					),
+					new XElement("supports",
+						mod.SupportsGameVersions.Select(v => new XElement("kcd_version", v))
+					)
+				)
+			);
+
+			doc.Save(manifestPath);
+			return true;
+		}
+
 	}
 }
