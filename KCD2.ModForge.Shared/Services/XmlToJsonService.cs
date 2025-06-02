@@ -103,11 +103,19 @@ namespace KCD2.ModForge.Shared.Services
 						var nameKey = GetAttributeValue(perk.Attributes, "perk_ui_name");
 
 						if (descKey != null && langDict.TryGetValue(descKey, out var desc))
-							perk.Localization.Descriptions[language] = desc;
+						{
+							perk.Localization.Descriptions[language] = new Dictionary<string, string> { [descKey] = desc };
+						}
+
 						if (loreDescKey != null && langDict.TryGetValue(loreDescKey, out var loreDesc))
-							perk.Localization.LoreDescriptions[language] = loreDesc;
-						if (nameKey != null && langDict.TryGetValue(nameKey, out var name1))
-							perk.Localization.Names[language] = name1;
+						{
+							perk.Localization.LoreDescriptions[language] = new Dictionary<string, string> { [loreDescKey] = loreDesc };
+						}
+
+						if (nameKey != null && langDict.TryGetValue(nameKey, out var name))
+						{
+							perk.Localization.Names[language] = new Dictionary<string, string> { [nameKey] = name };
+						}
 					}
 				}
 			}
@@ -126,12 +134,20 @@ namespace KCD2.ModForge.Shared.Services
 						var loreDescKey = GetAttributeValue(buff.Attributes, "slot_buff_ui_name");
 						var uiNameKey = GetAttributeValue(buff.Attributes, "buff_ui_name");
 
-						if (descKey != null && langDict.TryGetValue(descKey, out var buffDesc))
-							buff.Localization.Descriptions[language] = buffDesc;
-						if (loreDescKey != null && langDict.TryGetValue(loreDescKey, out var buffLoreDesc))
-							buff.Localization.LoreDescriptions[language] = buffLoreDesc;
-						if (uiNameKey != null && langDict.TryGetValue(uiNameKey, out var buffUiName))
-							buff.Localization.Names[language] = buffUiName;
+						if (descKey != null && langDict.TryGetValue(descKey, out var desc))
+						{
+							buff.Localization.Descriptions[language] = new Dictionary<string, string> { [descKey] = desc };
+						}
+
+						if (loreDescKey != null && langDict.TryGetValue(loreDescKey, out var loreDesc))
+						{
+							buff.Localization.LoreDescriptions[language] = new Dictionary<string, string> { [loreDescKey] = loreDesc };
+						}
+
+						if (uiNameKey != null && langDict.TryGetValue(uiNameKey, out var name))
+						{
+							buff.Localization.Names[language] = new Dictionary<string, string> { [uiNameKey] = name };
+						}
 					}
 				}
 			}

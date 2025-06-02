@@ -40,9 +40,27 @@
 						}
 						else
 						{
-							<MudTextField Immediate="true" @bind-Value="name[code]" OnKeyUp="@(() => EditingModItem.Localization.SetName(code, name[code]))" T="string" HelperText="@OriginalModItem.Localization.GetName(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
-							<MudTextField Immediate="true" @bind-Value="description[code]" OnKeyUp="@(() => EditingModItem.Localization.SetDescription(code, description[code]))" T="string" HelperText="@OriginalModItem.Localization.GetDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
-							<MudTextField Immediate="true" @bind-Value="loreDescription[code]" OnKeyUp="@(() => EditingModItem.Localization.SetLoreDescription(code, loreDescription[code]))" T="string" HelperText="@OriginalModItem.Localization.GetLoreDescription(code)" Margin="Margin.Dense" Variant="Variant.Outlined"></MudTextField>
+							<MudTextField T="string"
+										  Immediate="true"
+										  @bind-Value="name[code][NameKey]"
+										  OnKeyUp="@(() => EditingModItem.Localization.SetName(code, NameKey, name[code][NameKey]))"
+										  HelperText="@OriginalModItem.Localization.GetName(code)"
+										  Margin="Margin.Dense"
+										  Variant="Variant.Outlined" />
+							<MudTextField T="string"
+										  Immediate="true"
+										  @bind-Value="description[code][DescKey]"
+										  OnKeyUp="@(() => EditingModItem.Localization.SetDescription(code, DescKey, description[code][DescKey]))"
+										  HelperText="@OriginalModItem.Localization.GetDescription(code)"
+										  Margin="Margin.Dense"
+										  Variant="Variant.Outlined" />
+							<MudTextField T="string"
+										  Immediate="true"
+										  @bind-Value="loreDescription[code][LoreKey]"
+										  OnKeyUp="@(() => EditingModItem.Localization.SetLoreDescription(code, LoreKey, loreDescription[code][LoreKey]))"
+										  HelperText="@OriginalModItem.Localization.GetLoreDescription(code)"
+										  Margin="Margin.Dense"
+										  Variant="Variant.Outlined" />
 						}
 
 					</MudPaper>

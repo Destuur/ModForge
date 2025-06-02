@@ -1,4 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Models.Mods;
+using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace KCD2.ModForge.UI.Components.ModCollectionComponents
@@ -7,12 +8,15 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 	{
 		[Parameter]
 		public ModCollection? Mods { get; set; }
+		[Inject]
+		public ModService ModService { get; set; }
 
 		private void DeleteMod(ModDescription mod)
 		{
 			if (mod == null) return;
 
-			Mods.Remove(mod);
+			ModService.RemoveMod(mod);
+			Mods = ModService.GetAllMods();
 			StateHasChanged(); // UI aktualisieren
 		}
 	}

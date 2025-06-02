@@ -38,7 +38,8 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
-			modBuff.Attributes = GetEssentialAttributes();
+			//modBuff.Attributes = GetEssentialAttributes();
+			modBuff.Attributes = editingBuff.Attributes;
 			modBuff.Localization = GetChangedLocalizations();
 			modBuff.Name = originalBuff.Localization.GetName("en");
 			ModService.AddModItem(modBuff);
@@ -73,42 +74,46 @@ namespace KCD2.ModForge.UI.Pages
 
 		private Localization GetChangedLocalizations()
 		{
-			var modLocalization = new Localization();
-			modLocalization.LoreDescriptions = FilterLocalizations(originalBuff.Localization.LoreDescriptions, editingBuff.Localization.LoreDescriptions);
-			modLocalization.Names = FilterLocalizations(originalBuff.Localization.Names, editingBuff.Localization.Names);
-			modLocalization.Descriptions = FilterLocalizations(originalBuff.Localization.Descriptions, editingBuff.Localization.Descriptions);
+			var modLocalization = new Localization
+			{
+				LoreDescriptions = FilterNestedLocalizations(originalBuff.Localization.LoreDescriptions, editingBuff.Localization.LoreDescriptions),
+
+				Names = FilterNestedLocalizations(originalBuff.Localization.Names, editingBuff.Localization.Names),
+
+				Descriptions = FilterNestedLocalizations(originalBuff.Localization.Descriptions, editingBuff.Localization.Descriptions)
+			};
+
 			return modLocalization;
 		}
 
-		private Dictionary<string, string> FilterLocalizations(Dictionary<string, string>? originalLocalizations, Dictionary<string, string>? modifiedLocalizations)
+		private Dictionary<string, Dictionary<string, string>> FilterNestedLocalizations(Dictionary<string, Dictionary<string, string>> original, Dictionary<string, Dictionary<string, string>> edited)
 		{
-			var modDictionary = new Dictionary<string, string>();
+			var result = new Dictionary<string, Dictionary<string, string>>();
 
-			foreach (var originalLocalization in originalLocalizations)
+			foreach (var lang in edited)
 			{
-
-				var key = originalLocalization.Key;
-
-				if (modifiedLocalizations.TryGetValue(key, out string modifiedLocalizationValue) == false)
+				if (!original.TryGetValue(lang.Key, out var originalInner))
 				{
+					// komplette Sprache übernehmen
+					result[lang.Key] = new Dictionary<string, string>(lang.Value);
 					continue;
 				}
 
-				if (string.IsNullOrEmpty(modifiedLocalizationValue))
+				foreach (var kvp in lang.Value)
 				{
-					modifiedLocalizations.Remove(key);
-					continue;
-				}
+					if (!originalInner.TryGetValue(kvp.Key, out var origValue) || origValue != kvp.Value)
+					{
+						if (!result.ContainsKey(lang.Key))
+							result[lang.Key] = new Dictionary<string, string>();
 
-				if (modifiedLocalizationValue.Trim().Equals(originalLocalization.Value) == false)
-				{
-
-					modDictionary.TryAdd(key, modifiedLocalizationValue);
+						result[lang.Key][kvp.Key] = kvp.Value;
+					}
 				}
 			}
 
-			return modDictionary;
+			return result;
 		}
+
 
 		private IList<IAttribute> GetEssentialAttributes()
 		{

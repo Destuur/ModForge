@@ -182,6 +182,8 @@ namespace KCD2.ModForge.Shared.Adapter
 					WriteBuff(mod.ModId, buff);
 				}
 			}
+			var pakPath = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", mod.ModId, "Data");
+			CreateModPak(pakPath, Path.Combine(pakPath, mod.ModId + ".pak"));
 			return true;
 		}
 
@@ -211,10 +213,44 @@ namespace KCD2.ModForge.Shared.Adapter
 			}
 		}
 
+		private void CreateModPak(string baseFolder, string pakFileName)
+		{
+			if (File.Exists(pakFileName))
+				File.Delete(pakFileName);
+
+			// Pfad zum Zielordner sicherstellen (falls notwendig)
+			var outputFolder = Path.GetDirectoryName(pakFileName);
+			if (!Directory.Exists(outputFolder))
+				Directory.CreateDirectory(outputFolder);
+
+			using (FileStream fs = new FileStream(pakFileName, FileMode.CreateNew))
+			using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create))
+			{
+				var files = Directory.GetFiles(baseFolder, "*", SearchOption.AllDirectories);
+
+				foreach (var file in files)
+				{
+					// Wenn die Datei die PAK-Datei selbst ist, überspringen
+					if (Path.GetFullPath(file) == Path.GetFullPath(pakFileName))
+						continue;
+
+					string entryName = Path.GetRelativePath(baseFolder, file).Replace('\\', '/');
+
+					var entry = archive.CreateEntry(entryName, CompressionLevel.NoCompression);
+
+					using (var entryStream = entry.Open())
+					using (var fileStream = File.OpenRead(file))
+					{
+						fileStream.CopyTo(entryStream);
+					}
+				}
+			}
+		}
+
 		private bool WriteBuff(string modId, Buff buff)
 		{
 			string directoryUpToRpg = buff.Path.Substring(0, buff.Path.IndexOf("rpg") + "rpg".Length);
-			var buffDirectory = Path.Combine(ToolResources.Keys.ModPath(), modId, "Data", directoryUpToRpg);
+			var buffDirectory = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", modId, "Data", directoryUpToRpg);
 			var buffFile = Path.Combine(buffDirectory, "buff__" + modId + ".xml");
 
 			Directory.CreateDirectory(buffDirectory);
@@ -230,6 +266,14 @@ namespace KCD2.ModForge.Shared.Adapter
 				{
 					string serialized = BuffParamSerializer.ToAttributeString(list);
 					attributes.Add(new XAttribute(kv.Name, serialized));
+				}
+				else if (kv.Value is Enum enumValue)
+				{
+					attributes.Add(new XAttribute(kv.Name, Convert.ToInt32(enumValue)));
+				}
+				else if (kv.Value is bool boolValue)
+				{
+					attributes.Add(new XAttribute(kv.Name, boolValue.ToString().ToLower()));
 				}
 				else
 				{
@@ -259,7 +303,7 @@ namespace KCD2.ModForge.Shared.Adapter
 		private bool WritePerk(string modId, Perk perk)
 		{
 			string directoryUpToRpg = perk.Path.Substring(0, perk.Path.IndexOf("rpg") + "rpg".Length);
-			var perkDirectory = Path.Combine(ToolResources.Keys.ModPath(), modId, "Data", directoryUpToRpg);
+			var perkDirectory = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", modId, "Data", directoryUpToRpg);
 			var perkFile = Path.Combine(perkDirectory, "perk__" + modId + ".xml");
 
 			// Ordner erstellen
@@ -269,8 +313,21 @@ namespace KCD2.ModForge.Shared.Adapter
 			if (File.Exists(perkFile))
 				File.Delete(perkFile);
 
-			// Attribute aus dem Perk-Modell übernehmen
-			var attributes = perk.Attributes.Select(kv => new XAttribute(kv.Name, kv.Value));
+			var attributes = perk.Attributes.Select(kv =>
+			{
+				if (kv.Value is Enum enumValue)
+				{
+					return new XAttribute(kv.Name, Convert.ToInt32(enumValue));
+				}
+				if (kv.Value is bool boolValue)
+				{
+					return new XAttribute(kv.Name, boolValue.ToString().ToLower());
+				}
+				else
+				{
+					return new XAttribute(kv.Name, kv.Value?.ToString() ?? string.Empty);
+				}
+			});
 
 			// Perk-Element erzeugen
 			var perkElement = new XElement("perk", attributes);
@@ -298,9 +355,9 @@ namespace KCD2.ModForge.Shared.Adapter
 		private bool CreateLocalization(ModDescription mod)
 		{
 			string localizationPath;
-			Dictionary<string, string> names;
-			Dictionary<string, string> descriptions;
-			Dictionary<string, string> loreDescriptions;
+			Dictionary<string, Dictionary<string, string>> names;
+			Dictionary<string, Dictionary<string, string>> descriptions;
+			Dictionary<string, Dictionary<string, string>> loreDescriptions;
 
 			foreach (var moditem in mod.ModItems)
 			{
@@ -323,7 +380,7 @@ namespace KCD2.ModForge.Shared.Adapter
 				foreach (var languageKey in allLanguages)
 				{
 					var language = LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key;
-					localizationPath = Path.Combine(ToolResources.Keys.ModPath(), mod.ModId, "Localization", language + "_xml", "text__" + mod.ModId + ".xml");
+					localizationPath = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", mod.ModId, "Localization", language + "_xml", "text__" + mod.ModId + ".xml");
 
 					var directory = Path.GetDirectoryName(localizationPath);
 
@@ -365,7 +422,7 @@ namespace KCD2.ModForge.Shared.Adapter
 					if (language == null)
 						continue;
 
-					var localizationFolder = Path.Combine(ToolResources.Keys.ModPath(), mod.ModId, "Localization", language + "_xml");
+					var localizationFolder = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", mod.ModId, "Localization", language + "_xml");
 					var localizationPath = Path.Combine(localizationFolder, "text__" + mod.ModId + ".xml");
 
 					if (!File.Exists(localizationPath))
@@ -378,13 +435,13 @@ namespace KCD2.ModForge.Shared.Adapter
 						continue;
 
 					if (loc.Names.TryGetValue(languageKey, out var nameValue))
-						root.Add(CreateRow(modItem.Id + "_name", nameValue));
+						root.Add(CreateRow(nameValue.Keys.First(), nameValue.Values.First()));
 
 					if (loc.Descriptions.TryGetValue(languageKey, out var descValue))
-						root.Add(CreateRow(modItem.Id + "_desc", descValue));
+						root.Add(CreateRow(descValue.Keys.First(), descValue.Values.First()));
 
 					if (loc.LoreDescriptions.TryGetValue(languageKey, out var loreValue))
-						root.Add(CreateRow(modItem.Id + "_lore", loreValue));
+						root.Add(CreateRow(loreValue.Keys.First(), loreValue.Values.First()));
 
 					doc.Save(localizationPath);
 
@@ -416,7 +473,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			if (mod is null)
 				return false;
 
-			var path = Path.Combine(ToolResources.Keys.ModPath(), mod.ModId);
+			var path = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", mod.ModId);
 
 			// Verzeichnisse anlegen
 			Directory.CreateDirectory(Path.Combine(path, "Data"));
