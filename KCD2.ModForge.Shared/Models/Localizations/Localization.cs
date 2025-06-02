@@ -1,8 +1,4 @@
-﻿using KCD2.ModForge.Shared.Models.Attributes;
-using KCD2.ModForge.Shared.Mods;
-using System.Text.Json.Serialization;
-
-namespace KCD2.ModForge.Shared.Models.Localizations
+﻿namespace KCD2.ModForge.Shared.Models.Localizations
 {
 	public class Localization
 	{

@@ -1,6 +1,6 @@
 ﻿using KCD2.ModForge.Shared.Models.ModItems;
 
-namespace KCD2.ModForge.Shared.Mods
+namespace KCD2.ModForge.Shared.Models.Mods
 {
 	public class ModDescription
 	{

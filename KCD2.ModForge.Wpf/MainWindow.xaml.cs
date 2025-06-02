@@ -1,6 +1,5 @@
 ﻿using KCD2.ModForge.Shared;
-using KCD2.ModForge.Shared.Adapter;
-using KCD2.ModForge.Shared.Mods;
+using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
 using KCD2.ModForge.Wpf.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,15 +17,18 @@ namespace KCD2.ModForge.Wpf
 		public MainWindow()
 		{
 			var serviceCollection = new ServiceCollection();
-
 			serviceCollection.AddWpfBlazorWebView();
-
 			serviceCollection.AddMudServices()
-				.AddModForgeServices()
-				.AddModForgeAdapters()
-				.AddSingleton<IFolderPickerService, FolderPickerService>();
+							 .AddModForgeServices()
+							 .AddModForgeAdapters()
+							 .AddSingleton<IFolderPickerService, FolderPickerService>();
 
-			Resources.Add("services", serviceCollection.BuildServiceProvider());
+#if DEBUG
+			serviceCollection.AddBlazorWebViewDeveloperTools();
+#endif
+
+			var serviceProvider = serviceCollection.BuildServiceProvider();
+			Resources.Add("services", serviceProvider);
 
 			InitializeComponent();
 		}

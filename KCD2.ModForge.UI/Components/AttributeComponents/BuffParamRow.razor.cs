@@ -1,37 +1,32 @@
 ﻿using KCD2.ModForge.Shared.Models.Attributes;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace KCD2.ModForge.UI.Components.AttributeComponents
 {
-	public partial class EnumAttribute
+	public partial class BuffParamRow
 	{
-		[CascadingParameter]
-		public IAttribute Attribute { get; set; }
+		[Parameter]
+		public BuffParam BuffParam { get; set; }
 
-		private Type enumType;
+
+
+
 		private IEnumerable<string> enumNames = Enumerable.Empty<string>();
 		private Dictionary<string, string> enumDisplayNames = new();
 
 		private string currentEnumString;
 
-		// Strongly typed Access to Enum Value
-		private Enum CurrentEnumValue
+		private MathOperation CurrentEnumValue
 		{
-			get => Attribute.Value as Enum;
+			get => BuffParam.Operation;
 			set
 			{
-				Attribute.Value = value;
+				BuffParam.Operation = value;
 				currentEnumString = value.ToString();
 			}
 		}
 
-		// Used by MudSelect
 		private string CurrentEnumString
 		{
 			get => currentEnumString;
@@ -39,11 +34,8 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 			{
 				currentEnumString = value;
 
-				if (enumType != null)
-				{
-					var parsed = (Enum)Enum.Parse(enumType, value);
-					Attribute.Value = parsed;
-				}
+				var parsed = (MathOperation)Enum.Parse(typeof(MathOperation), value);
+				BuffParam.Operation = parsed;
 			}
 		}
 
@@ -51,11 +43,10 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 		{
 			base.OnInitialized();
 
-			var value = Attribute.Value;
+			var value = BuffParam.Operation;
 			if (value != null && value.GetType().IsEnum)
 			{
-				enumType = value.GetType();
-				enumNames = Enum.GetNames(enumType);
+				enumNames = Enum.GetNames(typeof(MathOperation));
 
 				enumDisplayNames = enumNames.ToDictionary(
 					name => name,
@@ -69,11 +60,6 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 		private string SplitCamelCase(string input)
 		{
 			return Regex.Replace(input, "(?<!^)([A-Z])", " $1");
-		}
-
-		private string GetTypeLabel()
-		{
-			return enumType != null ? SplitCamelCase(enumType.Name) : string.Empty;
 		}
 	}
 }

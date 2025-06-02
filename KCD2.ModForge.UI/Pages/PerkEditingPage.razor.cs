@@ -41,6 +41,26 @@ namespace KCD2.ModForge.UI.Pages
 			modPerk.Attributes = GetChangedAttributes();
 			modPerk.Localization = GetChangedLocalizations();
 			ModService.AddModItem(modPerk);
+			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
+		}
+
+		private async Task Checkout()
+		{
+			var parameters = new DialogParameters<MoreModItemsDialog>
+			{
+				{ x => x.ContentText, "Though have yanked enough pizzles? Leave then, and create your mod!" },
+				{ x => x.ButtonText, "Create Mod" }
+			};
+
+			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+			var dialog = await DialogService.ShowAsync<MoreModItemsDialog>("Create Your Mod", parameters, options);
+			var result = await dialog.Result;
+
+			if (result.Canceled == false)
+			{
+				await NavigationService.NavigateToAsync("/modoverview");
+			}
 		}
 
 		private Localization GetChangedLocalizations()
@@ -123,7 +143,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
-				await NavigationService.GoBackAsync();
+				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
 			}
 		}
 

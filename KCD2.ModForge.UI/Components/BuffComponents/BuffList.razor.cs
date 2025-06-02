@@ -1,5 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Models.ModItems;
-using KCD2.ModForge.Shared.Mods;
+using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 

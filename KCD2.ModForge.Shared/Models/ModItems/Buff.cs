@@ -29,7 +29,7 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 			Attributes = attributes.ToList();
 		}
 
-		public Buff(string id, string path, IList<IAttribute> attributes, IList<IModItem> modItems, Localization localization)
+		public Buff(string id, string path, IList<IModItem> modItems, IList<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
 			Path = path;
@@ -46,7 +46,7 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 
 		public static Buff GetDeepCopy(Buff buff)
 		{
-			return new Buff(buff.Id, buff.Path, buff.Attributes.ToList(), buff.ModItems.ToList(), buff.Localization);
+			return new Buff(buff.Id, buff.Path, buff.ModItems.ToList(), buff.Attributes.Select(attr => attr.DeepClone()).ToList(), buff.Localization.DeepClone());
 		}
 	}
 }

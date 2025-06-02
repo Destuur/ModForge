@@ -1,0 +1,13 @@
+﻿@page "/modoverview"
+
+@if(mod is not null)
+{
+	<MudGrid>
+
+		@foreach (var modItem in mod.ModItems)
+	{
+		<MudText>@modItem</MudText>
+	}
+
+	</MudGrid>
+}

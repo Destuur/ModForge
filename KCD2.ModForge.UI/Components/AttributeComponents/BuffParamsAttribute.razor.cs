@@ -10,29 +10,24 @@ using System.Threading.Tasks;
 
 namespace KCD2.ModForge.UI.Components.AttributeComponents
 {
-    public partial class BuffParamsAttribute
-    {
-        [CascadingParameter]
-        public IAttribute? Attribute { get; set; }
-        IList<BuffParam>? CurrentValues
-        {
-            get => (IList<BuffParam>)Attribute!.Value;
-            set => Attribute!.Value = value;
-        }
+	public partial class BuffParamsAttribute
+	{
+		[CascadingParameter]
+		public IAttribute? Attribute { get; set; }
+		IList<BuffParam>? CurrentValues
+		{
+			get => (IList<BuffParam>)Attribute!.Value;
+			set => Attribute!.Value = value;
+		}
 
-        private string FormatLabel(string raw)
-        {
-            if (string.IsNullOrWhiteSpace(raw))
-                return string.Empty;
+		private string SplitCamelCase(string input)
+		{
+			return Regex.Replace(input, "(?<!^)([A-Z])", " $1");
+		}
 
-            // Unterstriche durch Leerzeichen ersetzen
-            string noUnderscores = raw.Replace("_", " ");
-
-            // CamelCase trennen
-            string withSpaces = Regex.Replace(noUnderscores, "(?<!^)([A-Z])", " $1");
-
-            // Jeden Wortanfang großschreiben
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(withSpaces.ToLower());
-        }
-    }
+		private string GetTypeLabel()
+		{
+			return SplitCamelCase(typeof(MathOperation).Name);
+		}
+	}
 }

@@ -1,4 +1,4 @@
-﻿using KCD2.ModForge.Shared.Mods;
+﻿using KCD2.ModForge.Shared.Models.Mods;
 using Microsoft.AspNetCore.Components;
 
 namespace KCD2.ModForge.UI.Components.ModCollectionComponents

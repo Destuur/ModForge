@@ -20,7 +20,7 @@ namespace KCD2.ModForge.UI.Pages
 			{
 				return;
 			}
-			ModService.TrySetMod(ModId);
+			ModService.TryGetMod(ModId);
 			await base.OnInitializedAsync();
 		}
 	}

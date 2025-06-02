@@ -1,7 +1,4 @@
-﻿using KCD2.ModForge.Shared.Mods;
-using KCD2.ModForge.Shared.Services;
-
-namespace KCD2.ModForge.Shared.Adapter
+﻿namespace KCD2.ModForge.Shared.Adapter
 {
 	public interface IModItemAdapter<T>
 	{

@@ -96,14 +96,14 @@ namespace KCD2.ModForge.Shared.Factories
 		{
 			return op switch
 			{
-				"+" => MathOperation.AddAbs,
-				"-" => MathOperation.SubAbs,
-				"=" => MathOperation.SetAbs,
-				"*" => MathOperation.AddBaseRel,
-				"%" => MathOperation.AddCurrRel,
-				"<" => MathOperation.Min,
-				">" => MathOperation.Max,
-				"!" => MathOperation.Negation,
+				"+" => MathOperation.AddAbsolute,
+				"-" => MathOperation.SubtractAbsolute,
+				"=" => MathOperation.SetAbsolute,
+				"*" => MathOperation.AddRelativeToBase,
+				"%" => MathOperation.MultiplyCurrent,
+				"<" => MathOperation.Minimum,
+				">" => MathOperation.Maximum,
+				"!" => MathOperation.NegateRelativeToValue,
 				_ => throw new InvalidOperationException($"Unbekannte Operation: {op}")
 			};
 		}
@@ -146,7 +146,7 @@ namespace KCD2.ModForge.Shared.Factories
 					{
 						// Kein Operation+Wert gefunden → Key ist ein Flag (z.B. LimitSprint)
 						// Hier interpretieren wir es als Set-Operation mit Wert 1 (aktiv)
-						list.Add(new BuffParam(trimmed, MathOperation.SetAbs, 1));
+						list.Add(new BuffParam(trimmed, MathOperation.SetAbsolute, 1));
 					}
 				}
 				return list;

@@ -1,19 +1,12 @@
 ﻿using KCD2.ModForge.Shared.Models.ModItems;
-using KCD2.ModForge.Shared.Mods;
+using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static MudBlazor.CategoryTypes;
 
 namespace KCD2.ModForge.UI.Components.PerkComponents
 {
 	public partial class PerkList
 	{
-		private ModDescription? mod;
 		private string languageKey = "en";
 
 		[Inject]

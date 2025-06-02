@@ -25,7 +25,7 @@ namespace KCD2.ModForge.UI.Pages
 		[Inject]
 		public IDialogService DialogService { get; set; }
 
-		private async Task SaveBuff(MouseEventArgs args)
+		private async Task SaveBuff()
 		{
 			var modBuff = new Buff(originalBuff.Id, originalBuff.Path);
 			if (editingBuff is null || originalBuff is null)
@@ -41,6 +41,26 @@ namespace KCD2.ModForge.UI.Pages
 			modBuff.Attributes = GetChangedAttributes();
 			modBuff.Localization = GetChangedLocalizations();
 			ModService.AddModItem(modBuff);
+			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
+		}
+
+		private async Task Checkout()
+		{
+			var parameters = new DialogParameters<MoreModItemsDialog>
+			{
+				{ x => x.ContentText, "Though have yanked enough pizzles? Leave then, and create your mod!" },
+				{ x => x.ButtonText, "Create Mod" }
+			};
+
+			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+			var dialog = await DialogService.ShowAsync<MoreModItemsDialog>("Create Your Mod", parameters, options);
+			var result = await dialog.Result;
+
+			if (result.Canceled == false)
+			{
+				await NavigationService.NavigateToAsync("/modoverview");
+			}
 		}
 
 		private Localization GetChangedLocalizations()
@@ -99,6 +119,34 @@ namespace KCD2.ModForge.UI.Pages
 					continue;
 				}
 
+				if (editingAttribute is Attribute<IList<BuffParam>> editingBuffParams &&
+					originalAttribute is Attribute<IList<BuffParam>> originalBuffParams)
+				{
+					var modBuffParams = new Attribute<IList<BuffParam>>(editingBuffParams.Name, new List<BuffParam>());
+
+					foreach (var original in originalBuffParams.Value)
+					{
+						var edited = editingBuffParams.Value.FirstOrDefault(x => x.Key == original.Key);
+
+						if (edited is null)
+							continue;
+
+						bool keyChanged = edited.Key != original.Key;
+						bool opChanged = edited.Operation != original.Operation;
+						bool valueChanged = edited.Value != original.Value;
+
+						if (keyChanged || opChanged || valueChanged)
+						{
+							modBuffParams.Value.Add(new BuffParam(edited.Key, edited.Operation, edited.Value));
+						}
+					}
+
+					if (modBuffParams.Value.Count > 0)
+						modList.Add(modBuffParams);
+					continue;
+				}
+
+
 				if (editingAttribute.Value.Equals(originalAttribute.Value) == false)
 				{
 					modList.Add(editingAttribute);
@@ -111,10 +159,10 @@ namespace KCD2.ModForge.UI.Pages
 		private async Task Cancel()
 		{
 			var parameters = new DialogParameters<ChangesDetectedDialog>
-		{
-			{ x => x.ContentText, "Do you really want to discard all changes?" },
-			{ x => x.ButtonText, "Discard" }
-		};
+			{
+				{ x => x.ContentText, "Do you really want to discard all changes?" },
+				{ x => x.ButtonText, "Discard" }
+			};
 
 			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
@@ -123,7 +171,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
-				await NavigationService.GoBackAsync();
+				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
 			}
 		}
 

@@ -1,6 +1,6 @@
 ﻿using KCD2.ModForge.Shared.Adapter;
 using KCD2.ModForge.Shared.Models.ModItems;
-using KCD2.ModForge.Shared.Mods;
+using KCD2.ModForge.Shared.Models.Mods;
 
 namespace KCD2.ModForge.Shared.Services
 {
@@ -19,12 +19,34 @@ namespace KCD2.ModForge.Shared.Services
 			return mod!;
 		}
 
+		public ModDescription Mod
+		{
+			get => mod;
+			set
+			{
+				if (value is null)
+				{
+					return;
+				}
+				mod = value;
+			}
+		}
+
 		public void ClearMod()
 		{
 			mod = new();
 		}
 
-		public bool TrySetMod(string modId)
+		public int GetAttributeCount()
+		{
+			if (mod is null)
+			{
+				return default;
+			}
+			return mod.ModItems.Count;
+		}
+
+		public bool TryGetMod(string modId)
 		{
 			if (string.IsNullOrEmpty(modId))
 			{

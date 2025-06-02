@@ -14,31 +14,5 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 		public ModService? ModService { get; set; }
 		[Parameter]
 		public Buff Buff { get; set; }
-
-		private async Task SaveBuff(MouseEventArgs args)
-		{
-			if (Buff is null)
-			{
-				return;
-			}
-
-			if (ModService is null)
-			{
-				return;
-			}
-
-			ModService.AddModItem(Buff);
-			await ModService.ExportMod();
-		}
-
-		private void ChangeAttribute(KeyValuePair<string, string> keyValuePair)
-		{
-
-		}
-
-		private void ChangeLocalization(string value)
-		{
-
-		}
 	}
 }

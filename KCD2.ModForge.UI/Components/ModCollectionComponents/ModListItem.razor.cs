@@ -1,10 +1,5 @@
-﻿using KCD2.ModForge.Shared.Mods;
+﻿using KCD2.ModForge.Shared.Models.Mods;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 {

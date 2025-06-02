@@ -1,6 +1,8 @@
-﻿@foreach(var param in CurrentValues)
-{
-    <MudText>@param.Key</MudText>
-    <MudText>@param.Value</MudText>
-    <MudText>@param.Operation</MudText>
-}
+﻿<MudGrid>
+	@foreach (var buffParam in CurrentValues)
+	{
+		<MudItem xs="12" sm="12" md="12" lg="12">
+			<BuffParamRow BuffParam="buffParam"></BuffParamRow>
+		</MudItem>
+	}
+</MudGrid>

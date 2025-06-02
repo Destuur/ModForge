@@ -1,7 +1,4 @@
-﻿using KCD2.ModForge.Shared.Models.ModItems;
-using KCD2.ModForge.Shared.Mods;
-using Newtonsoft.Json;
-using System.Text.Json;
+﻿using Newtonsoft.Json;
 
 namespace KCD2.ModForge.Shared.Adapter
 {

@@ -1,0 +1,22 @@
+﻿<MudGrid>
+
+	<MudItem xs="4" sm="4" md="4" lg="4">
+		<MudTextField @bind-Value="BuffParam.Key" Variant="Variant.Outlined" Label="Attribute" FullWidth="true" Margin="Margin.Dense"></MudTextField>
+	</MudItem>
+
+	<MudItem xs="4" sm="4" md="4" lg="4">
+		<MudSelect T="string" @bind-Value="CurrentEnumString" FullWidth="true" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Math Operation">
+			@foreach (var enumName in enumNames)
+			{
+				<MudSelectItem T="string" Value="@enumName">
+					@enumDisplayNames[enumName]
+				</MudSelectItem>
+			}
+		</MudSelect>
+	</MudItem>
+
+	<MudItem xs="4" sm="4" md="4" lg="4">
+		<MudTextField @bind-Value="BuffParam.Value" Variant="Variant.Outlined" Label="Attribute" FullWidth="true" Margin="Margin.Dense"></MudTextField>
+	</MudItem>
+
+</MudGrid>

@@ -27,6 +27,10 @@ namespace KCD2.ModForge.Shared.Models.Attributes
 
 		public IAttribute DeepClone()
 		{
+			if (Value is IList<BuffParam> buffParams)
+			{
+				return new Attribute<IList<BuffParam>>(Name, buffParams.Select(attr => attr.DeepClone()).ToList());
+			}
 			return new Attribute<T>(Name, Value);
 		}
 
@@ -34,14 +38,14 @@ namespace KCD2.ModForge.Shared.Models.Attributes
 		{
 			return op switch
 			{
-				"+" => MathOperation.AddAbs,
-				"-" => MathOperation.SubAbs,
-				"=" => MathOperation.SetAbs,
-				"*" => MathOperation.AddBaseRel,
-				"%" => MathOperation.AddCurrRel,
-				"<" => MathOperation.Min,
-				">" => MathOperation.Max,
-				"!" => MathOperation.Negation,
+				"+" => MathOperation.AddAbsolute,
+				"-" => MathOperation.SubtractAbsolute,
+				"=" => MathOperation.SetAbsolute,
+				"*" => MathOperation.AddRelativeToBase,
+				"%" => MathOperation.MultiplyCurrent,
+				"<" => MathOperation.Minimum,
+				">" => MathOperation.Maximum,
+				"!" => MathOperation.NegateRelativeToValue,
 				_ => throw new InvalidOperationException($"Unbekannte Operation: {op}")
 			};
 		}
@@ -91,17 +95,22 @@ namespace KCD2.ModForge.Shared.Models.Attributes
 		public string Key { get; set; }
 		public MathOperation Operation { get; set; }
 		public double Value { get; set; }
+
+		public BuffParam DeepClone()
+		{
+			return new BuffParam(Key, Operation, Value);
+		}
 	}
 
 	public enum MathOperation
 	{
-		AddAbs,      // +
-		SubAbs,      // -
-		SetAbs,      // =
-		AddBaseRel,  // *
-		AddCurrRel,  // %
-		Min,         // <
-		Max,         // >
-		Negation     // !
+		AddAbsolute,      // +
+		SubtractAbsolute,      // -
+		SetAbsolute,      // =
+		AddRelativeToBase,  // *
+		MultiplyCurrent,  // %
+		Minimum,         // <
+		Maximum,         // >
+		NegateRelativeToValue     // !
 	}
 }
