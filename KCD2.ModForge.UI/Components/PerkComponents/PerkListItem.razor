@@ -8,7 +8,7 @@
 					(Perk.Localization.Names == null ||
 					Perk.Localization.Names.Count == 0))
 				{
-					<MudText Typo="Typo.h6">Perk: @Placeholder</MudText>
+					<MudText Typo="Typo.h6">System-Perk: @Perk.Attributes.FirstOrDefault(x => x.Name.Contains("name")).Value</MudText>
 				}
 				else
 				{

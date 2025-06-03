@@ -1,13 +1,10 @@
 ﻿using KCD2.ModForge.Shared;
-using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
 using KCD2.ModForge.Wpf.Services;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace KCD2.ModForge.Wpf
 {
