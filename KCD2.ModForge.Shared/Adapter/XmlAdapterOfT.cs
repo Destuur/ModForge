@@ -39,6 +39,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			if (typeof(Perk).IsAssignableFrom(typeof(T)))
 			{
 				modItemPath = GetPerks(filePath, modItemPath, foundModItems);
+				GetPerkToBuff(filePath, foundModItems);
 			}
 
 			if (typeof(Buff).IsAssignableFrom(typeof(T)))
@@ -47,6 +48,49 @@ namespace KCD2.ModForge.Shared.Adapter
 			}
 
 			return foundModItems;
+		}
+
+		private void GetPerkToBuff(string filePath, List<T> foundModItems)
+		{
+			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open))
+			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
+			{
+				foreach (var entry in archive.Entries)
+				{
+					if (entry.FullName.EndsWith(".tbl"))
+					{
+						continue;
+					}
+
+					if (entry.FullName.Contains("perk_buff"))
+					{
+						using (Stream stream = entry.Open())
+						{
+							try
+							{
+								XDocument doc = XDocument.Load(stream);
+
+								foreach (var perkElement in doc.Descendants("perk_buff"))
+								{
+									var buffId = perkElement.Attributes().FirstOrDefault(x => x.Name.LocalName == "buff_id").Value;
+									var perkId = perkElement.Attributes().FirstOrDefault(x => x.Name.LocalName == "perk_id").Value;
+									var perkItem = foundModItems.FirstOrDefault(x => x.Id == perkId);
+									// TODO: Als eigene Property oder als Attribut hinzufügen?
+									if (perkItem is Perk perk)
+									{
+										perk.BuffId = buffId;
+										perk.Attributes.Add(new Attribute<string>("buff_id", buffId));
+									}
+								}
+							}
+							catch (Exception ex)
+							{
+								Console.WriteLine($"Fehler beim Parsen von {entry.FullName}: {ex.Message}");
+							}
+						}
+					}
+				}
+			}
 		}
 
 		private static string GetPerks(string filePath, string modItemPath, List<T> foundModItems)

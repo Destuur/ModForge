@@ -18,7 +18,9 @@ namespace KCD2.ModForge.Shared.Factories
 			var constructor = type.GetConstructor(new[] { typeof(string), typeof(IEnumerable<IAttribute>) });
 
 			if (constructor == null)
+			{
 				throw new InvalidOperationException($"Kein passender Konstruktor in {type.Name} gefunden. Erwartet: (string, IEnumerable<IAttribute>)");
+			}
 
 			var newExpression = Expression.New(constructor!, pathExpression, attributesExpression);
 

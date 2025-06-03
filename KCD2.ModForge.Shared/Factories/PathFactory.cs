@@ -39,7 +39,7 @@ namespace KCD2.ModForge.Shared.Factories
 			return pakPaths;
 		}
 
-		public static string CreatePerkPath(string prefix, string modId)
+		public static string CreateModFolderPath(string prefix, string modId)
 		{
 			return Path.Combine(prefix, $"Mods\\{modId}\\");
 		}

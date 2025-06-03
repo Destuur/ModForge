@@ -1,4 +1,5 @@
-﻿using KCD2.ModForge.Shared.Models.Attributes;
+﻿using KCD2.ModForge.Shared;
+using KCD2.ModForge.Shared.Models.Attributes;
 using Microsoft.AspNetCore.Components;
 using System.Text.RegularExpressions;
 

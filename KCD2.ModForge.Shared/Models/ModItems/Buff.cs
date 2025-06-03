@@ -29,25 +29,25 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 			Attributes = attributes.ToList();
 		}
 
-		public Buff(string id, string path, IList<IModItem> modItems, IList<IAttribute> attributes, Localization localization)
+		public Buff(string id, string perkId, string path, IList<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
+			PerkId = perkId;
 			Path = path;
 			Attributes = attributes;
-			ModItems = modItems;
 			Localization = localization;
 		}
 
 		public string Id { get; set; } = string.Empty;
+		public string PerkId { get; set; } = string.Empty;
 		public string Path { get; set; } = string.Empty;
 		public string Name { get; set; }
 		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
-		public IList<IModItem> ModItems { get; set; } = new List<IModItem>();
 		public Localization Localization { get; set; } = new();
 
 		public static Buff GetDeepCopy(Buff buff)
 		{
-			return new Buff(buff.Id, buff.Path, buff.ModItems.ToList(), buff.Attributes.Select(attr => attr.DeepClone()).ToList(), buff.Localization.DeepClone());
+			return new Buff(buff.Id, buff.PerkId, buff.Path, buff.Attributes.Select(attr => attr.DeepClone()).ToList(), buff.Localization.DeepClone());
 		}
 	}
 }

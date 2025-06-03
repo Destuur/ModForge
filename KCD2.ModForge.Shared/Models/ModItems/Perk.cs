@@ -30,25 +30,25 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 			Attributes = attributes.ToList();
 		}
 
-		public Perk(string id, string path, IEnumerable<IModItem> modItems, IEnumerable<IAttribute> attributes, Localization localization)
+		public Perk(string id, string buffId, string path, IEnumerable<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
+			BuffId = buffId;
 			Path = path;
-			ModItems = modItems.ToList();
 			Attributes = attributes.ToList();
 			Localization = localization;
 		}
 
 		public string Id { get; set; } = string.Empty;
+		public string BuffId { get; set; } = string.Empty;
 		public string Path { get; set; } = string.Empty;
-		public string Name { get; set; }
-		public IList<IModItem> ModItems { get; set; } = new List<IModItem>();
+		public string Name { get; set; } = string.Empty;
 		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
 		public Localization Localization { get; set; } = new();
 
 		public static Perk GetDeepCopy(Perk perk)
 		{
-			return new Perk(perk.Id, perk.Path, perk.ModItems.ToList(), perk.Attributes.Select(attr => attr.DeepClone()).ToList(), perk.Localization.DeepClone());
+			return new Perk(perk.Id, perk.Path, perk.BuffId, perk.Attributes.Select(attr => attr.DeepClone()).ToList(), perk.Localization.DeepClone());
 		}
 	}
 }

@@ -159,4 +159,16 @@
 		normal = 1,
 		hardcore = 2
 	}
+
+	public enum MathOperation
+	{
+		AddAbsolute,      // +
+		SubtractAbsolute,      // -
+		SetAbsolute,      // =
+		AddRelativeToBase,  // *
+		MultiplyCurrent,  // %
+		Minimum,         // <
+		Maximum,         // >
+		NegateRelativeToValue     // !
+	}
 }

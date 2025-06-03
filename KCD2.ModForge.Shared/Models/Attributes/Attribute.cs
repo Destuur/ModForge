@@ -34,83 +34,52 @@ namespace KCD2.ModForge.Shared.Models.Attributes
 			return new Attribute<T>(Name, Value);
 		}
 
-		private MathOperation ParseOperation(string op)
-		{
-			return op switch
-			{
-				"+" => MathOperation.AddAbsolute,
-				"-" => MathOperation.SubtractAbsolute,
-				"=" => MathOperation.SetAbsolute,
-				"*" => MathOperation.AddRelativeToBase,
-				"%" => MathOperation.MultiplyCurrent,
-				"<" => MathOperation.Minimum,
-				">" => MathOperation.Maximum,
-				"!" => MathOperation.NegateRelativeToValue,
-				_ => throw new InvalidOperationException($"Unbekannte Operation: {op}")
-			};
-		}
+		//private MathOperation ParseOperation(string op)
+		//{
+		//	return op switch
+		//	{
+		//		"+" => MathOperation.AddAbsolute,
+		//		"-" => MathOperation.SubtractAbsolute,
+		//		"=" => MathOperation.SetAbsolute,
+		//		"*" => MathOperation.AddRelativeToBase,
+		//		"%" => MathOperation.MultiplyCurrent,
+		//		"<" => MathOperation.Minimum,
+		//		">" => MathOperation.Maximum,
+		//		"!" => MathOperation.NegateRelativeToValue,
+		//		_ => throw new InvalidOperationException($"Unbekannte Operation: {op}")
+		//	};
+		//}
 
-		private IList<BuffParam> ParseBuffParams(object value)
-		{
-			var list = new List<BuffParam>();
-			var buffParams = value.ToString() ?? string.Empty;
-			var pairs = buffParams.Split(',');
+		//private IList<BuffParam> ParseBuffParams(object value)
+		//{
+		//	var list = new List<BuffParam>();
+		//	var buffParams = value.ToString() ?? string.Empty;
+		//	var pairs = buffParams.Split(',');
 
-			foreach (var pair in pairs)
-			{
-				var match = System.Text.RegularExpressions.Regex.Match(pair.Trim(), @"(\w+)([\+\-\=\*\%\<\>\!])([\d\.]+)");
-				if (match.Success)
-				{
-					string key = match.Groups[1].Value;
-					string opStr = match.Groups[2].Value;
-					string valStr = match.Groups[3].Value;
+		//	foreach (var pair in pairs)
+		//	{
+		//		var match = System.Text.RegularExpressions.Regex.Match(pair.Trim(), @"(\w+)([\+\-\=\*\%\<\>\!])([\d\.]+)");
+		//		if (match.Success)
+		//		{
+		//			string key = match.Groups[1].Value;
+		//			string opStr = match.Groups[2].Value;
+		//			string valStr = match.Groups[3].Value;
 
-					if (double.TryParse(valStr, System.Globalization.NumberStyles.Any,
-										System.Globalization.CultureInfo.InvariantCulture,
-										out double val))
-					{
-						MathOperation op = ParseOperation(opStr);
-						list.Add(new BuffParam(key, op, val));
-					}
-				}
-				else
-				{
-					// Fehlerbehandlung
-				}
-			}
+		//			if (double.TryParse(valStr, System.Globalization.NumberStyles.Any,
+		//								System.Globalization.CultureInfo.InvariantCulture,
+		//								out double val))
+		//			{
+		//				MathOperation op = ParseOperation(opStr);
+		//				list.Add(new BuffParam(key, op, val));
+		//			}
+		//		}
+		//		else
+		//		{
+		//			// Fehlerbehandlung
+		//		}
+		//	}
 
-			return list;
-		}
-	}
-
-	public class BuffParam
-	{
-		public BuffParam(string key, MathOperation operation, double value)
-		{
-			Key = key;
-			Operation = operation;
-			Value = value;
-		}
-
-		public string Key { get; set; }
-		public MathOperation Operation { get; set; }
-		public double Value { get; set; }
-
-		public BuffParam DeepClone()
-		{
-			return new BuffParam(Key, Operation, Value);
-		}
-	}
-
-	public enum MathOperation
-	{
-		AddAbsolute,      // +
-		SubtractAbsolute,      // -
-		SetAbsolute,      // =
-		AddRelativeToBase,  // *
-		MultiplyCurrent,  // %
-		Minimum,         // <
-		Maximum,         // >
-		NegateRelativeToValue     // !
+		//	return list;
+		//}
 	}
 }

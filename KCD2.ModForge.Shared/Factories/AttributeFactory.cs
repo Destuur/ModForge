@@ -56,18 +56,26 @@ namespace KCD2.ModForge.Shared.Factories
 		public static IAttribute CreateAttribute(string name, string valueStr)
 		{
 			if (!AttributeTypeMap.TryGetValue(name, out var type))
+			{
 				throw new InvalidOperationException($"No type mapping defined for attribute '{name}'.");
+			}
 
 			object value;
 
 			try
 			{
 				if (type == typeof(IList<BuffParam>))
+				{
 					value = (IList<BuffParam>)ParseBuffParams(valueStr);
+				}
 				else if (type.IsEnum)
+				{
 					value = Enum.Parse(type, valueStr);
+				}
 				else
+				{
 					value = Convert.ChangeType(valueStr, type, CultureInfo.InvariantCulture);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -80,7 +88,9 @@ namespace KCD2.ModForge.Shared.Factories
 			{
 				var constructor = genericType.GetConstructor(new[] { typeof(string), type });
 				if (constructor == null)
+				{
 					throw new InvalidOperationException($"Konstruktor für {genericType.Name} nicht gefunden.");
+				}
 
 				var attribute = (IAttribute)constructor.Invoke(new[] { name, value });
 				return attribute;
@@ -120,7 +130,6 @@ namespace KCD2.ModForge.Shared.Factories
 				{
 					var trimmed = pair.Trim();
 
-					// Versuch, mit Regex zu matchen: key + operation + value
 					var match = System.Text.RegularExpressions.Regex.Match(trimmed, @"(\w+)([\+\-\=\*\%\<\>\!])([\-\+]?\d+(\.\d+)?)");
 
 					if (match.Success)
@@ -138,14 +147,11 @@ namespace KCD2.ModForge.Shared.Factories
 						}
 						else
 						{
-							// Fehlerbehandlung falls Wert nicht geparst werden kann
 							throw new InvalidOperationException($"Ungültiger Wert '{valStr}' für Key '{key}'.");
 						}
 					}
 					else
 					{
-						// Kein Operation+Wert gefunden → Key ist ein Flag (z.B. LimitSprint)
-						// Hier interpretieren wir es als Set-Operation mit Wert 1 (aktiv)
 						list.Add(new BuffParam(trimmed, MathOperation.SetAbsolute, 1));
 					}
 				}
