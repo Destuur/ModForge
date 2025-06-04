@@ -313,3 +313,8 @@ h1:focus {
     overflow-y: auto;
     max-height: calc(100vh - 64px - 24px); /* AppBar + Tab-Höhe abziehen */
 }
+
+.thick-outline {
+    border: 2px solid var(--mud-palette-outline, rgba(0,0,0,0.12)); /* Default-Farbe verwenden */
+    box-shadow: none; /* optional: MudBlazor verwendet normalerweise box-shadow für Outlines */
+}

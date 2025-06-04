@@ -64,5 +64,22 @@ namespace KCD2.ModForge.UI.Components.LocalizationComponents
 
 			StateHasChanged();
 		}
+
+		public void RemoveAllLanguages()
+		{
+			foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
+			{
+
+				SelectedLanguageCodes.Remove(languageKey);
+			}
+		}
+
+		public void AddAllLanguages()
+		{
+			foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
+			{
+				AddLanguageKey(languageKey);
+			}
+		}
 	}
 }

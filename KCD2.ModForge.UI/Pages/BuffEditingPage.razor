@@ -1,17 +1,19 @@
 ﻿@page "/editing/buff/{Id}"
 
-	<MudItem>
-		<MudTabs>
-			<MudTabPanel Text="Buff">
-			<BuffEditingItem Buff="editingBuff"></BuffEditingItem>
-			</MudTabPanel>
-			<MudTabPanel Text="Buff Localization">
-				<LocalizationComponent EditingModItem="editingBuff" OriginalModItem="originalBuff"></LocalizationComponent>
-			</MudTabPanel>
-		</MudTabs>
-	</MudItem>
+<MudTabs>
+	<MudTabPanel Text="Buff">		
+		<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 146.5px)" Elevation="0" Outlined="false" Style="background-color: transparent">
+			<BuffEditingItem Buff="editingBuff" />
+		</MudPaper>
+	</MudTabPanel>
+	<MudTabPanel Text="Buff Localization">
+		<MudPaper Class="d-flex flex-column overflow-x-auto " Height="calc(100vh - 146.5px)" Elevation="0" Outlined="false" Style="background-color: transparent">
+			<LocalizationComponent EditingModItem="editingBuff" OriginalModItem="originalBuff" />
+		</MudPaper>
+	</MudTabPanel>
+</MudTabs>
 
-<MudStack Row="true" Class="px-4 mt-4">
+<MudStack Row="true" Class="px-4 my-4">
 	<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
 	<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveBuff">Save & Continue Modding</MudButton>
 	<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="Checkout">Create Mod</MudButton>

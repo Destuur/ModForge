@@ -1,12 +1,14 @@
-﻿<MudGrid Spacing="5" Justify="Justify.FlexStart" Class="pa-4">
+﻿<MudGrid Spacing="4" Class="pa-4">
+
+	<MudItem sm="12">
+		<MudText Typo="Typo.h6">@EditingPerk.Localization.GetName("en")</MudText>
+	</MudItem>
 
 	@foreach (var attribute in sortedAttributes)
 	{
-		<MudItem xs="6" sm="6" md="6" lg="6">
 			<CascadingValue Value="attribute">
 				<AttributeSelector></AttributeSelector>
 			</CascadingValue>
-		</MudItem>
 	}
 
 </MudGrid>

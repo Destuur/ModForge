@@ -8,7 +8,7 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 {
 	public partial class BuffEditingItem
 	{
-		private IEnumerable<IAttribute> sortedAttributes => Buff.Attributes.OrderBy(x => x.Value.GetType().Name).Reverse();
+		private IEnumerable<IAttribute> sortedAttributes => Buff.Attributes.OrderBy(x => (x.Value is IList<BuffParam> ? 1 : 0, x.Value.GetType().Name));
 
 		[Inject]
 		public ModService? ModService { get; set; }

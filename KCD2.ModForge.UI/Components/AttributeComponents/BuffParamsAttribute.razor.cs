@@ -30,5 +30,20 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 		{
 			return SplitCamelCase(typeof(MathOperation).Name);
 		}
+
+		private void RemoveBuffParam(string key)
+		{
+			var tempList = new List<BuffParam>();
+
+			foreach (var currentValue in CurrentValues)
+			{
+				if (currentValue.Key != key)
+				{
+					tempList.Add(currentValue);
+				}
+			}
+
+			CurrentValues = tempList;
+		}
 	}
 }

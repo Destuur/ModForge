@@ -9,6 +9,8 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 	{
 		[Parameter]
 		public BuffParam BuffParam { get; set; }
+		[Parameter]
+		public EventCallback<string> RemoveBuffParam { get; set; }
 
 
 

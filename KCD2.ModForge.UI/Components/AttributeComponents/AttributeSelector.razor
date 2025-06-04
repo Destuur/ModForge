@@ -1,27 +1,47 @@
 ﻿@if (Attribute is not null)
 {
-    @switch (Attribute.Value)
-    {
-        case bool:
-            <BoolAttribute />
-            break;
-        case Enum:
-            <EnumAttribute />
-            break;
-        case double:
-            <DoubleAttribute />
-            break;
-        case int:
-            <IntAttribute />
-            break;
-        case string:
-            <StringAttribute />
-            break;
-        case IList<BuffParam>:
-            <BuffParamsAttribute />
-            break;
-        default:
-            <MudText>Unknown attribute type</MudText>
-            break;
-    }
+	@switch (Attribute.Value)
+	{
+		case bool:
+
+			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
+				<BoolAttribute />
+			</MudItem>
+			break;
+		case Enum:
+
+			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
+				<EnumAttribute />
+			</MudItem>
+			break;
+		case double:
+
+			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
+				<DoubleAttribute />
+			</MudItem>
+			break;
+		case int:
+
+			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
+				<IntAttribute />
+			</MudItem>
+			break;
+		case string:
+
+			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
+				<StringAttribute />
+			</MudItem>
+			break;
+		case IList<BuffParam>:
+			<MudItem xs="12" sm="12" md="12" lg="12">
+				<MudCard Class="pa-4 border-2" Elevation="0" Outlined="true">
+					<MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Add Buff Parameter</MudButton>
+					<BuffParamsAttribute />
+				</MudCard>
+			</MudItem>
+			break;
+		default:
+			<MudText>Unknown attribute type</MudText>
+			break;
+	}
 }

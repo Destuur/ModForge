@@ -34,6 +34,7 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 			await modSettingForm!.SaveMod();
 
 			var mod = await ModService.GenerateMod();
+			mod.ModItems.Clear();
 			await NavigationService!.NavigateToAsync($"modItems/{mod.ModId}");
 		}
 

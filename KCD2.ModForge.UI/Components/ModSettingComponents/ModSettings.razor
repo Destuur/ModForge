@@ -1,18 +1,19 @@
-﻿<MudGrid Spacing="2" Class="px-4">
+﻿<MudPaper Class="d-flex flex-column overflow-x-auto pa-0 ma-0" Height="calc(100vh - 156px)" Elevation="0" Outlined="false" Style="background-color: transparent">
+	<MudGrid Spacing="2" Class="px-4">
+		<MudItem md="3" sm="12" xs="12">
+			<ModSettingIconPicker @ref="modSettingIconPicker"></ModSettingIconPicker>
+		</MudItem>
 
-	<MudItem md="3" sm="12" xs="12">
-		<ModSettingIconPicker @ref="modSettingIconPicker"></ModSettingIconPicker>
-	</MudItem>
+		<MudItem md="9" sm="12" xs="12">
+			<ModSettingForm OnValidityChanged="UpdateChildValidity" @ref="modSettingForm"></ModSettingForm>
+		</MudItem>
 
-	<MudItem md="9" sm="12" xs="12">
-		<ModSettingForm OnValidityChanged="UpdateChildValidity" @ref="modSettingForm"></ModSettingForm>
-	</MudItem>
+	</MudGrid>
+</MudPaper>
+<MudItem xs="12">
+	<MudStack Row="true" Class="px-4 my-4">
+		<MudButton Color="Color.Error" FullWidth="true" Variant="Variant.Outlined" OnClick="Cancel">Cancel</MudButton>
+		<MudButton Disabled="!isChildValid" Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="StartModding">Start Modding</MudButton>
+	</MudStack>
+</MudItem>
 
-	<MudItem xs="12">
-		<MudStack Row="true" Class="mt-4">
-			<MudButton Color="Color.Error" FullWidth="true" Variant="Variant.Outlined" OnClick="Cancel">Cancel</MudButton>
-			<MudButton Disabled="!isChildValid" Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="StartModding">Start Modding</MudButton>
-		</MudStack>
-	</MudItem>
-
-</MudGrid>

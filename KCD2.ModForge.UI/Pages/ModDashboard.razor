@@ -2,14 +2,17 @@
 
 @if (ModService is not null)
 {
-	<MudGrid Class="px-4" Spacing="2">
+
+	<MudGrid Class="px-2" Spacing="2">
 
 		<MudItem Class="pt-4 pl-4">
 			<MudText Typo="Typo.h4">Recent Projects</MudText>
 		</MudItem>
 
 		<MudItem xs="12" sm="12" md="12">
-			<ModCollectionComponent Mods="modCollection"></ModCollectionComponent>
+			<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 90px)" Elevation="0" Outlined="false" Style="background-color: transparent">
+				<ModCollectionComponent Mods="modCollection"></ModCollectionComponent>
+			</MudPaper>
 		</MudItem>
 
 

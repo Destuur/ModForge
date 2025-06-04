@@ -1,24 +1,15 @@
-﻿
-<MudGrid Spacing="5" Justify="Justify.FlexStart" Class="pa-4">
+﻿<MudGrid Spacing="4" Class="pa-4">
 
 	<MudItem sm="12">
-		<MudText Typo="Typo.h6">@Buff.Localization.GetName("de")</MudText>
+		<MudText Typo="Typo.h6">@Buff.Localization.GetName("en")</MudText>
 	</MudItem>
+
 
 	@foreach (var attribute in sortedAttributes)
 	{
-		<MudItem xs="6" sm="6" md="6" lg="6">
 			<CascadingValue Value="attribute">
 				<AttributeSelector></AttributeSelector>
 			</CascadingValue>
-		</MudItem>
 	}
-
-	@* @foreach (var localization in Perk.Localization)
-	{
-		<MudItem lg="6">
-			<MudTextField Immediate="true" Margin="Margin.Dense" AutoGrow="true" @bind-Value="localization.Description" Label="@(localization.Language)" Variant="Variant.Outlined"></MudTextField>
-		</MudItem>
-	} *@
 
 </MudGrid>
