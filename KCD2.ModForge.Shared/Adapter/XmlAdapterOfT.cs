@@ -48,6 +48,7 @@ namespace KCD2.ModForge.Shared.Adapter
 				GetPerkToBuff(filePath, foundModItems);
 			}
 
+			// REV: Wofür newList?
 			var newList = new List<IModItem>();
 
 			foreach (var foundItem in foundModItems)
@@ -250,7 +251,6 @@ namespace KCD2.ModForge.Shared.Adapter
 
 			return modItemPath;
 		}
-
 
 		public Task<IList<T>> ReadAsync(string path)
 		{

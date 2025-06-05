@@ -22,6 +22,19 @@ namespace KCD2.ModForge.Shared.Services
 			Load();
 		}
 
+		public ModDescription Mod
+		{
+			get => mod;
+			set
+			{
+				if (value is null)
+				{
+					return;
+				}
+				mod = value;
+			}
+		}
+
 		public void Load()
 		{
 			if (File.Exists(modCollectionFile))
@@ -53,19 +66,6 @@ namespace KCD2.ModForge.Shared.Services
 		public ModCollection GetAllMods()
 		{
 			return modCollection;
-		}
-
-		public ModDescription Mod
-		{
-			get => mod;
-			set
-			{
-				if (value is null)
-				{
-					return;
-				}
-				mod = value;
-			}
 		}
 
 		public void ClearMod()
@@ -193,11 +193,6 @@ namespace KCD2.ModForge.Shared.Services
 		{
 			modCollection.RemoveMod(mod);
 			Save();
-		}
-
-		public async Task ExportMod()
-		{
-			//await adapter.WriteModItems(mod);
 		}
 	}
 }

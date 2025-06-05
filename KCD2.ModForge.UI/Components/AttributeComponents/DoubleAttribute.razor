@@ -1,4 +1,4 @@
 ﻿@if (Attribute is not null)
 {
-	<MudNumericField Immediate="false" @bind-Value="CurrentValue" Label="@FormatLabel(Attribute.Name)" Variant="Variant.Outlined" Margin="Margin.Dense" />
+	<MudNumericField Immediate="false" @bind-Value="CurrentValue" Label="@FormatLabel(Attribute.Name)" Variant="Variant.Outlined" Margin="Margin.Dense" HideSpinButtons="true" Adornment="Adornment.End" AdornmentColor="Color.Secondary" AdornmentIcon="@Icons.Material.Filled.Delete" IconSize="Size.Small" OnAdornmentClick="@(() => Remove(Attribute))" />
 }

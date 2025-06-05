@@ -28,6 +28,7 @@ namespace KCD2.ModForge.Shared.Services
 
 		public IList<Perk> Perks { get; private set; }
 		public IList<Buff> Buffs { get; private set; }
+		public IList<BuffParam> BuffParams { get; private set; }
 
 		private async Task InitializeExport()
 		{
@@ -160,7 +161,9 @@ namespace KCD2.ModForge.Shared.Services
 			{
 				var attr = attributes.FirstOrDefault(a => a.Name == name);
 				if (attr != null)
+				{
 					return attr.Value?.ToString();
+				}
 			}
 			return null;
 		}

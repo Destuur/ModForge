@@ -1,7 +1,7 @@
-﻿<MudGrid>
+﻿<MudGrid Spacing="2"> 
 	@foreach (var buffParam in CurrentValues)
 	{
-		<MudItem xs="12" sm="12" md="12" lg="12">
+		<MudItem xs="6" sm="6" md="6" lg="6" Class="px-2">
 			<BuffParamRow BuffParam="buffParam" RemoveBuffParam="RemoveBuffParam"></BuffParamRow>
 		</MudItem>
 	}

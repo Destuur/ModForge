@@ -5,7 +5,21 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 {
 	public partial class AttributeSelector
 	{
+		private BuffParamsAttribute? childComponent;
+
 		[CascadingParameter]
 		public IAttribute Attribute { get; set; }
+		[Parameter]
+		public EventCallback<string> RemoveAttribute { get; set; }
+
+		private void AddBuffParam()
+		{
+			childComponent.AddBuffParam();
+		}
+
+		private async Task Remove(string attribute)
+		{
+			await RemoveAttribute.InvokeAsync(attribute);
+		}
 	}
 }

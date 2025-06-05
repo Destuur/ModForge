@@ -9,12 +9,19 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 	{
 		[CascadingParameter]
 		public IAttribute Attribute { get; set; }
+		[Parameter]
+		public EventCallback<string> RemoveAttribute { get; set; }
 
 		// Bindet an MudSelect mit string-Werten ("True"/"False")
 		string CurrentValueString
 		{
 			get => (Attribute.Value is bool b && b) ? "True" : "False";
 			set => Attribute.Value = string.Equals(value, "True", StringComparison.OrdinalIgnoreCase);
+		}
+
+		private async Task Remove(IAttribute attribute)
+		{
+			await RemoveAttribute.InvokeAsync(attribute.Name);
 		}
 
 		private string FormatLabel(string raw)

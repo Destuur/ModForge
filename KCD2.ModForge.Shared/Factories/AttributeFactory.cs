@@ -68,9 +68,21 @@ namespace KCD2.ModForge.Shared.Factories
 				{
 					value = (IList<BuffParam>)ParseBuffParams(valueStr);
 				}
+				else if (type.IsEnum && valueStr == "")
+				{
+					value = Enum.Parse(type, "0");
+				}
 				else if (type.IsEnum)
 				{
 					value = Enum.Parse(type, valueStr);
+				}
+				else if (type == typeof(int) && valueStr == "" || type == typeof(double) && valueStr == "")
+				{
+					value = 0;
+				}
+				else if (type == typeof(bool) && valueStr == "")
+				{
+					value = false;
 				}
 				else
 				{
@@ -163,6 +175,18 @@ namespace KCD2.ModForge.Shared.Factories
 				throw new Exception();
 			}
 
+		}
+
+		public static IList<IAttribute> GetAllAttributes()
+		{
+			var newList = new List<IAttribute>();
+
+			foreach (var attribute in AttributeTypeMap)
+			{
+				newList.Add(CreateAttribute(attribute.Key, ""));
+			}
+
+			return newList;
 		}
 
 	}

@@ -1,10 +1,10 @@
-﻿<MudGrid style="align-items:center" Spacing="4" Class="d-flex">
+﻿<MudGrid style="align-items:center" Spacing="2" Class="d-flex">
 
 	<MudItem xs="4" sm="4" md="4" lg="4">
 		<MudTextField @bind-Value="BuffParam.Key" Variant="Variant.Outlined" Label="Attribute" FullWidth="true" Margin="Margin.Dense"></MudTextField>
 	</MudItem>
 
-	<MudItem xs="3" sm="3" md="3" lg="3">
+	<MudItem xs="4" sm="4" md="4" lg="4">
 		<MudSelect T="string" @bind-Value="CurrentEnumString" FullWidth="true" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Math Operation">
 			@foreach (var enumName in enumNames)
 			{
@@ -16,11 +16,7 @@
 	</MudItem>
 
 	<MudItem xs="4" sm="4" md="4" lg="4">
-		<MudTextField @bind-Value="BuffParam.Value" Variant="Variant.Outlined" Label="Attribute" FullWidth="true" Margin="Margin.Dense"></MudTextField>
-	</MudItem>
-
-	<MudItem xs="1" sm="1" md="1" lg="1">
-		<MudIconButton OnClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))" Variant="Variant.Filled" Color="Color.Primary" Icon="@Icons.Material.Filled.Delete" />
+		<MudNumericField @bind-Value="BuffParam.Value" HideSpinButtons="true" Variant="Variant.Outlined" Label="Attribute" FullWidth="true" Margin="Margin.Dense" Immediate="true" IconSize="Size.Small" AdornmentIcon="@Icons.Material.Filled.Delete" Adornment="Adornment.End" AdornmentColor="Color.Secondary" OnAdornmentClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))"></MudNumericField>
 	</MudItem>
 
 </MudGrid>

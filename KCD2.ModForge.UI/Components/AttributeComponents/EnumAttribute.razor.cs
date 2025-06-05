@@ -11,16 +11,13 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 {
 	public partial class EnumAttribute
 	{
-		[CascadingParameter]
-		public IAttribute Attribute { get; set; }
-
 		private Type enumType;
 		private IEnumerable<string> enumNames = Enumerable.Empty<string>();
 		private Dictionary<string, string> enumDisplayNames = new();
-
 		private string currentEnumString;
 
-		// Strongly typed Access to Enum Value
+		[CascadingParameter]
+		public IAttribute Attribute { get; set; }
 		private Enum CurrentEnumValue
 		{
 			get => Attribute.Value as Enum;
@@ -30,8 +27,6 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 				currentEnumString = value.ToString();
 			}
 		}
-
-		// Used by MudSelect
 		private string CurrentEnumString
 		{
 			get => currentEnumString;
@@ -45,6 +40,22 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 					Attribute.Value = parsed;
 				}
 			}
+		}
+		[Parameter]
+		public EventCallback<string> RemoveAttribute { get; set; }
+
+		private async Task Remove(IAttribute attribute)
+		{
+			await RemoveAttribute.InvokeAsync(attribute.Name);
+		}
+		private string SplitCamelCase(string input)
+		{
+			return Regex.Replace(input, "(?<!^)([A-Z])", " $1");
+		}
+
+		private string GetTypeLabel()
+		{
+			return enumType != null ? SplitCamelCase(enumType.Name) : string.Empty;
 		}
 
 		protected override void OnInitialized()
@@ -64,16 +75,6 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 
 				currentEnumString = value.ToString();
 			}
-		}
-
-		private string SplitCamelCase(string input)
-		{
-			return Regex.Replace(input, "(?<!^)([A-Z])", " $1");
-		}
-
-		private string GetTypeLabel()
-		{
-			return enumType != null ? SplitCamelCase(enumType.Name) : string.Empty;
 		}
 	}
 }

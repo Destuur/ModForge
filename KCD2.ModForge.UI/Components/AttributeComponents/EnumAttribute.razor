@@ -2,7 +2,7 @@
 {
     @if (enumNames.Any())
     {
-        <MudSelect T="string" @bind-Value="CurrentEnumString" FullWidth="true" Margin="Margin.Dense" Variant="Variant.Outlined" Label="@GetTypeLabel()">
+        <MudSelect T="string" @bind-Value="CurrentEnumString" FullWidth="true" Margin="Margin.Dense" Variant="Variant.Outlined" Label="@GetTypeLabel()" Adornment="Adornment.End" AdornmentColor="Color.Secondary" AdornmentIcon="@Icons.Material.Filled.Delete" IconSize="Size.Small" OnAdornmentClick="@(() => Remove(Attribute))">
             @foreach (var enumName in enumNames)
             {
                 <MudSelectItem T="string" Value="@enumName">

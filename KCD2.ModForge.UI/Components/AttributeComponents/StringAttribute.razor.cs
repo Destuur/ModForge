@@ -14,6 +14,13 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 			get => (string)Attribute.Value;
 			set => Attribute.Value = value;
 		}
+		[Parameter]
+		public EventCallback<string> RemoveAttribute { get; set; }
+
+		private async Task Remove(IAttribute attribute)
+		{
+			await RemoveAttribute.InvokeAsync(attribute.Name);
+		}
 
 		private string FormatLabel(string raw)
 		{
