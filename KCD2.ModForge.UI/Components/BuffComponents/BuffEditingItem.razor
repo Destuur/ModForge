@@ -14,9 +14,7 @@
 
 	@foreach (var attribute in sortedAttributes)
 	{
-		<CascadingValue Value="attribute">
-			<AttributeSelector RemoveAttribute="Remove"></AttributeSelector>
-		</CascadingValue>
+		<AttributeSelector Attribute="attribute" RemoveAttribute="Remove"></AttributeSelector>
 	}
 
 </MudGrid>
@@ -26,7 +24,7 @@
 		<MudText Align="Align.Right" Typo="Typo.h6" Color="Color.Primary">Attributes</MudText>
 	</MudDrawerHeader>
 	<MudList T="IAttribute">
-		@foreach (var attribute in selectableAttributes)
+		@foreach (var attribute in filteredAttributes)
 		{
 			<MudListItem Gutters="true" OnClick="@(() => AddAttribute(attribute))">
 				<MudText Align="Align.Right">@(FormatName(attribute.Name))</MudText>

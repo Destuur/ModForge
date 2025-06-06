@@ -13,7 +13,7 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 {
 	public partial class BuffParamsAttribute
 	{
-		[CascadingParameter]
+		[Parameter]
 		public IAttribute? Attribute { get; set; }
 		IList<BuffParam>? CurrentValues
 		{

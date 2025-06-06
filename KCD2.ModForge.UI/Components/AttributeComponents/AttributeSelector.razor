@@ -3,26 +3,26 @@
 	@switch (Attribute.Value)
 	{
 		case bool:
-			<BoolAttribute RemoveAttribute="Remove" />
+			<BoolAttribute Attribute="Attribute" RemoveAttribute="Remove" />
 			break;
 		case Enum:
 			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
-				<EnumAttribute RemoveAttribute="Remove" />
+				<EnumAttribute Attribute="Attribute" RemoveAttribute="Remove" />
 			</MudItem>
 			break;
 		case double:
 			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
-				<DoubleAttribute RemoveAttribute="Remove" />
+				<DoubleAttribute Attribute="Attribute" RemoveAttribute="Remove" />
 			</MudItem>
 			break;
 		case int:
 			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
-				<IntAttribute RemoveAttribute="Remove" />
+				<IntAttribute Attribute="Attribute" RemoveAttribute="Remove" />
 			</MudItem>
 			break;
 		case string:
 			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
-				<StringAttribute RemoveAttribute="Remove" />
+				<StringAttribute Attribute="Attribute" RemoveAttribute="Remove" />
 			</MudItem>
 			break;
 		case IList<BuffParam>:
@@ -36,7 +36,7 @@
 							<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@(() => Remove(Attribute.Name))">Remove</MudButton>
 						</MudItem>
 						<MudItem xs="12" sm="12" md="12" lg="12">
-							<BuffParamsAttribute @ref="childComponent" />
+							<BuffParamsAttribute Attribute="Attribute" @ref="childComponent" />
 						</MudItem>
 					</MudGrid>
 				</MudCard>

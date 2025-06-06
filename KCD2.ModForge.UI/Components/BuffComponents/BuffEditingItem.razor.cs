@@ -11,8 +11,8 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 {
 	public partial class BuffEditingItem
 	{
-		private IEnumerable<IAttribute> sortedAttributes => Buff.Attributes.OrderBy(x => (x.Value is IList<BuffParam> ? 1 : 0, x.Value.GetType().Name));
-		private IEnumerable<IAttribute> selectableAttributes => FilterAttributes();
+		private IEnumerable<IAttribute> sortedAttributes => Buff.Attributes.OrderBy(x => (x.Value is IList<BuffParam> ? 1 : 0, x.Value.GetType().Name)).ToList();
+		private List<IAttribute> filteredAttributes = new();
 		private bool isOpen;
 		private Buff originalBuff;
 
@@ -32,54 +32,40 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 
 		public void Remove(string attribute)
 		{
-			var tempList = new List<IAttribute>();
+			Buff.Attributes = Buff.Attributes.Where(attr => attr?.Name != attribute).ToList();
 
-			foreach (var removeItem in Buff.Attributes)
-			{
-				if (removeItem.Name.Equals(attribute))
-				{
-					continue;
-				}
-				if (removeItem is not null)
-				{
-					tempList.Add(removeItem);
-				}
-			}
-
-			Buff.Attributes = tempList.ToList();
+			UpdateFilteredAttributes();
 			StateHasChanged();
 		}
 
 		public void AddAttribute(IAttribute attribute)
 		{
-			if (Buff.Attributes.Any(x => x.Name == attribute.Name))
+			if (Buff.Attributes.Any(x => string.Equals(x.Name, attribute.Name, StringComparison.Ordinal)))
 			{
 				return;
 			}
-			Buff.Attributes.Add(attribute);
+			if (Buff.Attributes.Any(x => x.Name.Equals(attribute.Name, StringComparison.OrdinalIgnoreCase)))
+			{
+				return;
+			}
+			if (!Buff.Attributes.Contains(attribute))
+			{
+				Buff.Attributes.Add(attribute);
+			}
+			UpdateFilteredAttributes();
 			StateHasChanged();
 		}
 
-		private IEnumerable<IAttribute> FilterAttributes()
+		private void UpdateFilteredAttributes()
 		{
-			var tempList = new List<IAttribute>();
-
-			foreach (var attribute in Attributes)
-			{
-				if (attribute.Name.Contains("perk") ||
-					attribute.Name.Contains("level") ||
-					attribute.Name.Contains("stat") ||
-					attribute.Name.Contains("skill"))
-				{
-					continue;
-				}
-				if (Buff.Attributes.FirstOrDefault(x => x.Name == attribute.Name) == null)
-				{
-					tempList.Add(attribute);
-				}
-			}
-
-			return tempList;
+			filteredAttributes = Attributes
+				.Where(attribute =>
+					!attribute.Name.Contains("perk") &&
+					!attribute.Name.Contains("level") &&
+					!attribute.Name.Contains("stat") &&
+					!attribute.Name.Contains("skill") &&
+					!Buff.Attributes.Any(x => x.Name == attribute.Name))
+				.ToList();
 		}
 
 		public void ToggleDrawer()
@@ -107,6 +93,7 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 			base.OnInitialized();
 			Attributes = AttributeFactory.GetAllAttributes();
 			originalBuff = KCD2.ModForge.Shared.Models.ModItems.Buff.GetDeepCopy(Buff);
+			UpdateFilteredAttributes();
 		}
 	}
 }

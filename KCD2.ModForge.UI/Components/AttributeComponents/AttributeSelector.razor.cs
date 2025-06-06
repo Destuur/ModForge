@@ -7,7 +7,7 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 	{
 		private BuffParamsAttribute? childComponent;
 
-		[CascadingParameter]
+		[Parameter]
 		public IAttribute Attribute { get; set; }
 		[Parameter]
 		public EventCallback<string> RemoveAttribute { get; set; }

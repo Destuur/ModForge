@@ -7,7 +7,7 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 {
 	public partial class StringAttribute
 	{
-		[CascadingParameter]
+		[Parameter]
 		public IAttribute Attribute { get; set; }
 		string CurrentValue
 		{
@@ -17,9 +17,9 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 		[Parameter]
 		public EventCallback<string> RemoveAttribute { get; set; }
 
-		private async Task Remove(IAttribute attribute)
+		private async Task Remove()
 		{
-			await RemoveAttribute.InvokeAsync(attribute.Name);
+			await RemoveAttribute.InvokeAsync(Attribute.Name);
 		}
 
 		private string FormatLabel(string raw)

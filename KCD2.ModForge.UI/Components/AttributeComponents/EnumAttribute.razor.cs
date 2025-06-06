@@ -16,7 +16,7 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 		private Dictionary<string, string> enumDisplayNames = new();
 		private string currentEnumString;
 
-		[CascadingParameter]
+		[Parameter]
 		public IAttribute Attribute { get; set; }
 		private Enum CurrentEnumValue
 		{
@@ -44,9 +44,9 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 		[Parameter]
 		public EventCallback<string> RemoveAttribute { get; set; }
 
-		private async Task Remove(IAttribute attribute)
+		private async Task Remove()
 		{
-			await RemoveAttribute.InvokeAsync(attribute.Name);
+			await RemoveAttribute.InvokeAsync(Attribute.Name);
 		}
 		private string SplitCamelCase(string input)
 		{

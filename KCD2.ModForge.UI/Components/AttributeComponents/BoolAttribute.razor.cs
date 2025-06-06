@@ -7,7 +7,7 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 {
 	public partial class BoolAttribute
 	{
-		[CascadingParameter]
+		[Parameter]
 		public IAttribute Attribute { get; set; }
 		[Parameter]
 		public EventCallback<string> RemoveAttribute { get; set; }
@@ -19,9 +19,9 @@ namespace KCD2.ModForge.UI.Components.AttributeComponents
 			set => Attribute.Value = string.Equals(value, "True", StringComparison.OrdinalIgnoreCase);
 		}
 
-		private async Task Remove(IAttribute attribute)
+		private async Task Remove()
 		{
-			await RemoveAttribute.InvokeAsync(attribute.Name);
+			await RemoveAttribute.InvokeAsync(Attribute.Name);
 		}
 
 		private string FormatLabel(string raw)

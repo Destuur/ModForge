@@ -1,7 +1,7 @@
 ﻿@if (Attribute is not null)
 {
 	<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
-		<MudSelect T="string" @bind-Value="CurrentValueString" Label="@FormatLabel(Attribute.Name)" Dense="true" FullWidth="true" Margin="Margin.Dense" Variant="Variant.Outlined" AdornmentIcon="@Icons.Material.Filled.Delete" AdornmentColor="Color.Secondary" OnAdornmentClick="@(() => Remove(Attribute))">
+		<MudSelect T="string" @bind-Value="CurrentValueString" Label="@FormatLabel(Attribute.Name)" Dense="true" FullWidth="true" Margin="Margin.Dense" Variant="Variant.Outlined" AdornmentIcon="@Icons.Material.Filled.Delete" AdornmentColor="Color.Secondary" OnAdornmentClick="@(() => Remove())">
 			<MudSelectItem T="string" Value="@("True")">True</MudSelectItem>
 			<MudSelectItem T="string" Value="@("False")">False</MudSelectItem>
 		</MudSelect>
