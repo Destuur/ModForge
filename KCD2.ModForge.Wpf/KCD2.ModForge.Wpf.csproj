@@ -6,11 +6,11 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
-		<ApplicationIcon>wwwroot\images\Icons\skill_craftsmanship.ico</ApplicationIcon>
+		<ApplicationIcon>wwwroot\images\Icons\modforge.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Images\Icons\skill_craftsmanship.ico" />
+		<None Remove="Images\Icons\modforge.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -23,9 +23,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Resource Include="Images\Icons\skill_craftsmanship.ico">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
+		<Content Include="Images\Icons\modforge.ico">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
 	</ItemGroup>
 
 </Project>
