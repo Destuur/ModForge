@@ -4,8 +4,10 @@ using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Services;
 using KCD2.ModForge.UI.Components.DialogComponents;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
+using System.Text.Json;
 
 namespace KCD2.ModForge.UI.Pages
 {
@@ -13,6 +15,7 @@ namespace KCD2.ModForge.UI.Pages
 	{
 		private Perk editingPerk;
 		private Perk originalPerk;
+		private bool canCheckout;
 
 		[Parameter]
 		public string Id { get; set; }
@@ -68,6 +71,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
+				canCheckout = true;
 				await NavigationService.NavigateToAsync("/modoverview");
 			}
 		}
@@ -112,6 +116,41 @@ namespace KCD2.ModForge.UI.Pages
 			}
 
 			return result;
+		}
+
+		private async Task<bool> ConfirmNavigation(LocationChangingContext context)
+		{
+			var jsonA = JsonSerializer.Serialize(editingPerk);
+			var jsonB = JsonSerializer.Serialize(originalPerk);
+
+			if (jsonA == jsonB)
+			{
+				return true;
+			}
+
+			if (canCheckout)
+			{
+				canCheckout = false;
+				return true;
+			}
+
+			var parameters = new DialogParameters<ChangesDetectedDialog>()
+			{
+				{ x => x.ContentText, "If you leave now, you might lose some changes.\r\nDo you want to continue or stay on this page?" },
+				{ x => x.ButtonText, "Leave Anyway" }
+			};
+
+			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+			var dialog = await DialogService.ShowAsync<ChangesDetectedDialog>("Leave Page?", parameters, options);
+			var result = await dialog.Result;
+
+			if (result.Canceled)
+			{
+				context.PreventNavigation();
+			}
+
+			return true;
 		}
 
 		private IList<IAttribute> GetEssentialAttributes()
@@ -175,6 +214,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			originalPerk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == Id)!;
 			editingPerk = Perk.GetDeepCopy(originalPerk);
+			StateHasChanged();
 		}
 	}
 }

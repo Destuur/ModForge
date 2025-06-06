@@ -4,8 +4,9 @@ using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Services;
 using KCD2.ModForge.UI.Components.DialogComponents;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.Routing;
 using MudBlazor;
+using System.Text.Json;
 
 namespace KCD2.ModForge.UI.Pages
 {
@@ -13,6 +14,7 @@ namespace KCD2.ModForge.UI.Pages
 	{
 		private Buff editingBuff;
 		private Buff originalBuff;
+		private bool canCheckout;
 
 		[Parameter]
 		public string Id { get; set; }
@@ -57,7 +59,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			var parameters = new DialogParameters<MoreModItemsDialog>
 			{
-				{ x => x.ContentText, "Though have yanked enough pizzles? Leave then, and create your mod!" },
+				{ x => x.ContentText, "Hast thou pulled enough pizzles? Depart then, and shape thy mod!" },
 				{ x => x.ButtonText, "Create Mod" }
 			};
 
@@ -68,6 +70,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
+				canCheckout = true;
 				await NavigationService.NavigateToAsync("/modoverview");
 			}
 		}
@@ -113,7 +116,6 @@ namespace KCD2.ModForge.UI.Pages
 
 			return result;
 		}
-
 
 		private IList<IAttribute> GetEssentialAttributes()
 		{
@@ -193,6 +195,73 @@ namespace KCD2.ModForge.UI.Pages
 				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
 			}
 		}
+
+		private async Task<bool> ConfirmNavigation(LocationChangingContext context)
+		{
+			var jsonA = JsonSerializer.Serialize(editingBuff);
+			var jsonB = JsonSerializer.Serialize(originalBuff);
+
+			if (jsonA == jsonB)
+			{
+				return true;
+			}
+
+			if (canCheckout)
+			{
+				canCheckout = false;
+				return true;
+			}
+
+			var parameters = new DialogParameters<ChangesDetectedDialog>()
+			{
+				{ x => x.ContentText, "If you leave now, you might lose some changes.\r\nDo you want to continue or stay on this page?" },
+				{ x => x.ButtonText, "Leave Anyway" }
+			};
+
+			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+			var dialog = await DialogService.ShowAsync<ChangesDetectedDialog>("Leave Page?", parameters, options);
+			var result = await dialog.Result;
+
+			if (result.Canceled)
+			{
+				context.PreventNavigation();
+			}
+
+			return true;
+		}
+
+		//public static bool HasChanged(Buff a, Buff b)
+		//{
+		//	if (a.Id != b.Id) return true;
+		//	if (a.PerkId != b.PerkId) return true;
+		//	if (a.Path != b.Path) return true;
+		//	if (a.Name != b.Name) return true;
+		//	if (!LocalizationEquals(a.Localization, b.Localization)) return true;
+		//	if (!AttributesEqual(a.Attributes, b.Attributes)) return true;
+
+		//	return false;
+		//}
+
+		//private static bool LocalizationEquals(Localization a, Localization b)
+		//{
+		//	// Passe je nach Struktur an
+		//	return a.GetName("en") == b.GetName("en");
+		//}
+
+		//private static bool AttributesEqual(IList<IAttribute> a, IList<IAttribute> b)
+		//{
+		//	if (a.Count != b.Count)
+		//		return false;
+
+		//	for (int i = 0; i < a.Count; i++)
+		//	{
+		//		if (!a[i].Equals(b[i]))
+		//			return false;
+		//	}
+
+		//	return true;
+		//}
 
 		protected override void OnInitialized()
 		{

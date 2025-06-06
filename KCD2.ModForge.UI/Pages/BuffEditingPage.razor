@@ -1,5 +1,7 @@
 ﻿@page "/editing/buff/{Id}"
 
+<NavigationLock ConfirmExternalNavigation="true" OnBeforeInternalNavigation="ConfirmNavigation" />
+
 <MudTabs>
 	<MudTabPanel Text="Buff">		
 		<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 146.5px)" Elevation="0" Outlined="false" Style="background-color: transparent">

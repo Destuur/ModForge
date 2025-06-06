@@ -1,14 +1,34 @@
 ﻿<MudGrid Spacing="4" Class="pa-4">
 
-	<MudItem sm="12">
+	<MudItem sm="8">
 		<MudText Typo="Typo.h6">@EditingPerk.Localization.GetName("en")</MudText>
+	</MudItem>
+
+	<MudItem sm="1">
+		<MudButton FullWidth="true" OnClick="ResetBuff" Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
+	</MudItem>
+
+	<MudItem sm="3">
+		<MudButton FullWidth="true" OnClick="ToggleDrawer" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Add Attribute</MudButton>
 	</MudItem>
 
 	@foreach (var attribute in sortedAttributes)
 	{
-			<CascadingValue Value="attribute">
-				<AttributeSelector></AttributeSelector>
-			</CascadingValue>
+				<AttributeSelector Attribute="attribute" RemoveAttribute="Remove"></AttributeSelector>
 	}
 
 </MudGrid>
+
+<MudDrawer OpenChanged="ToggleDrawer" Open="isOpen" Anchor="Anchor.End" Overlay="true" Variant="DrawerVariant.Temporary">
+	<MudDrawerHeader>
+		<MudText Align="Align.Right" Typo="Typo.h6" Color="Color.Primary">Attributes</MudText>
+	</MudDrawerHeader>
+	<MudList T="IAttribute">
+		@foreach (var attribute in filteredAttributes)
+		{
+			<MudListItem Gutters="true" OnClick="@(() => AddAttribute(attribute))">
+				<MudText Align="Align.Right">@(FormatName(attribute.Name))</MudText>
+			</MudListItem>
+		}
+	</MudList>
+</MudDrawer>

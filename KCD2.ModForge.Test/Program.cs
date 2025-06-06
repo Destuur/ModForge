@@ -66,3 +66,4 @@ namespace KCD2.ModForge.Test
 			//}
 		}
 	}
+}
