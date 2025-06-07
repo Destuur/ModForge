@@ -7,18 +7,20 @@
         </MudItem>
 
         <!-- Mod-Infos -->
-    <MudItem xs="6" lg="6">
+    <MudItem xs="8" lg="8">
             <MudText Typo="Typo.h6">@Mod.Name</MudText>
             <MudText Typo="Typo.subtitle2" Class="text-secondary">v @Mod.ModVersion by @Mod.Author</MudText>
             <MudText Typo="Typo.subtitle1" Class="text-secondary">@(string.IsNullOrEmpty(Mod.Description) ? "This spot was reserved for greatness, but someone was too busy with their pizzle-yanking duties." : Mod.Description)</MudText>
         </MudItem>
 
-        <MudItem xs="3" lg="3" Class="pr-4">
-            <MudText Align="Align.Right" Typo="Typo.body2" Class="text-secondary">Last edited: @Mod.CreatedOn</MudText>
-        </MudItem>
-
-        <MudItem xs="1" lg="1">
-            <MudIconButton Color="Color.Secondary" Edge="Edge.End" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => OnDelete.InvokeAsync(Mod))" />
+        <MudItem xs="2" lg="2">
+            <div class="hover-buttons">
+                <MudStack Row="true" Spacing="2" Class="mr-2" Justify="Justify.FlexEnd">
+                    <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(() => EditMod())">Edit</MudButton>
+                    <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(() => ExportMod())">Export</MudButton>
+                    <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@(() => OnDelete.InvokeAsync(Mod))">Delete</MudButton>
+                </MudStack>
+            </div>
         </MudItem>
 
     </MudGrid>

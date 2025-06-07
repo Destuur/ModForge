@@ -6,8 +6,8 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 {
 	public partial class ModCollectionComponent
 	{
-		[Parameter]
-		public ModCollection? Mods { get; set; }
+		private ModCollection? mods = new();
+
 		[Inject]
 		public ModService ModService { get; set; }
 
@@ -16,8 +16,16 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 			if (mod == null) return;
 
 			ModService.RemoveMod(mod);
-			Mods = ModService.GetAllMods();
+			mods = ModService.GetAllMods();
 			StateHasChanged(); // UI aktualisieren
+		}
+
+		protected override void OnInitialized()
+		{
+			base.OnInitialized();
+			ModService.Load();
+			mods = ModService.GetAllMods();
+			StateHasChanged();
 		}
 	}
 }
