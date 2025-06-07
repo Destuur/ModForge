@@ -9,6 +9,15 @@
 		<ApplicationIcon>wwwroot\images\Icons\modforge.ico</ApplicationIcon>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<PublishSingleFile>true</PublishSingleFile>
+		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+		<SelfContained>false</SelfContained>
+		<PublishReadyToRun>false</PublishReadyToRun>
+		<InvariantGlobalization>true</InvariantGlobalization>
+		<StripSymbols>true</StripSymbols>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<None Remove="Images\Icons\modforge.ico" />
 	</ItemGroup>
