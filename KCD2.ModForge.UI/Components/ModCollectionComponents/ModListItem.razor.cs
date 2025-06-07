@@ -25,7 +25,7 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 
 		public void ExportMod()
 		{
-			XmlAdapter.WriteModItems(ModService.Mod);
+			XmlAdapter.WriteModItems(Mod);
 			ModService.Save();
 			Snackbar.Add(
 				"Mod successfully created",

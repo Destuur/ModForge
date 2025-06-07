@@ -16,9 +16,9 @@
         <MudItem xs="2" lg="2">
             <div class="hover-buttons">
                 <MudStack Row="true" Spacing="2" Class="mr-2" Justify="Justify.FlexEnd">
-                    <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(() => EditMod())">Edit</MudButton>
-                    <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(() => ExportMod())">Export</MudButton>
-                    <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@(() => OnDelete.InvokeAsync(Mod))">Delete</MudButton>
+                    <MudButton Variant="Variant.Outlined" OnClick="@(() => EditMod())">Edit</MudButton>
+                    <MudButton Variant="Variant.Outlined" OnClick="@(() => ExportMod())">Export</MudButton>
+                    <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@(() => OnDelete.InvokeAsync(Mod))">Delete</MudButton>
                 </MudStack>
             </div>
         </MudItem>
