@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:KCD2.ModForge.Wpf"
         xmlns:pages="clr-namespace:KCD2.ModForge.UI.Pages;assembly=KCD2.ModForge.UI"
         mc:Ignorable="d"
-        Title="ModForge" WindowState="Maximized" WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="CanResize">
+        Title="ModForge" Width="1280" Height="720" WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="CanResize">
 
     <Border Background="#1E1E1E"
             CornerRadius="8"
@@ -15,7 +15,6 @@
             BorderThickness="1"
             Padding="0"
             SnapsToDevicePixels="True">
-        <!--Effect="{DynamicResource {x:Static SystemParameters.DropShadowKey}}"-->
 
         <Grid>
             <Grid.RowDefinitions>
@@ -25,7 +24,7 @@
             </Grid.RowDefinitions>
 
             <!-- 🧭 Titlebar -->
-            <Grid Grid.Row="0" Background="#27272f" MouseDown="TitleBar_MouseDown">
+            <Grid Grid.Row="0" Background="Transparent" MouseDown="TitleBar_MouseDown">
                 <DockPanel>
                     <TextBlock Text="ModForge" 
                            VerticalAlignment="Center" 

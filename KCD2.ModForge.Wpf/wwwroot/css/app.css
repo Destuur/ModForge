@@ -1,7 +1,29 @@
-﻿/*#if (SampleContent)*/
-html, body {
+﻿html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, #1e1e1e 0%, #271200 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #c1c1c4;
+    position: relative;
 }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 500px;
+        height: 500px;
+        background-image: url("../../Images/Icons/modforge.png"); /* Pfad zum Bild */
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.15;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        pointer-events: none;
+    }
 
 a, .btn-link {
     color: #006bb7;

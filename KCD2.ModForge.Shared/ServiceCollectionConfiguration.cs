@@ -1,16 +1,8 @@
 ﻿using KCD2.ModForge.Shared.Adapter;
-using KCD2.ModForge.Shared.Factories;
 using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
-using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KCD2.ModForge.Shared
 {
