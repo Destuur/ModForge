@@ -28,8 +28,8 @@ namespace KCD2.ModForge.Shared
 			services.AddSingleton<LocalizationAdapter>();
 			services.AddSingleton<JsonAdapterOfT<Perk>>();
 			services.AddSingleton<JsonAdapterOfT<Buff>>();
-			services.AddSingleton<XmlAdapterOfT<Perk>>();
-			services.AddSingleton<XmlAdapterOfT<Buff>>();
+			services.AddSingleton<ModItemAdapter<Perk>>();
+			services.AddSingleton<ModItemAdapter<Buff>>();
 			return services;
 		}
 	}

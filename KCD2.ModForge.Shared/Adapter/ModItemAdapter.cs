@@ -1,5 +1,6 @@
 ﻿using KCD2.ModForge.Shared.Factories;
 using KCD2.ModForge.Shared.Models.Attributes;
+using KCD2.ModForge.Shared.Models.Data;
 using KCD2.ModForge.Shared.Models.Localizations;
 using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Models.Mods;
@@ -9,40 +10,62 @@ using System.Xml.Linq;
 
 namespace KCD2.ModForge.Shared.Adapter
 {
-	public partial class XmlAdapterOfT<T> : IModItemAdapter<T>
-		where T : IModItem
+	public partial class ModItemAdapter : IModItemAdapter
 	{
 		private readonly UserConfigurationService userConfigurationService;
 
-		public XmlAdapterOfT(UserConfigurationService userConfigurationService)
+		public ModItemAdapter(UserConfigurationService userConfigurationService)
 		{
 			this.userConfigurationService = userConfigurationService;
 		}
 
-		public Task Initialize()
+		public IList<IModItem> ReadModItems(IDataPoint dataPoint)
 		{
-			return Task.CompletedTask;
-		}
+			var filePath = dataPoint.Path;
+			var foundModItems = new List<IModItem>();
+			var type = dataPoint.Type.ToString().ToLower();
 
-		public Task Deinitialize()
-		{
-			return Task.CompletedTask;
-		}
+			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open))
+			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
+			{
+				foreach (var entry in archive.Entries)
+				{
+					if (entry.FullName.EndsWith(".tbl"))
+					{
+						continue;
+					}
 
-		public async Task<IList<T>> ReadModItems(string path)
-		{
-			await Task.Yield();
-			var filePath = PathFactory.CreateTablesPath(userConfigurationService.Current!.GameDirectory);
-			var modItemPath = string.Empty;
-			var foundModItems = new List<T>();
+					if (entry.FullName.Contains(dataPoint.Endpoint))
+					{
+						using (Stream stream = entry.Open())
+						{
+							try
+							{
+								XDocument doc = XDocument.Load(stream);
 
-			if (typeof(Perk).IsAssignableFrom(typeof(T)))
+								foreach (var perkElement in doc.Descendants(type))
+								{
+									var modItem = ModItemFactory<IModItem>.CreateModItem(perkElement, entry.FullName);
+
+									foundModItems.Add(modItem);
+								}
+							}
+							catch (Exception ex)
+							{
+								Console.WriteLine($"Fehler beim Parsen von {entry.FullName}: {ex.Message}");
+							}
+						}
+					}
+				}
+			}
+
+			if (typeof(Perk).IsAssignableFrom(typeof(IModItem)))
 			{
 				modItemPath = GetPerks(filePath, modItemPath, foundModItems);
 				GetBuffToPerk(filePath, foundModItems);
 			}
 
-			if (typeof(Buff).IsAssignableFrom(typeof(T)))
+			if (typeof(Buff).IsAssignableFrom(typeof(IModItem)))
 			{
 				modItemPath = GetBuffs(filePath, modItemPath, foundModItems);
 				GetPerkToBuff(filePath, foundModItems);
@@ -72,7 +95,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			return foundModItems;
 		}
 
-		private void GetBuffToPerk(string filePath, List<T> foundModItems)
+		private void GetBuffToPerk(string filePath, List<IModItem> foundModItems)
 		{
 			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
@@ -115,7 +138,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			}
 		}
 
-		private void GetPerkToBuff(string filePath, List<T> foundModItems)
+		private void GetPerkToBuff(string filePath, List<IModItem> foundModItems)
 		{
 			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
@@ -158,7 +181,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			}
 		}
 
-		private static string GetPerks(string filePath, string modItemPath, List<T> foundModItems)
+		private static string GetPerks(string filePath, string modItemPath, List<IModItem> foundModItems)
 		{
 			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
@@ -184,7 +207,7 @@ namespace KCD2.ModForge.Shared.Adapter
 
 								foreach (var perkElement in doc.Descendants("perk"))
 								{
-									var modItem = ModItemFactory<T>.CreateModItem(perkElement, entry.FullName);
+									var modItem = ModItemFactory<IModItem>.CreateModItem(perkElement, entry.FullName);
 
 									foundModItems.Add(modItem);
 								}
@@ -229,7 +252,7 @@ namespace KCD2.ModForge.Shared.Adapter
 
 								foreach (var perkElement in doc.Descendants("buff"))
 								{
-									var modItem = ModItemFactory<T>.CreateModItem(perkElement, entry.FullName);
+									var modItem = ModItemFactory<IModItem>.CreateModItem(perkElement, entry.FullName);
 
 									//TODO: Platzhalter - löschen
 									//if (modItem.Attributes.Count >= 11)
@@ -250,26 +273,6 @@ namespace KCD2.ModForge.Shared.Adapter
 			}
 
 			return modItemPath;
-		}
-
-		public Task<IList<T>> ReadAsync(string path)
-		{
-			throw new NotImplementedException();
-		}
-
-		Task<T> IModItemAdapter<T>.GetModItem(string id)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<bool> WriteElement(T modItem)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<bool> WriteElements(IEnumerable<T> modItem)
-		{
-			throw new NotImplementedException();
 		}
 
 		public bool WriteModItems(ModDescription mod)
@@ -617,5 +620,9 @@ namespace KCD2.ModForge.Shared.Adapter
 			return true;
 		}
 
+		public void WriteModItems(IEnumerable<IModItem> modItem)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

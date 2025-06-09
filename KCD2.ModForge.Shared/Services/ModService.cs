@@ -40,8 +40,7 @@ namespace KCD2.ModForge.Shared.Services
 			if (File.Exists(modCollectionFile))
 			{
 				var json = File.ReadAllText(modCollectionFile);
-				modCollection = JsonConvert.DeserializeObject<ModCollection>(json, settings)
-						  ?? new ModCollection();
+				modCollection = JsonConvert.DeserializeObject<ModCollection>(json, settings) ?? new ModCollection();
 			}
 			else
 			{

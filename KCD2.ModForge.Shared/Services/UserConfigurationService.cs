@@ -16,7 +16,7 @@ namespace KCD2.ModForge.Shared.Services
 			Load();
 		}
 
-		public UserConfiguration? Current { get; private set; }
+		public UserConfiguration? Current { get; set; }
 
 		private void Load()
 		{

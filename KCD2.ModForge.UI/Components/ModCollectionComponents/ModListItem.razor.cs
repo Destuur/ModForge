@@ -17,7 +17,7 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 		[Parameter]
 		public EventCallback<ModDescription> OnDelete { get; set; }
 		[Inject]
-		public XmlAdapterOfT<Perk> XmlAdapter { get; set; }
+		public ModItemAdapter<Perk> XmlAdapter { get; set; }
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
 		[Inject]

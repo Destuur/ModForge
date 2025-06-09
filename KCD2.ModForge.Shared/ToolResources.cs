@@ -15,5 +15,7 @@
 		public string EnglishLocalizationPath() => "G:\\SteamLibrary\\steamapps\\common\\KingdomComeDeliverance2\\Localization\\English_xml.pak";
 		public string IconPath() => "G:\\SteamLibrary\\steamapps\\common\\KingdomComeDeliverance2\\Data\\IPL_GameData.pak";
 		public string ModPath() => "G:\\SteamLibrary\\steamapps\\common\\KCD2Mod\\Mods";
+		public string KCD2ModsPath() => "G:\\SteamLibrary\\steamapps\\common\\KingdomComeDeliverance2\\Mods";
+		public string GameDirectory() => "G:\\SteamLibrary\\steamapps\\common\\KingdomComeDeliverance2";
 	}
 }

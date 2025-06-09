@@ -1,12 +1,11 @@
-﻿namespace KCD2.ModForge.Shared.Adapter
+﻿using KCD2.ModForge.Shared.Models.Data;
+using KCD2.ModForge.Shared.Models.ModItems;
+
+namespace KCD2.ModForge.Shared.Adapter
 {
-	public interface IModItemAdapter<T>
+	public interface IModItemAdapter
 	{
-		Task Initialize();
-		Task Deinitialize();
-		Task<IList<T>> ReadAsync(string path);
-		Task<T> GetModItem(string id);
-		Task<bool> WriteElement(T modItem);
-		Task<bool> WriteElements(IEnumerable<T> modItem);
+		void WriteModItems(IEnumerable<IModItem> modItem);
+		IList<IModItem> ReadModItems(IDataPoint dataPoint);
 	}
 }

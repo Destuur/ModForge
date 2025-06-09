@@ -7,8 +7,8 @@ namespace KCD2.ModForge.Shared.Services
 {
 	public class XmlToJsonService
 	{
-		private readonly XmlAdapterOfT<Perk> perkAdapter;
-		private readonly XmlAdapterOfT<Buff> buffAdapter;
+		private readonly ModItemAdapter<Perk> perkAdapter;
+		private readonly ModItemAdapter<Buff> buffAdapter;
 		private readonly LocalizationAdapter localizationAdapter;
 		private Dictionary<string, Dictionary<string, string>> localizationCache;
 		private readonly JsonAdapterOfT<Perk> jsonPerkAdapter;
@@ -16,7 +16,7 @@ namespace KCD2.ModForge.Shared.Services
 		private readonly UserConfigurationService userConfigurationService;
 
 		// TODO: Weitere Abstraktion einfügen. IModItemSource(?)
-		public XmlToJsonService(XmlAdapterOfT<Perk> perkAdapter, XmlAdapterOfT<Buff> buffAdapter, LocalizationAdapter localizationAdapter, JsonAdapterOfT<Perk> jsonPerkAdapter, JsonAdapterOfT<Buff> jsonBuffAdapter, UserConfigurationService userConfigurationService)
+		public XmlToJsonService(ModItemAdapter<Perk> perkAdapter, ModItemAdapter<Buff> buffAdapter, LocalizationAdapter localizationAdapter, JsonAdapterOfT<Perk> jsonPerkAdapter, JsonAdapterOfT<Buff> jsonBuffAdapter, UserConfigurationService userConfigurationService)
 		{
 			this.perkAdapter = perkAdapter;
 			this.buffAdapter = buffAdapter;

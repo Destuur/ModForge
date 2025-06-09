@@ -14,7 +14,7 @@ namespace KCD2.ModForge.UI.Pages
 		[Inject]
 		public ModService ModService { get; set; }
 		[Inject]
-		public XmlAdapterOfT<Perk> XmlAdapter { get; set; }
+		public ModItemAdapter<Perk> XmlAdapter { get; set; }
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
 		[Inject]
