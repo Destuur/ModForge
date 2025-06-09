@@ -51,7 +51,7 @@ namespace KCD2.ModForge.UI.Pages
 		private async Task SavePerk()
 		{
 			SaveItem();
-			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
+			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
 		}
 
 		private async Task Checkout()
@@ -200,7 +200,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
-				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
+				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
 			}
 		}
 
@@ -212,7 +212,7 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
-			originalPerk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == Id)!;
+			originalPerk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == Id)! as Perk;
 			editingPerk = Perk.GetDeepCopy(originalPerk);
 			StateHasChanged();
 		}

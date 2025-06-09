@@ -1,11 +1,33 @@
-﻿using KCD2.ModForge.Shared.Models.Localizations;
+﻿using KCD2.ModForge.Shared.Adapter;
+using KCD2.ModForge.Shared.Models.Localizations;
+using KCD2.ModForge.Shared.Models.Mods;
 
 namespace KCD2.ModForge.Shared.Services
 {
 	public class LocalizationService
 	{
+		private readonly LocalizationAdapter adapter;
 		private List<Localization> enLocalizations = new();
 		private List<Localization> deLocalizations = new();
+
+		public LocalizationService(LocalizationAdapter adapter)
+		{
+			this.adapter = adapter;
+		}
+
+		public Dictionary<string, Dictionary<string, string>> ReadLocalizationFromXml(string path)
+		{
+			if (string.IsNullOrEmpty(path))
+			{
+				return new Dictionary<string, Dictionary<string, string>>();
+			}
+			return adapter.ReadLocalizationFromXml(path);
+		}
+
+		public void WriteLocalizationAsXml(string path, ModDescription mod)
+		{
+			adapter.WriteLocalizationAsXml(path, mod);
+		}
 
 		public void AddLocalization(Localization localization)
 		{

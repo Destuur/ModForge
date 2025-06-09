@@ -13,7 +13,7 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 		public ModService? ModService { get; set; }
 		[Inject]
 		public XmlToJsonService? XmlToJsonService { get; set; }
-		public IList<Perk> PerkItems { get; set; } = new List<Perk>();
+		public IList<IModItem> PerkItems { get; set; } = new List<IModItem>();
 		public string? SearchPerk { get; set; }
 
 		public IEnumerable<IModItem> TakePerkItems(int count)

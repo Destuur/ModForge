@@ -16,7 +16,7 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 		public ModService? ModService { get; set; }
 		[Inject]
 		public XmlToJsonService? XmlToJsonService { get; set; }
-		public IList<Buff> BuffItems { get; set; } = new List<Buff>();
+		public IList<IModItem> BuffItems { get; set; } = new List<IModItem>();
 		public string? SearchBuff { get; set; }
 
 		public IEnumerable<IModItem> TakeBuffItems(int count)

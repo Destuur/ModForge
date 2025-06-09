@@ -14,16 +14,14 @@ namespace KCD2.ModForge.UI.Pages
 		[Inject]
 		public ModService ModService { get; set; }
 		[Inject]
-		public ModItemAdapter<Perk> XmlAdapter { get; set; }
-		[Inject]
 		public ISnackbar Snackbar { get; set; }
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
 
 		public void ExportMod()
 		{
-			XmlAdapter.WriteModItems(ModService.Mod);
-			ModService.Save();
+			ModService.ExportMod(mod);
+			ModService.WriteModCollectionAsJson();
 			Snackbar.Add(
 				"Mod successfully created",
 				Severity.Success,
@@ -37,7 +35,7 @@ namespace KCD2.ModForge.UI.Pages
 		protected override async Task OnInitializedAsync()
 		{
 			await base.OnInitializedAsync();
-			mod = ModService.GetMod();
+			mod = ModService.GetCurrentMod();
 			StateHasChanged();
 		}
 	}

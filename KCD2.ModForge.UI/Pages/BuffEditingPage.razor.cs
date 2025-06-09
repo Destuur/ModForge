@@ -50,7 +50,7 @@ namespace KCD2.ModForge.UI.Pages
 		private async Task SaveBuff()
 		{
 			SaveItem();
-			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
+			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
 		}
 
 		private async Task Checkout()
@@ -192,7 +192,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
-				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
+				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
 			}
 		}
 
@@ -271,7 +271,7 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
-			originalBuff = XmlToJsonService.Buffs!.FirstOrDefault(x => x.Id == Id)!;
+			originalBuff = XmlToJsonService.Buffs!.FirstOrDefault(x => x.Id == Id) as Buff;
 			editingBuff = Buff.GetDeepCopy(originalBuff);
 		}
 	}

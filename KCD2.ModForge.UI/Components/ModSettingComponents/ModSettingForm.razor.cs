@@ -58,7 +58,7 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 			StateHasChanged();
 		}
 
-		public async Task SaveMod()
+		public void SaveMod()
 		{
 			if (string.IsNullOrEmpty(name) ||
 				string.IsNullOrEmpty(modId) ||
@@ -73,7 +73,7 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 			}
 
 			supportedGameVersionRow.SaveMod();
-			await ModService.SaveMod(name, description, author, version, createdOn, modId, modifiesLevel);
+			ModService.CreateNewMod(name, description, author, version, createdOn, modId, modifiesLevel);
 		}
 
 		private string ValidateModName(string value)

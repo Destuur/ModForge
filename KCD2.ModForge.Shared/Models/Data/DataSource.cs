@@ -26,13 +26,13 @@ namespace KCD2.ModForge.Shared.Models.Data
 			return adapter.ReadModItems(dataPoint);
 		}
 
-		public void WriteModItems(IList<IModItem> modItems)
+		public void WriteModItems(string modId, IList<IModItem> modItems)
 		{
 			if (modItems is null)
 			{
 				return;
 			}
-			adapter.WriteModItems(modItems);
+			adapter.WriteModItems(modId, modItems);
 		}
 	}
 }

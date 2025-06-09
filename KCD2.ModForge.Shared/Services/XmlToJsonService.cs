@@ -1,5 +1,6 @@
 ﻿using KCD2.ModForge.Shared.Adapter;
 using KCD2.ModForge.Shared.Models.Attributes;
+using KCD2.ModForge.Shared.Models.Data;
 using KCD2.ModForge.Shared.Models.ModItems;
 using System.Diagnostics;
 
@@ -7,54 +8,80 @@ namespace KCD2.ModForge.Shared.Services
 {
 	public class XmlToJsonService
 	{
-		private readonly ModItemAdapter<Perk> perkAdapter;
-		private readonly ModItemAdapter<Buff> buffAdapter;
-		private readonly LocalizationAdapter localizationAdapter;
+		private readonly DataSource dataSource;
+		private readonly JsonAdapter jsonAdapter;
+		private readonly LocalizationService localizationService;
+		private readonly IList<IDataPoint> dataPoints;
 		private Dictionary<string, Dictionary<string, string>> localizationCache;
-		private readonly JsonAdapterOfT<Perk> jsonPerkAdapter;
-		private readonly JsonAdapterOfT<Buff> jsonBuffAdapter;
 		private readonly UserConfigurationService userConfigurationService;
 
-		// TODO: Weitere Abstraktion einfügen. IModItemSource(?)
-		public XmlToJsonService(ModItemAdapter<Perk> perkAdapter, ModItemAdapter<Buff> buffAdapter, LocalizationAdapter localizationAdapter, JsonAdapterOfT<Perk> jsonPerkAdapter, JsonAdapterOfT<Buff> jsonBuffAdapter, UserConfigurationService userConfigurationService)
+		public XmlToJsonService(DataSource dataSource, IEnumerable<IDataPoint> dataPoints, JsonAdapter jsonAdapter, LocalizationService localizationService, UserConfigurationService userConfigurationService)
 		{
-			this.perkAdapter = perkAdapter;
-			this.buffAdapter = buffAdapter;
-			this.localizationAdapter = localizationAdapter;
-			this.jsonPerkAdapter = jsonPerkAdapter;
-			this.jsonBuffAdapter = jsonBuffAdapter;
+			this.dataSource = dataSource;
+			this.jsonAdapter = jsonAdapter;
+			this.localizationService = localizationService;
+			this.dataPoints = dataPoints.ToList();
 			this.userConfigurationService = userConfigurationService;
 		}
 
-		public IList<Perk> Perks { get; private set; }
-		public IList<Buff> Buffs { get; private set; }
+		public IList<IModItem> Perks { get; private set; }
+		public IList<IModItem> Buffs { get; private set; }
 		public IList<BuffParam> BuffParams { get; private set; }
 
-		private async Task InitializeExport()
+		private void ReadModItemsFromXml()
 		{
-			Perks = await perkAdapter.ReadModItems("");
-			Buffs = await buffAdapter.ReadModItems("");
-			localizationCache = localizationAdapter.LoadAllLocalizationsFromPaks();
+			Perks = ImportPerksFromXml();
+			Buffs = ImportBuffsFromXml();
+			localizationCache = localizationService.ReadLocalizationFromXml(userConfigurationService.Current.GameDirectory);
 		}
 
-		private async Task AssignLocalizations()
+		private IList<IModItem> ImportPerksFromXml()
 		{
-			await AssignPerkLocalizations();
-			await AssignBuffLocalizations();
-			return;
+			var dataPoint = dataPoints.FirstOrDefault(x => x.Type == typeof(Perk));
+
+			if (dataPoint is null)
+			{
+				return new List<IModItem>();
+			}
+
+			return dataSource.ReadModItems(dataPoint);
 		}
 
-		public async Task ConvertXmlToJsonAsync()
+		private IList<IModItem> ImportBuffsFromXml()
+		{
+			var dataPoint = dataPoints.FirstOrDefault(x => x.Type == typeof(Buff));
+
+			if (dataPoint is null)
+			{
+				return new List<IModItem>();
+			}
+
+			return dataSource.ReadModItems(dataPoint);
+		}
+
+		private void AssignLocalizations()
+		{
+			AssignPerkLocalizations();
+			AssignBuffLocalizations();
+		}
+
+		public void ConvertXmlToJsonAsync()
 		{
 			var watch = Stopwatch.StartNew();
-			await InitializeExport();
-			await AssignLocalizations();
-			await jsonPerkAdapter.WriteElements(Perks);
-			await jsonBuffAdapter.WriteElements(Buffs);
+			ReadModItemsFromXml();
+			AssignLocalizations();
+			WriteModItemsAsJson();
+			WriteModItemsAsJson();
 			watch.Stop();
 		}
 
-		public async Task<bool> TryReadJsonFiles()
+		private void WriteModItemsAsJson()
+		{
+			jsonAdapter.WriteModItemsAsJson(Perks);
+			jsonAdapter.WriteModItemsAsJson(Buffs);
+		}
+
+		public bool TryReadJsonFiles()
 		{
 			var perkPath = Path.Combine(
 							Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -73,24 +100,22 @@ namespace KCD2.ModForge.Shared.Services
 				return false;
 			}
 
-			var perks = await ReadPerkJsonFile(perkPath);
-			var buffs = await ReadBuffJsonFile(buffPath);
-			Perks = perks.ToList();
-			Buffs = buffs.ToList();
+			Perks = ReadPerkJsonFile(perkPath).ToList();
+			Buffs = ReadBuffJsonFile(buffPath).ToList();
 			return true;
 		}
 
-		private async Task<IEnumerable<Perk>> ReadPerkJsonFile(string filePath)
+		private IEnumerable<IModItem> ReadPerkJsonFile(string filePath)
 		{
-			return await jsonPerkAdapter.ReadAsync(filePath);
+			return jsonAdapter.ReadModItemsFromJson(filePath);
 		}
 
-		private async Task<IEnumerable<Buff>> ReadBuffJsonFile(string filePath)
+		private IEnumerable<IModItem> ReadBuffJsonFile(string filePath)
 		{
-			return await jsonBuffAdapter.ReadAsync(filePath);
+			return jsonAdapter.ReadModItemsFromJson(filePath);
 		}
 
-		private Task AssignPerkLocalizations()
+		private void AssignPerkLocalizations()
 		{
 
 			foreach (var perk in Perks)
@@ -120,10 +145,9 @@ namespace KCD2.ModForge.Shared.Services
 					}
 				}
 			}
-			return Task.CompletedTask;
 		}
 
-		private Task AssignBuffLocalizations()
+		private void AssignBuffLocalizations()
 		{
 			foreach (var buff in Buffs)
 			{
@@ -152,7 +176,6 @@ namespace KCD2.ModForge.Shared.Services
 					}
 				}
 			}
-			return Task.CompletedTask;
 		}
 
 		private string? GetAttributeValue(IEnumerable<IAttribute> attributes, params string[] names)

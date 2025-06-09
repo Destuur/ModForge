@@ -61,8 +61,8 @@ namespace KCD2.ModForge.Test
 					UserName = "Destuur"
 				}
 			};
-			var perkAdapter = new ModItemAdapter<Perk>(userConfig);
-			var buffAdapter = new ModItemAdapter<Buff>(userConfig);
+			var perkAdapter = new XmlAdapter<Perk>(userConfig);
+			var buffAdapter = new XmlAdapter<Buff>(userConfig);
 
 			var mods = ToolResources.Keys.KCD2ModsPath();
 

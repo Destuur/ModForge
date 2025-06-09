@@ -17,16 +17,14 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 		[Parameter]
 		public EventCallback<ModDescription> OnDelete { get; set; }
 		[Inject]
-		public ModItemAdapter<Perk> XmlAdapter { get; set; }
-		[Inject]
 		public ISnackbar Snackbar { get; set; }
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
 
 		public void ExportMod()
 		{
-			XmlAdapter.WriteModItems(Mod);
-			ModService.Save();
+			ModService.ExportMod(Mod);
+			ModService.WriteModCollectionAsJson();
 			Snackbar.Add(
 				"Mod successfully created",
 				Severity.Success,

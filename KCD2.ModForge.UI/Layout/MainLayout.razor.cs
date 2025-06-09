@@ -14,8 +14,6 @@ namespace KCD2.ModForge.UI.Layout
 		public XmlToJsonService? XmlToJsonService { get; set; }
 		[Inject]
 		public NavigationService? NavigationService { get; set; }
-		//[Inject]
-		//public ModService ModService { get; set; }
 		public string ModName { get; set; }
 
 		protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -36,10 +34,7 @@ namespace KCD2.ModForge.UI.Layout
 			}
 			try
 			{
-				await Task.Run(async () =>
-				{
-					await XmlToJsonService.ConvertXmlToJsonAsync();
-				});
+				XmlToJsonService.ConvertXmlToJsonAsync();
 			}
 			finally
 			{
@@ -54,7 +49,7 @@ namespace KCD2.ModForge.UI.Layout
 			{
 				return;
 			}
-			await XmlToJsonService.TryReadJsonFiles();
+			XmlToJsonService.TryReadJsonFiles();
 		}
 	}
 }

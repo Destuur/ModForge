@@ -15,7 +15,7 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 		{
 			if (mod == null) return;
 
-			ModService.RemoveMod(mod);
+			ModService.RemoveModFromCollection(mod);
 			mods = ModService.GetAllMods();
 			StateHasChanged(); // UI aktualisieren
 		}
@@ -23,7 +23,7 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
-			ModService.Load();
+			ModService.ReadModCollectionFromJson();
 			mods = ModService.GetAllMods();
 			StateHasChanged();
 		}
