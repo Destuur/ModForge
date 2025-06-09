@@ -340,13 +340,3 @@ h1:focus {
     border: 2px solid var(--mud-palette-outline, rgba(0,0,0,0.12)); /* Default-Farbe verwenden */
     box-shadow: none; /* optional: MudBlazor verwendet normalerweise box-shadow für Outlines */
 }
-
-/* Standard: Buttons sind versteckt */
-.hover-buttons {
-    display: none;
-}
-
-/* Wenn übergeordnetes ListItem gehovt wird, zeige Buttons */
-.hover-wrapper:hover .hover-buttons {
-    display: block;
-}

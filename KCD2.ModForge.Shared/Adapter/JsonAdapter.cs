@@ -40,7 +40,7 @@ namespace KCD2.ModForge.Shared.Adapter
 		public void WriteModItemsAsJson(IEnumerable<IModItem> modItems)
 		{
 			var json = JsonConvert.SerializeObject(modItems, settings);
-			var jsonFile = Path.Combine(configFile, modItems.FirstOrDefault().GetType().Name.ToLower() + ".json");
+			var jsonFile = Path.Combine(configFile, modItems.FirstOrDefault().GetType().Name.ToLower() + "s.json");
 
 			Directory.CreateDirectory(Path.GetDirectoryName(jsonFile)!);
 			File.WriteAllText(jsonFile, json);

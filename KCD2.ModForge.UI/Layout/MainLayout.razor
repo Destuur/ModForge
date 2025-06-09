@@ -19,7 +19,7 @@
 	@* <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Overlay="true" OverlayAutoClose="true" Variant="DrawerVariant.Temporary" Elevation="2">
 		<NavMenu />
 	</MudDrawer> *@
-	<MudMainContent>
+	<MudMainContent Style="padding-top: 6px">
 		@if (!_isLoaded)
 		{
 			<div class="loading-screen">Lädt...</div>

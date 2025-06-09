@@ -61,8 +61,8 @@ namespace KCD2.ModForge.Test
 					UserName = "Destuur"
 				}
 			};
-			var perkAdapter = new XmlAdapter<Perk>(userConfig);
-			var buffAdapter = new XmlAdapter<Buff>(userConfig);
+			var perkAdapter = new XmlAdapter(userConfig);
+			var buffAdapter = new XmlAdapter(userConfig);
 
 			var mods = ToolResources.Keys.KCD2ModsPath();
 
@@ -97,11 +97,11 @@ namespace KCD2.ModForge.Test
 					SupportsGameVersions = supportList
 				};
 
-				var list = perkAdapter.ReadModItems(Path.Combine(file, "Data", modDescription.ModId + ".pak")).Result;
-				foreach (var item in list)
-				{
-					modDescription.ModItems.Add(item);
-				}
+				//var list = perkAdapter.ReadModItems(Path.Combine(file, "Data", modDescription.ModId + ".pak")).Result;
+				//foreach (var item in list)
+				//{
+				//	modDescription.ModItems.Add(item);
+				//}
 			}
 
 

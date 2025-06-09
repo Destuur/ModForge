@@ -8,10 +8,5 @@ namespace KCD2.ModForge.UI.Pages
 	{
 		[Inject]
 		public NavigationManager Navigation { get; set; }
-
-		private void NavigateToSettings()
-		{
-			Navigation.NavigateTo("/settings");
-		}
 	}
 }

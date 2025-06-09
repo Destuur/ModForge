@@ -36,7 +36,7 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 				return;
 			}
 
-			modSettingIconPicker!.SaveMod();
+			//modSettingIconPicker!.SaveMod();
 			modSettingForm!.SaveMod();
 			var mod = ModService.GetCurrentMod();
 

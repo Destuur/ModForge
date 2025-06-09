@@ -13,13 +13,14 @@ namespace KCD2.ModForge.UI.Themes
 		{
 			PaletteLight = new PaletteLight()
 			{
-				Primary = "#90caf9",
+				Primary = "#a14b00",
 				Secondary = "#f48fb1",
 				Background = "#00000000", // durchsichtig, damit CSS durchscheint
 				Surface = "#252539",
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1a1a2e",
-				TextPrimary = "#ffffff",
+				TextPrimary = "#c1c1c4",
+				GrayDefault = "#d9d9d9"
 			},
 			PaletteDark = new PaletteDark()
 			{
@@ -29,9 +30,8 @@ namespace KCD2.ModForge.UI.Themes
 				Surface = "#252539",
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1a1a2e",
-				TextPrimary = "#ffffff",
+				TextPrimary = "#c1c1c4",
 			},
-
 			LayoutProperties = new LayoutProperties()
 			{
 				DefaultBorderRadius = "6px"

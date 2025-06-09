@@ -77,7 +77,6 @@ namespace KCD2.ModForge.Shared.Services
 			ReadModItemsFromXml();
 			AssignLocalizations();
 			WriteModItemsAsJson();
-			WriteModItemsAsJson();
 			watch.Stop();
 		}
 

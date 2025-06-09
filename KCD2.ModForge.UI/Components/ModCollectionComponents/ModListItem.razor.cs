@@ -1,8 +1,5 @@
-﻿using KCD2.ModForge.Shared.Adapter;
-using KCD2.ModForge.Shared.Models.ModItems;
-using KCD2.ModForge.Shared.Models.Mods;
+﻿using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
-using KCD2.ModForge.UI.Components.ModSettingComponents;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 

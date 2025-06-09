@@ -26,15 +26,14 @@
             <!-- 🧭 Titlebar -->
             <Grid Grid.Row="0" Background="Transparent" MouseDown="TitleBar_MouseDown">
                 <DockPanel>
-                    <TextBlock Text="ModForge" 
+                    <TextBlock Text="ModForge"
                            VerticalAlignment="Center" 
                            Foreground="#c1c1c4"
                            FontWeight="Bold"
                            FontSize="14"
-                           Margin="12,0,0,0"/>
-
+                           Margin="15,0,0,0"/>
                     <!-- Control Buttons -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,14,0">
                         <Button Click="Minimize_Click" Style="{StaticResource TitlebarButtonStyle}" ToolTip="Minimieren">─</Button>
                         <Button Click="MaximizeRestore_Click" Style="{StaticResource TitlebarButtonStyle}" ToolTip="Maximieren">☐</Button>
                         <Button Click="Close_Click" Style="{StaticResource CloseButtonStyle}" ToolTip="Schließen">✕</Button>

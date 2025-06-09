@@ -1,17 +1,14 @@
 ﻿@page "/"
 
-<MudButton OnClick="NavigateToSettings">Settings</MudButton>
+<MudGrid Class="px-4" Spacing="2">
 
-<MudGrid Class="px-2" Spacing="2">
-
-	<MudItem Class="pt-4 mx-4">
-		<MudText Typo="Typo.h4">Recent Projects</MudText>
+	<MudItem xs="12" sm="12" md="12" lg="12">
+		<ModDashboardButtonsComponent />
 	</MudItem>
 
-	<MudItem xs="12" sm="12" md="12" Class="mx-4">
-		<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 90px)" Elevation="0" Outlined="false" Style="background-color: transparent">
+
+	<MudItem xs="12" sm="12" md="12" Class="px-2 mt-4">
 			<ModCollectionComponent />
-		</MudPaper>
 	</MudItem>
 
 
