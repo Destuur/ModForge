@@ -11,11 +11,11 @@ namespace KCD2.ModForge.Shared.Services
 		private readonly DataSource dataSource;
 		private readonly JsonAdapter jsonAdapter;
 		private readonly LocalizationService localizationService;
-		private readonly IList<IDataPoint> dataPoints;
+		private readonly List<IDataPoint> dataPoints;
 		private Dictionary<string, Dictionary<string, string>> localizationCache;
 		private readonly UserConfigurationService userConfigurationService;
 
-		public XmlToJsonService(DataSource dataSource, IEnumerable<IDataPoint> dataPoints, JsonAdapter jsonAdapter, LocalizationService localizationService, UserConfigurationService userConfigurationService)
+		public XmlToJsonService(DataSource dataSource, List<IDataPoint> dataPoints, JsonAdapter jsonAdapter, LocalizationService localizationService, UserConfigurationService userConfigurationService)
 		{
 			this.dataSource = dataSource;
 			this.jsonAdapter = jsonAdapter;
@@ -37,26 +37,32 @@ namespace KCD2.ModForge.Shared.Services
 
 		private IList<IModItem> ImportPerksFromXml()
 		{
-			var dataPoint = dataPoints.FirstOrDefault(x => x.Type == typeof(Perk));
+			var foundList = new List<IModItem>();
 
-			if (dataPoint is null)
+			foreach (var dataPoint in dataPoints)
 			{
-				return new List<IModItem>();
+				if (dataPoint.Type == typeof(Perk))
+				{
+					foundList = foundList.Concat(dataSource.ReadModItems(dataPoint)).ToList();
+				}
 			}
 
-			return dataSource.ReadModItems(dataPoint);
+			return foundList;
 		}
 
 		private IList<IModItem> ImportBuffsFromXml()
 		{
-			var dataPoint = dataPoints.FirstOrDefault(x => x.Type == typeof(Buff));
+			var foundList = new List<IModItem>();
 
-			if (dataPoint is null)
+			foreach (var dataPoint in dataPoints)
 			{
-				return new List<IModItem>();
+				if (dataPoint.Type == typeof(Buff))
+				{
+					foundList = foundList.Concat(dataSource.ReadModItems(dataPoint)).ToList();
+				}
 			}
 
-			return dataSource.ReadModItems(dataPoint);
+			return foundList;
 		}
 
 		private void AssignLocalizations()

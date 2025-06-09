@@ -22,7 +22,7 @@ namespace KCD2.ModForge.Shared.Adapter
 		{
 			var filePath = dataPoint.Path;
 			var foundModItems = new List<IModItem>();
-			var type = dataPoint.Type.ToString().ToLower();
+			var type = dataPoint.Type.Name.ToString().ToLower();
 
 			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
@@ -44,7 +44,7 @@ namespace KCD2.ModForge.Shared.Adapter
 
 								foreach (var perkElement in doc.Descendants(type))
 								{
-									var modItem = ModItemFactory<IModItem>.CreateModItem(perkElement, entry.FullName);
+									var modItem = ModItemFactory.CreateModItem(perkElement, dataPoint.Type, entry.FullName);
 
 									foundModItems.Add(modItem);
 								}

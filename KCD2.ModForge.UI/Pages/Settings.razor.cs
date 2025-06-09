@@ -5,12 +5,32 @@ namespace KCD2.ModForge.UI.Pages
 {
 	public partial class Settings
 	{
+		private bool isLoading;
+
 		[Inject]
 		public IFolderPickerService? FolderPickerService { get; set; }
 		[Inject]
 		public UserConfigurationService? UserConfigurationService { get; set; }
 		[Inject]
 		public XmlToJsonService? XmlToJsonService { get; set; }
+
+
+		public async Task ImportGameData()
+		{
+			isLoading = true;
+			if (XmlToJsonService is null)
+			{
+				return;
+			}
+			try
+			{
+				XmlToJsonService.ConvertXmlToJsonAsync();
+			}
+			finally
+			{
+				isLoading = false;
+			}
+		}
 
 		private async Task SelectGameDirectory()
 		{

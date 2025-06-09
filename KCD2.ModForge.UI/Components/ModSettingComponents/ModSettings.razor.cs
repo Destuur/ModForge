@@ -18,6 +18,8 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 		[Inject]
 		public IDialogService DialogService { get; set; }
 
+
+
 		private void UpdateChildValidity(bool valid)
 		{
 			isChildValid = valid;

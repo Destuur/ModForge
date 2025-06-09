@@ -6,7 +6,6 @@ namespace KCD2.ModForge.UI.Layout
 {
 	public partial class MainLayout
 	{
-		private bool isLoading;
 		private MudThemeProvider? _mudThemeProvider;
 		private bool _isLoaded = false;
 
@@ -22,23 +21,6 @@ namespace KCD2.ModForge.UI.Layout
 			{
 				_isLoaded = true;
 				StateHasChanged();
-			}
-		}
-
-		public async Task ImportGameData()
-		{
-			isLoading = true;
-			if (XmlToJsonService is null)
-			{
-				return;
-			}
-			try
-			{
-				XmlToJsonService.ConvertXmlToJsonAsync();
-			}
-			finally
-			{
-				isLoading = false;
 			}
 		}
 

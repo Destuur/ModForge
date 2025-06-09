@@ -22,7 +22,12 @@
 		<MudStack Row="true" Class="mt-2">
 			<MudButton Color="Color.Error" FullWidth="true" Variant="Variant.Outlined">Cancel</MudButton>
 			<MudButton Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="UserConfigurationService.Save">Save</MudButton>
+
+			<MudButton OnClick="ImportGameData">Import Game Data</MudButton>
 		</MudStack>
 	</MudItem>
 	
 </MudGrid>
+
+
+<LoadingOverlay IsVisible="@isLoading"></LoadingOverlay>

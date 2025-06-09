@@ -6,6 +6,12 @@ namespace KCD2.ModForge.UI.Pages
 {
 	public partial class ModDashboard
 	{
+		[Inject]
+		public NavigationManager Navigation { get; set; }
 
+		private void NavigateToSettings()
+		{
+			Navigation.NavigateTo("/settings");
+		}
 	}
 }
