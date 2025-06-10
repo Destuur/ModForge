@@ -16,7 +16,7 @@ namespace KCD2.ModForge.UI.Themes
 				Primary = "#a14b00",
 				Secondary = "#f48fb1",
 				Background = "#00000000", // durchsichtig, damit CSS durchscheint
-				Surface = "#252539",
+				Surface = "#00000000",
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1a1a2e",
 				TextPrimary = "#c1c1c4",
@@ -27,7 +27,7 @@ namespace KCD2.ModForge.UI.Themes
 				Primary = "#90caf9",
 				Secondary = "#f48fb1",
 				Background = "#00000000", // durchsichtig, damit CSS durchscheint
-				Surface = "#252539",
+				Surface = "#00000000",
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1a1a2e",
 				TextPrimary = "#c1c1c4",

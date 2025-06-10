@@ -19,6 +19,16 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 		public IList<IModItem> BuffItems { get; set; } = new List<IModItem>();
 		public string? SearchBuff { get; set; }
 
+		public string GetForgeIcon()
+		{
+			if (ModService.GetCurrentMod().ModItems.Count == 0)
+			{
+				return "images\\Icons\\forgeicon.png";
+			}
+
+			return "images\\Icons\\forgeicon2.png";
+		}
+
 		public IEnumerable<IModItem> TakeBuffItems(int count)
 		{
 			if (XmlToJsonService is null)

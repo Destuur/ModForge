@@ -1,20 +1,31 @@
 ﻿@if (Buff is not null)
 {
-	<MudItem xs="12" sm="12" md="12">
-		<MudCard Class="mudcard no-select card-hover-effect" @onclick="EditBuff">
-			<MudCardContent>
 
+	<MudItem xs="3" sm="3" md="3">
+		<MudCard Class="mudcard no-select card-hover-effect" @onclick="EditBuff" Outlined="true" Style="border-color: #c1c1c4; cursor: pointer">
+			<MudCardContent>
+				<div style="display:flex; justify-content:center; padding-bottom:1rem">
+					<MudImage Src="images/Icons/Trigger_icon.png" ObjectPosition="ObjectPosition.Center" />
+				</div>
 				@if (Buff.Localization == null ||
 							(Buff.Localization.Names == null ||
 							Buff.Localization.Names.Count == 0))
 				{
-					<MudText Typo="Typo.h6">System-Buff: @Buff.Attributes.FirstOrDefault(x => x.Name.Contains("name")).Value</MudText>
+					<div style="display:flex; justify-content:center;">
+						<MudText Align="Align.Center" Typo="Typo.caption">System Buff</MudText>
+					</div>
+					<div style="display:flex; justify-content:center;">
+						<MudText Align="Align.Center" Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 20rem;" Typo="Typo.subtitle1">@Buff.Attributes.FirstOrDefault(x => x.Name.Contains("name")).Value</MudText>
+					</div>
 				}
 				else
 				{
-					<MudText Typo="Typo.subtitle1">@(Buff.Localization.GetName(languageKey) ?? "No Name")</MudText>
-					<MudText Typo="Typo.body2">@(Buff.Localization.GetDescription(languageKey) ?? "No Description")</MudText>
-					<MudText Typo="Typo.body2">@(Buff.Localization.GetLoreDescription(languageKey) ?? "No Lore")</MudText>
+					<div style="display:flex; justify-content:center;">
+						<MudText Align="Align.Center" Typo="Typo.caption">Buff</MudText>
+					</div>
+					<div style="display:flex; justify-content:center;">
+						<MudText Align="Align.Center" Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 20rem;" Typo="Typo.subtitle1">@(Buff.Localization.GetName(languageKey) ?? "No Name")</MudText>
+					</div>
 				}
 
 

@@ -2,15 +2,16 @@
 
 <div class="tabs-container">
 	<div class="tabs-header">
-		<MudTabs @bind-ActivePanelIndex="selectedTab">
-			<MudTabPanel Text="Perks" />
+		<MudTabs @bind-ActivePanelIndex="selectedTab" Class="custom-tabs" Elevation="0">
+			<MudTabPanel Text="Perks"/>
 			<MudTabPanel Text="Buffs" />
-			<MudTabPanel Disabled="true" Text="RPG Params" />
-			<MudTabPanel Disabled="true" Text="Items" />
-			<MudTabPanel Disabled="true" Text="Recipes" />
-			<MudTabPanel Disabled="true" Text="STORM" />
+			<MudTabPanel Disabled="true" Text="RPG Params" Visible="false" />
+			<MudTabPanel Disabled="true" Text="Items" Visible="false" />
+			<MudTabPanel Disabled="true" Text="Recipes" Visible="false" />
+			<MudTabPanel Disabled="true" Text="STORM" Visible="false" />
 		</MudTabs>
 	</div>
+
 
 	<div class="tabs-content">
 		@if (selectedTab == 0)
@@ -39,3 +40,15 @@
 		}
 	</div>
 </div>
+
+<MudGrid Class="px-6 py-4">
+	<MudItem xs="2" sm="2" md="2" lg="2">
+		<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Error">Cancel</MudButton>
+	</MudItem>
+	<MudItem xs="5" sm="5" md="5" lg="5">
+		<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Save and Leave</MudButton>
+	</MudItem>
+	<MudItem xs="5" sm="5" md="5" lg="5">
+		<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Create Mod</MudButton>
+	</MudItem>
+</MudGrid>

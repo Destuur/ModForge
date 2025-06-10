@@ -2,6 +2,7 @@
 using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace KCD2.ModForge.UI.Components.PerkComponents
 {
@@ -23,6 +24,16 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 				return null!;
 			}
 			return XmlToJsonService.Perks!.ToList().Take(count);
+		}
+
+		public string GetForgeIcon()
+		{
+			if (ModService.GetCurrentMod().ModItems.Count == 0)
+			{
+				return "images\\Icons\\forgeicon.png";
+			}
+
+			return "images\\Icons\\forgeicon2.png";
 		}
 
 		public void AddModItem(IModItem item)

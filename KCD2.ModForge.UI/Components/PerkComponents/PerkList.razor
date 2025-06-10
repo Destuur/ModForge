@@ -2,28 +2,37 @@
 @if (PerkItems is not null)
 {
 
-	<MudGrid class="px-4" Spacing="2" Justify="Justify.FlexStart">
-		<MudItem>
-			<MudStack Row="true">
+	<MudGrid class="px-4 pt-3" Spacing="4" Justify="Justify.FlexStart">
+		<MudItem xs="12" sm="12" md="12" lg="12">
+			<MudStack class="px-2 mr-4" Row="true">
+				<MudTextField @bind-Value="SearchPerk" Immediate="true" Label="Search" OnKeyUp="SearchPerks" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
 				<MudTextField @bind-Value="SearchPerk" Immediate="true" Label="Search" OnKeyUp="SearchPerks" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
 				@* <MudSelect>
 					<MudSelectItem ></MudSelectItem>
 				</MudSelect> *@
+				<MudSpacer />
+				<MudBadge Content="@ModService.Mod.ModItems.Count" Overlap="true" Color="Color.Primary" Visible="@(ModService.Mod.ModItems.Count > 0)">
+					<MudImage Src="@GetForgeIcon()" Height="55" Style="cursor: pointer" />
+				</MudBadge>
 			</MudStack>
 		</MudItem>
-
-		@foreach (var perkItem in PerkItems)
-		{
-			@if (perkItem is not Perk perk)
-			{
-				continue;
-			}
-			@* @if (perk.Localizations.Count == 0)
+		<MudItem xs="12" sm="12" md="12" lg="12">
+			<MudPaper Class="d-flex flex-column overflow-x-auto px-2 ma-0" Height="calc(100vh - 208px)" Elevation="0" Outlined="false" Style="background-color: transparent">
+				<MudGrid>
+					@foreach (var perkItem in PerkItems)
+					{
+						@if (perkItem is not Perk perk)
+						{
+							continue;
+						}
+						@* @if (perk.Localizations.Count == 0)
 				{
 					continue;
 				} *@
-			<PerkListItem Perk="perk"></PerkListItem>
-		}
-
+						<PerkListItem Perk="perk"></PerkListItem>
+					}
+				</MudGrid>
+			</MudPaper>
+		</MudItem>
 	</MudGrid>
 }

@@ -326,7 +326,6 @@ h1:focus {
     position: sticky;
     top: 0; /* oder top: 64px, wenn du eine AppBar hast */
     z-index: 10;
-    background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -340,3 +339,27 @@ h1:focus {
     border: 2px solid var(--mud-palette-outline, rgba(0,0,0,0.12)); /* Default-Farbe verwenden */
     box-shadow: none; /* optional: MudBlazor verwendet normalerweise box-shadow für Outlines */
 }
+
+.custom-tabs {
+    background: linear-gradient(to top, rgba(161, 75, 0, 0.15), rgba(255, 255, 255, 0)); /* Unten leicht weißlich, oben transparent */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(161, 75, 0, 0.1);
+}
+
+    /* Die Tab-Schaltflächen */
+    .custom-tabs .mud-tab {
+        background-color: transparent;
+        color: white !important; /* Immer gleichbleibende Textfarbe */
+        transition: background-color 0.3s ease, filter 0.3s ease;
+    }
+
+        /* Aktiver Tab: leicht heller Hintergrund */
+        .custom-tabs .mud-tab.mud-tab-active {
+            background: linear-gradient(to top, rgba(161, 75, 0, 0.35), rgba(255, 255, 255, 0));
+        }
+
+        /* Hovereffekt: ebenfalls leicht heller */
+        .custom-tabs .mud-tab:hover {
+            background: linear-gradient(to top, rgba(161, 75, 0, 0.15), rgba(255, 255, 255, 0));
+        }
