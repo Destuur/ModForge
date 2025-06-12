@@ -16,7 +16,7 @@ namespace KCD2.ModForge.UI.Themes
 				Primary = "#a14b00",
 				Secondary = "#f48fb1",
 				Background = "#00000000", // durchsichtig, damit CSS durchscheint
-				Surface = "#00000000",
+				Surface = "#ffffff",
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1a1a2e",
 				TextPrimary = "#c1c1c4",
@@ -31,7 +31,7 @@ namespace KCD2.ModForge.UI.Themes
 				DarkDarken = "#ffffff",
 				DarkLighten = "#000000",
 				LinesInputs = "#c1c1c44d",
-				TextSecondary = "#99999c"
+				TextSecondary = "#99999c",
 			},
 			PaletteDark = new PaletteDark()
 			{

@@ -1,6 +1,6 @@
 ﻿@page "/moditems/{ModId}"
 
-<div class="tabs-container">
+<div style="height: calc(100vh - 6px)">
 	<div class="tabs-header">
 		<MudTabs @bind-ActivePanelIndex="selectedTab" Class="custom-tabs" Elevation="0">
 			<MudTabPanel Text="Perks"/>
@@ -39,16 +39,16 @@
 			<MudText>STORM</MudText>
 		}
 	</div>
-</div>
 
-<MudGrid Class="px-6 py-4">
+<MudGrid Class="px-4 pt-3">
 	<MudItem xs="2" sm="2" md="2" lg="2">
-		<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Error">Cancel</MudButton>
+		<MudButton Class="button-cancel" FullWidth="true" Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
 	</MudItem>
 	<MudItem xs="5" sm="5" md="5" lg="5">
-		<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Save and Leave</MudButton>
+		<MudButton Class="button-prominent" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveMod">Save and Leave</MudButton>
 	</MudItem>
 	<MudItem xs="5" sm="5" md="5" lg="5">
-		<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Create Mod</MudButton>
+		<MudButton Class="button-prominent" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="Checkout">Create Mod</MudButton>
 	</MudItem>
 </MudGrid>
+</div>

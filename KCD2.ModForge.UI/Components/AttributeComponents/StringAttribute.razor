@@ -1,4 +1,23 @@
 ﻿@if (Attribute is not null)
 {
-	<MudTextField @bind-Value="CurrentValue" Label="@FormatLabel(Attribute.Name)" Variant="Variant.Outlined" Margin="Margin.Dense" AutoGrow="true" Adornment="Adornment.End" AdornmentColor="Color.Secondary" AdornmentIcon="@Icons.Material.Filled.Delete" IconSize="Size.Small" OnAdornmentClick="@(() => Remove())">@Attribute.Value.ToString()</MudTextField>
+	<MudGrid Justify="Justify.SpaceBetween" Style="align-items: center;" Class="pa-1">
+		<MudItem>
+			<MudText>@FormatLabel(Attribute.Name)</MudText>
+		</MudItem>
+		<MudItem>
+			<MudIconButton Icon="@Icons.Material.Filled.Close"
+						   OnClick="@(() => Remove())"
+						   Size="Size.Small"
+						   Color="Color.Error" />
+		</MudItem>
+	</MudGrid>
+
+	<div class="grow-container">
+		<MudTextField style="border-bottom: 2px solid #a14b00AA !important; text-align: center; font-size: 1.1rem; background-color: transparent !important;"
+						 Immediate="false" @bind-Value="CurrentValue" Dense="true"
+						 FullWidth="false"
+						 Margin="Margin.Dense"
+						 Underline="false"
+						 Variant="Variant.Text" Class="ma-3 align-input-center" HideSpinButtons="true" />
+	</div>
 }

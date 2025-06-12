@@ -15,6 +15,7 @@ namespace KCD2.ModForge.UI.Pages
 		private Buff editingBuff;
 		private Buff originalBuff;
 		private bool canCheckout;
+		private int selectedTab;
 
 		[Parameter]
 		public string Id { get; set; }
@@ -270,9 +271,9 @@ namespace KCD2.ModForge.UI.Pages
 			{
 				return;
 			}
-
-			originalBuff = XmlToJsonService.Buffs!.FirstOrDefault(x => x.Id == Id) as Buff;
+			originalBuff = XmlToJsonService.Buffs!.FirstOrDefault(x => x.Id == Id)! as Buff;
 			editingBuff = Buff.GetDeepCopy(originalBuff);
+			StateHasChanged();
 		}
 	}
 }

@@ -46,7 +46,14 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 
 		private void Validate()
 		{
-			bool isValid = !string.IsNullOrEmpty(name) || !string.IsNullOrWhiteSpace(name) && ValidateModName(name) == string.Empty;
+			bool isValid = !string.IsNullOrEmpty(name) ||
+				!string.IsNullOrWhiteSpace(name) && ValidateModName(name) == string.Empty;
+
+			if (ModService.GetAllMods().FirstOrDefault(x => x.ModId == modId) is not null)
+			{
+				isValid = false;
+			}
+
 			OnValidityChanged.InvokeAsync(isValid);
 		}
 
@@ -89,6 +96,14 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 			if (!regex.IsMatch(value))
 			{
 				return "The mod name may only contain letters and spaces. No numbers or special characters allowed.";
+			}
+
+			var modIdStrings = name.Trim().ToLower().Split(' ');
+			var tempModId = string.Join('_', modIdStrings);
+
+			if (ModService.GetAllMods().FirstOrDefault(x => x.ModId == tempModId) is not null)
+			{
+				return "A mod with this name is already in your collection.";
 			}
 
 			return string.Empty;

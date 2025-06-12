@@ -5,8 +5,7 @@
 	<MudGrid class="px-4 pt-3" Spacing="4" Justify="Justify.FlexStart">
 		<MudItem xs="12" sm="12" md="12" lg="12">
 			<MudStack class="px-2 mr-4" Row="true">
-				<MudTextField @bind-Value="SearchPerk" Immediate="true" Label="Search" OnKeyUp="SearchPerks" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
-				<MudTextField @bind-Value="SearchPerk" Immediate="true" Label="Search" OnKeyUp="SearchPerks" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
+				<MudTextField Class="mudtext-warm" @bind-Value="SearchPerk" Immediate="true" Label="Search" OnKeyUp="SearchPerks" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
 				@* <MudSelect>
 					<MudSelectItem ></MudSelectItem>
 				</MudSelect> *@
@@ -17,7 +16,7 @@
 			</MudStack>
 		</MudItem>
 		<MudItem xs="12" sm="12" md="12" lg="12">
-			<MudPaper Class="d-flex flex-column overflow-x-auto px-2 ma-0" Height="calc(100vh - 208px)" Elevation="0" Outlined="false" Style="background-color: transparent">
+			<MudPaper Class="d-flex flex-column overflow-x-auto px-2 ma-0" Height="calc(100vh - 220px)" Elevation="0" Outlined="false" Style="background-color: transparent">
 				<MudGrid>
 					@foreach (var perkItem in PerkItems)
 					{

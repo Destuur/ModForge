@@ -38,7 +38,13 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 				return;
 			}
 
-			NavigationManager.NavigateTo($"modItems/{Mod.ModId}");
+			ModService.SetCurrentMod(Mod);
+			NavigationManager.NavigateTo($"/modoverview");
+		}
+
+		public void DeleteMod()
+		{
+			OnDelete.InvokeAsync(Mod);
 		}
 	}
 }

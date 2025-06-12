@@ -6,13 +6,13 @@
             <MudStack Row="true" Justify="Justify.SpaceBetween" Style="align-items: center" Spacing="0">
                 <MudText Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" Typo="Typo.subtitle1">@Mod.Name</MudText>
                 <MudMenu  Icon="@Icons.Material.Filled.MoreVert" Color="Color.Primary" AnchorOrigin="Origin.TopLeft" Dense="true" DropShadow="false" PopoverClass="my-rounded-menu">
-                    <MudMenuItem Class="custom-menu-item first">
+                    <MudMenuItem Class="custom-menu-item first" OnClick="EditMod">
                         Edit
                     </MudMenuItem>
-                    <MudMenuItem Class="custom-menu-item">
+                    <MudMenuItem Class="custom-menu-item" OnClick="ExportMod">
                         Export
                     </MudMenuItem>
-                    <MudMenuItem Class="custom-menu-item last">
+                    <MudMenuItem Class="custom-menu-item last" OnClick="DeleteMod">
                         Delete
                     </MudMenuItem>
                 </MudMenu>

@@ -9,7 +9,7 @@
 		{
 			<MudItem xs="2" sm="2" md="2" lg="2">
 				<MudPaper Class="card" Outlined="true" Elevation="0">
-						<ModListItem Mod="mod"></ModListItem>
+					<ModListItem Mod="mod" @key="mod.ModId" OnDelete="DeleteMod"></ModListItem>
 				</MudPaper>
 			</MudItem>
 		}

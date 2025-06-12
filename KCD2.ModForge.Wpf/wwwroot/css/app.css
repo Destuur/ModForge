@@ -25,6 +25,10 @@
         pointer-events: none;
     }
 
+.align-input-center input {
+    text-align: center;
+}
+
 a, .btn-link {
     color: #006bb7;
 }
@@ -109,6 +113,7 @@ h1:focus {
     }
 }
 
+
 .mudcard {
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     border-radius: 12px;
@@ -147,34 +152,74 @@ h1:focus {
     margin: auto;
 }
 
-.card {
-    background: rgba(39, 18, 0, 0.3); /* halbtransparent, warm */
-    border: 1px solid rgba(193, 193, 196, 0.2); /* TextPrimary, weich gemacht */
-    border-radius: 12px;
+
+.delete-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+.custom-textfield input {
+    text-align: center;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    background-color: transparent;
     padding: 0.5rem;
-    position: relative;
-    color: #c1c1c4;
+    border-bottom: 2px solid #3f51b5; /* Primärfarbe als untere Linie */
+    box-shadow: 0 2px 5px rgba(63, 81, 181, 0.3); /* Optional: sanfter Schatten unten */
+}
+
+    .custom-textfield input:focus {
+        border-bottom: 2px solid #303f9f;
+        box-shadow: 0 4px 6px rgba(63, 81, 181, 0.4);
+    }
+
+.attribute-card {
+    background: rgba(39, 18, 0, 0.3) !important; /* halbtransparent, warm */
+    border: 1px solid rgba(255, 153, 102, 0.3) !important; /* TextPrimary, weich gemacht */
+    border-radius: 12px !important;
+    padding: 0.5rem !important;
+    position: relative !important;
+    color: #c1c1c4 !important;
+    transition: all 0.2s ease !important;
+}
+
+.grow-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: rgba(39, 18, 0, 0.3) !important; /* halbtransparent, warm */
+    border: 1px solid rgba(193, 193, 196, 0.2) !important; /* TextPrimary, weich gemacht */
+    border-radius: 12px !important;
+    padding: 0.5rem !important;
+    position: relative !important;
+    color: #c1c1c4 !important;
     box-shadow: inset 0 0 2px rgba(255, 153, 102, 0.05), /* warmes Innenleuchten */
-    0 0 6px rgba(0, 0, 0, 0.4); /* dunkle Tiefe */
+    0 0 6px rgba(0, 0, 0, 0.4) !important; /* dunkle Tiefe */
     transition: all 0.2s ease;
 }
 
     .card:hover {
-        border-color: #a14b00; /* warmes, dominantes Hover */
-        box-shadow: 0 0 12px rgba(161, 75, 0, 0.35); /* glüht leicht */
-        transform: scale(1.015);
+        border-color: #a14b00 !important; /* warmes, dominantes Hover */
+        box-shadow: 0 0 12px rgba(161, 75, 0, 0.35) !important; /* glüht leicht */
+        transform: scale(1.015) !important;
     }
 
     .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 4px;
-        height: 100%;
-        background: linear-gradient(180deg, #a14b00, transparent);
-        border-radius: 4px 0 0 4px;
-        opacity: 0.8;
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 4px !important;
+        height: 100% !important;
+        background: linear-gradient(180deg, #a14b00, transparent) !important;
+        border-radius: 4px 0 0 4px !important;
+        opacity: 0.8 !important;
     }
 
 .button-prominent {
@@ -445,8 +490,8 @@ h1:focus {
 
 /* Optional: falls du Tabs-Inhalte in fester Höhe scrollen willst */
 .tabs-content {
-    overflow-y: auto;
-    max-height: calc(100vh - 64px - 24px); /* AppBar + Tab-Höhe abziehen */
+    overflow-y: hidden;
+    max-height: calc(100vh - 136px); /* AppBar + Tab-Höhe abziehen */
 }
 
 .thick-outline {
@@ -455,27 +500,31 @@ h1:focus {
 }
 
 .custom-tabs {
-    background: linear-gradient(to top, rgba(161, 75, 0, 0.15), rgba(255, 255, 255, 0)); /* Unten leicht weißlich, oben transparent */
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-bottom: 1px solid rgba(161, 75, 0, 0.1);
+    background: linear-gradient(to top, rgba(161, 75, 0, 0.15), rgba(255, 255, 255, 0)) !important; /* Unten leicht weißlich, oben transparent */
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border-bottom: 1px solid rgba(161, 75, 0, 0.1) !important;
 }
 
     /* Die Tab-Schaltflächen */
     .custom-tabs .mud-tab {
-        background-color: transparent;
+        background-color: transparent !important;
         color: white !important; /* Immer gleichbleibende Textfarbe */
-        transition: background-color 0.3s ease, filter 0.3s ease;
+        transition: background-color 0.3s ease, filter 0.3s ease !important;
     }
 
         /* Aktiver Tab: leicht heller Hintergrund */
         .custom-tabs .mud-tab.mud-tab-active {
-            background: linear-gradient(to top, rgba(161, 75, 0, 0.35), rgba(255, 255, 255, 0));
+            background: linear-gradient(to top, rgba(161, 75, 0, 0.35), rgba(255, 255, 255, 0)) !important;
         }
 
         /* Hovereffekt: ebenfalls leicht heller */
         .custom-tabs .mud-tab:hover {
-            background: linear-gradient(to top, rgba(161, 75, 0, 0.15), rgba(255, 255, 255, 0));
+            background: linear-gradient(to top, rgba(161, 75, 0, 0.15), rgba(255, 255, 255, 0)) !important;
+        }
+
+        .mud-tabs-tabbar {
+            background-color: transparent !important;
         }
 
 .my-rounded-menu {

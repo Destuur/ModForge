@@ -29,6 +29,7 @@ namespace KCD2.ModForge.UI.Pages
 				{
 					config.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
 				});
+			ModService.ClearCurrentMod();
 			NavigationManager.NavigateTo("/");
 		}
 

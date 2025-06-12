@@ -280,5 +280,14 @@ namespace KCD2.ModForge.Shared.Services
 			}
 		}
 
+		public void SetCurrentMod(ModDescription? mod)
+		{
+			if (mod is null)
+			{
+				return;
+			}
+
+			this.mod = mod;
+		}
 	}
 }

@@ -3,11 +3,14 @@
 
 @if (mod is not null)
 {
-	<MudGrid Class="pa-4" Spacing="2">
+	<MudText class="pl-6" Typo="Typo.h4" Style="font-weight: bold;">OVERVIEW</MudText>
 
-		@foreach (var modItem in mod.ModItems)
-		{
-			<MudItem>
+	<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 134px)" Elevation="0" Outlined="false" Style="background-color: transparent">
+		<MudGrid Justify="Justify.FlexStart" Class="px-6 py-4">
+
+
+			@foreach (var modItem in mod.ModItems)
+			{
 
 				@if (modItem is Perk perk)
 				{
@@ -18,13 +21,12 @@
 				{
 					<BuffListItem Buff="buff" Placeholder="@buff.Name"></BuffListItem>
 				}
+			}
 
-			</MudItem>
-		}
-
-	</MudGrid>
+		</MudGrid>
+	</MudPaper>
 
 	<MudStack Row="true" Class="px-4 mt-4">
-		<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="ExportMod">Create Mod</MudButton>
+		<MudButton Class="button-prominent" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="ExportMod">Create Mod</MudButton>
 	</MudStack>
 }

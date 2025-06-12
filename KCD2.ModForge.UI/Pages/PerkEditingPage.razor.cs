@@ -16,6 +16,7 @@ namespace KCD2.ModForge.UI.Pages
 		private Perk editingPerk;
 		private Perk originalPerk;
 		private bool canCheckout;
+		private int selectedTab;
 
 		[Parameter]
 		public string Id { get; set; }
@@ -212,7 +213,14 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
+
 			originalPerk = XmlToJsonService.Perks!.FirstOrDefault(x => x.Id == Id)! as Perk;
+
+			if (ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) is not null)
+			{
+				originalPerk.Attributes = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id).Attributes;
+			}
+
 			editingPerk = Perk.GetDeepCopy(originalPerk);
 			StateHasChanged();
 		}

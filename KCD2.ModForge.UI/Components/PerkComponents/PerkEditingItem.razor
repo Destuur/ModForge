@@ -1,20 +1,20 @@
 ﻿<MudGrid Spacing="4" Class="pa-4">
 
-	<MudItem sm="8">
-		<MudText Typo="Typo.h6">@EditingPerk.Localization.GetName("en")</MudText>
+	<MudItem sm="8" Style="display: flex; align-items: center;">
+		<MudText Typo="Typo.h4" Style="font-weight: bold;">@EditingPerk.Localization.GetName("en").ToUpper()</MudText>
 	</MudItem>
 
 	<MudItem sm="1">
-		<MudButton FullWidth="true" OnClick="ResetBuff" Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
+		<MudButton Class="button-neutral" FullWidth="true" OnClick="ResetBuff" Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
 	</MudItem>
 
 	<MudItem sm="3">
-		<MudButton FullWidth="true" OnClick="ToggleDrawer" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Add Attribute</MudButton>
+		<MudButton Class="button-prominent" FullWidth="true" OnClick="ToggleDrawer" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Add Attribute</MudButton>
 	</MudItem>
 
 	@foreach (var attribute in sortedAttributes)
 	{
-				<AttributeSelector Attribute="attribute" RemoveAttribute="Remove"></AttributeSelector>
+		<AttributeSelector Attribute="attribute" RemoveAttribute="Remove" @key="attribute.Name"></AttributeSelector>
 	}
 
 </MudGrid>
