@@ -18,6 +18,11 @@ namespace KCD2.ModForge.UI.Pages
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
 
+		public void ContinueModding()
+		{
+			NavigationManager.NavigateTo($"/moditems/{mod.ModId}");
+		}
+
 		public void ExportMod()
 		{
 			ModService.ExportMod(mod);

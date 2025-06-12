@@ -218,7 +218,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			if (ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) is not null)
 			{
-				originalPerk.Attributes = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id).Attributes;
+				originalPerk = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) as Perk;
 			}
 
 			editingPerk = Perk.GetDeepCopy(originalPerk);

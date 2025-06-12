@@ -32,7 +32,7 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 
 		private void GoToManageMods()
 		{
-			Navigation.NavigateTo("/settings");
+			Navigation.NavigateTo("/manager");
 		}
 	}
 }

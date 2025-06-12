@@ -3,9 +3,19 @@
 
 @if (mod is not null)
 {
-	<MudText class="pl-6" Typo="Typo.h4" Style="font-weight: bold;">OVERVIEW</MudText>
+	<MudGrid Spacing="4" Class="pa-4">
 
-	<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 134px)" Elevation="0" Outlined="false" Style="background-color: transparent">
+		<MudItem sm="9" Style="display: flex; align-items: center;">
+			<MudText Typo="Typo.h4" Style="font-weight: bold;">OVERVIEW</MudText>
+		</MudItem>
+
+		<MudItem sm="3">
+			<MudButton Class="button-neutral" FullWidth="true" OnClick="ContinueModding">Continue Modding</MudButton>
+		</MudItem>
+
+	</MudGrid>
+
+	<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 188px)" Elevation="0" Outlined="false" Style="background-color: transparent">
 		<MudGrid Justify="Justify.FlexStart" Class="px-6 py-4">
 
 

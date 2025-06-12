@@ -12,7 +12,8 @@ namespace KCD2.ModForge.Shared.Services
 	public class ModService
 	{
 		private ModDescription? mod = new();
-		private ModCollection modCollection;
+		private ModCollection modCollection = new();
+		private ModCollection externalModCollection = new();
 		private string modCollectionFile;
 		private readonly JsonSerializerSettings settings = new()
 		{
@@ -43,6 +44,77 @@ namespace KCD2.ModForge.Shared.Services
 					return;
 				}
 				mod = value;
+			}
+		}
+
+		public void ReadExternalModsFromPak()
+		{
+			var modFolder = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods");
+			var files = Directory.EnumerateDirectories(modFolder);
+
+			foreach (var file in files)
+			{
+				var modFiles = Directory.GetFiles(file);
+
+				var doc = XDocument.Load(modFiles.FirstOrDefault());
+
+				var info = doc.Root.Element("info");
+
+				if (info.Element("author")?.Value.Equals(userConfigurationService.Current.UserName) == true)
+				{
+					continue;
+				}
+
+				var supports = doc.Root.Element("supports");
+				var parseElement = bool.TryParse(info.Element("modifies_level").Value, out bool result);
+				var supportList = new List<string>();
+				var supportingVersionElements = supports.Elements("kcd_version");
+
+				foreach (var supportingVersionElement in supportingVersionElements)
+				{
+					supportList.Add(supportingVersionElement.Value);
+				}
+
+				var modDescription = new ModDescription()
+				{
+					Name = info.Element("name")?.Value,
+					Description = info.Element("description")?.Value,
+					Author = info.Element("author")?.Value,
+					ModVersion = info.Element("version")?.Value,
+					CreatedOn = info.Element("created_on")?.Value,
+					ModId = info.Element("modid")?.Value,
+					ModifiesLevel = result,
+					SupportsGameVersions = supportList
+				};
+
+				var folder = Path.Combine(file, "Data");
+				var pak = Path.Combine(folder, modDescription.ModId + ".pak");
+
+				var dataPoints = new List<IDataPoint>()
+				{
+					new DataPoint(pak, "perk", typeof(Perk)),
+					new DataPoint(pak, "buff", typeof(Buff))
+				};
+
+				foreach (var dataPoint in dataPoints)
+				{
+					var modItems = dataSource.ReadModItems(dataPoint);
+
+					if (modItems is null)
+					{
+						throw new NullReferenceException();
+					}
+
+					foreach (var modItem in modItems)
+					{
+						modDescription.ModItems.Add(modItem);
+					}
+				}
+
+				if (externalModCollection.FirstOrDefault(x => x.ModId == modDescription.ModId) is null)
+				{
+					externalModCollection.Add(modDescription);
+				}
 			}
 		}
 
@@ -78,6 +150,11 @@ namespace KCD2.ModForge.Shared.Services
 			return modCollection;
 		}
 
+		public ModCollection GetAllExternalMods()
+		{
+			return externalModCollection;
+		}
+
 		public void ClearCurrentMod()
 		{
 			mod = new();
@@ -100,6 +177,17 @@ namespace KCD2.ModForge.Shared.Services
 			}
 
 			mod = modCollection.GetMod(modId);
+
+			if (mod is null)
+			{
+				mod = externalModCollection.GetMod(modId);
+			}
+
+			if (mod is null)
+			{
+				throw new NullReferenceException();
+			}
+
 			return true;
 		}
 
@@ -191,6 +279,11 @@ namespace KCD2.ModForge.Shared.Services
 		{
 			modCollection.RemoveMod(mod);
 			WriteModCollectionAsJson();
+		}
+
+		public void RemoveModFromExternalCollection(ModDescription mod)
+		{
+			externalModCollection.RemoveMod(mod);
 		}
 
 		private bool WriteModManifest(ModDescription mod)

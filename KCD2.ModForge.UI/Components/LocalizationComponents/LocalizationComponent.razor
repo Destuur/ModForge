@@ -3,19 +3,31 @@
 {
 	<MudGrid Spacing="5" Justify="Justify.SpaceBetween" Class="pa-4">
 		<MudItem lg="12">
-			<MudStack Row="true" Justify="Justify.SpaceBetween" Spacing="0">
-				<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddAllLanguages">All</MudButton>
+			<MudGrid Justify="Justify.SpaceBetween" Spacing="2">
+
+				<MudItem xs="6" sm="6" md="6" lg="6">
+					<MudButton Class="button-prominent" Style="font-size: 0.6rem !important; padding: 0.2rem 0.4rem !important;" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="AddAllLanguages">All</MudButton>
+				</MudItem>
+
+				<MudItem xs="6" sm="6" md="6" lg="6">
+					<MudButton Class="button-prominent" Style="font-size: 0.6rem !important; padding: 0.2rem 0.4rem !important;" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveAllLanguages">Clear</MudButton>
+				</MudItem>
+
 				@foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
 				{
-					<MudButton Color="@(SelectedLanguageCodes.Contains(languageKey) ? Color.Primary : Color.Default)"
-							   Variant="@(SelectedLanguageCodes.Contains(languageKey) ? Variant.Filled : Variant.Outlined)"
-							   OnClick="@(() => AddLanguageKey(languageKey))"
-							   Size="Size.Small">
-						@(LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key)
-					</MudButton>
+					<MudItem xs="3" sm="3" md="3" lg="3">
+						<MudButton Class="@(SelectedLanguageCodes.Contains(languageKey) ? "button-prominent" : "button-neutral")"
+								   Style="font-size: 0.6rem !important; padding: 0.2rem 0.4rem !important;" FullWidth="true"
+								   Variant="@(SelectedLanguageCodes.Contains(languageKey) ? Variant.Filled : Variant.Outlined)"
+								   OnClick="@(() => AddLanguageKey(languageKey))"
+								   Size="Size.Small">
+							@(LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key)
+						</MudButton>
+					</MudItem>
 				}
-				<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveAllLanguages">Clear</MudButton>
-			</MudStack>
+
+
+			</MudGrid>
 		</MudItem>
 
 		<MudDivider Class="mt-4" />
@@ -31,8 +43,9 @@
 		{
 			@foreach (var code in SelectedLanguageCodes)
 			{
-				<MudItem lg="12">
-					<MudCard Class="pa-4 border-2" Elevation="0" Outlined="true">
+				<MudItem xs="12" sm="12" md="12" lg="12">
+							<MudText Class="pl-2">@(LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == code).Key)</MudText>
+					<MudPaper Class="attribute-card" Outlined="true" Elevation="0">
 
 						@if (editMode == false)
 						{
@@ -65,7 +78,7 @@
 										  Variant="Variant.Outlined" />
 						}
 
-					</MudCard>
+					</MudPaper>
 				</MudItem>
 			}
 		}

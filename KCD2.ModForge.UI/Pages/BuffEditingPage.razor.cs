@@ -271,7 +271,14 @@ namespace KCD2.ModForge.UI.Pages
 			{
 				return;
 			}
+
 			originalBuff = XmlToJsonService.Buffs!.FirstOrDefault(x => x.Id == Id)! as Buff;
+
+			if (ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) is not null)
+			{
+				originalBuff = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) as Buff;
+			}
+
 			editingBuff = Buff.GetDeepCopy(originalBuff);
 			StateHasChanged();
 		}

@@ -1,0 +1,18 @@
+﻿@if (mods is not null)
+{
+
+	<MudText Class="pb-1" Style="font-weight: bold" Typo="Typo.subtitle1">External Mods</MudText>
+
+	<MudGrid>
+
+		@foreach (var mod in mods)
+		{
+			<MudItem xs="2" sm="2" md="2" lg="2">
+				<MudPaper Class="card" Outlined="true" Elevation="0">
+					<ModListItem Mod="mod" @key="mod.ModId" OnDelete="DeleteExternalMod"></ModListItem>
+				</MudPaper>
+			</MudItem>
+		}
+
+	</MudGrid>
+}
