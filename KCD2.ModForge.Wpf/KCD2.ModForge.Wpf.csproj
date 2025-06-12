@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
-		<ApplicationIcon>wwwroot\images\Icons\modforge.ico</ApplicationIcon>
+		<ApplicationIcon>wwwroot\images\icons\modforge.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -17,6 +17,12 @@
 		<InvariantGlobalization>true</InvariantGlobalization>
 		<StripSymbols>true</StripSymbols>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="wwwroot\images\Icons\forgeicon.png" />
+	  <Content Remove="wwwroot\images\Icons\forgeicon2.png" />
+	  <Content Remove="wwwroot\images\Icons\modforge_icon_no_letters.png" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<None Remove="Images\Icons\modforge.ico" />
@@ -36,6 +42,16 @@
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
+		<Content Include="Images\Icons\modforge.png">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\images\Icons\forgeicon.png" />
+	  <None Include="wwwroot\images\Icons\forgeicon2.png" />
+	  <None Include="wwwroot\images\Icons\modforge_icon_no_letters.png" />
 	</ItemGroup>
 
 </Project>

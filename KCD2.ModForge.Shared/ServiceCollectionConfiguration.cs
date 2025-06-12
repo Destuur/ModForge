@@ -1,16 +1,10 @@
 ﻿using KCD2.ModForge.Shared.Adapter;
 using KCD2.ModForge.Shared.Factories;
+using KCD2.ModForge.Shared.Models.Data;
 using KCD2.ModForge.Shared.Models.ModItems;
 using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
-using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KCD2.ModForge.Shared
 {
@@ -18,26 +12,31 @@ namespace KCD2.ModForge.Shared
 	{
 		public static IServiceCollection AddModForgeServices(this IServiceCollection services)
 		{
-
-			services.AddSingleton<IconService>();
 			services.AddSingleton<LocalizationService>();
 			services.AddSingleton<ModService>();
 			services.AddScoped<NavigationService>();
-			services.AddSingleton<OrchestrationService>();
-			services.AddSingleton<PerkService>();
 			services.AddSingleton<UserConfigurationService>();
 			services.AddSingleton<XmlToJsonService>();
 			services.AddSingleton<ModCollection>();
+			services.AddSingleton<DataSource>();
+			services.AddSingleton(new List<IDataPoint>() {
+				new DataPoint(ToolResources.Keys.TablesPath(), "perk__combat", typeof(Perk)),
+				new DataPoint(ToolResources.Keys.TablesPath(), "perk__hardcore", typeof(Perk)),
+				new DataPoint(ToolResources.Keys.TablesPath(), "perk__kcd2", typeof(Perk)),
+				new DataPoint(ToolResources.Keys.TablesPath(), "buff.xml", typeof(Buff)),
+				new DataPoint(ToolResources.Keys.TablesPath(), "buff__alchemy", typeof(Buff)),
+				new DataPoint(ToolResources.Keys.TablesPath(), "buff__perk", typeof(Buff)),
+				new DataPoint(ToolResources.Keys.TablesPath(), "buff__perk_hardcore", typeof(Buff)),
+				new DataPoint(ToolResources.Keys.TablesPath(), "buff__perk_kcd1", typeof(Buff))
+			});
 			return services;
 		}
 
 		public static IServiceCollection AddModForgeAdapters(this IServiceCollection services)
 		{
 			services.AddSingleton<LocalizationAdapter>();
-			services.AddSingleton<JsonAdapterOfT<Perk>>();
-			services.AddSingleton<JsonAdapterOfT<Buff>>();
-			services.AddSingleton<XmlAdapterOfT<Perk>>();
-			services.AddSingleton<XmlAdapterOfT<Buff>>();
+			services.AddSingleton<JsonAdapter>();
+			services.AddSingleton<IModItemAdapter, XmlAdapter>();
 			return services;
 		}
 	}

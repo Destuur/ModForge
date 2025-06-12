@@ -6,6 +6,10 @@ namespace KCD2.ModForge.Shared.Services
 	public class UserConfigurationService
 	{
 		private readonly string configFile;
+		private JsonSerializerOptions jsonSettings = new JsonSerializerOptions()
+		{
+			WriteIndented = true
+		};
 
 		public UserConfigurationService()
 		{
@@ -16,7 +20,7 @@ namespace KCD2.ModForge.Shared.Services
 			Load();
 		}
 
-		public UserConfiguration? Current { get; private set; }
+		public UserConfiguration? Current { get; set; }
 
 		private void Load()
 		{
@@ -34,11 +38,7 @@ namespace KCD2.ModForge.Shared.Services
 
 		public void Save()
 		{
-			var json = JsonSerializer.Serialize(Current, new JsonSerializerOptions
-			{
-				WriteIndented = true
-			});
-
+			var json = JsonSerializer.Serialize(Current, jsonSettings);
 			Directory.CreateDirectory(Path.GetDirectoryName(configFile)!);
 			File.WriteAllText(configFile, json);
 		}

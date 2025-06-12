@@ -3,43 +3,56 @@
 	@switch (Attribute.Value)
 	{
 		case bool:
-			<BoolAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<MudItem xs="2" sm="2" md="2" lg="2" Class="mx-0">
+				<MudPaper Class="attribute-card" Outlined="true" Elevation="0" Height="100px">
+					<BoolAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+				</MudPaper>
+			</MudItem>
 			break;
 		case Enum:
-			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
-				<EnumAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<MudItem xs="2" sm="2" md="2" lg="2" Class="mx-0">
+				<MudPaper Class="attribute-card" Outlined="true" Elevation="0" Height="100px">
+					<EnumAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+				</MudPaper>
 			</MudItem>
 			break;
 		case double:
-			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
-				<DoubleAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<MudItem xs="2" sm="2" md="2" lg="2" Class="mx-0">
+				<MudPaper Class="attribute-card" Outlined="true" Elevation="0" Height="100px">
+					<DoubleAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+				</MudPaper>
 			</MudItem>
 			break;
 		case int:
-			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
-				<IntAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<MudItem xs="2" sm="2" md="2" lg="2" Class="mx-0">
+				<MudPaper Class="attribute-card" Outlined="true" Elevation="0" Height="100px">
+					<IntAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+				</MudPaper>
 			</MudItem>
 			break;
 		case string:
-			<MudItem xs="6" sm="6" md="6" lg="6" Class="mx-0">
-				<StringAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<MudItem xs="4" sm="4" md="4" lg="4" Class="mx-0">
+				<MudPaper Class="attribute-card" Outlined="true" Elevation="0" Height="100px">
+					<StringAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+				</MudPaper>
 			</MudItem>
 			break;
 		case IList<BuffParam>:
 			<MudItem xs="12" sm="12" md="12" lg="12">
-				<MudCard Class="pa-4 border-2" Elevation="0" Outlined="true">
+				<MudPaper Class="attribute-card" Outlined="true" Elevation="0">
 					<MudGrid Spacing="4">
 						<MudItem xs="11" sm="11" md="11" lg="11">
-							<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Primary" OnClick="AddBuffParam">Add Buff Parameter</MudButton>
+							<MudButton class="button-prominent" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" FullWidth="true" OnClick="AddBuffParam">Add Buff Parameter</MudButton>
 						</MudItem>
 						<MudItem xs="1" sm="1" md="1" lg="1">
-							<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@(() => Remove(Attribute.Name))">Remove</MudButton>
+							<MudButton FullWidth="true" class="button-cancel" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" OnClick="@(() => Remove(Attribute.Name))">Remove</MudButton>
 						</MudItem>
 						<MudItem xs="12" sm="12" md="12" lg="12">
 							<BuffParamsAttribute Attribute="Attribute" @ref="childComponent" />
 						</MudItem>
-					</MudGrid>
-				</MudCard>
+					</MudGrid>					
+
+				</MudPaper>
 			</MudItem>
 			break;
 		default:

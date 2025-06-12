@@ -28,7 +28,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			if (Service is not null)
 			{
-				ModItems = Service.GetAll().ToList();
+				ModItems = Service.GetCurrentModItems().ToList();
 			}
 		}
 	}

@@ -25,7 +25,7 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
-			mod = ModService!.GetMod();
+			mod = ModService!.GetCurrentMod();
 		}
 
 		private async Task EditBuff(MouseEventArgs args)

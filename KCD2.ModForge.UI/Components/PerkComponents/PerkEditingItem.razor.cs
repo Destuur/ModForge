@@ -10,7 +10,7 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 {
 	public partial class PerkEditingItem
 	{
-		private IEnumerable<IAttribute> sortedAttributes => EditingPerk.Attributes.OrderBy(x => x.Value.GetType().Name);
+		private IEnumerable<IAttribute> sortedAttributes => EditingPerk.Attributes.OrderBy(x => x.Value.GetType().Name).ToList();
 		private List<IAttribute> filteredAttributes = new();
 		private bool isOpen;
 
@@ -32,8 +32,8 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 		{
 			EditingPerk.Attributes = EditingPerk.Attributes.Where(attr => attr?.Name != attribute).ToList();
 
-			UpdateFilteredAttributes();
 			StateHasChanged();
+			UpdateFilteredAttributes();
 		}
 
 		public void AddAttribute(IAttribute attribute)
@@ -63,6 +63,7 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 					!attribute.Name.Contains("implementation") &&
 					!EditingPerk.Attributes.Any(x => x.Name == attribute.Name))
 				.ToList();
+			StateHasChanged();
 		}
 
 		public void ToggleDrawer()

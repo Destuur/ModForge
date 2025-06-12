@@ -1,16 +1,24 @@
-﻿@if(Mods is not null)
+﻿@if (mods is not null)
 {
-	<MudList Dense="true" T="ModDescription">
+	<MudGrid Justify="Justify.SpaceBetween" Style="display: flex; align-items: center;" Class="pb-3">
+		<MudItem>
+			<MudText Class="pb-1" Style="font-weight: bold" Typo="Typo.subtitle1">Created</MudText>
+		</MudItem>
+		<MudItem>
+			<MudButton Class="button-cancel" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" OnClick="DeleteAllMods" Disabled="@(ModService.GetAllMods().Count == 0)">Delete All</MudButton>
+		</MudItem>
+	</MudGrid>
 
-		@foreach (var mod in Mods)
+	<MudGrid>
+
+		@foreach (var mod in mods)
 		{
-			<MudPaper Class="my-2">
-				<MudListItem Dense="true" Gutters="false">
-					<ModListItem Mod="mod" OnDelete="DeleteMod"></ModListItem>
-				</MudListItem>
-			</MudPaper>
-			
+			<MudItem xs="2" sm="2" md="2" lg="2">
+				<MudPaper Class="card" Outlined="true" Elevation="0">
+					<ModListItem Mod="mod" @key="mod.ModId" OnDelete="DeleteMod"></ModListItem>
+				</MudPaper>
+			</MudItem>
 		}
 
-	</MudList>
+	</MudGrid>
 }

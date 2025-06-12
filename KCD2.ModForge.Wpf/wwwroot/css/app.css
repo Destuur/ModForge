@@ -1,6 +1,38 @@
-﻿/*#if (SampleContent)*/
-html, body {
+﻿html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, #1e1e1e 0%, #271200 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #c1c1c4;
+    position: relative;
+    filter: grayscale(0%);
+    overflow-x: hidden;
+}
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 500px;
+        height: 500px;
+        background-image: url("../../Images/Icons/modforge_icon_no_letters.png"); /* Pfad zum Bild */
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.15;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+.align-input-center input {
+    text-align: center;
+}
+
+.entry-dialog {
+    backdrop-filter: blur(10px);
 }
 
 a, .btn-link {
@@ -87,6 +119,7 @@ h1:focus {
     }
 }
 
+
 .mudcard {
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     border-radius: 12px;
@@ -125,6 +158,136 @@ h1:focus {
     margin: auto;
 }
 
+
+.delete-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+.custom-textfield input {
+    text-align: center;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    background-color: transparent;
+    padding: 0.5rem;
+    border-bottom: 2px solid #3f51b5; /* Primärfarbe als untere Linie */
+    box-shadow: 0 2px 5px rgba(63, 81, 181, 0.3); /* Optional: sanfter Schatten unten */
+}
+
+    .custom-textfield input:focus {
+        border-bottom: 2px solid #303f9f;
+        box-shadow: 0 4px 6px rgba(63, 81, 181, 0.4);
+    }
+
+.attribute-card {
+    background: rgba(39, 18, 0, 0.3) !important; /* halbtransparent, warm */
+    border: 1px solid rgba(255, 153, 102, 0.3) !important; /* TextPrimary, weich gemacht */
+    border-radius: 12px !important;
+    padding: 0.5rem !important;
+    position: relative !important;
+    color: #c1c1c4 !important;
+    transition: all 0.2s ease !important;
+}
+
+.grow-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: rgba(39, 18, 0, 0.3) !important; /* halbtransparent, warm */
+    border: 1px solid rgba(193, 193, 196, 0.2) !important; /* TextPrimary, weich gemacht */
+    border-radius: 12px !important;
+    padding: 0.5rem !important;
+    position: relative !important;
+    color: #c1c1c4 !important;
+    box-shadow: inset 0 0 2px rgba(255, 153, 102, 0.05), /* warmes Innenleuchten */
+    0 0 6px rgba(0, 0, 0, 0.4) !important; /* dunkle Tiefe */
+    transition: all 0.2s ease;
+}
+
+    .card:hover {
+        border-color: #a14b00 !important; /* warmes, dominantes Hover */
+        box-shadow: 0 0 12px rgba(161, 75, 0, 0.35) !important; /* glüht leicht */
+        transform: scale(1.015) !important;
+    }
+
+    .card::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 4px !important;
+        height: 100% !important;
+        background: linear-gradient(180deg, #a14b00, transparent) !important;
+        border-radius: 4px 0 0 4px !important;
+        opacity: 0.8 !important;
+    }
+
+.button-prominent {
+    background: linear-gradient(180deg, rgba(161, 75, 0, 0.4), rgba(161, 75, 0, 0.25)) !important;
+    border: 1px solid #a14b00 !important;
+    color: #ffd9b0 !important;
+    padding: 0.75rem 1.5rem !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 6px rgba(161, 75, 0, 0.2), inset 0 0 4px rgba(255, 255, 255, 0.05) !important;
+    transition: all 0.2s ease !important;
+    backdrop-filter: blur(2px) !important;
+}
+
+    .button-prominent:hover {
+        background: linear-gradient(180deg, rgba(161, 75, 0, 0.5), rgba(161, 75, 0, 0.35)) !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 12px rgba(255, 145, 80, 0.25), 0 0 2px rgba(255, 255, 255, 0.1) !important;
+        transform: scale(1.02) !important;
+    }
+
+.button-neutral {
+    background: linear-gradient(180deg, rgba(193, 193, 196, 0.15), rgba(193, 193, 196, 0.1)) !important;
+    border: 1px solid rgba(193, 193, 196, 0.3) !important;
+    color: #c1c1c4 !important; /* TextPrimary */
+    padding: 0.75rem 1.5rem !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+    transition: background 0.15s ease, color 0.15s ease !important;
+    backdrop-filter: blur(1.5px) !important;
+}
+
+    .button-neutral:hover {
+        background: linear-gradient(180deg, rgba(193, 193, 196, 0.25), rgba(193, 193, 196, 0.15)) !important;
+        color: #e0e0e3 !important;
+    }
+
+.button-cancel {
+    background: linear-gradient(180deg, rgba(139, 0, 0, 0.3), rgba(139, 0, 0, 0.2)) !important; /* Dunkelrot Transparent */
+    border: 1px solid #8b0000 !important;
+    color: #f5c6cb !important; /* zartes, helles Rosa-Rot */
+    padding: 0.75rem 1.5rem !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+    transition: background 0.2s ease, color 0.2s ease !important;
+    backdrop-filter: blur(1.5px) !important;
+}
+
+    .button-cancel:hover {
+        background: linear-gradient(180deg, rgba(178, 34, 34, 0.5), rgba(178, 34, 34, 0.35)) !important; /* stärkeres Rot */
+        color: #fff0f1 !important;
+    }
+
+
 /* Keyframes für die Drehung */
 @keyframes spin {
     from {
@@ -142,7 +305,7 @@ h1:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* halbtransparentes Schwarz */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,8 +317,8 @@ h1:focus {
     border-radius: 1rem;
     background-color: white;
     text-align: center;
-    min-width: 300px; /* 👈 Mindestbreite */
-    max-width: 350px; /* optional */
+    min-width: 300px;
+    max-width: 350px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -164,7 +327,7 @@ h1:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem; /* 👈 gleichmäßiger Abstand zwischen Spinner und Text */
+    gap: 1.5rem;
 }
 
 
@@ -278,6 +441,30 @@ h1:focus {
         transform: scale(0.7) translateY(10px);
     }
 
+.mudtext-warm {
+    background: linear-gradient(180deg, rgba(39, 18, 0, 0.25), rgba(39, 18, 0, 0.15));
+    border: 1px solid #a14b00;
+    color: #ffd9b0;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 6px rgba(161, 75, 0, 0.08);
+}
+
+    .mudtext-warm:focus-within,
+    .mudtext-warm:focus {
+        border-color: #ff9150;
+        box-shadow: 0 0 8px 1px rgba(255, 145, 80, 0.18);
+        outline: none;
+        color: #fff;
+        background: linear-gradient(180deg, rgba(161, 75, 0, 0.18), rgba(39, 18, 0, 0.18));
+    }
+
+    .mudtext-warm::placeholder {
+        color: #c1c1c4;
+        opacity: 0.7;
+    }
 
 @keyframes fadeBack {
     0% {
@@ -304,17 +491,74 @@ h1:focus {
     position: sticky;
     top: 0; /* oder top: 64px, wenn du eine AppBar hast */
     z-index: 10;
-    background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 /* Optional: falls du Tabs-Inhalte in fester Höhe scrollen willst */
 .tabs-content {
-    overflow-y: auto;
-    max-height: calc(100vh - 64px - 24px); /* AppBar + Tab-Höhe abziehen */
+    overflow-y: hidden;
+    max-height: calc(100vh - 136px); /* AppBar + Tab-Höhe abziehen */
 }
 
 .thick-outline {
     border: 2px solid var(--mud-palette-outline, rgba(0,0,0,0.12)); /* Default-Farbe verwenden */
     box-shadow: none; /* optional: MudBlazor verwendet normalerweise box-shadow für Outlines */
 }
+
+.custom-tabs {
+    background: linear-gradient(to top, rgba(161, 75, 0, 0.15), rgba(255, 255, 255, 0)) !important; /* Unten leicht weißlich, oben transparent */
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border-bottom: 1px solid rgba(161, 75, 0, 0.1) !important;
+}
+
+    /* Die Tab-Schaltflächen */
+    .custom-tabs .mud-tab {
+        background-color: transparent !important;
+        color: white !important; /* Immer gleichbleibende Textfarbe */
+        transition: background-color 0.3s ease, filter 0.3s ease !important;
+    }
+
+        /* Aktiver Tab: leicht heller Hintergrund */
+        .custom-tabs .mud-tab.mud-tab-active {
+            background: linear-gradient(to top, rgba(161, 75, 0, 0.35), rgba(255, 255, 255, 0)) !important;
+        }
+
+        /* Hovereffekt: ebenfalls leicht heller */
+        .custom-tabs .mud-tab:hover {
+            background: linear-gradient(to top, rgba(161, 75, 0, 0.15), rgba(255, 255, 255, 0)) !important;
+        }
+
+.mud-tabs-tabbar {
+    background-color: transparent !important;
+}
+
+.my-rounded-menu {
+    padding: 0; /* Wichtig, damit MenuItems direkt anliegen */
+    overflow: hidden; /* Sorgt dafür, dass Radius sauber greift */
+    border-radius: 4px;
+    background: linear-gradient(180deg, #2c1d13, #1f1a17) !important;
+    color: #c1c1c4;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.custom-menu-item {
+    border-radius: 0;
+}
+
+
+    .custom-menu-item.first {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    .custom-menu-item.last {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        color: #d34848;
+    }
+
+    .custom-menu-item.first:hover {
+    }

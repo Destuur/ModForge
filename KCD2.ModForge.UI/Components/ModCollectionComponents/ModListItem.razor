@@ -1,25 +1,29 @@
 ﻿@if (Mod is not null)
 {
-    <MudGrid Justify="Justify.SpaceBetween" Spacing="2">                
-        <!-- Bild oder Icon -->
-        <MudItem xs="2" lg="2" Class="ml-n6">
-            <MudImage ObjectPosition="ObjectPosition.Center" Fluid="true" Src="@Mod.ImagePath" />
-        </MudItem>
+	<MudGrid Justify="Justify.SpaceBetween" Spacing="2">
 
-        <!-- Mod-Infos -->
-    <MudItem xs="6" lg="6">
-            <MudText Typo="Typo.h6">@Mod.Name</MudText>
-            <MudText Typo="Typo.subtitle2" Class="text-secondary">v @Mod.ModVersion by @Mod.Author</MudText>
-            <MudText Typo="Typo.subtitle1" Class="text-secondary">@(string.IsNullOrEmpty(Mod.Description) ? "This spot was reserved for greatness, but someone was too busy with their pizzle-yanking duties." : Mod.Description)</MudText>
-        </MudItem>
+		<MudItem xs="12" lg="12" Class="ml-4 mb-2">
+			<MudStack Row="true" Justify="Justify.SpaceBetween" Style="align-items: center" Spacing="0">
+				<MudText Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" Typo="Typo.subtitle1">@Mod.Name</MudText>
+				<MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Primary" AnchorOrigin="Origin.TopLeft" Dense="true" DropShadow="false" PopoverClass="my-rounded-menu">
+					<MudMenuItem Class="custom-menu-item first" OnClick="EditMod">
+						Edit
+					</MudMenuItem>
+					<MudMenuItem Class="custom-menu-item" OnClick="ExportMod">
+						Export
+					</MudMenuItem>
+					<MudMenuItem Class="custom-menu-item last" OnClick="DeleteMod">
+						Delete
+					</MudMenuItem>
+				</MudMenu>
+			</MudStack>
+			<MudText Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" Typo="Typo.subtitle2">Author: @Mod.Author</MudText>
+			<MudText Typo="Typo.subtitle2">Perks: @(Mod.ModItems.Where(x => x.GetType().Name == "Perk").Count())</MudText>
+			<MudText Typo="Typo.subtitle2">Buffs: @(Mod.ModItems.Where(x => x.GetType().Name == "Buff").Count())</MudText>
+			<MudTooltip Text="Kingdom Coming: Soon">
+				<MudText Typo="Typo.subtitle2">Items: -</MudText>
+			</MudTooltip>
+		</MudItem>
 
-        <MudItem xs="3" lg="3" Class="pr-4">
-            <MudText Align="Align.Right" Typo="Typo.body2" Class="text-secondary">Last edited: @Mod.CreatedOn</MudText>
-        </MudItem>
-
-        <MudItem xs="1" lg="1">
-            <MudIconButton Color="Color.Secondary" Edge="Edge.End" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => OnDelete.InvokeAsync(Mod))" />
-        </MudItem>
-
-    </MudGrid>
+	</MudGrid>
 }

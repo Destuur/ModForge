@@ -1,22 +1,38 @@
 ﻿@page "/editing/buff/{Id}"
 
-<NavigationLock ConfirmExternalNavigation="true" OnBeforeInternalNavigation="ConfirmNavigation" />
+@* <NavigationLock ConfirmExternalNavigation="true" OnBeforeInternalNavigation="ConfirmNavigation" /> *@
 
-<MudTabs>
-	<MudTabPanel Text="Buff">		
+<MudItem>
+	<div class="tabs-container">
+		<div class="tabs-header">
+			<MudTabs @bind-ActivePanelIndex="selectedTab" Class="custom-tabs" Elevation="0">
+				<MudTabPanel Text="Buff">
+				</MudTabPanel>
+				<MudTabPanel Text="Buff Localization">
+				</MudTabPanel>
+			</MudTabs>
+		</div>
+	</div>
+</MudItem>
+
+
+<div class="tabs-content">
+	@if (selectedTab == 0)
+	{
 		<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 146.5px)" Elevation="0" Outlined="false" Style="background-color: transparent">
-			<BuffEditingItem Buff="editingBuff" />
+			<BuffEditingItem EditingBuff="editingBuff" OriginalBuff="originalBuff" />
 		</MudPaper>
-	</MudTabPanel>
-	<MudTabPanel Text="Buff Localization">
+	}
+	else if (selectedTab == 1)
+	{
 		<MudPaper Class="d-flex flex-column overflow-x-auto " Height="calc(100vh - 146.5px)" Elevation="0" Outlined="false" Style="background-color: transparent">
 			<LocalizationComponent EditingModItem="editingBuff" OriginalModItem="originalBuff" />
 		</MudPaper>
-	</MudTabPanel>
-</MudTabs>
+	}
+</div>
 
-<MudStack Row="true" Class="px-4 my-4">
-	<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
-	<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveBuff">Save & Continue Modding</MudButton>
-	<MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="Checkout">Create Mod</MudButton>
+<MudStack Row="true" Class="px-4 mt-4">
+	<MudButton Class="button-cancel" FullWidth="true" Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
+	<MudButton Class="button-prominent" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveBuff">Save & Continue Modding</MudButton>
+	<MudButton Class="button-prominent" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="Checkout">Create Mod</MudButton>
 </MudStack>

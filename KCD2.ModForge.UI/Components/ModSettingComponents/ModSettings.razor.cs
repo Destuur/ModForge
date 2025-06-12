@@ -18,6 +18,8 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 		[Inject]
 		public IDialogService DialogService { get; set; }
 
+
+
 		private void UpdateChildValidity(bool valid)
 		{
 			isChildValid = valid;
@@ -29,13 +31,22 @@ namespace KCD2.ModForge.UI.Components.ModSettingComponents
 			{
 				return;
 			}
+			if (NavigationService is null)
+			{
+				return;
+			}
 
-			await modSettingIconPicker!.SaveMod();
-			await modSettingForm!.SaveMod();
+			//modSettingIconPicker!.SaveMod();
+			modSettingForm!.SaveMod();
+			var mod = ModService.GetCurrentMod();
 
-			var mod = await ModService.GenerateMod();
+			if (mod is null)
+			{
+				return;
+			}
+
 			mod.ModItems.Clear();
-			await NavigationService!.NavigateToAsync($"modItems/{mod.ModId}");
+			await NavigationService.NavigateToAsync($"modItems/{mod.ModId}");
 		}
 
 		private async Task Cancel()

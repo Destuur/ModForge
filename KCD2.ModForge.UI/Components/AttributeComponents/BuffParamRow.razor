@@ -16,7 +16,7 @@
 	</MudItem>
 
 	<MudItem xs="4" sm="4" md="4" lg="4">
-		<MudNumericField @bind-Value="BuffParam.Value" HideSpinButtons="true" Variant="Variant.Outlined" Label="Attribute" FullWidth="true" Margin="Margin.Dense" Immediate="true" IconSize="Size.Small" AdornmentIcon="@Icons.Material.Filled.Delete" Adornment="Adornment.End" AdornmentColor="Color.Secondary" OnAdornmentClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))"></MudNumericField>
+		<MudNumericField @bind-Value="BuffParam.Value" HideSpinButtons="true" Variant="Variant.Outlined" Label="Attribute" FullWidth="true" Margin="Margin.Dense" Immediate="true" IconSize="Size.Small" AdornmentIcon="@Icons.Material.Filled.Delete" Adornment="Adornment.End" AdornmentColor="Color.Error" OnAdornmentClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))"></MudNumericField>
 	</MudItem>
 
 </MudGrid>

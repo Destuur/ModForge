@@ -2,19 +2,27 @@
 using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace KCD2.ModForge.UI.Components.PerkComponents
 {
 	public partial class PerkList
 	{
+		private bool isOpen;
 		private string languageKey = "en";
 
 		[Inject]
 		public ModService? ModService { get; set; }
 		[Inject]
 		public XmlToJsonService? XmlToJsonService { get; set; }
-		public IList<Perk> PerkItems { get; set; } = new List<Perk>();
+		public IList<IModItem> PerkItems { get; set; } = new List<IModItem>();
 		public string? SearchPerk { get; set; }
+
+
+		public void ToggleDrawer()
+		{
+			isOpen = !isOpen;
+		}
 
 		public IEnumerable<IModItem> TakePerkItems(int count)
 		{
@@ -23,6 +31,16 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 				return null!;
 			}
 			return XmlToJsonService.Perks!.ToList().Take(count);
+		}
+
+		public string GetForgeIcon()
+		{
+			if (ModService.GetCurrentMod().ModItems.Count == 0)
+			{
+				return "images\\Icons\\forgeicon.png";
+			}
+
+			return "images\\Icons\\forgeicon2.png";
 		}
 
 		public void AddModItem(IModItem item)

@@ -11,46 +11,47 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 {
 	public partial class BuffEditingItem
 	{
-		private IEnumerable<IAttribute> sortedAttributes => Buff.Attributes.OrderBy(x => (x.Value is IList<BuffParam> ? 1 : 0, x.Value.GetType().Name)).ToList();
+		private IEnumerable<IAttribute> sortedAttributes => EditingBuff.Attributes.OrderBy(x => x.Value.GetType().Name).ToList();
 		private List<IAttribute> filteredAttributes = new();
 		private bool isOpen;
-		private Buff originalBuff;
+
 
 		[Inject]
 		public ModService? ModService { get; set; }
 		[Parameter]
-		public Buff Buff { get; set; }
+		public Buff EditingBuff { get; set; }
+		[Parameter]
+		public Buff OriginalBuff { get; set; }
 		public IList<IAttribute> Attributes { get; private set; }
 
-		// TODO: Remove funktioniert noch nicht richtig.
-		// Exception abfangen.
+
 		public void ResetBuff()
 		{
-			Buff = KCD2.ModForge.Shared.Models.ModItems.Buff.GetDeepCopy(originalBuff);
+			EditingBuff = Buff.GetDeepCopy(OriginalBuff);
 			StateHasChanged();
 		}
 
 		public void Remove(string attribute)
 		{
-			Buff.Attributes = Buff.Attributes.Where(attr => attr?.Name != attribute).ToList();
+			EditingBuff.Attributes = EditingBuff.Attributes.Where(attr => attr?.Name != attribute).ToList();
 
-			UpdateFilteredAttributes();
 			StateHasChanged();
+			UpdateFilteredAttributes();
 		}
 
 		public void AddAttribute(IAttribute attribute)
 		{
-			if (Buff.Attributes.Any(x => string.Equals(x.Name, attribute.Name, StringComparison.Ordinal)))
+			if (EditingBuff.Attributes.Any(x => string.Equals(x.Name, attribute.Name, StringComparison.Ordinal)))
 			{
 				return;
 			}
-			if (Buff.Attributes.Any(x => x.Name.Equals(attribute.Name, StringComparison.OrdinalIgnoreCase)))
+			if (EditingBuff.Attributes.Any(x => x.Name.Equals(attribute.Name, StringComparison.OrdinalIgnoreCase)))
 			{
 				return;
 			}
-			if (!Buff.Attributes.Contains(attribute))
+			if (!EditingBuff.Attributes.Contains(attribute))
 			{
-				Buff.Attributes.Add(attribute);
+				EditingBuff.Attributes.Add(attribute);
 			}
 			UpdateFilteredAttributes();
 			StateHasChanged();
@@ -61,11 +62,11 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 			filteredAttributes = Attributes
 				.Where(attribute =>
 					!attribute.Name.Contains("perk") &&
-					!attribute.Name.Contains("level") &&
-					!attribute.Name.Contains("stat") &&
 					!attribute.Name.Contains("skill") &&
-					!Buff.Attributes.Any(x => x.Name == attribute.Name))
+					!attribute.Name.Contains("stat") &&
+					!EditingBuff.Attributes.Any(x => x.Name == attribute.Name))
 				.ToList();
+			StateHasChanged();
 		}
 
 		public void ToggleDrawer()
@@ -88,11 +89,12 @@ namespace KCD2.ModForge.UI.Components.BuffComponents
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(withSpaces.ToLower());
 		}
 
+
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
 			Attributes = AttributeFactory.GetAllAttributes();
-			originalBuff = KCD2.ModForge.Shared.Models.ModItems.Buff.GetDeepCopy(Buff);
+			OriginalBuff = Buff.GetDeepCopy(OriginalBuff);
 			UpdateFilteredAttributes();
 		}
 	}

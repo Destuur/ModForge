@@ -1,28 +1,25 @@
 ﻿@inherits LayoutComponentBase
-<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
+<MudThemeProvider @ref="_mudThemeProvider" Theme="ModForgeThemes.DarkTheme" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudLayout Style="--mud-appbar-height: 40px;">
-	<MudAppBar Dense="true" Elevation="1">
-		<MudIconButton Icon="@Icons.Material.Filled.Menu" Size="Size.Small" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-		@* <MudIconButton Class="ml-4" Icon="@Icons.Material.Outlined.ArrowBack" Size="Size.Small" Disabled="@(!NavigationService.CanGoBack)" OnClick="NavigationService.GoBackAsync" />
-		<MudIconButton Class="mr-4" Icon="@Icons.Material.Outlined.ArrowForward" Size="Size.Small" Disabled="@(!NavigationService.CanGoForward)" OnClick="NavigationService.GoForwardAsync" /> *@
+<MudLayout>
+	@* <MudAppBar Dense="true" Elevation="1">
+		<MudIconButton Class="ml-4" Icon="@Icons.Material.Outlined.ArrowBack" Size="Size.Small" Disabled="@(!NavigationService.CanGoBack)" OnClick="NavigationService.GoBackAsync" />
+		<MudIconButton Class="mr-4" Icon="@Icons.Material.Outlined.ArrowForward" Size="Size.Small" Disabled="@(!NavigationService.CanGoForward)" OnClick="NavigationService.GoForwardAsync" />
 		
-		@* TODO: Überlegen, wie man den Modnamen hier hin bekommt, sobald man Edit Mod startet. *@		
-		@* <MudText>Edit: @ModName</MudText> *@
 
 		<MudSpacer />
 		<MudToggleIconButton Icon="@Icons.Material.Filled.LightMode" Size="Size.Small" ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledChanged="ToggleDarkMode" Color="Color.Inherit" Edge="Edge.End" Class="mr-1" />
 		<MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
 			<MudMenuItem Onclick="ImportGameData" Label="Import Game Data" />
 		</MudMenu>
-	</MudAppBar>
-	<MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Overlay="true" OverlayAutoClose="true" Variant="DrawerVariant.Temporary" Elevation="2">
+	</MudAppBar> *@
+	@* <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Overlay="true" OverlayAutoClose="true" Variant="DrawerVariant.Temporary" Elevation="2">
 		<NavMenu />
-	</MudDrawer>
-	<MudMainContent>
+	</MudDrawer> *@
+	<MudMainContent Style="padding-top: 6px">
 		@if (!_isLoaded)
 		{
 			<div class="loading-screen">Lädt...</div>
@@ -31,9 +28,6 @@
 		{
 			@Body
 		}
-
-		<LoadingOverlay IsVisible="@isLoading"></LoadingOverlay>
-
 	</MudMainContent>
 	<StartupLoader />
 </MudLayout>

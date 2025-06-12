@@ -1,4 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Factories;
+using KCD2.ModForge.Shared.Models.Mods;
 using KCD2.ModForge.Shared.Services;
 using System.IO.Compression;
 using System.Xml.Linq;
@@ -19,12 +20,7 @@ namespace KCD2.ModForge.Shared.Adapter
 			//"text_ui_ingame.xml",
 			//"text_ui_dialog.xml"
 		};
-		private readonly UserConfigurationService userConfigurationService;
 
-		public LocalizationAdapter(UserConfigurationService userConfigurationService)
-		{
-			this.userConfigurationService = userConfigurationService;
-		}
 
 		public static readonly Dictionary<string, string> LanguageMap = new()
 		{
@@ -45,9 +41,9 @@ namespace KCD2.ModForge.Shared.Adapter
 			{ "Ukrainian", "uk" }
 		};
 
-		public Dictionary<string, Dictionary<string, string>> LoadAllLocalizationsFromPaks()
+		public Dictionary<string, Dictionary<string, string>> ReadLocalizationFromXml(string path)
 		{
-			var pakPaths = PathFactory.CreatePakPaths(userConfigurationService.Current.GameDirectory);
+			var pakPaths = PathFactory.CreatePakPaths(path);
 			var result = new Dictionary<string, Dictionary<string, string>>();
 
 			foreach (var pakPath in pakPaths)
@@ -100,5 +96,152 @@ namespace KCD2.ModForge.Shared.Adapter
 			return result;
 		}
 
+		public void WriteLocalizationAsXml(string path, ModDescription mod)
+		{
+			CreateLocalization(path, mod);
+			AppendLocalization(path, mod);
+		}
+
+		private bool CreateLocalization(string path, ModDescription mod)
+		{
+			string localizationPath;
+			Dictionary<string, Dictionary<string, string>> names;
+			Dictionary<string, Dictionary<string, string>> descriptions;
+			Dictionary<string, Dictionary<string, string>> loreDescriptions;
+
+			foreach (var moditem in mod.ModItems)
+			{
+				if (moditem.Localization.Names.Count == 0 &&
+					moditem.Localization.Descriptions.Count == 0 &&
+					moditem.Localization.LoreDescriptions.Count == 0)
+				{
+					continue;
+				}
+
+				names = moditem.Localization.Names;
+				descriptions = moditem.Localization.Descriptions;
+				loreDescriptions = moditem.Localization.LoreDescriptions;
+
+				var allLanguages = names.Keys
+					.Union(descriptions.Keys)
+					.Union(loreDescriptions.Keys)
+					.Distinct();
+
+				foreach (var languageKey in allLanguages)
+				{
+					var language = LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key;
+					localizationPath = PathFactory.CreateExportLocalizationPath(path, language, mod.ModId);
+
+					var directory = Path.GetDirectoryName(localizationPath);
+
+					if (!Directory.Exists(directory))
+					{
+						Directory.CreateDirectory(directory);
+					}
+
+					var doc = new XDocument(new XElement("Table"));
+					doc.Save(localizationPath);
+				}
+			}
+			return true;
+		}
+
+		private bool AppendLocalization(string path, ModDescription mod)
+		{
+			var modifiedLocalizationFolders = new HashSet<string>();
+
+			foreach (var modItem in mod.ModItems)
+			{
+				var loc = modItem.Localization;
+
+				if (loc.Names.Count == 0 &&
+					   loc.Descriptions.Count == 0 &&
+					   loc.LoreDescriptions.Count == 0)
+				{
+					continue;
+				}
+
+				var allLanguages = loc.Names.Keys
+					.Union(loc.Descriptions.Keys)
+					.Union(loc.LoreDescriptions.Keys)
+					.Distinct();
+
+				foreach (var languageKey in allLanguages)
+				{
+					var language = LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key;
+					if (language == null)
+						continue;
+
+					var localizationFolder = Path.Combine(path, "Mods", mod.ModId, "Localization", language + "_xml");
+					var localizationPath = Path.Combine(localizationFolder, "text__" + mod.ModId + ".xml");
+
+					if (!File.Exists(localizationPath))
+						continue;
+
+					var doc = XDocument.Load(localizationPath);
+					var root = doc.Element("Table");
+
+					if (root == null)
+						continue;
+
+					if (loc.Names.TryGetValue(languageKey, out var nameValue))
+						root.Add(CreateRow(nameValue.Keys.First(), nameValue.Values.First()));
+
+					if (loc.Descriptions.TryGetValue(languageKey, out var descValue))
+						root.Add(CreateRow(descValue.Keys.First(), descValue.Values.First()));
+
+					if (loc.LoreDescriptions.TryGetValue(languageKey, out var loreValue))
+						root.Add(CreateRow(loreValue.Keys.First(), loreValue.Values.First()));
+
+					doc.Save(localizationPath);
+
+					modifiedLocalizationFolders.Add(localizationFolder); // merken
+				}
+			}
+
+			// Jetzt alle geänderten Ordner packen
+			foreach (var folder in modifiedLocalizationFolders)
+			{
+				var pakPath = folder + ".pak";
+				CreateLocalizationPak(folder, pakPath);
+			}
+
+			return true;
+		}
+
+		private void CreateLocalizationPak(string sourceFolder, string localizationPakFile)
+		{
+			if (File.Exists(localizationPakFile))
+				File.Delete(localizationPakFile);
+
+			using (FileStream fs = new FileStream(localizationPakFile, FileMode.CreateNew))
+			using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create))
+			{
+				var files = Directory.GetFiles(sourceFolder, "*", SearchOption.AllDirectories);
+
+				foreach (var file in files)
+				{
+					// Pfad innerhalb des Archives, relativ zum sourceDir
+					string entryName = Path.GetRelativePath(sourceFolder, file).Replace('\\', '/');
+
+					var entry = archive.CreateEntry(entryName, CompressionLevel.NoCompression);
+
+					using (var entryStream = entry.Open())
+					using (var fileStream = File.OpenRead(file))
+					{
+						fileStream.CopyTo(entryStream);
+					}
+				}
+			}
+		}
+
+		private XElement CreateRow(string id, string value)
+		{
+			return new XElement("Row",
+				new XElement("Cell", id),
+				new XElement("Cell", ""), // TODO: Default Wert hinzufügen.
+				new XElement("Cell", value?.Replace(" ", "&nbsp;")) // z. B. Encoding vorbereiten
+			);
+		}
 	}
 }

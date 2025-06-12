@@ -29,17 +29,17 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 			Attributes = attributes.ToList();
 		}
 
-		public Buff(string id, string perkId, string path, IList<IAttribute> attributes, Localization localization)
+		public Buff(string id, IList<string> perkIds, string path, IList<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
-			PerkId = perkId;
+			LinkedIds = perkIds;
 			Path = path;
 			Attributes = attributes;
 			Localization = localization;
 		}
 
 		public string Id { get; set; } = string.Empty;
-		public string PerkId { get; set; } = string.Empty;
+		public IList<string> LinkedIds { get; set; } = new List<string>();
 		public string Path { get; set; } = string.Empty;
 		public string Name { get; set; } = string.Empty;
 		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
@@ -47,7 +47,7 @@ namespace KCD2.ModForge.Shared.Models.ModItems
 
 		public static Buff GetDeepCopy(Buff buff)
 		{
-			return new Buff(buff.Id, buff.PerkId, buff.Path, buff.Attributes.Select(attr => attr.DeepClone()).ToList(), buff.Localization.DeepClone());
+			return new Buff(buff.Id, buff.LinkedIds, buff.Path, buff.Attributes.Select(attr => attr.DeepClone()).ToList(), buff.Localization.DeepClone());
 		}
 	}
 }

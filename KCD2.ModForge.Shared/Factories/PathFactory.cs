@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KCD2.ModForge.Shared.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,14 @@ namespace KCD2.ModForge.Shared.Factories
 			return Path.Combine(prefix, "Data\\IPL_GameData.pak");
 		}
 
-		public static string CreateLocalizationPath(string prefix, Language language)
+		public static string CreateImportLocalizationPath(string prefix, Language language)
 		{
-			return Path.Combine([prefix, $"Localization\\{language}_xml.pak"]);
+			return Path.Combine(prefix, "Localization", language + "_xml.pak");
+		}
+
+		public static string CreateExportLocalizationPath(string prefix, string language, string modId)
+		{
+			return Path.Combine(prefix, "Mods", modId, "Localization", language + "_xml", "text__" + modId + ".xml");
 		}
 
 		public static IEnumerable<string> CreatePakPaths(string prefix)
@@ -34,14 +40,19 @@ namespace KCD2.ModForge.Shared.Factories
 			var allLanguages = Enum.GetValues(typeof(Language)).Cast<Language>();
 			foreach (var language in allLanguages)
 			{
-				pakPaths.Add(CreateLocalizationPath(prefix, language));
+				pakPaths.Add(CreateImportLocalizationPath(prefix, language));
 			}
 			return pakPaths;
 		}
 
 		public static string CreateModFolderPath(string prefix, string modId)
 		{
-			return Path.Combine(prefix, $"Mods\\{modId}\\");
+			return Path.Combine(prefix, "Mods", modId);
+		}
+
+		public static string CreateModToPakPath(string prefix, string modId)
+		{
+			return Path.Combine(prefix, "Mods", modId, "Data");
 		}
 	}
 }

@@ -15,6 +15,7 @@ namespace KCD2.ModForge.UI.Pages
 		private Buff editingBuff;
 		private Buff originalBuff;
 		private bool canCheckout;
+		private int selectedTab;
 
 		[Parameter]
 		public string Id { get; set; }
@@ -50,7 +51,7 @@ namespace KCD2.ModForge.UI.Pages
 		private async Task SaveBuff()
 		{
 			SaveItem();
-			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
+			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
 		}
 
 		private async Task Checkout()
@@ -192,7 +193,7 @@ namespace KCD2.ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
-				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetMod().ModId}");
+				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
 			}
 		}
 
@@ -271,8 +272,15 @@ namespace KCD2.ModForge.UI.Pages
 				return;
 			}
 
-			originalBuff = XmlToJsonService.Buffs!.FirstOrDefault(x => x.Id == Id)!;
+			originalBuff = XmlToJsonService.Buffs!.FirstOrDefault(x => x.Id == Id)! as Buff;
+
+			if (ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) is not null)
+			{
+				originalBuff = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) as Buff;
+			}
+
 			editingBuff = Buff.GetDeepCopy(originalBuff);
+			StateHasChanged();
 		}
 	}
 }

@@ -1,20 +1,20 @@
 ﻿<MudGrid Spacing="4" Class="pa-4">
 
-	<MudItem sm="8">
-		<MudText Typo="Typo.h5">Buff: @Buff.Localization.GetName("en")</MudText>
+	<MudItem sm="11" Style="display: flex; align-items: center;">
+			<MudText Typo="Typo.h4" Style="font-weight: bold;">@EditingBuff.Localization.GetName("en").ToUpper()</MudText>
 	</MudItem>
 
 	<MudItem sm="1">
-		<MudButton FullWidth="true" OnClick="ResetBuff" Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
+		<MudButton Class="button-neutral" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" FullWidth="true" OnClick="ResetBuff">Reset</MudButton>
 	</MudItem>
 
-	<MudItem sm="3">
-		<MudButton FullWidth="true" OnClick="ToggleDrawer" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Add Attribute</MudButton>
-	</MudItem>
+	@* <MudItem sm="3">
+		<MudButton Class="button-prominent" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" FullWidth="true" OnClick="ToggleDrawer">Add Attribute</MudButton>
+	</MudItem> *@
 
 	@foreach (var attribute in sortedAttributes)
 	{
-		<AttributeSelector Attribute="attribute" RemoveAttribute="Remove"></AttributeSelector>
+		<AttributeSelector Attribute="attribute" RemoveAttribute="Remove" @key="attribute.Name"></AttributeSelector>
 	}
 
 </MudGrid>
