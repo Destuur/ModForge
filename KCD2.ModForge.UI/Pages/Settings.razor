@@ -7,24 +7,33 @@
 	</MudItem>
 
 	<MudItem md="12">
-		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Label="User Name" @bind-Value="UserConfigurationService!.Current!.UserName" />
+		<MudTextField Class="mudtext-warm" Variant="Variant.Outlined" Margin="Margin.Dense" Label="User Name" @bind-Value="UserConfigurationService!.Current!.UserName" />
 	</MudItem>
 
 	<MudItem md="12">
-		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Label="Choose Game Directory" ReadOnly="true" @bind-Value="UserConfigurationService.Current!.GameDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectGameDirectory" Style="cursor: pointer;" />
+		<MudTextField Class="mudtext-warm" Variant="Variant.Outlined" Margin="Margin.Dense" Label="Choose Game Directory" ReadOnly="true" @bind-Value="UserConfigurationService.Current!.GameDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectGameDirectory" Style="cursor: pointer;" />
 	</MudItem>
 
 	<MudItem md="12">
-		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Label="Output Folder - Nexus Mods/Steam Workshop" ReadOnly="true" @bind-Value="UserConfigurationService.Current!.NexusModsDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectNexusModsDirectory" Style="cursor: pointer;" />
+		<MudTextField Class="mudtext-warm" Variant="Variant.Outlined" Margin="Margin.Dense" Label="Output Folder - Nexus Mods/Steam Workshop" ReadOnly="true" @bind-Value="UserConfigurationService.Current!.NexusModsDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectNexusModsDirectory" Style="cursor: pointer;" />
 	</MudItem>
 
 	<MudItem md="12">
-		<MudStack Row="true" Class="mt-2">
-			<MudButton Color="Color.Error" FullWidth="true" Variant="Variant.Outlined">Cancel</MudButton>
-			<MudButton Color="Color.Primary" FullWidth="true" Variant="Variant.Filled" OnClick="UserConfigurationService.Save">Save</MudButton>
+		<MudGrid Class="mt-2" Spacing="4">
 
-			<MudButton OnClick="ImportGameData">Import Game Data</MudButton>
-		</MudStack>
+			<MudItem xs="2" sm="2" md="2" lg="2">
+				<MudButton Class="button-cancel" Color="Color.Error" FullWidth="true">Cancel</MudButton>
+			</MudItem>
+
+			<MudItem xs="5" sm="5" md="5" lg="5">
+				<MudButton Class="button-prominent" Color="Color.Primary" FullWidth="true" OnClick="UserConfigurationService.Save">Save</MudButton>
+			</MudItem>
+
+			<MudItem xs="5" sm="5" md="5" lg="5">
+				<MudButton Class="button-prominent" OnClick="ImportGameData" FullWidth="true">Import Game Data</MudButton>
+			</MudItem>
+
+		</MudGrid>
 	</MudItem>
 	
 </MudGrid>

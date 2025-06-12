@@ -20,7 +20,18 @@ namespace KCD2.ModForge.UI.Themes
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1a1a2e",
 				TextPrimary = "#c1c1c4",
-				GrayDefault = "#d9d9d9"
+				GrayDefault = "#000000",
+				ActionDisabled = "#7a7a7d",
+				ActionDefault = "#ffffff",
+				TextDisabled = "#7a7a7d",
+				ActionDisabledBackground = "#a14b0044",
+				BackgroundGray = "#000000",
+				Dark = "#ffffff",
+				DarkContrastText = "#ffffff",
+				DarkDarken = "#ffffff",
+				DarkLighten = "#000000",
+				LinesInputs = "#c1c1c44d",
+				TextSecondary = "#99999c"
 			},
 			PaletteDark = new PaletteDark()
 			{

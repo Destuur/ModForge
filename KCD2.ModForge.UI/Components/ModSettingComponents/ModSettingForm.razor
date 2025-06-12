@@ -1,10 +1,10 @@
 ﻿<MudStack Spacing="0">
-	<MudTextField @bind-Value="@name" Validation="@(new Func<string, string>(ValidateModName))" ShrinkLabel="true" Label="Mod Name" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" OnKeyUp="GetModId" Required="true"></MudTextField>
-	<MudTextField @bind-Value="@description" ShrinkLabel="true" Label="Description" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-	<MudTextField @bind-Value="@author" ShrinkLabel="true" Label="Author" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-	<MudTextField @bind-Value="@version" ShrinkLabel="true" Label="Mod Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-	<MudDatePicker @bind-Value="@createdOn"  Label="Created On" DateFormat="yyyy-MM-dd" Date="@DateTime.Now" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentColor="Color.Inherit" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.CalendarToday" />
-	<MudTextField @bind-Value="@modId" ShrinkLabel="true" Label="Mod ID" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Required="true"></MudTextField>
+	<MudTextField Class="mudtext-warm" @bind-Value="@name" Validation="@(new Func<string, string>(ValidateModName))" ShrinkLabel="true" Label="Mod Name" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" OnKeyUp="GetModId" Required="true"></MudTextField>
+	<MudTextField Class="mudtext-warm" @bind-Value="@description" ShrinkLabel="true" Label="Description" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+	<MudTextField Class="mudtext-warm" @bind-Value="@author" ShrinkLabel="true" Label="Author" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+	<MudTextField Class="mudtext-warm" @bind-Value="@version" ShrinkLabel="true" Label="Mod Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+	<MudDatePicker  @bind-Value="@createdOn" Label="Created On" DateFormat="yyyy-MM-dd" Date="@DateTime.Now" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentColor="Color.Inherit" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.CalendarToday" />
+	<MudTextField Class="mudtext-warm" @bind-Value="@modId" ShrinkLabel="true" Label="Mod ID" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Required="true"></MudTextField>
 	<MudSwitch Class="py-2" Size="Size.Medium" T="bool" Color="Color.Primary" @bind-Value="@modifiesLevel" Label="Modifies Level"></MudSwitch>
 	<SupportedGameVersionRow @ref="supportedGameVersionRow"></SupportedGameVersionRow>
 </MudStack>

@@ -4,8 +4,18 @@
 
         <MudItem xs="12" lg="12" Class="ml-4 mb-2">
             <MudStack Row="true" Justify="Justify.SpaceBetween" Style="align-items: center" Spacing="0">
-                <MudText Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 7rem;" Typo="Typo.subtitle1">@Mod.Name</MudText>
-                <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Primary"></MudIconButton>
+                <MudText Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" Typo="Typo.subtitle1">@Mod.Name</MudText>
+                <MudMenu  Icon="@Icons.Material.Filled.MoreVert" Color="Color.Primary" AnchorOrigin="Origin.TopLeft" Dense="true" DropShadow="false" PopoverClass="my-rounded-menu">
+                    <MudMenuItem Class="custom-menu-item first">
+                        Edit
+                    </MudMenuItem>
+                    <MudMenuItem Class="custom-menu-item">
+                        Export
+                    </MudMenuItem>
+                    <MudMenuItem Class="custom-menu-item last">
+                        Delete
+                    </MudMenuItem>
+                </MudMenu>
             </MudStack>
             <MudText Typo="Typo.subtitle2">Perks: @(Mod.ModItems.Where(x => x.GetType().Name == "Perk").Count())</MudText>
             <MudText Typo="Typo.subtitle2">Buffs: @(Mod.ModItems.Where(x => x.GetType().Name == "Buff").Count())</MudText>

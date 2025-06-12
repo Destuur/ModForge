@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using KCD2.ModForge.Shared.Services;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace KCD2.ModForge.UI.Components.ModCollectionComponents
@@ -7,6 +8,17 @@ namespace KCD2.ModForge.UI.Components.ModCollectionComponents
 	{
 		[Inject]
 		public NavigationManager Navigation { get; set; }
+		[Inject]
+		public XmlToJsonService XmlToJsonService { get; set; }
+
+		public bool ValidateModItemList()
+		{
+			if (XmlToJsonService.Perks is null || XmlToJsonService.Buffs is null)
+			{
+				return true;
+			}
+			return false;
+		}
 
 		private void GoToSettings()
 		{

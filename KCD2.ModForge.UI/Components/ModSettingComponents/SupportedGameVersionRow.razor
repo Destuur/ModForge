@@ -6,8 +6,8 @@
 
 		<MudListItem Class="pa-0">
 			<MudStack Row="true" Justify="Justify.Center">
-				<MudTextField Disabled="@isNotSupported" @bind-Text="supportedGameVersion" T="string" Immediate="true" Validation="@(new Func<string, string>(ValidateVersion))" Label="Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-				<MudIconButton Disabled="@isNotSupported" OnClick="AddVersion" Class="ml-1" Style="height:fit-content;align-self: center" Icon="@Icons.Material.Outlined.Add" Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" ButtonType="ButtonType.Button" Edge="Edge.Start" />
+				<MudTextField Class="mudtext-warm" Disabled="@isNotSupported" @bind-Text="supportedGameVersion" T="string" Immediate="true" Validation="@(new Func<string, string>(ValidateVersion))" Label="Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+				<MudIconButton Disabled="@isNotSupported" OnClick="AddVersion" Class="button-prominent ml-1" Style="height:2.5rem; width: 2.5rem; align-self: center" Icon="@Icons.Material.Outlined.Add" Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" ButtonType="ButtonType.Button" Edge="Edge.Start" />
 			</MudStack>
 		</MudListItem>
 
@@ -15,8 +15,8 @@
 		{
 			<MudListItem Gutters="false" Dense="true">
 				<MudStack Row="true" Justify="Justify.Center">
-					<MudField Label="@("Version" + $" {(ModService.GetAllSupportedVersions().IndexOf(modVersion) + 1)}")" Variant="Variant.Outlined" Margin="Margin.Dense">@modVersion</MudField>
-					<MudIconButton OnClick="(_ => RemoveVersion(modVersion))" Class="ml-1" Style="height:fit-content;align-self: center" Icon="@Icons.Material.Outlined.Remove" Variant="Variant.Outlined" Size="Size.Medium" ButtonType="ButtonType.Button" Edge="Edge.Start" />
+					<MudField Class="mudtext-warm" Label="@("Version" + $" {(ModService.GetAllSupportedVersions().IndexOf(modVersion) + 1)}")" Variant="Variant.Outlined" Margin="Margin.Dense">@modVersion</MudField>
+					<MudIconButton Class="button-cancel ml-1" OnClick="(_ => RemoveVersion(modVersion))" Style="height:2.5rem; width: 2.5rem; align-self: center" Icon="@Icons.Material.Outlined.Remove" Variant="Variant.Outlined" Size="Size.Medium" ButtonType="ButtonType.Button" Edge="Edge.Start" />
 				</MudStack>
 			</MudListItem>
 		}
