@@ -20,7 +20,9 @@
 			<MudText Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" Typo="Typo.subtitle2">Author: @Mod.Author</MudText>
 			<MudText Typo="Typo.subtitle2">Perks: @(Mod.ModItems.Where(x => x.GetType().Name == "Perk").Count())</MudText>
 			<MudText Typo="Typo.subtitle2">Buffs: @(Mod.ModItems.Where(x => x.GetType().Name == "Buff").Count())</MudText>
-			<MudText Typo="Typo.subtitle2">Items: NaN</MudText>
+			<MudTooltip Text="Kingdom Coming: Soon">
+				<MudText Typo="Typo.subtitle2">Items: -</MudText>
+			</MudTooltip>
 		</MudItem>
 
 	</MudGrid>

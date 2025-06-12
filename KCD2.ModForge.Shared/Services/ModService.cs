@@ -275,6 +275,11 @@ namespace KCD2.ModForge.Shared.Services
 			mod!.ImagePath = path;
 		}
 
+		public void ClearModCollection()
+		{
+			modCollection.Clear();
+		}
+
 		public void RemoveModFromCollection(ModDescription mod)
 		{
 			modCollection.RemoveMod(mod);

@@ -42,10 +42,10 @@
 				<MudPaper Class="attribute-card" Outlined="true" Elevation="0">
 					<MudGrid Spacing="4">
 						<MudItem xs="11" sm="11" md="11" lg="11">
-							<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Primary" OnClick="AddBuffParam">Add Buff Parameter</MudButton>
+							<MudButton class="button-prominent" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" FullWidth="true" OnClick="AddBuffParam">Add Buff Parameter</MudButton>
 						</MudItem>
 						<MudItem xs="1" sm="1" md="1" lg="1">
-							<MudButton FullWidth="true" Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@(() => Remove(Attribute.Name))">Remove</MudButton>
+							<MudButton FullWidth="true" class="button-cancel" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" OnClick="@(() => Remove(Attribute.Name))">Remove</MudButton>
 						</MudItem>
 						<MudItem xs="12" sm="12" md="12" lg="12">
 							<BuffParamsAttribute Attribute="Attribute" @ref="childComponent" />
