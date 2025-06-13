@@ -4,16 +4,21 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudLayout>
-	<MudMainContent Style="padding-top: 6px">
-		@if (!_isLoaded)
-		{
-			<div class="loading-screen">Lädt...</div>
-		}
-		else
-		{
-			@Body
-		}
-	</MudMainContent>
-	<StartupLoader />
+<MudLayout Style="height: 100vh; width: 100vw; display: flex; flex-direction: column;">
+    <MudMainContent Style="flex-grow: 1; padding-top: 6px; display: flex; justify-content: center; align-items: center;">
+        @if (!_isLoaded)
+        {
+            <div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+                Lädt...
+            </div>
+        }
+        else
+        {
+            <div style="width: 100%; height: 100%;">
+                @Body
+            </div>
+        }
+    </MudMainContent>
+
+    <StartupLoader />
 </MudLayout>

@@ -33,17 +33,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="wwwroot\images\Icons\modforge.png">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Resource>
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="wwwroot\images\Icons\forgeicon.png" />
 		<None Include="wwwroot\images\Icons\forgeicon2.png" />
 		<None Include="wwwroot\images\Icons\modforge_icon_no_letters.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="wwwroot\images\Icons\modforge.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
 	</ItemGroup>
 
 </Project>
