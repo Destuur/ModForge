@@ -19,14 +19,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="wwwroot\images\Icons\forgeicon.png" />
-	  <Content Remove="wwwroot\images\Icons\forgeicon2.png" />
-	  <Content Remove="wwwroot\images\Icons\modforge_icon_no_letters.png" />
+		<Content Remove="wwwroot\images\Icons\modforge.png" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Remove="Images\Icons\modforge.ico" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="8.0.100" />
@@ -38,20 +33,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="Images\Icons\modforge.ico">
+		<Resource Include="wwwroot\images\Icons\modforge.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Include="Images\Icons\modforge.png">
-		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
+		</Resource>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="wwwroot\images\Icons\forgeicon.png" />
-	  <None Include="wwwroot\images\Icons\forgeicon2.png" />
-	  <None Include="wwwroot\images\Icons\modforge_icon_no_letters.png" />
+		<None Include="wwwroot\images\Icons\forgeicon.png" />
+		<None Include="wwwroot\images\Icons\forgeicon2.png" />
+		<None Include="wwwroot\images\Icons\modforge_icon_no_letters.png" />
 	</ItemGroup>
 
 </Project>

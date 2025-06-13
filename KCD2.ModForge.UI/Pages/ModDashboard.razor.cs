@@ -15,10 +15,8 @@ namespace KCD2.ModForge.UI.Pages
 		[Inject]
 		public IDialogService DialogService { get; set; }
 
-		protected override async Task OnInitializedAsync()
+		protected override async Task OnAfterRenderAsync(bool firstRender)
 		{
-			await base.OnInitializedAsync();
-
 			if (string.IsNullOrEmpty(UserConfigurationService.Current.GameDirectory))
 			{
 				var parameters = new DialogParameters<MoreModItemsDialog>
