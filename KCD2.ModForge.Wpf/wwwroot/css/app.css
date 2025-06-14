@@ -6,8 +6,6 @@
     background-size: cover;
     color: #c1c1c4;
     position: relative;
-    filter: grayscale(0%);
-    overflow-x: hidden;
 }
 
     body::before {
@@ -29,10 +27,6 @@
 
 .align-input-center input {
     text-align: center;
-}
-
-.entry-dialog {
-    backdrop-filter: blur(10px);
 }
 
 a, .btn-link {
@@ -305,7 +299,7 @@ h1:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -317,8 +311,8 @@ h1:focus {
     border-radius: 1rem;
     background-color: white;
     text-align: center;
-    min-width: 300px;
-    max-width: 350px;
+    min-width: 300px; 
+    max-width: 350px; 
     width: 100%;
     box-sizing: border-box;
 }
@@ -529,9 +523,9 @@ h1:focus {
             background: linear-gradient(to top, rgba(161, 75, 0, 0.15), rgba(255, 255, 255, 0)) !important;
         }
 
-.mud-tabs-tabbar {
-    background-color: transparent !important;
-}
+        .mud-tabs-tabbar {
+            background-color: transparent !important;
+        }
 
 .my-rounded-menu {
     padding: 0; /* Wichtig, damit MenuItems direkt anliegen */

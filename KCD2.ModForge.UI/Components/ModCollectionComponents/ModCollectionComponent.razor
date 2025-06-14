@@ -1,13 +1,7 @@
 ﻿@if (mods is not null)
 {
-	<MudGrid Justify="Justify.SpaceBetween" Style="display: flex; align-items: center;" Class="pb-3">
-		<MudItem>
-			<MudText Class="pb-1" Style="font-weight: bold" Typo="Typo.subtitle1">Created</MudText>
-		</MudItem>
-		<MudItem>
-			<MudButton Class="button-cancel" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" OnClick="DeleteAllMods" Disabled="@(ModService.GetAllMods().Count == 0)">Delete All</MudButton>
-		</MudItem>
-	</MudGrid>
+
+	<MudText Class="pb-1" Style="font-weight: bold" Typo="Typo.subtitle1">Created</MudText>
 
 	<MudGrid>
 

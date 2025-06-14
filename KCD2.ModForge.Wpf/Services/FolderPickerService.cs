@@ -9,7 +9,7 @@ namespace KCD2.ModForge.Wpf.Services
 		{
 			var dialog = new VistaFolderBrowserDialog
 			{
-				Description = "Select target folder",
+				Description = "Zielordner auswählen",
 				UseDescriptionForTitle = true,
 				ShowNewFolderButton = true
 			};

@@ -8,7 +8,6 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 {
 	public partial class PerkList
 	{
-		private bool isOpen;
 		private string languageKey = "en";
 
 		[Inject]
@@ -17,12 +16,6 @@ namespace KCD2.ModForge.UI.Components.PerkComponents
 		public XmlToJsonService? XmlToJsonService { get; set; }
 		public IList<IModItem> PerkItems { get; set; } = new List<IModItem>();
 		public string? SearchPerk { get; set; }
-
-
-		public void ToggleDrawer()
-		{
-			isOpen = !isOpen;
-		}
 
 		public IEnumerable<IModItem> TakePerkItems(int count)
 		{
