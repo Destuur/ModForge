@@ -15,13 +15,15 @@ namespace KCD2.ModForge.UI.Pages
 		[Inject]
 		public IDialogService DialogService { get; set; }
 
-		protected override async Task OnAfterRenderAsync(bool firstRender)
+		protected override async Task OnInitializedAsync()
 		{
+			await base.OnInitializedAsync();
+
 			if (string.IsNullOrEmpty(UserConfigurationService.Current.GameDirectory))
 			{
 				var parameters = new DialogParameters<MoreModItemsDialog>
 				{
-					{ x => x.ButtonText, "Bring me the sacred data" }
+					{ x => x.ButtonText, "Bring me the sacred data." }
 				};
 
 				var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, BackdropClick = false, BackgroundClass = "entry-dialog", CloseOnEscapeKey = false, FullWidth = true };

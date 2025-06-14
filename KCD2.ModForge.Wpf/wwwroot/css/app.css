@@ -6,8 +6,6 @@
     background-size: cover;
     color: #c1c1c4;
     position: relative;
-    filter: grayscale(0%);
-    overflow-x: hidden;
 }
 
     body::before {
