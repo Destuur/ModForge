@@ -8,7 +8,7 @@ namespace KCD2.ModForge.Shared.Factories
 {
 	public static class ModItemFactory
 	{
-		private static Func<string, IEnumerable<IAttribute>, IModItem> BuildModItem(string path, Type type, IEnumerable<IAttribute> attributes)
+		private static Func<string, IEnumerable<IAttribute>, IModItem> BuildAttribute(string path, Type type, IEnumerable<IAttribute> attributes)
 		{
 			var pathExpression = Expression.Parameter(typeof(string), nameof(path));
 			var attributesExpression = Expression.Parameter(typeof(IEnumerable<IAttribute>), nameof(attributes));
@@ -33,7 +33,7 @@ namespace KCD2.ModForge.Shared.Factories
 			try
 			{
 				IEnumerable<IAttribute> attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value));
-				var modItem = BuildModItem(path, type, attributes).Invoke(path, attributes);
+				var modItem = BuildAttribute(path, type, attributes).Invoke(path, attributes);
 
 				return modItem;
 			}
