@@ -21,6 +21,7 @@ namespace KCD2.ModForge.UI.Pages
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
 
+
 		private async Task Checkout()
 		{
 			var parameters = new DialogParameters<MoreModItemsDialog>
