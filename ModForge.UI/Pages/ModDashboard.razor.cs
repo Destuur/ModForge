@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ModForge.Localizations;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
 using MudBlazor;
+using System.Globalization;
 
 namespace ModForge.UI.Pages
 {
@@ -13,10 +15,20 @@ namespace ModForge.UI.Pages
 		public UserConfigurationService UserConfigurationService { get; set; }
 		[Inject]
 		public IDialogService DialogService { get; set; }
+		[Inject]
+		public MessageService MessageService { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
 			await base.OnInitializedAsync();
+
+			var culture = new CultureInfo("de"); // oder "en-US", "de-DE", etc.
+
+			// Kultur für Formatierungen
+			Thread.CurrentThread.CurrentCulture = culture;
+
+			// UI-Kultur für Ressourcen
+			Thread.CurrentThread.CurrentUICulture = culture;
 
 			if (string.IsNullOrEmpty(UserConfigurationService.Current.GameDirectory))
 			{

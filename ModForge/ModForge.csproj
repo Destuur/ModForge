@@ -16,6 +16,10 @@
 		<PublishReadyToRun>false</PublishReadyToRun>
 		<InvariantGlobalization>true</InvariantGlobalization>
 		<StripSymbols>true</StripSymbols>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<PublishTrimmed>false</PublishTrimmed>
+		<InvariantGlobalization>false</InvariantGlobalization>
+		<RuntimeGlobalizationMode>full</RuntimeGlobalizationMode>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -35,7 +39,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ModForge.UI\ModForge.UI.csproj" />
+		<ProjectReference Include="..\ModForge.UI\ModForge.UI.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

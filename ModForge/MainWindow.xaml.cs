@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ModForge.Localizations;
+using ModForge.Services;
 using ModForge.Shared;
 using ModForge.Shared.Services;
-using ModForge.Wpf.Services;
 using MudBlazor.Services;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 
@@ -21,6 +23,9 @@ namespace ModForge
 							 .AddModForgeServices()
 							 .AddModForgeAdapters()
 							 .AddSingleton<IFolderPickerService, FolderPickerService>();
+
+			serviceCollection.AddLocalization();
+			serviceCollection.AddTransient<MessageService>();
 
 #if DEBUG
 			serviceCollection.AddBlazorWebViewDeveloperTools();

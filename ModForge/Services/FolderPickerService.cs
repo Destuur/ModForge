@@ -1,7 +1,7 @@
 ﻿using ModForge.Shared.Services;
 using Ookii.Dialogs.Wpf;
 
-namespace ModForge.Wpf.Services
+namespace ModForge.Services
 {
 	public class FolderPickerService : IFolderPickerService
 	{

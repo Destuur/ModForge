@@ -11,6 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\ModForge.Localizations\ModForge.Localizations.csproj" />
 	  <ProjectReference Include="..\ModForge.Shared\ModForge.Shared.csproj" />
 	</ItemGroup>
 

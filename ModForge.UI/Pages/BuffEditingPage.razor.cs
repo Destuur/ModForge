@@ -1,10 +1,10 @@
-﻿using ModForge.Shared.Models.Attributes;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
+using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
 using MudBlazor;
 using System.Text.Json;
 
