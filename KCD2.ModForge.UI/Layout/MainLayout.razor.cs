@@ -21,17 +21,13 @@ namespace KCD2.ModForge.UI.Layout
 			{
 				_isLoaded = true;
 				StateHasChanged();
+				await base.OnInitializedAsync();
+				if (XmlToJsonService is null)
+				{
+					return;
+				}
+				XmlToJsonService.TryReadJsonFiles();
 			}
-		}
-
-		protected override async Task OnInitializedAsync()
-		{
-			await base.OnInitializedAsync();
-			if (XmlToJsonService is null)
-			{
-				return;
-			}
-			XmlToJsonService.TryReadJsonFiles();
 		}
 	}
 }

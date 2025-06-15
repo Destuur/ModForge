@@ -1,8 +1,10 @@
 ﻿using KCD2.ModForge.Shared;
 using KCD2.ModForge.Shared.Services;
 using KCD2.ModForge.Wpf.Services;
+using Microsoft.AspNetCore.Components.WebView.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
+using System.Runtime.InteropServices.JavaScript;
 using System.Windows;
 using System.Windows.Input;
 
@@ -36,7 +38,20 @@ namespace KCD2.ModForge.Wpf
 		private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			if (e.ChangedButton == MouseButton.Left)
-				this.DragMove();
+			{
+				if (e.ClickCount == 2)
+				{
+					// Doppelklick: Maximieren oder wiederherstellen
+					this.WindowState = this.WindowState == WindowState.Maximized
+						? WindowState.Normal
+						: WindowState.Maximized;
+				}
+				else
+				{
+					// Einfaches DragMove für Fenster verschieben
+					this.DragMove();
+				}
+			}
 		}
 
 		private void Minimize_Click(object sender, RoutedEventArgs e)

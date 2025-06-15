@@ -5,11 +5,11 @@
 	</MudItem>
 
 	<MudItem sm="1">
-		<MudButton Class="button-neutral" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" FullWidth="true" OnClick="ResetBuff">Reset</MudButton>
+		<MudButton Class="button-neutral" FullWidth="true" OnClick="ResetBuff" Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
 	</MudItem>
 
 	@* <MudItem sm="3">
-		<MudButton Class="button-prominent" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" FullWidth="true" OnClick="ToggleDrawer">Add Attribute</MudButton>
+		<MudButton Class="button-prominent" FullWidth="true" OnClick="ToggleDrawer" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Add Attribute</MudButton>
 	</MudItem> *@
 
 	@foreach (var attribute in sortedAttributes)

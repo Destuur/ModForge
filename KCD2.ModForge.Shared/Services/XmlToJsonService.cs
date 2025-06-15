@@ -1,4 +1,5 @@
 ﻿using KCD2.ModForge.Shared.Adapter;
+using KCD2.ModForge.Shared.Factories;
 using KCD2.ModForge.Shared.Models.Attributes;
 using KCD2.ModForge.Shared.Models.Data;
 using KCD2.ModForge.Shared.Models.ModItems;
@@ -15,18 +16,33 @@ namespace KCD2.ModForge.Shared.Services
 		private Dictionary<string, Dictionary<string, string>> localizationCache;
 		private readonly UserConfigurationService userConfigurationService;
 
-		public XmlToJsonService(DataSource dataSource, List<IDataPoint> dataPoints, JsonAdapter jsonAdapter, LocalizationService localizationService, UserConfigurationService userConfigurationService)
+		public XmlToJsonService(DataSource dataSource, JsonAdapter jsonAdapter, LocalizationService localizationService, UserConfigurationService userConfigurationService)
 		{
 			this.dataSource = dataSource;
 			this.jsonAdapter = jsonAdapter;
 			this.localizationService = localizationService;
-			this.dataPoints = dataPoints.ToList();
 			this.userConfigurationService = userConfigurationService;
+			this.dataPoints = GetDataPoints();
 		}
 
 		public IList<IModItem> Perks { get; private set; }
 		public IList<IModItem> Buffs { get; private set; }
 		public IList<BuffParam> BuffParams { get; private set; }
+
+		private List<IDataPoint> GetDataPoints()
+		{
+			var newList = new List<IDataPoint>();
+
+			foreach (var type in ToolResources.Keys.Endpoints())
+			{
+				foreach (var item in type.Value)
+				{
+					newList.Add(DataPointFactory.CreateDataPoint(Path.Combine(userConfigurationService.Current.GameDirectory, item.Value), item.Key, type.Key));
+				}
+			}
+
+			return newList;
+		}
 
 		private void ReadModItemsFromXml()
 		{
