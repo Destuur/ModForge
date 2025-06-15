@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>ModForge</title>
+    <base href="/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="ModForge.styles.css" />
+    <link rel="icon" href="data:,">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="initial-loader" style=" position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: linear-gradient(180deg, #1e1e1e 0%, #271200 100%); color: #c1c1c4; font-size: 2.5rem; z-index: 9999;">
+        <img src="images/Icons/modforge.png" alt="Loading ModForge..." style="width:500px;" />
+    </div>
+
+    <div id="app">Lade Blazor-Komponenten...</div>
+
+    <div id="blazor-error-ui" data-nosnippet>
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.webview.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="js/folder.js"></script>
+    <!--Script für Startup der App-->
+    <script>
+        window.removeInitialLoader = function () {
+            const loader = document.getElementById('initial-loader');
+            if (loader) {
+                loader.remove();
+            }
+        };
+    </script>
+</body>
+
+</html>
