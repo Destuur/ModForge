@@ -12,10 +12,8 @@ namespace ModForge.Localizations
 			this.localizer = localizer;
 		}
 
-		[return: NotNullIfNotNull(nameof(localizer))]
-		public string? GetGreetingMessage()
-		{
-			return localizer["DashboardTitle"];
-		}
+		public string this[string key] => localizer[key];
+
+		public string Get(string key, params object[] args) => localizer[key, args];
 	}
 }

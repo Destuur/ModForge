@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using ModForge.Localizations;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
@@ -16,7 +17,7 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public IDialogService DialogService { get; set; }
 		[Inject]
-		public MessageService MessageService { get; set; }
+		public IStringLocalizer<MessageService> L { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
