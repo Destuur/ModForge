@@ -23,7 +23,7 @@ namespace ModForge.UI.Layout
 				{
 					return;
 				}
-				XmlToJsonService.TryReadJsonFiles();
+				XmlToJsonService.TryReadJsonFilesWithFallback();
 			}
 		}
 	}

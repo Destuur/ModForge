@@ -67,7 +67,7 @@ namespace ModForge.UI.Pages
 			Navigation.NavigateTo("/");
 		}
 
-		public async Task ImportGameData()
+		public void ImportGameData()
 		{
 			isLoading = true;
 			if (XmlToJsonService is null)

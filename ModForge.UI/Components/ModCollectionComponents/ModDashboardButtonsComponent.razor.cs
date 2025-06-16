@@ -6,6 +6,8 @@ namespace ModForge.UI.Components.ModCollectionComponents
 {
 	public partial class ModDashboardButtonsComponent
 	{
+		private bool isDisabled;
+
 		[Inject]
 		public NavigationManager Navigation { get; set; }
 		[Inject]
@@ -33,6 +35,12 @@ namespace ModForge.UI.Components.ModCollectionComponents
 		private void GoToManageMods()
 		{
 			Navigation.NavigateTo("/manager");
+		}
+
+		protected override void OnAfterRender(bool firstRender)
+		{
+			base.OnAfterRender(firstRender);
+			isDisabled = ValidateModItemList();
 		}
 	}
 }

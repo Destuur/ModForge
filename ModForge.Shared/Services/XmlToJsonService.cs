@@ -42,7 +42,7 @@ namespace ModForge.Shared.Services
 		#endregion
 
 		#region Public Methods
-		public async Task ConvertXmlToJsonAsync()
+		public void ConvertXmlToJsonAsync()
 		{
 			var watch = Stopwatch.StartNew();
 			try
@@ -60,7 +60,31 @@ namespace ModForge.Shared.Services
 			}
 		}
 
-		public bool TryReadJsonFiles()
+		public bool TryReadJsonFilesWithFallback()
+		{
+			if (TryReadJsonFilesInternal())
+			{
+				return true;
+			}
+
+			logger.LogWarning("JSON files could not be read or are empty. Attempting automatic conversion from XML...");
+
+			if (string.IsNullOrEmpty(userConfigurationService.Current.GameDirectory) == false)
+			{
+				ConvertXmlToJsonAsync();
+
+				if (TryReadJsonFilesInternal())
+				{
+					logger.LogInformation("JSON files were recovered after conversion from XML.");
+					return true;
+				}
+			}
+
+			logger.LogError("Failed to recover JSON files after fallback conversion.");
+			return false;
+		}
+
+		private bool TryReadJsonFilesInternal()
 		{
 			var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			var perkPath = Path.Combine(appDataPath, "ModForge", "perks.json");
@@ -82,6 +106,13 @@ namespace ModForge.Shared.Services
 			{
 				Perks = ReadPerkJsonFile(perkPath).ToList();
 				Buffs = ReadBuffJsonFile(buffPath).ToList();
+
+				if (Perks.Count == 0 || Buffs.Count == 0)
+				{
+					logger.LogWarning("Perks or Buffs list is empty after reading JSON. This may indicate a format mismatch.");
+					return false;
+				}
+
 				logger.LogInformation("Successfully read perk and buff JSON files.");
 				return true;
 			}

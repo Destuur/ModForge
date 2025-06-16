@@ -241,6 +241,8 @@ namespace ModForge.Shared.Services
 
 			logger.LogInformation("CreateNewMod: Mod '{Name}' with ID '{ModId}' created.", name, modId);
 
+			mod = newMod;
+
 			return newMod;
 		}
 
