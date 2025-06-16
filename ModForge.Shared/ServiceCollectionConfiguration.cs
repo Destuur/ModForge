@@ -12,7 +12,6 @@ namespace ModForge.Shared
 		{
 			services.AddSingleton<LocalizationService>();
 			services.AddSingleton<ModService>();
-			services.AddScoped<NavigationService>();
 			services.AddSingleton<UserConfigurationService>();
 			services.AddSingleton<XmlToJsonService>();
 			services.AddSingleton<ModCollection>();

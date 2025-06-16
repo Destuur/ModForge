@@ -1,6 +1,8 @@
-﻿using ModForge.Shared.Services;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
+using ModForge.Shared.Services;
+using ModForge.UI.Components.BuffComponents;
 using ModForge.UI.Components.DialogComponents;
-using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace ModForge.UI.Components.ModSettingComponents
@@ -14,10 +16,11 @@ namespace ModForge.UI.Components.ModSettingComponents
 		[Inject]
 		public ModService? ModService { get; set; }
 		[Inject]
-		public NavigationService? NavigationService { get; set; }
+		public NavigationManager Navigation { get; set; }
+		[Inject]
+		public ILogger<BuffListItem> Logger { get; set; }
 		[Inject]
 		public IDialogService DialogService { get; set; }
-
 
 
 		private void UpdateChildValidity(bool valid)
@@ -25,28 +28,31 @@ namespace ModForge.UI.Components.ModSettingComponents
 			isChildValid = valid;
 		}
 
-		public async Task StartModding()
+		public void StartModding()
 		{
 			if (ModService is null)
 			{
+				Logger?.LogWarning("ModService is null. Cannot start modding.");
 				return;
 			}
-			if (NavigationService is null)
+
+			if (Navigation is null)
 			{
+				Logger?.LogWarning("Navigation service is null. Cannot start modding.");
 				return;
 			}
 
-			//modSettingIconPicker!.SaveMod();
-			modSettingForm!.SaveMod();
-			var mod = ModService.GetCurrentMod();
+			modSettingForm?.SaveMod();
 
+			var mod = ModService.GetCurrentMod();
 			if (mod is null)
 			{
+				Logger?.LogWarning("Current mod is null. Aborting start modding.");
 				return;
 			}
 
 			mod.ModItems.Clear();
-			await NavigationService.NavigateToAsync($"modItems/{mod.ModId}");
+			Navigation.NavigateTo($"modItems/{mod.ModId}");
 		}
 
 		private async Task Cancel()
@@ -59,13 +65,25 @@ namespace ModForge.UI.Components.ModSettingComponents
 
 			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
+			if (DialogService is null)
+			{
+				Logger?.LogError("DialogService is null. Cannot show discard changes dialog.");
+				return;
+			}
+
 			var dialog = await DialogService.ShowAsync<ChangesDetectedDialog>("Discard Changes", parameters, options);
 			var result = await dialog.Result;
 
-			if (result.Canceled == false)
+			if (!result.Canceled)
 			{
-				await NavigationService!.NavigateToAsync("/");
+				if (Navigation is null)
+				{
+					Logger?.LogWarning("Navigation service is null. Cannot navigate after cancel.");
+					return;
+				}
+				Navigation.NavigateTo("/");
 			}
 		}
+
 	}
 }

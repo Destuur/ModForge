@@ -1,8 +1,9 @@
-﻿using ModForge.Shared.Models.ModItems;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Logging;
+using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace ModForge.UI.Components.PerkComponents
 {
@@ -16,7 +17,9 @@ namespace ModForge.UI.Components.PerkComponents
 		[Inject]
 		public LocalizationService? LocalizationService { get; set; }
 		[Inject]
-		public NavigationService? NavigationService { get; set; }
+		public NavigationManager? Navigation { get; set; }
+		[Inject]
+		public ILogger<PerkListItem>? Logger { get; set; }
 		[Parameter]
 		public Perk? Perk { get; set; }
 		[Parameter]
@@ -28,13 +31,21 @@ namespace ModForge.UI.Components.PerkComponents
 			mod = ModService!.GetCurrentMod();
 		}
 
-		private async Task EditPerk(MouseEventArgs args)
+		private void EditPerk(MouseEventArgs args)
 		{
-			if (NavigationService is null)
+			if (Navigation is null)
 			{
+				Logger?.LogWarning("Navigation service is null, cannot navigate to perk editor.");
 				return;
 			}
-			await NavigationService.NavigateToAsync($"editing/perk/{Perk.Id}");
+
+			if (Perk is null || Perk.Id == null)
+			{
+				Logger?.LogWarning("Perk or Perk.Id is null, cannot navigate.");
+				return;
+			}
+
+			Navigation.NavigateTo($"editing/perk/{Perk.Id}");
 		}
 	}
 }

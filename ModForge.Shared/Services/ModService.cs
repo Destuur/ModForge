@@ -36,11 +36,11 @@ namespace ModForge.Shared.Services
 			ILogger<ModService> logger)
 		{
 			modCollectionFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ModForge", "modcollection.json");
-			ReadModCollectionFromJson();
 			this.dataSource = dataSource;
 			this.userConfigurationService = userConfigurationService;
 			this.localizationService = localizationService;
 			this.logger = logger;
+			ReadModCollectionFromJson();
 		}
 
 		public ModDescription Mod
@@ -380,24 +380,62 @@ namespace ModForge.Shared.Services
 		#region Private Methods
 		private ModDescription ReadModMetadata(string modPath)
 		{
+			logger?.LogInformation("Reading mod metadata from path: {ModPath}", modPath);
+
 			var modFiles = Directory.GetFiles(modPath);
 			if (modFiles.Length == 0)
-				throw new FileNotFoundException($"Keine Dateien im Mod-Ordner: {modPath}");
+			{
+				var msg = $"No files found in mod folder: {modPath}";
+				logger?.LogError(msg);
+				throw new FileNotFoundException(msg);
+			}
 
 			var modFileUri = modFiles.FirstOrDefault();
 			if (string.IsNullOrEmpty(modFileUri))
-				throw new FileNotFoundException($"Mod-Info-Datei fehlt in {modPath}");
+			{
+				var msg = $"Mod info file missing in {modPath}";
+				logger?.LogError(msg);
+				throw new FileNotFoundException(msg);
+			}
 
-			var doc = XDocument.Load(modFileUri);
-			var root = doc.Root ?? throw new InvalidDataException("Mod-Datei hat keine Root");
+			XDocument doc;
+			try
+			{
+				doc = XDocument.Load(modFileUri);
+				logger?.LogInformation("Mod XML loaded from file: {ModFile}", modFileUri);
+			}
+			catch (Exception ex)
+			{
+				logger?.LogError(ex, "Failed to load XML from mod file: {ModFile}", modFileUri);
+				throw;
+			}
 
-			var info = root.Element("info") ?? throw new InvalidDataException("Element <info> fehlt");
+			var root = doc.Root ?? throw new InvalidDataException("Mod file has no root element");
+			var info = root.Element("info") ?? throw new InvalidDataException("Missing <info> element");
+
 			var modifiesLevel = bool.TryParse(info.Element("modifies_level")?.Value, out var modifies) && modifies;
 
-			var supports = root.Element("supports") ?? throw new InvalidDataException("Element <supports> fehlt");
-			var supportList = supports.Elements("kcd_version").Select(e => e.Value).ToList();
+			List<string> supportList = new List<string>();
+			try
+			{
+				var supports = root.Element("supports");
+				if (supports != null)
+				{
+					supportList = supports.Elements("kcd_version").Select(e => e.Value).ToList();
+					logger?.LogInformation("Found {Count} supported game versions", supportList.Count);
+				}
+				else
+				{
+					logger?.LogWarning("No <supports> element found in mod metadata");
+				}
+			}
+			catch (Exception ex)
+			{
+				logger?.LogError(ex, "Error reading supported game versions from mod metadata");
+				supportList = new List<string>();
+			}
 
-			return new ModDescription
+			var modDescription = new ModDescription
 			{
 				Name = info.Element("name")?.Value,
 				Description = info.Element("description")?.Value,
@@ -408,7 +446,11 @@ namespace ModForge.Shared.Services
 				ModifiesLevel = modifiesLevel,
 				SupportsGameVersions = supportList
 			};
+
+			logger?.LogInformation("Mod metadata successfully read: {ModId}", modDescription.ModId);
+			return modDescription;
 		}
+
 
 		private bool IsModCreatedByUser(XDocument doc)
 		{

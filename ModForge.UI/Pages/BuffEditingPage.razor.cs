@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.Extensions.Logging;
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.ModItems;
@@ -22,57 +23,91 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public XmlToJsonService XmlToJsonService { get; set; }
 		[Inject]
-		public NavigationService NavigationService { get; set; }
+		public NavigationManager Navigation { get; set; }
 		[Inject]
 		public ModService ModService { get; set; }
 		[Inject]
+		public ILogger<BuffEditingPage> Logger { get; set; }
+		[Inject]
 		public IDialogService DialogService { get; set; }
+
 
 		private void SaveItem()
 		{
-			var modBuff = new Buff(originalBuff.Id, originalBuff.Path);
-			if (editingBuff is null || originalBuff is null)
+			if (editingBuff is null)
 			{
+				Logger?.LogWarning("SaveItem aborted: editingBuff is null.");
+				return;
+			}
+
+			if (originalBuff is null)
+			{
+				Logger?.LogWarning("SaveItem aborted: originalBuff is null.");
 				return;
 			}
 
 			if (ModService is null)
 			{
+				Logger?.LogWarning("SaveItem aborted: ModService is null.");
 				return;
 			}
 
-			//modBuff.Attributes = GetEssentialAttributes();
-			modBuff.Attributes = editingBuff.Attributes;
-			modBuff.Localization = GetChangedLocalizations();
-			modBuff.Name = originalBuff.Localization.GetName("en");
+			var modBuff = new Buff(originalBuff.Id, originalBuff.Path)
+			{
+				Attributes = editingBuff.Attributes,
+				Localization = GetChangedLocalizations(),
+				Name = originalBuff.Localization.GetName("en")
+			};
+
 			ModService.AddModItem(modBuff);
+			Logger?.LogInformation($"Saved mod buff with Id: {modBuff.Id}");
 		}
 
-		private async Task SaveBuff()
+		private void SaveBuff()
 		{
 			SaveItem();
-			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
+
+			var mod = ModService?.GetCurrentMod();
+			if (mod == null)
+			{
+				Logger?.LogWarning("Current mod is null, navigation cancelled.");
+				return;
+			}
+
+			if (Navigation == null)
+			{
+				Logger?.LogWarning("Navigation service is null, cannot navigate after saving buff.");
+				return;
+			}
+
+			Navigation.NavigateTo($"/moditems/{mod.ModId}");
 		}
 
 		private async Task Checkout()
 		{
 			SaveItem();
+			Logger?.LogInformation("Item saved before checkout.");
 
 			var parameters = new DialogParameters<MoreModItemsDialog>
-			{
-				{ x => x.ContentText, "Hast thou pulled enough pizzles? Depart then, and shape thy mod!" },
-				{ x => x.ButtonText, "Create Mod" }
-			};
+	{
+		{ x => x.ContentText, "Have you pulled enough pizzles? Depart then, and shape thy mod!" },
+		{ x => x.ButtonText, "Create Mod" }
+	};
 
-			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+			var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
 			var dialog = await DialogService.ShowAsync<MoreModItemsDialog>("Create Your Mod", parameters, options);
 			var result = await dialog.Result;
 
-			if (result.Canceled == false)
+			if (!result.Canceled)
 			{
 				canCheckout = true;
-				await NavigationService.NavigateToAsync("/modoverview");
+				Logger?.LogInformation("User confirmed checkout, navigating to mod overview.");
+				Navigation.NavigateTo("/modoverview");
+			}
+			else
+			{
+				Logger?.LogInformation("User canceled the checkout dialog.");
 			}
 		}
 
@@ -180,107 +215,59 @@ namespace ModForge.UI.Pages
 
 		private async Task Cancel()
 		{
-			var parameters = new DialogParameters<ChangesDetectedDialog>
-			{
-				{ x => x.ContentText, "Do you really want to discard all changes?" },
-				{ x => x.ButtonText, "Discard" }
-			};
+			Logger?.LogInformation("Cancel operation initiated: showing discard confirmation dialog.");
 
-			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+			var parameters = new DialogParameters<ChangesDetectedDialog>
+	{
+		{ x => x.ContentText, "Do you really want to discard all changes?" },
+		{ x => x.ButtonText, "Discard" }
+	};
+
+			var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
 			var dialog = await DialogService.ShowAsync<ChangesDetectedDialog>("Discard Changes", parameters, options);
 			var result = await dialog.Result;
 
-			if (result.Canceled == false)
+			if (!result.Canceled)
 			{
-				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
+				Logger?.LogInformation("User confirmed discard. Navigating back to mod items.");
+				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+			}
+			else
+			{
+				Logger?.LogInformation("User canceled discard dialog. No navigation performed.");
 			}
 		}
-
-		private async Task<bool> ConfirmNavigation(LocationChangingContext context)
-		{
-			var jsonA = JsonSerializer.Serialize(editingBuff);
-			var jsonB = JsonSerializer.Serialize(originalBuff);
-
-			if (jsonA == jsonB)
-			{
-				return true;
-			}
-
-			if (canCheckout)
-			{
-				canCheckout = false;
-				return true;
-			}
-
-			var parameters = new DialogParameters<ChangesDetectedDialog>()
-			{
-				{ x => x.ContentText, "If you leave now, you might lose some changes.\r\nDo you want to continue or stay on this page?" },
-				{ x => x.ButtonText, "Leave Anyway" }
-			};
-
-			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-
-			var dialog = await DialogService.ShowAsync<ChangesDetectedDialog>("Leave Page?", parameters, options);
-			var result = await dialog.Result;
-
-			if (result.Canceled)
-			{
-				context.PreventNavigation();
-			}
-
-			return true;
-		}
-
-		//public static bool HasChanged(Buff a, Buff b)
-		//{
-		//	if (a.Id != b.Id) return true;
-		//	if (a.PerkId != b.PerkId) return true;
-		//	if (a.Path != b.Path) return true;
-		//	if (a.Name != b.Name) return true;
-		//	if (!LocalizationEquals(a.Localization, b.Localization)) return true;
-		//	if (!AttributesEqual(a.Attributes, b.Attributes)) return true;
-
-		//	return false;
-		//}
-
-		//private static bool LocalizationEquals(Localization a, Localization b)
-		//{
-		//	// Passe je nach Struktur an
-		//	return a.GetName("en") == b.GetName("en");
-		//}
-
-		//private static bool AttributesEqual(IList<IAttribute> a, IList<IAttribute> b)
-		//{
-		//	if (a.Count != b.Count)
-		//		return false;
-
-		//	for (int i = 0; i < a.Count; i++)
-		//	{
-		//		if (!a[i].Equals(b[i]))
-		//			return false;
-		//	}
-
-		//	return true;
-		//}
 
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
+			Logger?.LogInformation("Component initialization started.");
+
 			if (XmlToJsonService is null)
 			{
+				Logger?.LogWarning("XmlToJsonService is null. Initialization aborted.");
 				return;
 			}
 
-			originalBuff = XmlToJsonService.Buffs!.FirstOrDefault(x => x.Id == Id)! as Buff;
+			originalBuff = XmlToJsonService.Buffs?.FirstOrDefault(x => x.Id == Id) as Buff;
+			Logger?.LogInformation(originalBuff != null
+				? $"Original buff loaded from XmlToJsonService with Id {Id}."
+				: $"No original buff found in XmlToJsonService for Id {Id}.");
 
-			if (ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) is not null)
+			var modBuff = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) as Buff;
+			if (modBuff is not null)
 			{
-				originalBuff = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) as Buff;
+				originalBuff = modBuff;
+				Logger?.LogInformation($"Original buff overridden with mod item buff for Id {Id}.");
 			}
 
 			editingBuff = Buff.GetDeepCopy(originalBuff);
+			Logger?.LogInformation("Created deep copy of buff for editing.");
+
 			StateHasChanged();
+			Logger?.LogInformation("Component state updated.");
 		}
+
 	}
 }

@@ -1,8 +1,9 @@
-﻿using ModForge.Shared.Models.ModItems;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Logging;
+using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace ModForge.UI.Components.BuffComponents
 {
@@ -16,7 +17,9 @@ namespace ModForge.UI.Components.BuffComponents
 		[Inject]
 		public LocalizationService? LocalizationService { get; set; }
 		[Inject]
-		public NavigationService? NavigationService { get; set; }
+		public NavigationManager Navigation { get; set; }
+		[Inject]
+		public ILogger<BuffListItem> Logger { get; set; }
 		[Parameter]
 		public Buff? Buff { get; set; }
 		[Parameter]
@@ -28,13 +31,21 @@ namespace ModForge.UI.Components.BuffComponents
 			mod = ModService!.GetCurrentMod();
 		}
 
-		private async Task EditBuff(MouseEventArgs args)
+		private void EditBuff(MouseEventArgs args)
 		{
-			if (NavigationService is null)
+			if (Navigation is null)
 			{
+				Logger?.LogWarning("Navigation service is null, cannot navigate to buff editor.");
 				return;
 			}
-			await NavigationService.NavigateToAsync($"editing/buff/{Buff.Id}");
+
+			if (Buff is null || Buff.Id == null)
+			{
+				Logger?.LogWarning("Buff or Buff.Id is null, cannot navigate.");
+				return;
+			}
+
+			Navigation.NavigateTo($"editing/buff/{Buff.Id}");
 		}
 	}
 }

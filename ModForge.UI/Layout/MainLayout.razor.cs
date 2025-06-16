@@ -11,9 +11,6 @@ namespace ModForge.UI.Layout
 
 		[Inject]
 		public XmlToJsonService? XmlToJsonService { get; set; }
-		[Inject]
-		public NavigationService? NavigationService { get; set; }
-		public string ModName { get; set; }
 
 		protected override async Task OnAfterRenderAsync(bool firstRender)
 		{

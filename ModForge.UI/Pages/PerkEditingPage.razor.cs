@@ -22,7 +22,7 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public XmlToJsonService XmlToJsonService { get; set; }
 		[Inject]
-		public NavigationService NavigationService { get; set; }
+		public NavigationManager Navigation { get; set; }
 		[Inject]
 		public ModService ModService { get; set; }
 		[Inject]
@@ -48,10 +48,10 @@ namespace ModForge.UI.Pages
 			ModService.AddModItem(modPerk);
 		}
 
-		private async Task SavePerk()
+		private void SavePerk()
 		{
 			SaveItem();
-			await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
+			Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
 		}
 
 		private async Task Checkout()
@@ -72,7 +72,7 @@ namespace ModForge.UI.Pages
 			if (result.Canceled == false)
 			{
 				canCheckout = true;
-				await NavigationService.NavigateToAsync("/modoverview");
+				Navigation.NavigateTo("/modoverview");
 			}
 		}
 
@@ -200,7 +200,7 @@ namespace ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
-				await NavigationService.NavigateToAsync($"/moditems/{ModService.GetCurrentMod().ModId}");
+				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
 			}
 		}
 

@@ -1,4 +1,5 @@
-﻿using ModForge.Shared.Models.User;
+﻿using Microsoft.Extensions.Logging;
+using ModForge.Shared.Models.User;
 using System.Text.Json;
 
 namespace ModForge.Shared.Services
@@ -6,13 +7,16 @@ namespace ModForge.Shared.Services
 	public class UserConfigurationService
 	{
 		private readonly string configFile;
+		private readonly ILogger<UserConfigurationService> logger;
 		private JsonSerializerOptions jsonSettings = new JsonSerializerOptions()
 		{
 			WriteIndented = true
 		};
 
-		public UserConfigurationService()
+		public UserConfigurationService(ILogger<UserConfigurationService> logger)
 		{
+			this.logger = logger;
+
 			configFile = Path.Combine(
 				Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
 				"ModForge", "userconfig.json");
@@ -24,23 +28,51 @@ namespace ModForge.Shared.Services
 
 		private void Load()
 		{
-			if (File.Exists(configFile))
+			try
 			{
-				var json = File.ReadAllText(configFile);
-				Current = JsonSerializer.Deserialize<UserConfiguration>(json)
-						  ?? new UserConfiguration();
+				if (File.Exists(configFile))
+				{
+					var json = File.ReadAllText(configFile);
+					Current = JsonSerializer.Deserialize<UserConfiguration>(json, jsonSettings)
+							  ?? new UserConfiguration();
+					logger.LogInformation("User configuration loaded successfully.");
+				}
+				else
+				{
+					Current = new UserConfiguration();
+					logger.LogInformation("Config file not found. Initialized new UserConfiguration.");
+				}
 			}
-			else
+			catch (JsonException jex)
 			{
+				logger.LogError(jex, "Failed to deserialize the user configuration. Using default configuration.");
+				Current = new UserConfiguration();
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Unexpected error while loading user configuration. Using default configuration.");
 				Current = new UserConfiguration();
 			}
 		}
 
 		public void Save()
 		{
-			var json = JsonSerializer.Serialize(Current, jsonSettings);
-			Directory.CreateDirectory(Path.GetDirectoryName(configFile)!);
-			File.WriteAllText(configFile, json);
+			try
+			{
+				var directory = Path.GetDirectoryName(configFile);
+				if (!string.IsNullOrEmpty(directory))
+				{
+					Directory.CreateDirectory(directory);
+				}
+
+				var json = JsonSerializer.Serialize(Current, jsonSettings);
+				File.WriteAllText(configFile, json);
+				logger.LogInformation("User configuration saved successfully.");
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Failed to save user configuration.");
+			}
 		}
 	}
 }
