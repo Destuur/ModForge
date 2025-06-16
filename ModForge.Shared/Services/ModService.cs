@@ -1,4 +1,5 @@
-﻿using ModForge.Shared.Adapter;
+﻿using Microsoft.Extensions.Logging;
+using ModForge.Shared.Adapter;
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Data;
 using ModForge.Shared.Models.ModItems;
@@ -11,6 +12,7 @@ namespace ModForge.Shared.Services
 {
 	public class ModService
 	{
+		#region Private Fields
 		private ModDescription? mod = new();
 		private ModCollection modCollection = new();
 		private ModCollection externalModCollection = new();
@@ -24,14 +26,21 @@ namespace ModForge.Shared.Services
 		private readonly DataSource dataSource;
 		private readonly UserConfigurationService userConfigurationService;
 		private readonly LocalizationService localizationService;
+		private readonly ILogger<ModService> logger;
+		#endregion
 
-		public ModService(DataSource dataSource, UserConfigurationService userConfigurationService, LocalizationService localizationService)
+		public ModService(
+			DataSource dataSource,
+			UserConfigurationService userConfigurationService,
+			LocalizationService localizationService,
+			ILogger<ModService> logger)
 		{
 			modCollectionFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ModForge", "modcollection.json");
 			ReadModCollectionFromJson();
 			this.dataSource = dataSource;
 			this.userConfigurationService = userConfigurationService;
 			this.localizationService = localizationService;
+			this.logger = logger;
 		}
 
 		public ModDescription Mod
@@ -47,97 +56,113 @@ namespace ModForge.Shared.Services
 			}
 		}
 
+		#region Public Methods
 		public void ReadExternalModsFromPak()
 		{
 			var modFolder = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods");
-			var files = Directory.EnumerateDirectories(modFolder);
+			var modDirectories = Directory.EnumerateDirectories(modFolder);
 
-			foreach (var file in files)
+			foreach (var modPath in modDirectories)
 			{
-				var modFiles = Directory.GetFiles(file);
-
-				var doc = XDocument.Load(modFiles.FirstOrDefault());
-
-				var info = doc.Root.Element("info");
-
-				if (info.Element("author")?.Value.Equals(userConfigurationService.Current.UserName) == true)
+				try
 				{
-					continue;
+					var modFiles = Directory.GetFiles(modPath);
+					if (modFiles.Length == 0)
+						continue;
+
+					var doc = XDocument.Load(modFiles.First());
+
+					if (IsModCreatedByUser(doc))
+						continue;
+
+					var modDescription = ReadModMetadata(modPath);
+					LoadModItems(modDescription);
+
+					if (!externalModCollection.Any(x => x.ModId == modDescription.ModId))
+						externalModCollection.Add(modDescription);
 				}
-
-				var supports = doc.Root.Element("supports");
-				var parseElement = bool.TryParse(info.Element("modifies_level").Value, out bool result);
-				var supportList = new List<string>();
-				var supportingVersionElements = supports.Elements("kcd_version");
-
-				foreach (var supportingVersionElement in supportingVersionElements)
+				catch (Exception ex)
 				{
-					supportList.Add(supportingVersionElement.Value);
-				}
-
-				var modDescription = new ModDescription()
-				{
-					Name = info.Element("name")?.Value,
-					Description = info.Element("description")?.Value,
-					Author = info.Element("author")?.Value,
-					ModVersion = info.Element("version")?.Value,
-					CreatedOn = info.Element("created_on")?.Value,
-					ModId = info.Element("modid")?.Value,
-					ModifiesLevel = result,
-					SupportsGameVersions = supportList
-				};
-
-				var folder = Path.Combine(file, "Data");
-				var pak = Path.Combine(folder, modDescription.ModId + ".pak");
-
-				var dataPoints = new List<IDataPoint>()
-				{
-					new DataPoint(pak, "perk", typeof(Perk)),
-					new DataPoint(pak, "buff", typeof(Buff))
-				};
-
-				foreach (var dataPoint in dataPoints)
-				{
-					var modItems = dataSource.ReadModItems(dataPoint);
-
-					if (modItems is null)
-					{
-						throw new NullReferenceException();
-					}
-
-					foreach (var modItem in modItems)
-					{
-						modDescription.ModItems.Add(modItem);
-					}
-				}
-
-				if (externalModCollection.FirstOrDefault(x => x.ModId == modDescription.ModId) is null)
-				{
-					externalModCollection.Add(modDescription);
+					logger.LogWarning(ex, $"Mod in '{modPath}' konnte nicht gelesen werden.");
 				}
 			}
 		}
 
 		public void ReadModCollectionFromJson()
 		{
-			if (File.Exists(modCollectionFile))
+			if (string.IsNullOrWhiteSpace(modCollectionFile))
+			{
+				logger.LogError("ReadModCollectionFromJson: The path to the mod collection file is null or empty.");
+				modCollection = new ModCollection();
+				return;
+			}
+
+			if (!File.Exists(modCollectionFile))
+			{
+				logger.LogInformation("Mod collection file not found. Creating a new empty collection.");
+				modCollection = new ModCollection();
+				return;
+			}
+
+			try
 			{
 				var json = File.ReadAllText(modCollectionFile);
-				modCollection = JsonConvert.DeserializeObject<ModCollection>(json, settings) ?? new ModCollection();
+
+				var deserialized = JsonConvert.DeserializeObject<ModCollection>(json, settings);
+
+				if (deserialized == null)
+				{
+					logger.LogWarning("Deserialization returned null. Creating a new empty mod collection.");
+					modCollection = new ModCollection();
+				}
+				else
+				{
+					modCollection = deserialized;
+					logger.LogInformation("Mod collection successfully loaded from file.");
+				}
 			}
-			else
+			catch (JsonException jex)
 			{
+				logger.LogError(jex, "Error deserializing the mod collection file.");
+				modCollection = new ModCollection();
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Unexpected error while loading the mod collection.");
 				modCollection = new ModCollection();
 			}
 		}
 
-		public void WriteModCollectionAsJson()
+		public bool WriteModCollectionAsJson()
 		{
-			var json = JsonConvert.SerializeObject(modCollection, settings);
+			try
+			{
+				if (string.IsNullOrWhiteSpace(modCollectionFile))
+				{
+					logger.LogError("WriteModCollectionAsJson: Path to file not valid.");
+					return false;
+				}
 
-			Directory.CreateDirectory(Path.GetDirectoryName(modCollectionFile)!);
-			File.WriteAllText(modCollectionFile, json);
-			ReadModCollectionFromJson();
+				var directory = Path.GetDirectoryName(modCollectionFile);
+				if (string.IsNullOrWhiteSpace(directory))
+				{
+					logger.LogError("WriteModCollectionAsJson: Target directory not valid.");
+					return false;
+				}
+
+				Directory.CreateDirectory(directory);
+
+				var json = JsonConvert.SerializeObject(modCollection, settings);
+				File.WriteAllText(modCollectionFile, json);
+
+				logger.LogInformation("ModCollection was created in '{Path}'.", modCollectionFile);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Error occured while writing ModCollection.");
+				return false;
+			}
 		}
 
 		public ModDescription GetCurrentMod()
@@ -160,19 +185,11 @@ namespace ModForge.Shared.Services
 			mod = new();
 		}
 
-		public int GetCurrentAttributeCount()
-		{
-			if (mod is null)
-			{
-				return default;
-			}
-			return mod.ModItems.Count;
-		}
-
 		public bool TryGetModFromCollection(string modId)
 		{
 			if (string.IsNullOrEmpty(modId))
 			{
+				logger.LogWarning("TryGetModFromCollection: modId is null or empty.");
 				return false;
 			}
 
@@ -185,30 +202,46 @@ namespace ModForge.Shared.Services
 
 			if (mod is null)
 			{
-				throw new NullReferenceException();
+				logger.LogInformation("TryGetModFromCollection: No mod with ID '{ModId}' found.", modId);
+				return false;
 			}
 
 			return true;
 		}
 
-		public ModDescription CreateNewMod(string name, string description, string author, string version, DateTime createdOn, string modId, bool modifiesLevel)
+		public ModDescription? CreateNewMod(string name, string description, string author, string version, DateTime createdOn, string modId, bool modifiesLevel)
 		{
-			if (mod is null)
+			if (string.IsNullOrWhiteSpace(name) ||
+				string.IsNullOrWhiteSpace(modId) ||
+				string.IsNullOrWhiteSpace(version))
 			{
-				return new ModDescription();
+				logger.LogWarning("CreateNewMod: Required inputs missing.");
+				return null;
 			}
 
-			mod.Name = name;
-			mod.Description = description;
-			mod.Author = author;
-			mod.ModVersion = version;
-			mod.CreatedOn = createdOn.ToString("yyyy-MM-dd");
-			mod.ModId = modId;
-			mod.ModifiesLevel = modifiesLevel;
+			if (modCollection.FirstOrDefault(x => x.ModId == modId) is not null)
+			{
+				logger.LogWarning("CreateNewMod: A mod with ID '{ModId}' already exists.", modId);
+				return null;
+			}
 
-			modCollection.AddMod(mod);
+			var newMod = new ModDescription
+			{
+				Name = name,
+				Description = description,
+				Author = author,
+				ModVersion = version,
+				CreatedOn = createdOn.ToString("yyyy-MM-dd"),
+				ModId = modId,
+				ModifiesLevel = modifiesLevel
+			};
+
+			modCollection.AddMod(newMod);
 			WriteModCollectionAsJson();
-			return mod;
+
+			logger.LogInformation("CreateNewMod: Mod '{Name}' with ID '{ModId}' created.", name, modId);
+
+			return newMod;
 		}
 
 		public List<string> GetAllSupportedVersions()
@@ -218,24 +251,55 @@ namespace ModForge.Shared.Services
 
 		public bool AddSupportedVersion(string version)
 		{
-			if (mod is null)
+			if (mod == null)
 			{
+				logger.LogWarning("AddSupportedVersion: Mod-Context is null.");
+				return false;
+			}
+
+			if (string.IsNullOrWhiteSpace(version))
+			{
+				logger.LogWarning("AddSupportedVersion: Version is null or empty.");
+				return false;
+			}
+
+			if (mod.SupportsGameVersions.Contains(version))
+			{
+				logger.LogInformation("AddSupportedVersion: Version '{Version}' already existing in the list.", version);
 				return false;
 			}
 
 			mod.SupportsGameVersions.Add(version);
+			logger.LogInformation("AddSupportedVersion: Version '{Version}' was added.", version);
 			return true;
 		}
 
 		public bool RemoveSupportedVersion(string version)
 		{
-			if (mod is null)
+			if (mod == null)
 			{
+				logger.LogWarning("RemoveSupportedVersion: Mod-Context is null.");
 				return false;
 			}
 
-			mod.SupportsGameVersions.Remove(version);
-			return true;
+			if (string.IsNullOrWhiteSpace(version))
+			{
+				logger.LogWarning("RemoveSupportedVersion: version is null or empty.");
+				return false;
+			}
+
+			bool removed = mod.SupportsGameVersions.Remove(version);
+
+			if (removed)
+			{
+				logger.LogInformation("Version '{Version}' successfully removed..", version);
+			}
+			else
+			{
+				logger.LogInformation("Version '{Version}' currently not in list.", version);
+			}
+
+			return removed;
 		}
 
 		public IEnumerable<IModItem> GetCurrentModItems()
@@ -245,23 +309,32 @@ namespace ModForge.Shared.Services
 
 		public bool AddModItem(IModItem item)
 		{
-			if (item is null)
+			if (item == null)
 			{
+				logger.LogWarning("AddModItem: item is null.");
 				return false;
 			}
 
-			if (mod!.ModItems.FirstOrDefault(x => x.Id == item.Id) is null)
+			if (mod == null)
 			{
-				mod!.ModItems.Add(item);
-				return true;
+				logger.LogError("AddModItem: Mod-Context (mod) is null.");
+				return false;
+			}
+
+			var existingItem = mod.ModItems.FirstOrDefault(x => x.Id == item.Id);
+
+			if (existingItem != null)
+			{
+				mod.ModItems.Remove(existingItem);
+				logger.LogInformation("ModItem with ID '{Id}' replaced.", item.Id);
 			}
 			else
 			{
-				var oldItem = mod!.ModItems.FirstOrDefault(x => x.Id == item.Id);
-				mod.ModItems.Remove(oldItem!);
-				mod.ModItems.Add(item);
-				return true;
+				logger.LogInformation("ModItem with ID '{Id}' added.", item.Id);
 			}
+
+			mod.ModItems.Add(item);
+			return true;
 		}
 
 		public async Task AddModIcon(string path)
@@ -291,47 +364,6 @@ namespace ModForge.Shared.Services
 			externalModCollection.RemoveMod(mod);
 		}
 
-		private bool WriteModManifest(ModDescription mod)
-		{
-			if (mod is null)
-				return false;
-
-			var path = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", mod.ModId);
-
-			// Verzeichnisse anlegen
-			Directory.CreateDirectory(Path.Combine(path, "Data"));
-			Directory.CreateDirectory(Path.Combine(path, "Localization"));
-
-			var manifestPath = Path.Combine(path, "mod.manifest");
-
-			if (File.Exists(manifestPath))
-				return true;
-
-			// XML-Struktur aufbauen
-			var doc = new XDocument(
-				new XDeclaration("1.0", "utf-8", null),
-				new XElement("kcd_mod",
-					new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
-					new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-					new XElement("info",
-						new XElement("name", mod.Name),
-						new XElement("description", mod.Description),
-						new XElement("author", mod.Author),
-						new XElement("version", mod.ModVersion),
-						new XElement("created_on", mod.CreatedOn),
-						new XElement("modid", mod.ModId),
-						new XElement("modifies_level", mod.ModifiesLevel.ToString().ToLower())
-					),
-					new XElement("supports",
-						mod.SupportsGameVersions.Select(v => new XElement("kcd_version", v))
-					)
-				)
-			);
-
-			doc.Save(manifestPath);
-			return true;
-		}
-
 		public void ExportMod(ModDescription mod)
 		{
 			var path = userConfigurationService.Current.GameDirectory;
@@ -343,38 +375,127 @@ namespace ModForge.Shared.Services
 
 			CreateModPak(pakPath, Path.Combine(pakPath, mod.ModId + ".pak"));
 		}
+		#endregion
 
-		private void CreateModPak(string baseFolder, string pakFileName)
+		#region Private Methods
+		private ModDescription ReadModMetadata(string modPath)
 		{
-			if (File.Exists(pakFileName))
-				File.Delete(pakFileName);
+			var modFiles = Directory.GetFiles(modPath);
+			if (modFiles.Length == 0)
+				throw new FileNotFoundException($"Keine Dateien im Mod-Ordner: {modPath}");
 
-			// Pfad zum Zielordner sicherstellen (falls notwendig)
-			var outputFolder = Path.GetDirectoryName(pakFileName);
-			if (!Directory.Exists(outputFolder))
-				Directory.CreateDirectory(outputFolder);
+			var modFileUri = modFiles.FirstOrDefault();
+			if (string.IsNullOrEmpty(modFileUri))
+				throw new FileNotFoundException($"Mod-Info-Datei fehlt in {modPath}");
 
-			using (FileStream fs = new FileStream(pakFileName, FileMode.CreateNew))
-			using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create))
+			var doc = XDocument.Load(modFileUri);
+			var root = doc.Root ?? throw new InvalidDataException("Mod-Datei hat keine Root");
+
+			var info = root.Element("info") ?? throw new InvalidDataException("Element <info> fehlt");
+			var modifiesLevel = bool.TryParse(info.Element("modifies_level")?.Value, out var modifies) && modifies;
+
+			var supports = root.Element("supports") ?? throw new InvalidDataException("Element <supports> fehlt");
+			var supportList = supports.Elements("kcd_version").Select(e => e.Value).ToList();
+
+			return new ModDescription
 			{
-				var files = Directory.GetFiles(baseFolder, "*", SearchOption.AllDirectories);
+				Name = info.Element("name")?.Value,
+				Description = info.Element("description")?.Value,
+				Author = info.Element("author")?.Value,
+				ModVersion = info.Element("version")?.Value,
+				CreatedOn = info.Element("created_on")?.Value,
+				ModId = info.Element("modid")?.Value,
+				ModifiesLevel = modifiesLevel,
+				SupportsGameVersions = supportList
+			};
+		}
 
-				foreach (var file in files)
+		private bool IsModCreatedByUser(XDocument doc)
+		{
+			var author = doc.Root?.Element("info")?.Element("author")?.Value;
+			return !string.IsNullOrEmpty(author) && author == userConfigurationService.Current.UserName;
+		}
+
+		private void LoadModItems(ModDescription modDescription)
+		{
+			var dataFolder = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", modDescription.ModId, "Data");
+			var pakFile = Path.Combine(dataFolder, modDescription.ModId + ".pak");
+
+			var dataPoints = new List<IDataPoint>
+			{
+				new DataPoint(pakFile, "perk", typeof(Perk)),
+				new DataPoint(pakFile, "buff", typeof(Buff))
+			};
+
+			foreach (var dataPoint in dataPoints)
+			{
+				var modItems = dataSource.ReadModItems(dataPoint)
+								?? throw new NullReferenceException("Fehler beim Lesen von ModItems");
+
+				foreach (var item in modItems)
+					modDescription.ModItems.Add(item);
+			}
+		}
+
+		private bool IsValidModDescription(ModDescription mod)
+		{
+			return mod != null
+				&& !string.IsNullOrWhiteSpace(mod.ModId)
+				&& !string.IsNullOrWhiteSpace(mod.Name);
+		}
+
+		private bool WriteModManifest(ModDescription mod)
+		{
+			if (IsValidModDescription(mod) == false)
+			{
+				logger.LogWarning("ModDescription is null – manifest wont be created.");
+				return false;
+			}
+
+			try
+			{
+				var modRootPath = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", mod.ModId);
+				var dataPath = Path.Combine(modRootPath, "Data");
+				var localizationPath = Path.Combine(modRootPath, "Localization");
+				var manifestPath = Path.Combine(modRootPath, "mod.manifest");
+
+				Directory.CreateDirectory(dataPath);
+				Directory.CreateDirectory(localizationPath);
+
+				if (File.Exists(manifestPath))
 				{
-					// Wenn die Datei die PAK-Datei selbst ist, überspringen
-					if (Path.GetFullPath(file) == Path.GetFullPath(pakFileName))
-						continue;
-
-					string entryName = Path.GetRelativePath(baseFolder, file).Replace('\\', '/');
-
-					var entry = archive.CreateEntry(entryName, CompressionLevel.NoCompression);
-
-					using (var entryStream = entry.Open())
-					using (var fileStream = File.OpenRead(file))
-					{
-						fileStream.CopyTo(entryStream);
-					}
+					logger.LogInformation("Manifest already exists: {ManifestPath}", manifestPath);
+					return true;
 				}
+
+				var doc = new XDocument(
+					new XDeclaration("1.0", "utf-8", null),
+					new XElement("kcd_mod",
+						new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
+						new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+						new XElement("info",
+							new XElement("name", mod.Name),
+							new XElement("description", mod.Description),
+							new XElement("author", mod.Author),
+							new XElement("version", mod.ModVersion),
+							new XElement("created_on", mod.CreatedOn),
+							new XElement("modid", mod.ModId),
+							new XElement("modifies_level", mod.ModifiesLevel.ToString().ToLowerInvariant())
+						),
+						new XElement("supports",
+							mod.SupportsGameVersions.Select(v => new XElement("kcd_version", v))
+						)
+					)
+				);
+
+				doc.Save(manifestPath);
+				logger.LogInformation("Manifest successfully created: {ManifestPath}", manifestPath);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "An error occured while writing mod.manifest: {ModId}", mod?.ModId);
+				return false;
 			}
 		}
 
@@ -387,5 +508,57 @@ namespace ModForge.Shared.Services
 
 			this.mod = mod;
 		}
+
+		private void CreateModPak(string baseFolder, string pakFilePath)
+		{
+			try
+			{
+				if (File.Exists(pakFilePath))
+				{
+					File.Delete(pakFilePath);
+					logger.LogInformation("Bestehende PAK-Datei gelöscht: {PakFile}", pakFilePath);
+				}
+
+				var outputFolder = Path.GetDirectoryName(pakFilePath);
+				if (!string.IsNullOrEmpty(outputFolder) && !Directory.Exists(outputFolder))
+				{
+					Directory.CreateDirectory(outputFolder);
+					logger.LogInformation("Zielverzeichnis erstellt: {OutputFolder}", outputFolder);
+				}
+
+				using var fs = new FileStream(pakFilePath, FileMode.CreateNew);
+				using var archive = new ZipArchive(fs, ZipArchiveMode.Create);
+
+				var files = Directory.GetFiles(baseFolder, "*", SearchOption.AllDirectories);
+
+				foreach (var file in files)
+				{
+					if (Path.GetFullPath(file) == Path.GetFullPath(pakFilePath))
+						continue;
+
+					AddFileToArchive(archive, file, baseFolder);
+				}
+
+				logger.LogInformation("PAK-Datei erfolgreich erstellt: {PakFile}", pakFilePath);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Fehler beim Erstellen der PAK-Datei: {PakFile}", pakFilePath);
+				throw; // ggf. entfernen oder weiterreichen, je nach Anforderung
+			}
+		}
+
+		private void AddFileToArchive(ZipArchive archive, string filePath, string baseFolder)
+		{
+			var relativePath = Path.GetRelativePath(baseFolder, filePath).Replace('\\', '/');
+			var entry = archive.CreateEntry(relativePath, CompressionLevel.NoCompression);
+
+			using var entryStream = entry.Open();
+			using var fileStream = File.OpenRead(filePath);
+			fileStream.CopyTo(entryStream);
+
+			logger.LogDebug("Datei hinzugefügt: {Path}", relativePath);
+		}
+		#endregion
 	}
 }

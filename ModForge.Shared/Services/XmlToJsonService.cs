@@ -12,7 +12,7 @@ namespace ModForge.Shared.Services
 		private readonly DataSource dataSource;
 		private readonly JsonAdapter jsonAdapter;
 		private readonly LocalizationService localizationService;
-		private readonly List<IDataPoint> dataPoints;
+		private readonly List<IDataPoint> dataPoints = new();
 		private Dictionary<string, Dictionary<string, string>> localizationCache;
 		private readonly UserConfigurationService userConfigurationService;
 
@@ -22,30 +22,26 @@ namespace ModForge.Shared.Services
 			this.jsonAdapter = jsonAdapter;
 			this.localizationService = localizationService;
 			this.userConfigurationService = userConfigurationService;
-			this.dataPoints = GetDataPoints();
 		}
 
 		public IList<IModItem> Perks { get; private set; }
 		public IList<IModItem> Buffs { get; private set; }
 		public IList<BuffParam> BuffParams { get; private set; }
 
-		private List<IDataPoint> GetDataPoints()
+		private void GetDataPoints()
 		{
-			var newList = new List<IDataPoint>();
-
 			foreach (var type in ToolResources.Keys.Endpoints())
 			{
 				foreach (var item in type.Value)
 				{
-					newList.Add(DataPointFactory.CreateDataPoint(Path.Combine(userConfigurationService.Current.GameDirectory, item.Value), item.Key, type.Key));
+					dataPoints.Add(DataPointFactory.CreateDataPoint(Path.Combine(userConfigurationService.Current.GameDirectory, item.Value), item.Key, type.Key));
 				}
 			}
-
-			return newList;
 		}
 
 		private void ReadModItemsFromXml()
 		{
+			GetDataPoints();
 			Perks = ImportPerksFromXml();
 			Buffs = ImportBuffsFromXml();
 			localizationCache = localizationService.ReadLocalizationFromXml(userConfigurationService.Current.GameDirectory);

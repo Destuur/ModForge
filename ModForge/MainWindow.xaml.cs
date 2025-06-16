@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ModForge.Localizations;
 using ModForge.Services;
 using ModForge.Shared;
 using ModForge.Shared.Services;
 using MudBlazor.Services;
-using System.Globalization;
+using Serilog;
 using System.Windows;
 using System.Windows.Input;
 
@@ -17,7 +18,19 @@ namespace ModForge
 	{
 		public MainWindow()
 		{
+			var logger = new LoggerConfiguration()
+			.WriteTo.Console()
+			.WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
+			.CreateLogger();
+
 			var serviceCollection = new ServiceCollection();
+
+			serviceCollection.AddLogging(configure =>
+			{
+				configure.ClearProviders();
+				configure.AddSerilog(logger, dispose: true);
+			});
+
 			serviceCollection.AddWpfBlazorWebView();
 			serviceCollection.AddMudServices()
 							 .AddModForgeServices()

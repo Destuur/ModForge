@@ -1,4 +1,5 @@
-﻿using ModForge.Shared.Adapter;
+﻿using Microsoft.Extensions.Logging;
+using ModForge.Shared.Adapter;
 using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.Mods;
 
@@ -7,94 +8,57 @@ namespace ModForge.Shared.Services
 	public class LocalizationService
 	{
 		private readonly LocalizationAdapter adapter;
+		private readonly ILogger<LocalizationService> logger;
 		private List<Localization> enLocalizations = new();
 		private List<Localization> deLocalizations = new();
 
-		public LocalizationService(LocalizationAdapter adapter)
+		public LocalizationService(LocalizationAdapter adapter, ILogger<LocalizationService> logger)
 		{
 			this.adapter = adapter;
+			this.logger = logger;
 		}
 
 		public Dictionary<string, Dictionary<string, string>> ReadLocalizationFromXml(string path)
 		{
-			if (string.IsNullOrEmpty(path))
+			if (string.IsNullOrWhiteSpace(path))
 			{
+				logger.LogWarning("ReadLocalizationFromXml was called with null or empty path.");
 				return new Dictionary<string, Dictionary<string, string>>();
 			}
-			return adapter.ReadLocalizationFromXml(path);
+
+			try
+			{
+				return adapter.ReadLocalizationFromXml(path);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Failed to read localization from XML at path: {Path}", path);
+				return new Dictionary<string, Dictionary<string, string>>();
+			}
 		}
 
 		public void WriteLocalizationAsXml(string path, ModDescription mod)
 		{
-			adapter.WriteLocalizationAsXml(path, mod);
-		}
-
-		public void AddLocalization(Localization localization)
-		{
-			deLocalizations.Add(localization);
-		}
-
-		public Localization GetLocalization(string attribute, string id)
-		{
-			var localization = deLocalizations.FirstOrDefault();
-			return localization;
-		}
-
-		public bool IsFilled(Language language)
-		{
-			switch (language)
+			if (string.IsNullOrWhiteSpace(path))
 			{
-				case Language.NotValid:
-					return false;
-					break;
-				case Language.Chineses:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Chineset:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Czech:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.English:
-					return enLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.French:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.German:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Italian:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Japanese:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Korean:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Polish:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Portuguese:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Russian:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Spanish:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Turkish:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				case Language.Ukrainian:
-					return deLocalizations.Count > 0 ? true : false;
-					break;
-				default:
-					return false;
-					break;
+				logger.LogWarning("WriteLocalizationAsXml called with null or empty path.");
+				return;
+			}
+
+			if (mod == null)
+			{
+				logger.LogWarning("WriteLocalizationAsXml called with null ModDescription.");
+				return;
+			}
+
+			try
+			{
+				adapter.WriteLocalizationAsXml(path, mod);
+				logger.LogInformation("Localization successfully written to XML at path: {Path}", path);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Failed to write localization XML to path: {Path}", path);
 			}
 		}
 	}
