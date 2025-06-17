@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LanguageKey" xml:space="preserve">
-    <value>Deutsch</value>
+    <value>Türkçe</value>
   </data>
   <data name="NewModButton" xml:space="preserve">
-    <value>Neue Mod</value>
+    <value>Yeni mod</value>
   </data>
   <data name="Overview" xml:space="preserve">
-    <value>Übersicht</value>
+    <value>Genel bakış</value>
   </data>
 </root>

@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LanguageKey" xml:space="preserve">
-    <value>Deutsch</value>
-  </data>
-  <data name="NewModButton" xml:space="preserve">
-    <value>Neue Mod</value>
+    <value>中文（简体)</value>
   </data>
   <data name="Overview" xml:space="preserve">
-    <value>Übersicht</value>
+    <value>总览</value>
+  </data>
+  <data name="NewModButton" xml:space="preserve">
+    <value>新模组</value>
   </data>
 </root>

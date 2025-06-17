@@ -15,7 +15,7 @@
 						<MudText Align="Align.Center" Typo="Typo.caption">System Buff</MudText>
 					</div>
 					<div style="display:flex; justify-content:center;">
-						<MudText Align="Align.Center" Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 20rem;" Typo="Typo.subtitle1">@Buff.Attributes.FirstOrDefault(x => x.Name.Contains("name")).Value</MudText>
+						<MudText Align="Align.Center" Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 20rem;" Typo="Typo.subtitle1">@(Buff.Attributes.FirstOrDefault(x => x.Name.Contains("name"))?.Value ?? "No Name found")</MudText>
 					</div>
 				}
 				else
