@@ -1,7 +1,8 @@
-﻿using ModForge.Shared.Models.Mods;
+﻿using Microsoft.AspNetCore.Components;
+using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
-using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using System.Diagnostics;
 
 namespace ModForge.UI.Components.ModCollectionComponents
 {
@@ -11,6 +12,8 @@ namespace ModForge.UI.Components.ModCollectionComponents
 		public ModDescription? Mod { get; set; }
 		[Inject]
 		public ModService ModService { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
 		[Parameter]
 		public EventCallback<ModDescription> OnDelete { get; set; }
 		[Inject]
@@ -29,6 +32,26 @@ namespace ModForge.UI.Components.ModCollectionComponents
 				{
 					config.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
 				});
+		}
+
+		public void OpenFolder()
+		{
+			var folder = Path.Combine(UserConfigurationService.Current.GameDirectory, "Mods", Mod.ModId);
+
+			if (Directory.Exists(folder))
+			{
+				Process.Start("explorer.exe", folder);
+			}
+			else
+			{
+				Snackbar.Add(
+				"Mod must be exported first",
+				Severity.Error,
+				config =>
+				{
+					config.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
+				});
+			}
 		}
 
 		public void EditMod()

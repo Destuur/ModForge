@@ -1,6 +1,6 @@
 ﻿<MudGrid>
 	<MudItem md="5" lg="5">
-		<MudTooltip Text="You must import game data before creating a mod. You can do this in the Settings." Inline="false" Disabled="!ValidateModItemList()">
+		<MudTooltip Text="@(isDisabled ? "You must import game data before creating a mod. You can do this in the Settings" : "Forge your own, new mod")" Inline="false">
 			<MudButton Class="button-prominent" Style="height: 68px" Disabled="@isDisabled" OnClick="GoToNewMod" Ripple="false" StartIcon="@Icons.Material.Filled.AddBox" DropShadow="false" Variant="Variant.Text" FullWidth="true">New Mod</MudButton>
 		</MudTooltip>
 	</MudItem>

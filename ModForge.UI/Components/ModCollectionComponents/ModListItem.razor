@@ -7,13 +7,16 @@
 				<MudText Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" Typo="Typo.subtitle1">@Mod.Name</MudText>
 				<MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Primary" AnchorOrigin="Origin.TopLeft" Dense="true" DropShadow="false" PopoverClass="my-rounded-menu">
 					<MudMenuItem Class="custom-menu-item first" OnClick="EditMod">
-						Edit
+						Edit Mod
+					</MudMenuItem>
+					<MudMenuItem Class="custom-menu-item" OnClick="OpenFolder">
+						Open Folder
 					</MudMenuItem>
 					<MudMenuItem Class="custom-menu-item" OnClick="ExportMod">
-						Export
+						Export Mod
 					</MudMenuItem>
 					<MudMenuItem Class="custom-menu-item last" OnClick="DeleteMod">
-						Delete
+						Delete Mod
 					</MudMenuItem>
 				</MudMenu>
 			</MudStack>

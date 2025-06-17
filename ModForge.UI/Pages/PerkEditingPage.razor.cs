@@ -48,10 +48,30 @@ namespace ModForge.UI.Pages
 			ModService.AddModItem(modPerk);
 		}
 
-		private void SavePerk()
+		private async Task SavePerk()
 		{
 			SaveItem();
-			Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+
+			var parameters = new DialogParameters<MoreModItemsDialog>
+			{
+				{ x => x.ContentText, "Do you want to modify the associated buff as well?" },
+				{ x => x.ButtonText, "Yes" }
+			};
+
+			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+			var dialog = await DialogService.ShowAsync<MoreModItemsDialog>("Choose your path", parameters, options);
+			var result = await dialog.Result;
+
+			if (result.Canceled == false)
+			{
+				NavigationManager.NavigateTo($"/editing/buff/{Id}");
+			}
+			else
+			{
+				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+			}
+
 		}
 
 		private async Task Checkout()
