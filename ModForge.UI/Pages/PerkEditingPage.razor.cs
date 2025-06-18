@@ -52,6 +52,12 @@ namespace ModForge.UI.Pages
 		{
 			SaveItem();
 
+			if (XmlToJsonService.Buffs.FirstOrDefault(x => x.Id == editingPerk.LinkedIds.FirstOrDefault()) is null)
+			{
+				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+				return;
+			}
+
 			var parameters = new DialogParameters<MoreModItemsDialog>
 			{
 				{ x => x.ContentText, "Do you want to modify the associated buff as well?" },
@@ -65,13 +71,12 @@ namespace ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
-				NavigationManager.NavigateTo($"/editing/buff/{Id}");
+				Navigation.NavigateTo($"/editing/buff/{editingPerk.LinkedIds.FirstOrDefault()}");
 			}
 			else
 			{
 				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
 			}
-
 		}
 
 		private async Task Checkout()
