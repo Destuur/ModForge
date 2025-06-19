@@ -3,14 +3,21 @@
     src: url(../fonts/Rubik-VariableFont_wght.ttf) format('truetype');
 }
 
+:root {
+    --icon-primary: #c1c1c4;
+    --background: #1e1e1e;
+}
+
 html, body {
     font-family: 'Rubik';
-    background: linear-gradient(180deg, #1e1e1e 0%, #271200 100%);
+    /*background: linear-gradient(to bottom, transparent, rgba(219, 80, 0, 0.2) 150%);*/
+    background-color: #1e1e1e;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
     color: #c1c1c4;
     position: relative;
+    user-select: none;
 }
 
     body::before {
@@ -122,7 +129,48 @@ h1:focus {
     }
 }
 
+.button-widget {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, transparent, rgba(128, 0, 0, 0.3) 100%), linear-gradient(135deg,rgba(255, 166, 0, 1) 0%, rgba(219, 80, 0, 1) 100%);
+    height: 100%;
+    opacity: 0.8;
+    width: 100%;
+    border-radius: 8px;
+    transition: all ease-in-out 0.1s;
+}
 
+    .button-widget:hover {
+        opacity: 1;
+    }
+
+    .button-widget:active {
+        opacity: 0.6;
+    }
+
+.mod-item-card {
+    height: auto;
+    min-height: 110px;
+    width: 100%;
+    border-radius: 8px;
+    transition: all ease-in-out 0.1s;
+}
+
+.mod-item-hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+}
+
+.mod-item-card:hover
+.mod-item-hidden {
+    opacity: 0.8;
+    visibility: visible;
+}
+
+
+/*Old Stuff*/
 .mudcard {
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     border-radius: 12px;
@@ -581,3 +629,4 @@ h1:focus {
     opacity: 0;
     transition: opacity 0.8s ease-out;
 }
+/*End old Stuff*/
