@@ -1,0 +1,37 @@
+﻿@page "/"
+
+<MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
+
+	<MudItem Style=" padding: 0px; width: 56px;">
+		<MudStack AlignItems="AlignItems.Center" Spacing="0">
+			<MudIconButton Icon="@Icons.Material.Outlined.Menu" />
+			<MudIconButton Icon="@Icons.Material.Outlined.Home" />
+			<MudIconButton Icon="@Icons.Material.Outlined.Settings" />
+		</MudStack>
+	</MudItem>
+
+	<MudItem Style="padding: 0px; width: calc(100% - 56px);">
+
+		<MudGrid Style="height: 100%; margin: 0px;" Class="pr-2" Spacing="0">
+
+			<MudItem md="12" Style="height: 15%; padding: 0px;">
+				<ButtonWidget Title="NEW MOD" Color="red" />
+			</MudItem>
+
+			<MudItem md="12" Style="height: 55%; padding: 4px;">
+				<ModListWidget Title="Created">
+					<ModListItems Mods="CreatedMods" />
+				</ModListWidget>
+			</MudItem>
+
+			<MudItem md="12" Style="height: 30%; padding: 4px;">
+				<ModListWidget Title="Imported">
+					<MudText>Test</MudText>
+				</ModListWidget>
+			</MudItem>
+
+		</MudGrid>
+
+	</MudItem>
+
+</MudGrid>

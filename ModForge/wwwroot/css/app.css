@@ -1,5 +1,10 @@
-﻿html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+﻿@font-face {
+    font-family: 'Rubik';
+    src: url(../fonts/Rubik-VariableFont_wght.ttf) format('truetype');
+}
+
+html, body {
+    font-family: 'Rubik';
     background: linear-gradient(180deg, #1e1e1e 0%, #271200 100%);
     background-attachment: fixed;
     background-repeat: no-repeat;

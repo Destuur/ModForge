@@ -40,7 +40,14 @@ namespace ModForge.UI.Themes
 			},
 			LayoutProperties = new LayoutProperties()
 			{
-				DefaultBorderRadius = "6px"
+				AppbarHeight = "0",
+			},
+			Typography = new Typography()
+			{
+				Default = new DefaultTypography()
+				{
+					FontFamily = new[] { "Rubik" },
+				}
 			}
 		};
 	}
