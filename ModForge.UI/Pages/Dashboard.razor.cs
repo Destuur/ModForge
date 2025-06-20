@@ -24,6 +24,22 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
 
+
+		private void OnButtonClicked()
+		{
+			Navigation.NavigateTo("/newmod");
+		}
+
+		private void GoToSettings()
+		{
+			Navigation.NavigateTo("/settings");
+		}
+
+		private void GoToManageMods()
+		{
+			Navigation.NavigateTo("/manager");
+		}
+
 		protected override async Task OnInitializedAsync()
 		{
 			await base.OnInitializedAsync();
