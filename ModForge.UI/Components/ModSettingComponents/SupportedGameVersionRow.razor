@@ -15,7 +15,7 @@
 		{
 			<MudListItem Gutters="false" Dense="true">
 				<MudStack Row="true" Justify="Justify.Center">
-					<MudField Class="mudtext-warm" Label="@("Version" + $" {(ModService.GetAllSupportedVersions().IndexOf(modVersion) + 1)}")" Variant="Variant.Outlined" Margin="Margin.Dense">@modVersion</MudField>
+					<MudField Label="@("Version" + $" {(ModService.GetAllSupportedVersions().IndexOf(modVersion) + 1)}")" Variant="Variant.Outlined" Margin="Margin.Dense">@modVersion</MudField>
 					<MudIconButton Class="button-cancel ml-1" OnClick="(_ => RemoveVersion(modVersion))" Style="height:2.5rem; width: 2.5rem; align-self: center" Icon="@Icons.Material.Outlined.Remove" Variant="Variant.Outlined" Size="Size.Medium" ButtonType="ButtonType.Button" Edge="Edge.Start" />
 				</MudStack>
 			</MudListItem>

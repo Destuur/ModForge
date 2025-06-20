@@ -1,44 +1,28 @@
-﻿@page "/settings"
+﻿@using ModForge.Shared.Models.Localizations
+<MudGrid Style="height: 100%; margin: 0px;" Class="pr-2" Spacing="0">
 
+	<MudItem md="12" Style="height: 90%; width: 100%;">
+		<MudStack Spacing="0">
+			<MudText Typo="Typo.subtitle1" Align="Align.Right" Class="pr-2">Settings</MudText>
+			<MudTextField HelperText="Henry was taken. Pick your own." Validation="ValidateName" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" Placeholder="User Name" @bind-Value="name" />
+			<MudTextField HelperText="This is the path. The one true path." Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="/home/you/games/kcd2" ReadOnly="true" @bind-Value="gameDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectGameDirectory" Style="cursor: pointer;" />
+			<MudSelect T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Language" ValueChanged="ChangeLanguage">
 
-<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 80px)" Elevation="0" Outlined="false" Style="background-color: transparent">
-	<MudGrid Class="px-4" Spacing="2">
+				@foreach (var language in Languages.Map)
+				{
+					<MudSelectItem T="string" Value="language.Value">@language.Key</MudSelectItem>
+				}
 
-		<MudItem Class="pt-4 pl-4">
-			<MudText Typo="Typo.h4" Style="font-weight: bold;">SETTINGS</MudText>
-		</MudItem>
-
-		<MudItem md="12">
-			<MudTextField Class="mudtext-warm" HelperText="Henry was taken. Pick your own." Validation="ValidateName" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" Placeholder="User Name" @bind-Value="name" />
-		</MudItem>
-
-		<MudItem md="12">
-			<MudTextField Class="mudtext-warm" HelperText="This is the path. The one true path." Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="/home/you/games/kcd2" ReadOnly="true" @bind-Value="gameDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectGameDirectory" Style="cursor: pointer;" />
-		</MudItem>
-
-
-		@* <MudItem md="12">
-		<MudTextField Class="mudtext-warm" Variant="Variant.Outlined" Margin="Margin.Dense" Label="Output Folder - Nexus Mods/Steam Workshop" ReadOnly="true" @bind-Value="UserConfigurationService.Current!.NexusModsDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectNexusModsDirectory" Style="cursor: pointer;" />
-	</MudItem> *@
-	</MudGrid>
-</MudPaper>
-
-<MudGrid Class="px-4" Spacing="2">
-
-	<MudItem xs="2" sm="2" md="2" lg="2">
-		<MudButton Class="button-neutral" FullWidth="true" Onclick="BackToDashboard">Back</MudButton>
+			</MudSelect>
+		</MudStack>
 	</MudItem>
 
-	<MudItem xs="5" sm="5" md="5" lg="5">
-		<MudButton Class="button-prominent" Color="Color.Primary" Disabled="@(string.IsNullOrEmpty(gameDirectory))" FullWidth="true" OnClick="Save">Save</MudButton>
-	</MudItem>
 
-	<MudItem xs="5" sm="5" md="5" lg="5">
-		<MudButton Class="button-prominent" OnClick="ImportGameData" Disabled="@(string.IsNullOrEmpty(UserConfigurationService.Current.GameDirectory))" FullWidth="true">Import Game Data</MudButton>
+	<MudItem md="12" Style="height: 10%; width: 100%; align-content: end;" class="pb-2">
+		<MudStack Row>
+			<ButtonWidget Background="var(--button-background-neutral)" Typo="Typo.h6" Title="Back" />
+			<ButtonWidget Typo="Typo.h6" Title="Save" />
+		</MudStack>
 	</MudItem>
 
 </MudGrid>
-
-
-
-<LoadingOverlay IsVisible="@isLoading"></LoadingOverlay>

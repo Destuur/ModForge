@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ModForge.Shared.Adapter;
+using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.ModItems;
 
 namespace ModForge.UI.Components.LocalizationComponents
@@ -62,7 +63,7 @@ namespace ModForge.UI.Components.LocalizationComponents
 
 		public void RemoveAllLanguages()
 		{
-			foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
+			foreach (var languageKey in Languages.Map.Values)
 			{
 
 				SelectedLanguageCodes.Remove(languageKey);
@@ -71,7 +72,7 @@ namespace ModForge.UI.Components.LocalizationComponents
 
 		public void AddAllLanguages()
 		{
-			foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
+			foreach (var languageKey in Languages.Map.Values)
 			{
 				AddLanguageKey(languageKey);
 			}

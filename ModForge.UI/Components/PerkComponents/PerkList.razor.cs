@@ -14,6 +14,8 @@ namespace ModForge.UI.Components.PerkComponents
 		public ModService? ModService { get; set; }
 		[Inject]
 		public XmlToJsonService? XmlToJsonService { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
 		public IList<IModItem> PerkItems { get; set; } = new List<IModItem>();
 		public string? SearchPerk { get; set; }
 
@@ -90,6 +92,8 @@ namespace ModForge.UI.Components.PerkComponents
 
 			await base.OnInitializedAsync();
 			PerkItems = XmlToJsonService.Perks.ToList();
+			languageKey = UserConfigurationService.Current.Language;
+			StateHasChanged();
 		}
 
 		protected override async Task OnParametersSetAsync()

@@ -1,4 +1,5 @@
 ﻿using ModForge.Shared.Factories;
+using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
 using System.IO.Compression;
@@ -21,26 +22,6 @@ namespace ModForge.Shared.Adapter
 			//"text_ui_dialog.xml"
 		};
 
-
-		public static readonly Dictionary<string, string> LanguageMap = new()
-		{
-			{ "English", "en" },
-			{ "German", "de" },
-			{ "French", "fr" },
-			{ "Spanish", "es" },
-			{ "Italian", "it" },
-			{ "Czech", "cs" },
-			{ "Polish", "pl" },
-			{ "Russian", "ru" },
-			{ "Chineses", "zs" },
-			{ "Chineset", "zh" },
-			{ "Korean", "ko" },
-			{ "Japanese", "ja" },
-			{ "Turkish", "tr" },
-			{ "Portuguese", "pt" },
-			{ "Ukrainian", "uk" }
-		};
-
 		public Dictionary<string, Dictionary<string, string>> ReadLocalizationFromXml(string path)
 		{
 			var pakPaths = PathFactory.CreatePakPaths(path);
@@ -49,7 +30,7 @@ namespace ModForge.Shared.Adapter
 			foreach (var pakPath in pakPaths)
 			{
 				var fileName = Path.GetFileNameWithoutExtension(pakPath); // z. B. "German_xml"
-				var langKey = LanguageMap.FirstOrDefault(pair => fileName.StartsWith(pair.Key)).Value;
+				var langKey = Languages.Map.FirstOrDefault(pair => fileName.StartsWith(pair.Key)).Value;
 
 				if (string.IsNullOrEmpty(langKey)) continue;
 
@@ -129,7 +110,7 @@ namespace ModForge.Shared.Adapter
 
 				foreach (var languageKey in allLanguages)
 				{
-					var language = LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key;
+					var language = Languages.Map.FirstOrDefault(x => x.Value == languageKey).Key;
 					localizationPath = PathFactory.CreateExportLocalizationPath(path, language, mod.ModId);
 
 					var directory = Path.GetDirectoryName(localizationPath);
@@ -168,7 +149,7 @@ namespace ModForge.Shared.Adapter
 
 				foreach (var languageKey in allLanguages)
 				{
-					var language = LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key;
+					var language = Languages.Map.FirstOrDefault(x => x.Value == languageKey).Key;
 					if (language == null)
 						continue;
 

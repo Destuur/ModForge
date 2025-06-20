@@ -4,14 +4,17 @@ using ModForge.Localizations;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
+using ModForge.UI.Components.MenuComponents;
 using MudBlazor;
 using System.Globalization;
 
 namespace ModForge.UI.Pages
 {
-	public partial class Dashboard
+	public partial class Menus
 	{
 		private ModCollection createdMods { get; set; }
+
+		public RenderFragment? CustomRender { get; set; }
 
 		[Inject]
 		public ModService ModService { get; set; }
@@ -24,20 +27,25 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
 
-
-		private void OnButtonClicked()
+		public RenderFragment CreateComponent(Type type) => builder =>
 		{
-			Navigation.NavigateTo("/newmod");
+			builder.OpenComponent(0, type);
+			builder.CloseComponent();
+		};
+
+		private void GoToDashboard()
+		{
+			CustomRender = CreateComponent(typeof(DashboardComponent));
 		}
 
 		private void GoToSettings()
 		{
-			Navigation.NavigateTo("/settings");
+			CustomRender = CreateComponent(typeof(Settings));
 		}
 
 		private void GoToManageMods()
 		{
-			Navigation.NavigateTo("/manager");
+			CustomRender = CreateComponent(typeof(ModManager));
 		}
 
 		protected override async Task OnInitializedAsync()
@@ -49,9 +57,11 @@ namespace ModForge.UI.Pages
 				return;
 			}
 
+			CustomRender = CreateComponent(typeof(DashboardComponent));
+
 			createdMods = ModService.GetAllMods();
 
-			var culture = new CultureInfo("de");
+			var culture = new CultureInfo(UserConfigurationService.Current.Language);
 			Thread.CurrentThread.CurrentCulture = culture;
 			Thread.CurrentThread.CurrentUICulture = culture;
 

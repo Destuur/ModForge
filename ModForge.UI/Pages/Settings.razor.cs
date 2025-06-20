@@ -1,6 +1,9 @@
-﻿using ModForge.Shared.Services;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
+using ModForge.Localizations;
+using ModForge.Shared.Services;
 using MudBlazor;
+using System.Globalization;
 
 namespace ModForge.UI.Pages
 {
@@ -20,6 +23,8 @@ namespace ModForge.UI.Pages
 		public ISnackbar SnackBar { get; set; }
 		[Inject]
 		public NavigationManager Navigation { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 
 		public void Save()
 		{
@@ -57,7 +62,7 @@ namespace ModForge.UI.Pages
 				return "Brabant’s lands are already claimed. Use a different name unless you seek a feud.";
 
 			if (name.Trim().ToLower() == "divish")
-				return "Diwish may be the loyal husband, but some whisper that the true son of Lady Stefanie is a certain young Henry’s bastard. Best pick another name before rumors follow you like a shadow.";
+				return "Divish may be the loyal husband, but some whisper that the true son of Lady Stefanie is a certain young Henry’s bastard. Best pick another name before rumors follow you like a shadow.";
 
 			return null; // valid
 		}
@@ -182,11 +187,24 @@ namespace ModForge.UI.Pages
 			XmlToJsonService.ConvertXmlToJsonAsync();
 		}
 
+		private void ChangeLanguage(string language)
+		{
+			UserConfigurationService.Current.Language = language;
+
+			var culture = new CultureInfo(language);
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+		}
+
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
 			name = UserConfigurationService.Current.UserName ?? string.Empty;
 			gameDirectory = UserConfigurationService.Current.GameDirectory ?? string.Empty;
+
+			var culture = new CultureInfo(UserConfigurationService.Current.Language);
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
 		}
 	}
 }

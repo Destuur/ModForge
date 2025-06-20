@@ -7,11 +7,12 @@ using ModForge.UI.Components.DialogComponents;
 using MudBlazor;
 using System.Globalization;
 
-namespace ModForge.UI.Pages
+namespace ModForge.UI.Components.MenuComponents
 {
-	public partial class Dashboard
+	public partial class DashboardComponent
 	{
 		private ModCollection createdMods { get; set; }
+		private string buttonContent;
 
 		[Inject]
 		public ModService ModService { get; set; }
@@ -30,16 +31,6 @@ namespace ModForge.UI.Pages
 			Navigation.NavigateTo("/newmod");
 		}
 
-		private void GoToSettings()
-		{
-			Navigation.NavigateTo("/settings");
-		}
-
-		private void GoToManageMods()
-		{
-			Navigation.NavigateTo("/manager");
-		}
-
 		protected override async Task OnInitializedAsync()
 		{
 			await base.OnInitializedAsync();
@@ -51,9 +42,11 @@ namespace ModForge.UI.Pages
 
 			createdMods = ModService.GetAllMods();
 
-			var culture = new CultureInfo("de");
+			var culture = new CultureInfo(string.IsNullOrEmpty(UserConfigurationService.Current.Language) ? "en" : UserConfigurationService.Current.Language);
 			Thread.CurrentThread.CurrentCulture = culture;
 			Thread.CurrentThread.CurrentUICulture = culture;
+
+			buttonContent = L["NewModButton"].Value;
 
 			if (string.IsNullOrEmpty(UserConfigurationService.Current.GameDirectory))
 			{
@@ -72,6 +65,7 @@ namespace ModForge.UI.Pages
 					Navigation.NavigateTo("/settings");
 				}
 			}
+			StateHasChanged();
 		}
 	}
 }

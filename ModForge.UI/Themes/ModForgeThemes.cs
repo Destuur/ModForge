@@ -11,7 +11,7 @@ namespace ModForge.UI.Themes
 				Primary = "#df6f00",
 				Secondary = "#f48fb1",
 				Background = "#00000000", // durchsichtig, damit CSS durchscheint
-				Surface = "#c1c1c425",
+				Surface = "#2e2e2e",
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1a1a2e",
 				TextPrimary = "#c1c1c4",

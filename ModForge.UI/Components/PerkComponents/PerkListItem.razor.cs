@@ -20,6 +20,8 @@ namespace ModForge.UI.Components.PerkComponents
 		public NavigationManager? Navigation { get; set; }
 		[Inject]
 		public ILogger<PerkListItem>? Logger { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
 		[Parameter]
 		public Perk? Perk { get; set; }
 		[Parameter]
@@ -29,6 +31,7 @@ namespace ModForge.UI.Components.PerkComponents
 		{
 			base.OnInitialized();
 			mod = ModService!.GetCurrentMod();
+			languageKey = UserConfigurationService.Current.Language;
 		}
 
 		private void EditPerk(MouseEventArgs args)

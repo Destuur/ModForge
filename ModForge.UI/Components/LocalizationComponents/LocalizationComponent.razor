@@ -1,4 +1,5 @@
 ﻿@using ModForge.Shared.Adapter
+@using ModForge.Shared.Models.Localizations
 @if (EditingModItem is not null)
 {
 	<MudGrid Spacing="5" Justify="Justify.SpaceBetween" Class="pa-4">
@@ -13,7 +14,7 @@
 					<MudButton Class="button-prominent" Style="font-size: 0.6rem !important; padding: 0.2rem 0.4rem !important;" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveAllLanguages">Clear</MudButton>
 				</MudItem>
 
-				@foreach (var languageKey in LocalizationAdapter.LanguageMap.Values)
+				@foreach (var languageKey in Languages.Map.Values)
 				{
 					<MudItem xs="3" sm="3" md="3" lg="3">
 						<MudButton Class="@(SelectedLanguageCodes.Contains(languageKey) ? "button-prominent" : "button-neutral")"
@@ -21,7 +22,7 @@
 								   Variant="@(SelectedLanguageCodes.Contains(languageKey) ? Variant.Filled : Variant.Outlined)"
 								   OnClick="@(() => AddLanguageKey(languageKey))"
 								   Size="Size.Small">
-							@(LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == languageKey).Key)
+							@(Languages.Map.FirstOrDefault(x => x.Value == languageKey).Key)
 						</MudButton>
 					</MudItem>
 				}
@@ -44,7 +45,7 @@
 			@foreach (var code in SelectedLanguageCodes)
 			{
 				<MudItem xs="12" sm="12" md="12" lg="12">
-							<MudText Class="pl-2">@(LocalizationAdapter.LanguageMap.FirstOrDefault(x => x.Value == code).Key)</MudText>
+					<MudText Class="pl-2">@(Languages.Map.FirstOrDefault(x => x.Value == code).Key)</MudText>
 					<MudPaper Class="attribute-card" Outlined="true" Elevation="0">
 
 						@if (editMode == false)

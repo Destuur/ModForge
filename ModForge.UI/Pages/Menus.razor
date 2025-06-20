@@ -1,0 +1,20 @@
+﻿@page "/"
+
+<MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
+
+	<MudItem Style=" padding: 0px; width: 56px;">
+		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="0">
+			<MudIconButton OnClick="GoToDashboard" Icon="@Icons.Material.Outlined.Home" Style="color: var(--icon-primary);" />
+			<MudIconButton OnClick="GoToManageMods" Icon="@Icons.Material.Outlined.Tune" Style="color: var(--icon-primary);" />
+			<MudSpacer />
+			<MudIconButton OnClick="GoToSettings" Icon="@Icons.Material.Outlined.Settings" Style="color: var(--icon-primary);" />
+		</MudStack>
+	</MudItem>
+
+	<MudItem Style="padding: 0px; width: calc(100% - 56px);">
+
+		@CustomRender
+
+	</MudItem>
+
+</MudGrid>
