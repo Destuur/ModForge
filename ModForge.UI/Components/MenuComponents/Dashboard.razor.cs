@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace ModForge.UI.Components.MenuComponents
 {
-	public partial class DashboardComponent
+	public partial class Dashboard
 	{
 		private ModCollection createdMods { get; set; }
 		private string buttonContent;
@@ -24,11 +24,13 @@ namespace ModForge.UI.Components.MenuComponents
 		public IDialogService DialogService { get; set; }
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
+		[Parameter]
+		public EventCallback<Type> ChangeChildContent { get; set; }
 
 
-		private void OnButtonClicked()
+		private async Task OnButtonClicked()
 		{
-			Navigation.NavigateTo("/newmod");
+			await ChangeChildContent.InvokeAsync(typeof(NewMod));
 		}
 
 		protected override async Task OnInitializedAsync()
@@ -40,7 +42,7 @@ namespace ModForge.UI.Components.MenuComponents
 				return;
 			}
 
-			createdMods = ModService.GetAllMods();
+			createdMods = ModService.ModCollection;
 
 			var culture = new CultureInfo(string.IsNullOrEmpty(UserConfigurationService.Current.Language) ? "en" : UserConfigurationService.Current.Language);
 			Thread.CurrentThread.CurrentCulture = culture;

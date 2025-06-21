@@ -30,7 +30,7 @@ namespace ModForge.UI.Components.PerkComponents
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
-			mod = ModService!.GetCurrentMod();
+			mod = ModService!.Mod;
 			languageKey = UserConfigurationService.Current.Language;
 		}
 

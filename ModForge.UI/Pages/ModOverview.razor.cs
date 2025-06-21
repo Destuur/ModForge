@@ -18,13 +18,12 @@ namespace ModForge.UI.Pages
 
 		public void ContinueModding()
 		{
-			NavigationManager.NavigateTo($"/moditems/{mod.ModId}");
+			NavigationManager.NavigateTo($"/moditems/{mod.Id}");
 		}
 
 		public void ExportMod()
 		{
 			ModService.ExportMod(mod);
-			ModService.WriteModCollectionAsJson();
 			Snackbar.Add(
 				"Mod successfully created",
 				Severity.Success,
@@ -39,7 +38,7 @@ namespace ModForge.UI.Pages
 		protected override async Task OnInitializedAsync()
 		{
 			await base.OnInitializedAsync();
-			mod = ModService.GetCurrentMod();
+			mod = ModService.Mod;
 			StateHasChanged();
 		}
 	}

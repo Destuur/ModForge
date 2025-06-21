@@ -67,7 +67,7 @@ namespace ModForge.UI.Pages
 		{
 			SaveItem();
 
-			var mod = ModService?.GetCurrentMod();
+			var mod = ModService?.Mod;
 			if (mod == null)
 			{
 				Logger?.LogWarning("Current mod is null, navigation cancelled.");
@@ -80,7 +80,7 @@ namespace ModForge.UI.Pages
 				return;
 			}
 
-			Navigation.NavigateTo($"/moditems/{mod.ModId}");
+			Navigation.NavigateTo($"/moditems/{mod.Id}");
 		}
 
 		private async Task Checkout()
@@ -231,7 +231,7 @@ namespace ModForge.UI.Pages
 			if (!result.Canceled)
 			{
 				Logger?.LogInformation("User confirmed discard. Navigating back to mod items.");
-				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+				Navigation.NavigateTo($"/moditems/{ModService.Mod.Id}");
 			}
 			else
 			{

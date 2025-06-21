@@ -132,6 +132,12 @@ h1:focus {
     }
 }
 
+.header-primary {
+    background-image: var(--button-background-primary);
+    color: transparent;
+    background-clip: text;
+}
+
 .button-widget {
     display: flex;
     align-items: center;
@@ -171,7 +177,6 @@ h1:focus {
     opacity: 0.8;
     visibility: visible;
 }
-
 
 /*Old Stuff*/
 .mudcard {

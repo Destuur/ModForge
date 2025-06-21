@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace ModForge.UI.Components.DashboardComponents
+namespace ModForge.UI.Components.ModListComponents
 {
 	public partial class ModListWidget
 	{

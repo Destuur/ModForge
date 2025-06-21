@@ -1,4 +1,4 @@
-﻿ @using ModForge.Shared.Models.ModItems
+﻿@using ModForge.Shared.Models.ModItems
 <MudGrid Spacing="2">
 
 	@if (Mods is not null)
@@ -10,16 +10,27 @@
 					<div style="position: absolute; background: linear-gradient(180deg,rgba(255, 166, 0, 0) 0%, var(--background) 100%); width: 100%; height: 100%; border-radius: inherit;" class="mod-item-hidden">
 						<MudStack Row Justify="Justify.SpaceEvenly" AlignItems="AlignItems.End" Style="height: 100%;">
 
-							<MudIconButton Style="cursor: pointer;" Icon="@Icons.Material.Outlined.Edit" Size="Size.Large" />
-							<MudIconButton Style="cursor: pointer;" Icon="@Icons.Material.Outlined.Download" Size="Size.Large" />
+							<MudTooltip Text="Edit Mod" Placement="Placement.Top">
+								<MudIconButton Style="cursor: pointer;" Icon="@Icons.Material.Outlined.Edit" />
+							</MudTooltip>
+
+							<MudTooltip Text="Export" Placement="Placement.Top">
+								<MudIconButton Style="cursor: pointer;" Icon="@Icons.Material.Outlined.Download" />
+							</MudTooltip>
+
+							<MudTooltip Text="Open Folder" Placement="Placement.Top">
+								<MudIconButton Style="cursor: pointer;" Icon="@Icons.Material.Outlined.Folder"  />
+							</MudTooltip>
 
 						</MudStack>
 					</div>
-					<MudStack Spacing="0" Class="px-2 py-1">
+					<MudStack Spacing="0" Class="px-3 py-3">
 
 						<MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" class="pb-2">
-							<MudText Typo="Typo.subtitle1" Color="Color.Primary" Style="font-weight: bold;">@mod.Name</MudText>
-							<MudIconButton Icon="@Icons.Material.Outlined.Cancel" Size="Size.Small" Color="Color.Error" Class="pa-0 ma-n1 mod-item-hidden" />
+							<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@mod.Name</MudText>
+							<MudTooltip Text="Delete Mod" Placement="Placement.Top">
+								<MudIconButton Icon="@Icons.Material.Outlined.Cancel" Size="Size.Small" Color="Color.Error" Class="pa-0 ma-n1 mod-item-hidden" />
+							</MudTooltip>
 						</MudStack>
 
 						<MudStack Row Justify="Justify.SpaceBetween">

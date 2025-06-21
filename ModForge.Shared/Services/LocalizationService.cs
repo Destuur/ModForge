@@ -9,8 +9,6 @@ namespace ModForge.Shared.Services
 	{
 		private readonly LocalizationAdapter adapter;
 		private readonly ILogger<LocalizationService> logger;
-		private List<Localization> enLocalizations = new();
-		private List<Localization> deLocalizations = new();
 
 		public LocalizationService(LocalizationAdapter adapter, ILogger<LocalizationService> logger)
 		{

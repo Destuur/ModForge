@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using ModForge.Localizations;
 using ModForge.Shared.Models.Mods;
@@ -27,25 +28,16 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
 
-		public RenderFragment CreateComponent(Type type) => builder =>
+		private RenderFragment CreateComponent(Type type, EventCallback<Type> changeChildContent) => builder =>
 		{
 			builder.OpenComponent(0, type);
+			builder.AddAttribute(1, "ChangeChildContent", changeChildContent);
 			builder.CloseComponent();
 		};
 
-		private void GoToDashboard()
+		private void OnChangeChildContent(Type type)
 		{
-			CustomRender = CreateComponent(typeof(DashboardComponent));
-		}
-
-		private void GoToSettings()
-		{
-			CustomRender = CreateComponent(typeof(Settings));
-		}
-
-		private void GoToManageMods()
-		{
-			CustomRender = CreateComponent(typeof(ModManager));
+			CustomRender = CreateComponent(type, EventCallback.Factory.Create<Type>(this, OnChangeChildContent));
 		}
 
 		protected override async Task OnInitializedAsync()
@@ -56,10 +48,11 @@ namespace ModForge.UI.Pages
 			{
 				return;
 			}
+			ModService.InitiateModCollections();
 
-			CustomRender = CreateComponent(typeof(DashboardComponent));
+			OnChangeChildContent(typeof(Dashboard));
 
-			createdMods = ModService.GetAllMods();
+			createdMods = ModService.ModCollection;
 
 			var culture = new CultureInfo(UserConfigurationService.Current.Language);
 			Thread.CurrentThread.CurrentCulture = culture;

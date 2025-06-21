@@ -111,7 +111,7 @@ namespace ModForge.Shared.Adapter
 				foreach (var languageKey in allLanguages)
 				{
 					var language = Languages.Map.FirstOrDefault(x => x.Value == languageKey).Key;
-					localizationPath = PathFactory.CreateExportLocalizationPath(path, language, mod.ModId);
+					localizationPath = PathFactory.CreateExportLocalizationPath(path, language, mod.Id);
 
 					var directory = Path.GetDirectoryName(localizationPath);
 
@@ -153,8 +153,8 @@ namespace ModForge.Shared.Adapter
 					if (language == null)
 						continue;
 
-					var localizationFolder = Path.Combine(path, "Mods", mod.ModId, "Localization", language + "_xml");
-					var localizationPath = Path.Combine(localizationFolder, "text__" + mod.ModId + ".xml");
+					var localizationFolder = Path.Combine(path, "Mods", mod.Id, "Localization", language + "_xml");
+					var localizationPath = Path.Combine(localizationFolder, "text__" + mod.Id + ".xml");
 
 					if (!File.Exists(localizationPath))
 						continue;

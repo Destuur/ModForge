@@ -1,0 +1,50 @@
+﻿<MudGrid Style="height: 100%; margin: 0px;" Class="pr-4" Spacing="0">
+
+
+	<MudItem md="12" Style="height: 90%; width: 100%;">
+		<MudStack Spacing="0">
+			<MudText Class="header-primary pr-2" Typo="Typo.h6">Create New Mod</MudText>
+			<MudTextField @bind-Value="@name" Validation="@(new Func<string, string>(ValidateModName))" ShrinkLabel="true" Label="Mod Name" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" OnKeyUp="GetModId" Required="true"></MudTextField>
+			<MudTextField @bind-Value="@description" ShrinkLabel="true" Label="Description" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+			<MudTextField @bind-Value="@author" ShrinkLabel="true" Label="Author" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+			<MudTextField @bind-Value="@version" ShrinkLabel="true" Label="Mod Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+			<MudDatePicker @bind-Value="@createdOn" Label="Created On" DateFormat="yyyy-MM-dd" Date="@DateTime.Now" Variant="Variant.Outlined" Margin="Margin.Dense" AdornmentColor="Color.Inherit" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.CalendarToday" />
+			<MudTextField @bind-Value="@modId" ShrinkLabel="true" Label="Mod ID" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Required="true"></MudTextField>
+
+			<MudStack Row AlignItems="AlignItems.Center">
+				<MudCheckBox Size="Size.Medium" T="bool" Color="Color.Primary" @bind-Value="@modifiesLevel" Label="Modifies Level"></MudCheckBox>
+				<MudCheckBox Size="Size.Medium" T="bool" Color="Color.Primary" @bind-Value="@hasSupportVersion" Label="Add Version Support"></MudCheckBox>
+			</MudStack>
+			<MudList T="string" Dense="true" ReadOnly="true" Disabled="@(hasSupportVersion == false)">
+
+				<MudListItem Class="pa-0">
+					<MudStack Row="true" Justify="Justify.Center">
+						<MudTextField Disabled="@(hasSupportVersion == false)" @bind-Text="supportedGameVersion" T="string" Immediate="true" Validation="@(new Func<string, string>(ValidateVersion))" Label="Version" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+						<MudIconButton Disabled="@(hasSupportVersion == false)" OnClick="@(() => AddVersion())" Color="Color.Primary" Class="ml-1" Style="height:2.5rem; width: 2.5rem; align-self: center;" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Size="Size.Medium" ButtonType="ButtonType.Button" Edge="Edge.Start" />
+					</MudStack>
+				</MudListItem>
+
+				@foreach (var modVersion in supportedGameVersions)
+				{
+					<MudListItem Gutters="false" Dense="true">
+						<MudStack Row="true" Justify="Justify.Center">
+							<MudField Label="@("Version" + $" {(supportedGameVersions.IndexOf(modVersion) + 1)}")" Variant="Variant.Outlined" Margin="Margin.Dense">@modVersion</MudField>
+							<MudIconButton Class="ml-1" OnClick="(_ => RemoveVersion(modVersion))" Style="height:2.5rem; width: 2.5rem; align-self: center" Icon="@Icons.Material.Filled.Remove" Variant="Variant.Outlined" Size="Size.Medium" ButtonType="ButtonType.Button" Edge="Edge.Start" />
+						</MudStack>
+					</MudListItem>
+				}
+
+			</MudList>
+		</MudStack>
+	</MudItem>
+
+	<MudItem md="12" Style="height: 10%; width: 100%; align-content: end;" class="pb-2">
+		<MudStack Row>
+			<ButtonWidget ButtonClicked="BackToDashboard" Background="var(--button-background-neutral)" Typo="Typo.h6" Title="Back" />
+			<ButtonWidget ButtonClicked="StartModding" Typo="Typo.h6" Title="Start Modding" />
+		</MudStack>
+	</MudItem>
+
+
+</MudGrid>
+

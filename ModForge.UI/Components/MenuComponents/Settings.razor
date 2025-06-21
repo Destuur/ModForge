@@ -1,12 +1,12 @@
 ﻿@using ModForge.Shared.Models.Localizations
-<MudGrid Style="height: 100%; margin: 0px;" Class="pr-2" Spacing="0">
+<MudGrid Style="height: 100%; margin: 0px;" Class="pr-4" Spacing="0">
 
 	<MudItem md="12" Style="height: 90%; width: 100%;">
 		<MudStack Spacing="0">
-			<MudText Typo="Typo.subtitle1" Align="Align.Right" Class="pr-2">Settings</MudText>
+			<MudText  Class="header-primary pr-2" Typo="Typo.h6">Settings</MudText>
 			<MudTextField HelperText="Henry was taken. Pick your own." Validation="ValidateName" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" Placeholder="User Name" @bind-Value="name" />
 			<MudTextField HelperText="This is the path. The one true path." Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="/home/you/games/kcd2" ReadOnly="true" @bind-Value="gameDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectGameDirectory" Style="cursor: pointer;" />
-			<MudSelect T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Language" ValueChanged="ChangeLanguage">
+			<MudSelect T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Language" ValueChanged="ChangeLanguage" SelectedValues="[UserConfigurationService.Current.Language]">
 
 				@foreach (var language in Languages.Map)
 				{
@@ -20,8 +20,8 @@
 
 	<MudItem md="12" Style="height: 10%; width: 100%; align-content: end;" class="pb-2">
 		<MudStack Row>
-			<ButtonWidget Background="var(--button-background-neutral)" Typo="Typo.h6" Title="Back" />
-			<ButtonWidget Typo="Typo.h6" Title="Save" />
+			<ButtonWidget ButtonClicked="BackToDashboard" Background="var(--button-background-neutral)" Typo="Typo.h6" Title="Back" />
+			<ButtonWidget ButtonClicked="Save" Typo="Typo.h6" Title="Save" />
 		</MudStack>
 	</MudItem>
 

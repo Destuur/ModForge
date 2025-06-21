@@ -21,7 +21,12 @@ namespace ModForge.UI.Components.BuffComponents
 
 		public string GetForgeIcon()
 		{
-			if (ModService.GetCurrentMod().ModItems.Count == 0)
+			if (ModService is null)
+			{
+				return string.Empty;
+			}
+
+			if (ModService.Mod.ModItems.Count == 0)
 			{
 				return "images\\Icons\\forgeicon.png";
 			}

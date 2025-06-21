@@ -9,7 +9,6 @@ namespace ModForge.UI.Components.BuffComponents
 {
 	public partial class BuffListItem
 	{
-		private ModDescription? mod;
 		private string languageKey = "en";
 
 		[Inject]
@@ -24,12 +23,6 @@ namespace ModForge.UI.Components.BuffComponents
 		public Buff? Buff { get; set; }
 		[Parameter]
 		public string Placeholder { get; set; } = "No localization data available";
-
-		protected override void OnInitialized()
-		{
-			base.OnInitialized();
-			mod = ModService!.GetCurrentMod();
-		}
 
 		private void EditBuff(MouseEventArgs args)
 		{

@@ -54,7 +54,7 @@ namespace ModForge.UI.Pages
 
 			if (XmlToJsonService.Buffs.FirstOrDefault(x => x.Id == editingPerk.LinkedIds.FirstOrDefault()) is null)
 			{
-				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+				Navigation.NavigateTo($"/moditems/{ModService.Mod.Id}");
 				return;
 			}
 
@@ -75,7 +75,7 @@ namespace ModForge.UI.Pages
 			}
 			else
 			{
-				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+				Navigation.NavigateTo($"/moditems/{ModService.Mod.Id}");
 			}
 		}
 
@@ -225,7 +225,7 @@ namespace ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
-				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+				Navigation.NavigateTo($"/moditems/{ModService.Mod.Id}");
 			}
 		}
 

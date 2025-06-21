@@ -1,13 +1,23 @@
 ﻿@page "/"
+@using ModForge.UI.Components.MenuComponents
 
 <MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
 
 	<MudItem Style=" padding: 0px; width: 56px;">
 		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="0">
-			<MudIconButton OnClick="GoToDashboard" Icon="@Icons.Material.Outlined.Home" Style="color: var(--icon-primary);" />
-			<MudIconButton OnClick="GoToManageMods" Icon="@Icons.Material.Outlined.Tune" Style="color: var(--icon-primary);" />
+			<MudTooltip Text="Dashboard">
+				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Dashboard)))" Icon="@Icons.Material.Filled.SpaceDashboard" Style="color: var(--icon-primary);" />
+			</MudTooltip>
+			<MudTooltip Text="Install Mod">
+				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(ModInstall)))" Icon="@Icons.Material.Filled.InstallDesktop" Style="color: var(--icon-primary);" />
+			</MudTooltip>
+			<MudTooltip Text="Loadouts">
+				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(ModInstall)))" Icon="@Icons.Material.Filled.Games" Style="color: var(--icon-primary);" />
+			</MudTooltip>
 			<MudSpacer />
-			<MudIconButton OnClick="GoToSettings" Icon="@Icons.Material.Outlined.Settings" Style="color: var(--icon-primary);" />
+			<MudTooltip Text="Settings">
+				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Settings)))" Icon="@Icons.Material.Filled.Settings" Style="color: var(--icon-primary);" />
+			</MudTooltip>
 		</MudStack>
 	</MudItem>
 

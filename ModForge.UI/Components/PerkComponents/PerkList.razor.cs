@@ -36,7 +36,7 @@ namespace ModForge.UI.Components.PerkComponents
 
 		public string GetForgeIcon()
 		{
-			if (ModService.GetCurrentMod().ModItems.Count == 0)
+			if (ModService.Mod.ModItems.Count == 0)
 			{
 				return "images\\Icons\\forgeicon.png";
 			}

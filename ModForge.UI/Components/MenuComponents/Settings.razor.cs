@@ -2,10 +2,11 @@
 using Microsoft.Extensions.Localization;
 using ModForge.Localizations;
 using ModForge.Shared.Services;
+using ModForge.UI.Components.MenuComponents;
 using MudBlazor;
 using System.Globalization;
 
-namespace ModForge.UI.Pages
+namespace ModForge.UI.Components.MenuComponents
 {
 	public partial class Settings
 	{
@@ -25,20 +26,24 @@ namespace ModForge.UI.Pages
 		public NavigationManager Navigation { get; set; }
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
+		[Parameter]
+		public EventCallback<Type> ChangeChildContent { get; set; }
 
-		public void Save()
+		public async Task Save()
 		{
 			UserConfigurationService.Current.UserName = name;
 			UserConfigurationService.Current.GameDirectory = gameDirectory;
 			UserConfigurationService.Save();
 
 			SnackBar.Add(
-				"Settings Saved! Now - IMPORT THE DATA",
+				"Settings Saved",
 				Severity.Success,
 				config =>
 				{
 					config.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
 				});
+
+			await BackToDashboard();
 		}
 
 		private string ValidateName(string name)
@@ -67,9 +72,9 @@ namespace ModForge.UI.Pages
 			return null; // valid
 		}
 
-		public void BackToDashboard()
+		public async Task BackToDashboard()
 		{
-			Navigation.NavigateTo("/");
+			await ChangeChildContent.InvokeAsync(typeof(Dashboard));
 		}
 
 		public void ImportGameData()
