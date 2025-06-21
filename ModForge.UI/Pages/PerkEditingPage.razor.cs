@@ -48,10 +48,35 @@ namespace ModForge.UI.Pages
 			ModService.AddModItem(modPerk);
 		}
 
-		private void SavePerk()
+		private async Task SavePerk()
 		{
 			SaveItem();
-			Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+
+			if (XmlToJsonService.Buffs.FirstOrDefault(x => x.Id == editingPerk.LinkedIds.FirstOrDefault()) is null)
+			{
+				Navigation.NavigateTo($"/moditems/{ModService.Mod.Id}");
+				return;
+			}
+
+			var parameters = new DialogParameters<MoreModItemsDialog>
+			{
+				{ x => x.ContentText, "Do you want to modify the associated buff as well?" },
+				{ x => x.ButtonText, "Yes" }
+			};
+
+			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+			var dialog = await DialogService.ShowAsync<MoreModItemsDialog>("Choose your path", parameters, options);
+			var result = await dialog.Result;
+
+			if (result.Canceled == false)
+			{
+				Navigation.NavigateTo($"/editing/buff/{editingPerk.LinkedIds.FirstOrDefault()}");
+			}
+			else
+			{
+				Navigation.NavigateTo($"/moditems/{ModService.Mod.Id}");
+			}
 		}
 
 		private async Task Checkout()
@@ -200,7 +225,7 @@ namespace ModForge.UI.Pages
 
 			if (result.Canceled == false)
 			{
-				Navigation.NavigateTo($"/moditems/{ModService.GetCurrentMod().ModId}");
+				Navigation.NavigateTo($"/moditems/{ModService.Mod.Id}");
 			}
 		}
 

@@ -3,6 +3,7 @@ using ModForge.Shared.Adapter;
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Data;
+using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.ModItems;
 using System.Diagnostics;
 
@@ -170,7 +171,7 @@ namespace ModForge.Shared.Services
 			{
 				foreach (var perk in Perks)
 				{
-					foreach (var language in LocalizationAdapter.LanguageMap.Values)
+					foreach (var language in Languages.Map.Values)
 					{
 						if (!localizationCache.TryGetValue(language, out var langDict))
 						{
@@ -212,7 +213,7 @@ namespace ModForge.Shared.Services
 			{
 				foreach (var buff in Buffs)
 				{
-					foreach (var language in LocalizationAdapter.LanguageMap.Values)
+					foreach (var language in Languages.Map.Values)
 					{
 						if (!localizationCache.TryGetValue(language, out var langDict))
 						{

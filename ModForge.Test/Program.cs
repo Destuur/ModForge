@@ -1,4 +1,5 @@
-﻿using ModForge.Shared;
+﻿using Microsoft.Extensions.Logging;
+using ModForge.Shared;
 using ModForge.Shared.Adapter;
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.ModItems;
@@ -52,72 +53,72 @@ namespace ModForge.Test
 
 			//	Console.WriteLine(path);
 
-			var userConfig = new UserConfigurationService()
-			{
-				Current = new Shared.Models.User.UserConfiguration()
-				{
-					GameDirectory = ToolResources.Keys.GameDirectory(),
-					Language = "de",
-					UserName = "Destuur"
-				}
-			};
-			var perkAdapter = new XmlAdapter(userConfig);
-			var buffAdapter = new XmlAdapter(userConfig);
+			//var userConfig = new UserConfigurationService()
+			//{
+			//	Current = new Shared.Models.User.UserConfiguration()
+			//	{
+			//		GameDirectory = ToolResources.Keys.GameDirectory(),
+			//		Language = "de",
+			//		UserName = "Destuur"
+			//	}
+			//};
+			//var perkAdapter = new XmlAdapter(userConfig);
+			//var buffAdapter = new XmlAdapter(userConfig);
 
-			var mods = ToolResources.Keys.KCD2ModsPath();
+			//var mods = ToolResources.Keys.KCD2ModsPath();
 
-			var files = Directory.EnumerateDirectories(mods);
-			foreach (var file in files)
-			{
-				var modFiles = Directory.GetFiles(file);
+			//var files = Directory.EnumerateDirectories(mods);
+			//foreach (var file in files)
+			//{
+			//	var modFiles = Directory.GetFiles(file);
 
-				var doc = XDocument.Load(modFiles.FirstOrDefault());
+			//	var doc = XDocument.Load(modFiles.FirstOrDefault());
 
-				var info = doc.Root.Element("info");
-				var supports = doc.Root.Element("supports");
-				var parseElement = bool.TryParse(info.Element("modifies_level").Value, out bool result);
-				var supportList = new List<string>();
+			//	var info = doc.Root.Element("info");
+			//	var supports = doc.Root.Element("supports");
+			//	var parseElement = bool.TryParse(info.Element("modifies_level").Value, out bool result);
+			//	var supportList = new List<string>();
 
-				var test = supports.Elements("kcd_version");
+			//	var test = supports.Elements("kcd_version");
 
-				foreach (var item in test)
-				{
-					supportList.Add(item.Value);
-				}
+			//	foreach (var item in test)
+			//	{
+			//		supportList.Add(item.Value);
+			//	}
 
-				var modDescription = new ModDescription()
-				{
-					Name = info.Element("name")?.Value,
-					Description = info.Element("description")?.Value,
-					Author = info.Element("author")?.Value,
-					ModVersion = info.Element("version")?.Value,
-					CreatedOn = info.Element("created_on")?.Value,
-					ModId = info.Element("modid")?.Value,
-					ModifiesLevel = result,
-					SupportsGameVersions = supportList
-				};
+			//	var modDescription = new ModDescription()
+			//	{
+			//		Name = info.Element("name")?.Value,
+			//		Description = info.Element("description")?.Value,
+			//		Author = info.Element("author")?.Value,
+			//		ModVersion = info.Element("version")?.Value,
+			//		CreatedOn = info.Element("created_on")?.Value,
+			//		ModId = info.Element("modid")?.Value,
+			//		ModifiesLevel = result,
+			//		SupportsGameVersions = supportList
+			//	};
 
-				//var list = perkAdapter.ReadModItems(Path.Combine(file, "Data", modDescription.ModId + ".pak")).Result;
-				//foreach (var item in list)
-				//{
-				//	modDescription.ModItems.Add(item);
-				//}
-			}
-
-
+			//var list = perkAdapter.ReadModItems(Path.Combine(file, "Data", modDescription.ModId + ".pak")).Result;
+			//foreach (var item in list)
+			//{
+			//	modDescription.ModItems.Add(item);
+			//}
 			Console.ReadLine();
-			//}
-
-			//private static async void ImportJson(XmlToJsonService xmlToJsonService)
-			//{
-			//	var perks = await xmlToJsonService.ReadPerkJsonFile();
-			//	var buffs = await xmlToJsonService.ReadBuffJsonFile();
-			//}
-
-			//private static async void ExportXmlToJson(XmlToJsonService xmlToJsonService)
-			//{
-			//	await xmlToJsonService.ConvertXmlToJsonAsync();
-			//}
 		}
+
+
+		//}
+
+		//private static async void ImportJson(XmlToJsonService xmlToJsonService)
+		//{
+		//	var perks = await xmlToJsonService.ReadPerkJsonFile();
+		//	var buffs = await xmlToJsonService.ReadBuffJsonFile();
+		//}
+
+		//private static async void ExportXmlToJson(XmlToJsonService xmlToJsonService)
+		//{
+		//	await xmlToJsonService.ConvertXmlToJsonAsync();
+		//}
 	}
 }
+

@@ -42,7 +42,6 @@ namespace ModForge.UI.Pages
 
 		public void SaveMod()
 		{
-			ModService.WriteModCollectionAsJson();
 			Snackbar.Add(
 				"Mod successfully saved",
 				Severity.Success,

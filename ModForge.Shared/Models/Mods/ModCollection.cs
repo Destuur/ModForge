@@ -24,7 +24,7 @@ namespace ModForge.Shared.Models.Mods
 			if (mod is null)
 				return;
 
-			var itemToRemove = Items.FirstOrDefault(item => item.ModId == mod.ModId);
+			var itemToRemove = Items.FirstOrDefault(item => item.Id == mod.Id);
 			if (itemToRemove != null)
 			{
 				Items.Remove(itemToRemove);
@@ -33,7 +33,7 @@ namespace ModForge.Shared.Models.Mods
 
 		internal ModDescription? GetMod(string modId)
 		{
-			return Items.FirstOrDefault(x => x.ModId == modId);
+			return Items.FirstOrDefault(x => x.Id == modId);
 		}
 	}
 }

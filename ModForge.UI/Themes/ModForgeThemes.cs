@@ -8,10 +8,10 @@ namespace ModForge.UI.Themes
 		{
 			PaletteLight = new PaletteLight()
 			{
-				Primary = "#a14b00",
+				Primary = "#df6f00",
 				Secondary = "#f48fb1",
 				Background = "#00000000", // durchsichtig, damit CSS durchscheint
-				Surface = "#ffffff",
+				Surface = "#2e2e2e",
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1a1a2e",
 				TextPrimary = "#c1c1c4",
@@ -40,7 +40,14 @@ namespace ModForge.UI.Themes
 			},
 			LayoutProperties = new LayoutProperties()
 			{
-				DefaultBorderRadius = "6px"
+				AppbarHeight = "0",
+			},
+			Typography = new Typography()
+			{
+				Default = new DefaultTypography()
+				{
+					FontFamily = new[] { "Rubik" }
+				}
 			}
 		};
 	}

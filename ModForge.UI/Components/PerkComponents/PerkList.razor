@@ -50,7 +50,7 @@
 		</MudDrawerHeader>
 
 		<MudList T="IAttribute">
-			@foreach (var modItem in ModService.GetCurrentMod().ModItems)
+			@foreach (var modItem in ModService.Mod.ModItems)
 			{
 
 				<MudListItem Gutters="true" Disabled="true">
