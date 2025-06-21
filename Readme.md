@@ -1,4 +1,4 @@
-# KCD2 ModForge
+# ModForge
 
 > ?? **Notice:** This application is currently in active development and not yet available to the public. A first public release is planned once core functionality is stable.
 
@@ -8,7 +8,9 @@
 
 ## Features
 
-- Import, edit, and create Perks, Buffs, Debuffs, Localizations, and more  
+- Import, edit, and create Perks, Buffs, Debuffs, Localizations, and more
+- Mod Management: install mods per drag and drop
+- Configure Mod Loadouts for different Save Files
 - Automatic generation of mod folder structure including official `mod.manifest` file compatible with KCD2 modding tools  
 - Export mods as `.pak` files ready to be used in the game  
 - Project management with recent mods list for quick access  
@@ -18,14 +20,6 @@
 ---
 
 ## Upcoming Improvements
-
-### Settings & Personalization
-- Save the game installation path and username to auto-fill mod metadata during creation  
-- Support for language settings and other user preferences
-
-### Caching & Performance
-- Current behavior: XML files are read on demand  
-- Planned: Load all data at startup, process it, and cache it locally in a `.json` file for faster access during app usage
 
 ### Multilingual Support
 - User interface available in multiple languages with AI-assisted translations
