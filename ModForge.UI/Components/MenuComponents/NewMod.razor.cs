@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using ModForge.Shared.Services;
-using ModForge.UI.Components.BuffComponents;
 using ModForge.UI.Components.DialogComponents;
-using ModForge.UI.Components.ModSettingComponents;
 using MudBlazor;
 using System.Text.RegularExpressions;
 
