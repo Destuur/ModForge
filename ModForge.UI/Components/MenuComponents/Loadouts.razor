@@ -1,3 +1,37 @@
-﻿<h3>Loadouts</h3>
+﻿<MudGrid Style="height: 100%;" Class="pr-4" Spacing="0">
+
+	<MudItem md="12" Style="height: 7%; width: 100%;" Class="pb-2">
+		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
+			<MudText Class="header-primary pr-2" Typo="Typo.h6">Loadouts</MudText>
+			<MudSpacer />
+			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center">
+				<ButtonWidgetNoIcon Title="Use Loadout" Typo="Typo.subtitle2" Width="200px" />
+				<MudSelect class="ma-0" Style="max-width: 200px; width: 200px;" FullWidth="false" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Select Loadout" Dense T="string">
+					<MudSelectItem T="string">Test</MudSelectItem>
+				</MudSelect>
+			</MudStack>
+		</MudStack>
+	</MudItem>
+
+	<MudItem md="12" Style="height: 93%; width: 100%;">
+		<MudGrid Style="height: 100%;" class="pb-2" Spacing="2">
+
+			<MudItem md="3">
+				<MudCard Style="height: 100%;" Class="mod-item-card">
+
+				</MudCard>
+			</MudItem>
+
+			<MudItem md="3">
+				<MudCard Style="height: 100%;" Class="mod-item-card"></MudCard>
+			</MudItem>
+
+			<MudItem md="6">
+				<MudCard Style="height: 100%;" Class="mod-item-card"></MudCard>
+			</MudItem>
+		</MudGrid>
+
+	</MudItem>
 
 
+</MudGrid>

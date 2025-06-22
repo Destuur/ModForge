@@ -3,14 +3,12 @@ using MudBlazor;
 
 namespace ModForge.UI.Components.ButtonComponents
 {
-	public partial class ButtonWidget
+	public partial class ButtonWidgetNoIcon
 	{
 		[Parameter]
 		public EventCallback ButtonClicked { get; set; }
 		[Parameter]
 		public string Title { get; set; }
-		[Parameter]
-		public string Icon { get; set; }
 		[Parameter]
 		public Typo Typo { get; set; }
 		[Parameter]
