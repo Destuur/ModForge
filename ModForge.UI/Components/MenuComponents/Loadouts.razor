@@ -6,39 +6,51 @@
 			<MudSpacer />
 			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center">
 				<ButtonWidgetNoIcon Title="Use Loadout" Typo="Typo.subtitle2" Width="200px" />
-				<MudSelect class="ma-0" Style="max-width: 200px; width: 200px;" FullWidth="false" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Select Loadout" Dense T="string">
-					<MudSelectItem T="string">Test</MudSelectItem>
+				<MudSelect ValueChanged="GetLoadout" MultiSelection="false" class="ma-0" Style="max-width: 200px; width: 200px;" FullWidth="false" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Select Loadout" Dense T="string">
+
+					@foreach (var savefile in savefiles)
+					{
+						<MudSelectItem T="string" Value="savefile">@savefile</MudSelectItem>
+					}
+
 				</MudSelect>
 			</MudStack>
 		</MudStack>
 	</MudItem>
 
 	<MudItem md="12" Style="height: 93%; width: 100%;">
-		<MudDropContainer T="DropItem" Items="mods" ItemsSelector="@((mod, dropzone) => mod.Selector == dropzone)" ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1" Style="height: 100%;">
+		<MudDropContainer T="DropItem" Items="mods" @ref=container ItemsSelector="@((mod, dropzone) => mod.Selector == dropzone)" ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1" Style="height: 100%;">
 			<ChildContent>
-				<MudGrid Style="height: 100%;" class="pb-2" Spacing="2">
-					<MudItem md="3">
+				<MudGrid Style="height: 100%; max-height: 93dvh;" class="pb-2" Spacing="2">
+					<MudItem md="4">
 						<MudCard Style="height: 100%;" Class="mod-item-card">
-							<MudText Class="px-3 py-3" Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Available Mods</MudText>
+							<MudCardHeader>
+								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Available Mods</MudText>
+							</MudCardHeader>
 							<MudList T="string" Class="d-flex flex-column mud-height-full">
 								<MudDropZone T="DropItem" Identifier="1" Class="flex-grow-1" />
 							</MudList>
 						</MudCard>
 					</MudItem>
-					<MudItem md="3">
+					<MudItem md="4">
 						<MudCard Style="height: 100%;" Class="mod-item-card">
-							<MudText Class="px-3 py-3" Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Loadout</MudText>
+							<MudCardHeader>
+								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Loadout</MudText>
+							</MudCardHeader>
 							<MudList T="string" Class="d-flex flex-column mud-height-full">
 								<MudDropZone T="DropItem" Identifier="2" Class="flex-grow-1" />
 							</MudList>
 						</MudCard>
 					</MudItem>
-					<MudItem md="6">
-						<MudCard Style="height: 100%;" Class="mod-item-card">
+					<MudItem md="4" Style="height: 100%;">
+						<MudCard Style="height: 100%; overflow-y: auto;" Class="mod-item-card">
+							<MudCardHeader>
+								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Mod Effects</MudText>
+							</MudCardHeader>
 
 							@foreach (var buffParam in buffParams)
 							{
-								<MudStack Row>
+								<MudStack Row Class="px-3 py-1">
 									<MudText>@buffParam.Key</MudText>
 									<MudText>@buffParam.Operation</MudText>
 									<MudText>@buffParam.Value</MudText>
@@ -53,7 +65,7 @@
 				<MudListItem T="string" Text="@context.Mod.Name" />
 			</ItemRenderer>
 		</MudDropContainer>
-		
+
 
 	</MudItem>
 

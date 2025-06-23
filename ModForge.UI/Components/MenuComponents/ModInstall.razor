@@ -4,7 +4,7 @@
         <MudStack Style="width: 100%" Spacing="0">
             <MudText Class="header-primary pr-2" Typo="Typo.h6">Install Mods</MudText>
             <MudFileUpload T="IReadOnlyList<IBrowserFile>"
-                           @ref="@_fileUpload"
+                           @ref="@fileUpload"
                            OnFilesChanged="OnInputFileChanged"
                            AppendMultipleFiles
                            Hidden="@false"
@@ -18,14 +18,14 @@
                 <ActivatorContent>
                     <MudPaper Height="300px"
                               Outlined="true"
-                              Class="@_dragClass">
+                              Class="@dragClass">
                         <MudText Typo="Typo.h6">
                             Drag and drop files here or click
                         </MudText>
-                        @foreach (var file in _fileNames)
+                        @foreach (var file in fileNames)
                         {
                             <MudChip T="string"
-                                     Color="Color.Dark"
+                                     Color="Color.Primary"
                                      Text="@file"
                                      tabindex="-1" />
                         }
@@ -40,13 +40,13 @@
                     Open file picker
                 </MudButton>
                 <MudButton Color="Color.Primary"
-                           Disabled="@(!_fileNames.Any())"
+                           Disabled="@(!fileNames.Any())"
                            OnClick="@Upload"
                            Variant="Variant.Filled">
                     Upload
                 </MudButton>
                 <MudButton Color="Color.Error"
-                           Disabled="@(!_fileNames.Any())"
+                           Disabled="@(!fileNames.Any())"
                            OnClick="@ClearAsync"
                            Variant="Variant.Filled">
                     Clear

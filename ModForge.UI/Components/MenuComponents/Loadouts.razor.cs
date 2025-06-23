@@ -10,7 +10,11 @@ namespace ModForge.UI.Components.MenuComponents
 	public partial class Loadouts
 	{
 		private List<DropItem> mods = new();
-		private List<BuffParam> buffParams = new();
+		private List<BuffParam> buffParams;
+		private Dictionary<string, List<DropItem>> loadouts = new();
+		private string[] savefiles = { "Savefile 1", "Savefile 2", "Savefile 3", "Savefile 4", "Savefile 5" };
+		private string selectedSavefile;
+		private MudDropContainer<DropItem> container;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -23,81 +27,83 @@ namespace ModForge.UI.Components.MenuComponents
 
 			if (dropItem.Item.Selector == "1")
 			{
-				foreach (var modItem in dropItem.Item.Mod.ModItems)
-				{
-					RemoveBuffParams(modItem);
-				}
+				loadouts[selectedSavefile].Remove(dropItem.Item);
+				buffParams = GetBuffParams();
 			}
 			else
 			{
-				foreach (var modItem in dropItem.Item.Mod.ModItems)
-				{
-					AddBuffParams(modItem);
-				}
+				loadouts[selectedSavefile].Add(dropItem.Item);
+				buffParams = GetBuffParams();
 			}
-
-
 		}
 
-		private void RemoveBuffParams(IModItem modItem)
+		private void GetLoadout(string savefile)
 		{
-			foreach (var attribute in modItem.Attributes)
+			selectedSavefile = savefile;
+
+			foreach (var dropItem in mods)
 			{
-				if (attribute is Attribute<IList<BuffParam>> foundBuffParams)
+				dropItem.Selector = "1";
+			}
+
+			if (loadouts[selectedSavefile] is null)
+			{
+				return;
+			}
+
+			foreach (var dropItem in loadouts[selectedSavefile])
+			{
+				var mod = mods.FirstOrDefault(x => x.Mod.Id == dropItem.Mod.Id);
+
+				if (mod is null)
 				{
-					foreach (var buffParam in foundBuffParams.Value)
+					loadouts[selectedSavefile].Remove(dropItem);
+					continue;
+				}
+				else
+				{
+					mod.Selector = "2";
+				}
+			}
+			container.Refresh();
+			buffParams = GetBuffParams();
+		}
+
+		private List<BuffParam> GetBuffParams()
+		{
+			var foundList = new List<BuffParam>();
+
+			foreach (var dropItem in loadouts[selectedSavefile])
+			{
+				foreach (var modItem in dropItem.Mod.ModItems)
+				{
+					foreach (var attribute in modItem.Attributes)
 					{
-						if (buffParam is null)
+						if (attribute is Attribute<IList<BuffParam>> foundBuffParams)
 						{
-							continue;
-						}
+							foreach (var buffParam in foundBuffParams.Value)
+							{
+								if (buffParam is null)
+								{
+									continue;
+								}
 
-						var existingBuffParam = buffParams.FirstOrDefault(x => x.Key == buffParam.Key);
+								var existingBuffParam = foundList.FirstOrDefault(x => x.Key == buffParam.Key);
 
-						if (existingBuffParam is null)
-						{
-							continue;
-						}
-
-						if (existingBuffParam.Value - buffParam.Value == 0)
-						{
-							buffParams.Remove(buffParam);
-						}
-						else
-						{
-							existingBuffParam.Value -= buffParam.Value;
+								if (existingBuffParam is null)
+								{
+									foundList.Add(buffParam.DeepClone());
+								}
+								else
+								{
+									existingBuffParam.Value += buffParam.Value;
+								}
+							}
 						}
 					}
 				}
 			}
-		}
-
-		private void AddBuffParams(IModItem modItem)
-		{
-			foreach (var attribute in modItem.Attributes)
-			{
-				if (attribute is Attribute<IList<BuffParam>> foundBuffParams)
-				{
-					foreach (var buffParam in foundBuffParams.Value)
-					{
-						if (buffParam is null)
-						{
-							continue;
-						}
-
-						var existingBuffParam = buffParams.FirstOrDefault(x => x.Key == buffParam.Key);
-
-						if (existingBuffParam is null)
-						{
-							buffParams.Add(buffParam);
-						}
-						else
-						{
-							existingBuffParam.Value += buffParam.Value;
-						}
-					}
-				}
-			}
+			return foundList;
 		}
 
 		protected override void OnInitialized()
@@ -113,6 +119,15 @@ namespace ModForge.UI.Components.MenuComponents
 			{
 				mods.Add(new DropItem() { Mod = mod, Selector = "1" });
 			}
+
+			selectedSavefile = "Savefile 1";
+
+			foreach (var savefile in savefiles)
+			{
+				loadouts.Add(savefile, new List<DropItem>());
+			}
+
+			buffParams = GetBuffParams();
 		}
 
 		public class DropItem
