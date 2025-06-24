@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using ModForge.Shared.Models.User;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace ModForge.Shared.Services
 {
@@ -8,9 +8,11 @@ namespace ModForge.Shared.Services
 	{
 		private readonly string configFile;
 		private readonly ILogger<UserConfigurationService> logger;
-		private JsonSerializerOptions jsonSettings = new JsonSerializerOptions()
+		private readonly JsonSerializerSettings settings = new()
 		{
-			WriteIndented = true
+			TypeNameHandling = TypeNameHandling.All,
+			Formatting = Formatting.Indented,
+			PreserveReferencesHandling = PreserveReferencesHandling.None
 		};
 
 		public UserConfigurationService(ILogger<UserConfigurationService> logger)
@@ -33,7 +35,7 @@ namespace ModForge.Shared.Services
 				if (File.Exists(configFile))
 				{
 					var json = File.ReadAllText(configFile);
-					Current = JsonSerializer.Deserialize<UserConfiguration>(json, jsonSettings)
+					Current = JsonConvert.DeserializeObject<UserConfiguration>(json, settings)
 							  ?? new UserConfiguration();
 					logger.LogInformation("User configuration loaded successfully.");
 				}
@@ -46,11 +48,13 @@ namespace ModForge.Shared.Services
 			catch (JsonException jex)
 			{
 				logger.LogError(jex, "Failed to deserialize the user configuration. Using default configuration.");
+				File.Delete(configFile);
 				Current = new UserConfiguration();
 			}
 			catch (Exception ex)
 			{
 				logger.LogError(ex, "Unexpected error while loading user configuration. Using default configuration.");
+				File.Delete(configFile);
 				Current = new UserConfiguration();
 			}
 		}
@@ -65,7 +69,7 @@ namespace ModForge.Shared.Services
 					Directory.CreateDirectory(directory);
 				}
 
-				var json = JsonSerializer.Serialize(Current, jsonSettings);
+				var json = JsonConvert.SerializeObject(Current, settings);
 				File.WriteAllText(configFile, json);
 				logger.LogInformation("User configuration saved successfully.");
 			}

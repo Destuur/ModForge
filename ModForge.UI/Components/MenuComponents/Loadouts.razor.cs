@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
@@ -13,13 +14,36 @@ namespace ModForge.UI.Components.MenuComponents
 		private List<BuffParam> buffParams;
 		private Dictionary<string, List<DropItem>> loadouts = new();
 		private string[] savefiles = { "Savefile 1", "Savefile 2", "Savefile 3", "Savefile 4", "Savefile 5" };
-		private string selectedSavefile;
 		private MudDropContainer<DropItem> container;
+		private string selectedSavefile;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
 		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
+		[Inject]
 		public ModService ModService { get; set; }
+		[Inject]
+		public ILogger<Loadouts> Logger { get; set; }
+		public string SelectedSavefile
+		{
+			get => selectedSavefile;
+			set
+			{
+				if (value is null)
+				{
+					return;
+				}
+				selectedSavefile = value;
+				GetLoadout(value);
+			}
+		}
+
+		private void SaveLoadouts()
+		{
+			UserConfigurationService.Current.Loadouts = loadouts;
+			UserConfigurationService.Save();
+		}
 
 		private void ItemUpdated(MudItemDropInfo<DropItem> dropItem)
 		{
@@ -39,8 +63,6 @@ namespace ModForge.UI.Components.MenuComponents
 
 		private void GetLoadout(string savefile)
 		{
-			selectedSavefile = savefile;
-
 			foreach (var dropItem in mods)
 			{
 				dropItem.Selector = "1";
@@ -127,13 +149,21 @@ namespace ModForge.UI.Components.MenuComponents
 				loadouts.Add(savefile, new List<DropItem>());
 			}
 
+			try
+			{
+
+				foreach (var key in loadouts.Keys)
+				{
+					loadouts[key] = UserConfigurationService.Current.Loadouts[key].ToList();
+				}
+			}
+			catch (Exception e)
+			{
+				Logger.LogError($"Could not add loadouts to current collection of loadouts.");
+			}
+
 			buffParams = GetBuffParams();
 		}
 
-		public class DropItem
-		{
-			public ModDescription Mod { get; init; }
-			public string Selector { get; set; }
-		}
 	}
 }

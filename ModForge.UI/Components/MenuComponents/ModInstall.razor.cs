@@ -11,18 +11,6 @@ namespace ModForge.UI.Components.MenuComponents
 {
 	public partial class ModInstall
 	{
-		[Inject]
-		public NavigationManager Navigation { get; set; }
-		[Inject]
-		public ModService ModService { get; set; }
-		[Inject]
-		public UserConfigurationService UserConfigurationService { get; set; }
-		[Parameter]
-		public EventCallback<Type> ChangeChildContent { get; set; }
-		[Inject]
-		public ISnackbar Snackbar { get; set; }
-
-		//TODO: Update mit Möglichkeit Thumbnails in der Mod zu hinterlegen!
 		private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
 		private string dragClass = DefaultDragClass;
 		private readonly List<string> fileNames = new();
@@ -37,6 +25,17 @@ namespace ModForge.UI.Components.MenuComponents
 			".tar"
 		};
 
+		[Inject]
+		public NavigationManager Navigation { get; set; }
+		[Inject]
+		public ModService ModService { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
+		[Parameter]
+		public EventCallback<Type> ChangeChildContent { get; set; }
+		[Inject]
+		public ISnackbar Snackbar { get; set; }
+
 		private async Task ClearAsync()
 		{
 			await (fileUpload?.ClearAsync() ?? Task.CompletedTask);
@@ -50,11 +49,13 @@ namespace ModForge.UI.Components.MenuComponents
 		private void OnInputFileChanged(InputFileChangeEventArgs e)
 		{
 			ClearDragClass();
-			var files = e.GetMultipleFiles();
-			foreach (var file in files)
+			fileNames.Clear();
+			files.Clear(); // <--- Wichtig: Liste leeren!
+			var newFiles = e.GetMultipleFiles();
+			foreach (var file in newFiles)
 			{
 				fileNames.Add(file.Name);
-				this.files.Add(file);
+				files.Add(file);
 			}
 		}
 
@@ -70,52 +71,61 @@ namespace ModForge.UI.Components.MenuComponents
 					}
 				}
 			}
+			await ClearAsync();
 		}
 
 		// TODO: Snackbar für Feedback und Clear Items
 		private async Task ExtractModToDirectoryAsync(IBrowserFile file, string targetDirectory)
 		{
 			var extension = Path.GetExtension(file.Name).ToLowerInvariant();
-
-			// Erstelle das Zielverzeichnis, falls es nicht existiert
 			Directory.CreateDirectory(targetDirectory);
 
-			// Datei in einen temporären Pfad speichern
-			var tempFilePath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + extension);
-			using (var stream = file.OpenReadStream(maxAllowedSize: 1024 * 1024 * 1024)) // 1 GB
-			using (var fs = File.Create(tempFilePath))
-			{
-				await stream.CopyToAsync(fs);
-			}
+			// Garantiert eindeutiger Temp-Dateiname
+			var tempFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + extension);
 
-			if (extension == ".zip")
+			try
 			{
-				ZipFile.ExtractToDirectory(tempFilePath, targetDirectory, overwriteFiles: true);
-			}
-			else if (extension == ".rar" || extension == ".7z" || extension == ".tar" || extension == ".gzip")
-			{
-				using (var archive = ArchiveFactory.Open(tempFilePath))
+				using (var stream = file.OpenReadStream(maxAllowedSize: 1024 * 1024 * 1024)) // 1 GB
+				using (var fs = File.Create(tempFilePath))
 				{
-					foreach (var entry in archive.Entries.Where(e => !e.IsDirectory))
+					await stream.CopyToAsync(fs);
+				}
+
+				if (extension == ".zip")
+				{
+					ZipFile.ExtractToDirectory(tempFilePath, targetDirectory, overwriteFiles: true);
+				}
+				else if (extension == ".rar" || extension == ".7z" || extension == ".tar" || extension == ".gzip")
+				{
+					using (var archive = ArchiveFactory.Open(tempFilePath))
 					{
-						entry.WriteToDirectory(targetDirectory, new ExtractionOptions()
+						foreach (var entry in archive.Entries.Where(e => !e.IsDirectory))
 						{
-							ExtractFullPath = true,
-							Overwrite = true
-						});
+							entry.WriteToDirectory(targetDirectory, new ExtractionOptions()
+							{
+								ExtractFullPath = true,
+								Overwrite = true
+							});
+						}
 					}
 				}
+				else
+				{
+					throw new NotSupportedException($"Format {extension} wird nicht unterstützt.");
+				}
+
+				Snackbar.Add("Mod successfully installed", Severity.Success);
 			}
-			else
+			catch (Exception ex)
 			{
-				throw new NotSupportedException($"Format {extension} wird nicht unterstützt.");
+				Snackbar.Add($"Fehler beim Installieren: {ex.Message}", Severity.Error);
+				throw; // Optional: oder nur loggen
 			}
-
-			// Optional: temporäre Datei löschen
-			File.Delete(tempFilePath);
-			await ClearAsync();
-
-			Snackbar.Add("Mod successfully installed", Severity.Success);
+			finally
+			{
+				// Versuche, die temporäre Datei zu löschen, auch bei Fehlern
+				try { if (File.Exists(tempFilePath)) File.Delete(tempFilePath); } catch { }
+			}
 		}
 
 		private void SetDragClass()
