@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Models.User;
 using Newtonsoft.Json;
 
@@ -77,6 +78,19 @@ namespace ModForge.Shared.Services
 			{
 				logger.LogError(ex, "Failed to save user configuration.");
 			}
+		}
+
+		public void WriteLoadout(List<DropItem> dropItems)
+		{
+			var path = Path.Combine(Current.GameDirectory, "Mods", "mod_order.txt");
+
+			if (File.Exists(path))
+			{
+				File.Delete(path);
+			}
+
+			var modIds = dropItems.Select(x => x.Mod.Id);
+			File.AppendAllLines(path, modIds);
 		}
 	}
 }

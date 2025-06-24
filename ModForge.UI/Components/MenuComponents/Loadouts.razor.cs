@@ -25,6 +25,8 @@ namespace ModForge.UI.Components.MenuComponents
 		public ModService ModService { get; set; }
 		[Inject]
 		public ILogger<Loadouts> Logger { get; set; }
+		[Inject]
+		public ISnackbar Snackbar { get; set; }
 		public string SelectedSavefile
 		{
 			get => selectedSavefile;
@@ -43,6 +45,29 @@ namespace ModForge.UI.Components.MenuComponents
 		{
 			UserConfigurationService.Current.Loadouts = loadouts;
 			UserConfigurationService.Save();
+
+			Snackbar.Add("Loadouts successfully saved", Severity.Success);
+		}
+
+		private void SetLoadout()
+		{
+			if (loadouts[selectedSavefile].Count == 0)
+			{
+				Snackbar.Add($"Stop yanking my pizzle — there are no mods to prep for your journey.", Severity.Warning);
+			}
+			else
+			{
+				try
+				{
+					UserConfigurationService.WriteLoadout(loadouts[selectedSavefile]);
+					Snackbar.Add($"You're all set! Loadout from '{selectedSavefile}' is ready.", Severity.Success);
+				}
+				catch (Exception e)
+				{
+					Logger.LogError(@"Loadout could not be written to mod_order.txt.");
+					Snackbar.Add($"Oops. Something went wrong, mate.", Severity.Success);
+				}
+			}
 		}
 
 		private void ItemUpdated(MudItemDropInfo<DropItem> dropItem)
@@ -59,6 +84,25 @@ namespace ModForge.UI.Components.MenuComponents
 				loadouts[selectedSavefile].Add(dropItem.Item);
 				buffParams = GetBuffParams();
 			}
+		}
+
+		private void ClearLoadout()
+		{
+			// Kopiere die Liste, um Modifikationen während der Iteration zu vermeiden
+			var itemsToRemove = loadouts[selectedSavefile].ToList();
+
+			foreach (var dropItem in itemsToRemove)
+			{
+				// Setze Selector auf "1" (Available Mods)
+				dropItem.Selector = "1";
+			}
+
+			// Liste leeren, Referenz bleibt erhalten
+			loadouts[selectedSavefile].Clear();
+
+			// UI ggf. aktualisieren
+			container?.Refresh();
+			buffParams = GetBuffParams();
 		}
 
 		private void GetLoadout(string savefile)
@@ -131,7 +175,13 @@ namespace ModForge.UI.Components.MenuComponents
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
+			PrepareModCollection();
+			PrepareLoadouts();
+			buffParams = GetBuffParams();
+		}
 
+		private void PrepareModCollection()
+		{
 			foreach (var mod in ModService.ModCollection)
 			{
 				mods.Add(new DropItem() { Mod = mod, Selector = "1" });
@@ -141,7 +191,10 @@ namespace ModForge.UI.Components.MenuComponents
 			{
 				mods.Add(new DropItem() { Mod = mod, Selector = "1" });
 			}
+		}
 
+		private void PrepareLoadouts()
+		{
 			selectedSavefile = "Savefile 1";
 
 			foreach (var savefile in savefiles)
@@ -151,19 +204,28 @@ namespace ModForge.UI.Components.MenuComponents
 
 			try
 			{
-
 				foreach (var key in loadouts.Keys)
 				{
-					loadouts[key] = UserConfigurationService.Current.Loadouts[key].ToList();
+					// Lade die gespeicherten Loadouts
+					var savedItems = UserConfigurationService.Current.Loadouts[key];
+					loadouts[key] = new List<DropItem>();
+
+					foreach (var savedItem in savedItems)
+					{
+						// Finde das passende DropItem in mods anhand der Mod-Id
+						var modItem = mods.FirstOrDefault(x => x.Mod.Id == savedItem.Mod.Id);
+						if (modItem != null)
+						{
+							modItem.Selector = "2";
+							loadouts[key].Add(modItem);
+						}
+					}
 				}
 			}
 			catch (Exception e)
 			{
 				Logger.LogError($"Could not add loadouts to current collection of loadouts.");
 			}
-
-			buffParams = GetBuffParams();
 		}
-
 	}
 }

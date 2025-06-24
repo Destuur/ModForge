@@ -4,8 +4,9 @@
 		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
 			<MudText Class="header-primary pr-2" Typo="Typo.h6">Loadouts</MudText>
 			<MudSpacer />
-			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center">
-				<MudButton Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background)">Use Loadout</MudButton>
+			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2">
+				<MudButton Color="Color.Primary" Variant="Variant.Outlined" IconColor="Color.Error" OnClick="ClearLoadout">Clear Loadout</MudButton>
+				<MudButton Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background)" OnClick="SetLoadout">Use Loadout</MudButton>
 				<MudButton Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background)" OnClick="SaveLoadouts">Save Loadout</MudButton>
 				<MudSelect @bind-Value="SelectedSavefile" MultiSelection="false" class="ma-0" Style="max-width: 200px; width: 200px;" FullWidth="false" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Select Loadout" Dense T="string">
 
