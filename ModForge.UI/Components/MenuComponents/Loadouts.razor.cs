@@ -81,6 +81,10 @@ namespace ModForge.UI.Components.MenuComponents
 			}
 			else
 			{
+				if (loadouts[selectedSavefile].FirstOrDefault(x => x.Mod.Id == dropItem.Item.Mod.Id) is not null)
+				{
+					return;
+				}
 				loadouts[selectedSavefile].Add(dropItem.Item);
 				buffParams = GetBuffParams();
 			}
