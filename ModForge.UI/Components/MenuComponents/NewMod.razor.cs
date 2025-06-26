@@ -42,6 +42,18 @@ namespace ModForge.UI.Components.MenuComponents
 		}
 		[Inject]
 		public ILogger<NewMod> Logger { get; set; }
+		public bool HasSupportedVersion
+		{
+			get => hasSupportVersion;
+			set
+			{
+				hasSupportVersion = value;
+				if (value == false)
+				{
+					supportedGameVersions.Clear();
+				}
+			}
+		}
 
 
 		public void GetModId()
@@ -179,6 +191,18 @@ namespace ModForge.UI.Components.MenuComponents
 			return string.Empty;
 		}
 
+		private void EmptySupportedVersions()
+		{
+			if (hasSupportVersion)
+			{
+				return;
+			}
+			else
+			{
+				supportedGameVersions.Clear();
+			}
+		}
+
 		private string ValidateModName(string value)
 		{
 			if (string.IsNullOrWhiteSpace(value))
@@ -219,6 +243,7 @@ namespace ModForge.UI.Components.MenuComponents
 		protected override void OnInitialized()
 		{
 			Validate();
+			StateHasChanged();
 		}
 	}
 }

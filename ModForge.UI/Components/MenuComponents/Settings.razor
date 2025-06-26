@@ -1,9 +1,18 @@
 ﻿@using ModForge.Shared.Models.Localizations
 <MudGrid Style="margin: 0px;" Class="pr-4" Spacing="0">
 
+	<MudItem md="12" Style="width: 100%;" Class="pb-2">
+		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
+			<MudText Class="header-primary pr-2" Typo="Typo.h6">Settings</MudText>
+			<MudSpacer />
+			<MudButton OnClick="BackToDashboard" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">Back</MudButton>
+			<MudButton OnClick="Save" Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background); width: 150px;">Save</MudButton>
+		</MudStack>
+	</MudItem>
+
 	<MudItem md="12" Style="width: 100%;">
 		<MudStack Spacing="0">
-			<MudText  Class="header-primary pr-2" Typo="Typo.h6">Settings</MudText>
+
 			<MudTextField HelperText="Henry was taken. Pick your own." Validation="ValidateName" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" Placeholder="User Name" @bind-Value="name" />
 			<MudTextField HelperText="This is the path. The one true path." Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="/home/you/games/kcd2" ReadOnly="true" @bind-Value="gameDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectGameDirectory" Style="cursor: pointer;" />
 			<MudSelect T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Language" ValueChanged="ChangeLanguage" SelectedValues="[UserConfigurationService.Current.Language]">
@@ -14,14 +23,6 @@
 				}
 
 			</MudSelect>
-		</MudStack>
-	</MudItem>
-
-
-	<MudItem md="12" Style="width: 100%;" class="pt-2">
-		<MudStack Row Justify="Justify.FlexEnd">
-			<MudButton OnClick="BackToDashboard" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">Back</MudButton>
-			<MudButton OnClick="Save" Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background); width: 150px;">Save</MudButton>
 		</MudStack>
 	</MudItem>
 

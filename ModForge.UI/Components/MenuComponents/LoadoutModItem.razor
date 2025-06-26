@@ -1,0 +1,8 @@
+﻿<MudCard Outlined Style="@($"border: solid 1px {Mod.Color}; border-radius: 5px; width: 100%;")">
+	<MudTooltip Text="@Mod.Description">
+		<MudStack Style="height: 100%; width: 100%;" Class="pa-2" Spacing="0">
+			<MudText Typo="Typo.subtitle1">@Mod.Name</MudText>
+			<MudText Typo="Typo.caption">@($"Modded Variables: {Mod.ModItems.SelectMany(x => x.Attributes).Where(attr => attr.Name == "buff_params").Select(attr => ((Attribute<IList<BuffParam>>)attr).Value?.Count ?? 0).Sum()}")</MudText>
+		</MudStack>
+	</MudTooltip>
+</MudCard>

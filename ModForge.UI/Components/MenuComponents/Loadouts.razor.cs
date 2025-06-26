@@ -10,8 +10,10 @@ namespace ModForge.UI.Components.MenuComponents
 {
 	public partial class Loadouts
 	{
+		private LoadoutModItem loadoutModItem;
 		private List<DropItem> mods = new();
 		private List<BuffParam> buffParams;
+		private Dictionary<BuffParam, ModDescription> buffParamToMod = new();
 		private Dictionary<string, List<DropItem>> loadouts = new();
 		private string[] savefiles = { "Savefile 1", "Savefile 2", "Savefile 3", "Savefile 4", "Savefile 5" };
 		private MudDropContainer<DropItem> container;
@@ -40,6 +42,14 @@ namespace ModForge.UI.Components.MenuComponents
 				GetLoadout(value);
 			}
 		}
+
+		//private void Test(DropItem dropItem)
+		//{
+		//	if (dropItem.Selector == "2")
+		//	{
+		//		loadoutModItem.Test();
+		//	}
+		//}
 
 		private void SaveLoadouts()
 		{
@@ -142,6 +152,7 @@ namespace ModForge.UI.Components.MenuComponents
 		private List<BuffParam> GetBuffParams()
 		{
 			var foundList = new List<BuffParam>();
+			buffParamToMod.Clear();
 
 			foreach (var dropItem in loadouts[selectedSavefile])
 			{
@@ -154,15 +165,15 @@ namespace ModForge.UI.Components.MenuComponents
 							foreach (var buffParam in foundBuffParams.Value)
 							{
 								if (buffParam is null)
-								{
 									continue;
-								}
 
 								var existingBuffParam = foundList.FirstOrDefault(x => x.Key == buffParam.Key);
 
 								if (existingBuffParam is null)
 								{
-									foundList.Add(buffParam.DeepClone());
+									var clone = buffParam.DeepClone();
+									foundList.Add(clone);
+									buffParamToMod[clone] = dropItem.Mod; // Mapping speichern
 								}
 								else
 								{

@@ -178,6 +178,17 @@ h1:focus {
     visibility: visible;
 }
 
+.loadout-buff-param {
+    opacity: 0.8;
+    visibility: hidden;
+}
+
+.loadout-mod-item:hover
+.loadout-buff-param {
+    opacity: 0.8;
+    visibility: visible;
+}
+
 /*Old Stuff*/
 .mudcard {
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;

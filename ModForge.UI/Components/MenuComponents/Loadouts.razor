@@ -52,10 +52,12 @@
 
 							@foreach (var buffParam in buffParams)
 							{
-								<MudStack Row Class="px-3 py-1">
+								var mod = buffParamToMod.TryGetValue(buffParam, out var m) ? m : null;
+								<MudStack Row Class="px-3 py-1" Style="@($"border-left: solid 4px {mod?.Color}")">
 									<MudText>@buffParam.Key</MudText>
 									<MudText>@buffParam.Operation</MudText>
 									<MudText>@buffParam.Value</MudText>
+									<div class="loadout-buff-param" style="@($"border-left: solid 4px {mod?.Color}")"></div>
 								</MudStack>
 							}
 
@@ -64,7 +66,9 @@
 				</MudGrid>
 			</ChildContent>
 			<ItemRenderer>
-				<MudListItem T="string" Text="@context.Mod.Name" />
+                <MudListItem T="string" Class="loadout-mod-item">  
+                    <LoadoutModItem @ref="loadoutModItem" Mod="context.Mod" />
+                </MudListItem>
 			</ItemRenderer>
 		</MudDropContainer>
 
