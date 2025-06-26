@@ -97,7 +97,7 @@ namespace ModForge.UI.Pages
 			if (result.Canceled == false)
 			{
 				canCheckout = true;
-				Navigation.NavigateTo("/modoverview");
+				Navigation.NavigateTo($"/modoverview/{ModService.Mod.Id}");
 			}
 		}
 

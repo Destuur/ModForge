@@ -4,10 +4,19 @@
 		<ButtonWidget Typo="Typo.h4" Title="@buttonContent" Icon="@Icons.Material.Filled.AddBox" ButtonClicked="OnButtonClicked" />
 	</MudItem>
 
-	<MudItem md="12" Style="height: 85%; padding: 0px;">
-		<ModListWidget Title="Created">
-			<ModListItems Mods="createdMods" />
+	<MudItem md="12" Style="height: 85%; padding: 0px;" Class="@(isCreatedVisible ? string.Empty : "modlist-no-display")">
+		<ModListWidget Title="Created Mods" ToggledModList="ToggleModList">
+			<ModListItems Mods="createdMods" ModDeleted="RefreshMods" />
 		</ModListWidget>
 	</MudItem>
+
+	<MudItem md="12" Style="height: 85%; padding: 0px;" Class="@(isCreatedVisible ? "modlist-no-display" : string.Empty)">
+		<ModListWidget Title="External Mods" ToggledModList="ToggleModList">
+			<ModListItems Mods="externalMods" ModDeleted="RefreshMods" />
+		</ModListWidget>
+	</MudItem>
+
+
+
 
 </MudGrid>

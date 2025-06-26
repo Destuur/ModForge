@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ModForge"
         xmlns:pages="clr-namespace:ModForge.UI.Pages;assembly=ModForge.UI"
         mc:Ignorable="d"
-        Title="ModForge" Width="1280" Height="720" WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="CanResize">
+        Title="ModForge" Width="1280" Height="720" WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="CanResize" >
 
     <Border Background="#1E1E1E"
             CornerRadius="8"

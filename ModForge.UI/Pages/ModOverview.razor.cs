@@ -15,6 +15,8 @@ namespace ModForge.UI.Pages
 		public ISnackbar Snackbar { get; set; }
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
+		[Parameter]
+		public string ModId { get; set; }
 
 		public void ContinueModding()
 		{
@@ -38,7 +40,11 @@ namespace ModForge.UI.Pages
 		protected override async Task OnInitializedAsync()
 		{
 			await base.OnInitializedAsync();
-			mod = ModService.Mod;
+			if (ModService.TryGetModFromCollection(ModId))
+			{
+				mod = ModService.Mod;
+			}
+
 			StateHasChanged();
 		}
 	}

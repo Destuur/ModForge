@@ -68,6 +68,9 @@ namespace ModForge.Shared.Services
 			var modFolder = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods");
 			var modDirectories = Directory.EnumerateDirectories(modFolder);
 
+			ModCollection.Clear();
+			ExternalModCollection.Clear();
+
 			foreach (var modPath in modDirectories)
 			{
 				try

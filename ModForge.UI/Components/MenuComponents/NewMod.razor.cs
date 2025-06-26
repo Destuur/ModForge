@@ -191,18 +191,6 @@ namespace ModForge.UI.Components.MenuComponents
 			return string.Empty;
 		}
 
-		private void EmptySupportedVersions()
-		{
-			if (hasSupportVersion)
-			{
-				return;
-			}
-			else
-			{
-				supportedGameVersions.Clear();
-			}
-		}
-
 		private string ValidateModName(string value)
 		{
 			if (string.IsNullOrWhiteSpace(value))

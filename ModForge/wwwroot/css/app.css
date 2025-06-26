@@ -189,6 +189,10 @@ h1:focus {
     visibility: visible;
 }
 
+.modlist-no-display {
+    display: none;
+}
+
 /*Old Stuff*/
 .mudcard {
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;

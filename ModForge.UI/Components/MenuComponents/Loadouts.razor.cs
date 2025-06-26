@@ -13,6 +13,7 @@ namespace ModForge.UI.Components.MenuComponents
 		private LoadoutModItem loadoutModItem;
 		private List<DropItem> mods = new();
 		private List<BuffParam> buffParams;
+		//TODO: Dictionary<BuffParam, List<ModDescription>> so more than one can get displayed
 		private Dictionary<BuffParam, ModDescription> buffParamToMod = new();
 		private Dictionary<string, List<DropItem>> loadouts = new();
 		private string[] savefiles = { "Savefile 1", "Savefile 2", "Savefile 3", "Savefile 4", "Savefile 5" };

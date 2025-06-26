@@ -36,6 +36,12 @@ namespace ModForge.UI.Components.MenuComponents
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
 
+
+		public async Task BackToDashboard()
+		{
+			await ChangeChildContent.InvokeAsync(typeof(Dashboard));
+		}
+
 		private async Task ClearAsync()
 		{
 			await (fileUpload?.ClearAsync() ?? Task.CompletedTask);

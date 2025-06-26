@@ -1,6 +1,9 @@
 ﻿<MudGrid Spacing="0" Class="pt-4">
 	<MudItem md="12" Class="pr-2">
-		<MudText Class="header-primary pl-2 pb-1" Typo="Typo.h6">@Title</MudText>
+		<MudStack Row AlignItems="AlignItems.Center" Spacing="0">
+			<MudToggleIconButton Icon="@Icons.Material.Filled.SwitchLeft" ToggledIcon="@Icons.Material.Filled.SwitchRight" Color="Color.Primary" ToggledChanged="ToggleModList" />
+			<MudText Class="header-primary pb-1" Typo="Typo.h6">@Title</MudText>
+		</MudStack>
 	</MudItem>
 
 	<MudItem md="12" Style="height: 100%; padding: 0px;">

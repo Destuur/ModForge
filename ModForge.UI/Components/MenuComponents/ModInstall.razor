@@ -1,8 +1,44 @@
-﻿<MudGrid Style="height: 100%; margin: 0px;" Class="pr-4" Spacing="0">
+﻿<MudGrid Style="margin: 0px;" Class="pr-4" Spacing="0">
 
-	<MudItem md="12" Style="height: 15%; padding: 0px;">
-		<MudStack Style="width: 100%" Spacing="0">
+	<MudItem md="12" Style="width: 100%;" Class="pb-2">
+		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
 			<MudText Class="header-primary pr-2" Typo="Typo.h6">Install Mods</MudText>
+			<MudSpacer />
+
+			<MudButton OnClick="BackToDashboard" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">Back</MudButton>
+
+			<MudTooltip Text="Opens file explorer, to select mod on your harddrive">
+				<MudButton Color="Color.Primary"
+						   OnClick="@OpenFilePickerAsync"
+						   Variant="Variant.Filled">
+					Open file picker
+				</MudButton>
+			</MudTooltip>
+
+			<MudTooltip Text="Installs currently selected mod">
+				<MudButton Color="Color.Primary"
+						   Disabled="@(!fileNames.Any())"
+						   OnClick="@Upload"
+						   Variant="Variant.Filled">
+					Install
+				</MudButton>
+			</MudTooltip>
+
+			<MudTooltip Text="Clears currently selected mod">
+				<MudButton Color="Color.Error"
+						   Disabled="@(!fileNames.Any())"
+						   OnClick="@ClearAsync"
+						   Variant="Variant.Filled">
+					Clear
+				</MudButton>
+			</MudTooltip>
+
+		</MudStack>
+	</MudItem>
+
+
+	<MudItem md="12" Style="padding: 0px;">
+		<MudStack Style="width: 100%" Spacing="0">
 			<MudFileUpload T="IReadOnlyList<IBrowserFile>"
 						   @ref="@fileUpload"
 						   OnFilesChanged="OnInputFileChanged"
@@ -34,26 +70,6 @@
 					</MudPaper>
 				</ActivatorContent>
 			</MudFileUpload>
-			<MudToolBar Gutters="@false"
-						Class="relative d-flex justify-end gap-2">
-				<MudButton Color="Color.Primary"
-						   OnClick="@OpenFilePickerAsync"
-						   Variant="Variant.Filled">
-					Open file picker
-				</MudButton>
-				<MudButton Color="Color.Primary"
-						   Disabled="@(!fileNames.Any())"
-						   OnClick="@Upload"
-						   Variant="Variant.Filled">
-					Upload
-				</MudButton>
-				<MudButton Color="Color.Error"
-						   Disabled="@(!fileNames.Any())"
-						   OnClick="@ClearAsync"
-						   Variant="Variant.Filled">
-					Clear
-				</MudButton>
-			</MudToolBar>
 		</MudStack>
 
 	</MudItem>

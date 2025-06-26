@@ -103,7 +103,7 @@ namespace ModForge.UI.Pages
 			{
 				canCheckout = true;
 				Logger?.LogInformation("User confirmed checkout, navigating to mod overview.");
-				Navigation.NavigateTo("/modoverview");
+				Navigation.NavigateTo($"/modoverview/{ModService.Mod.Id}");
 			}
 			else
 			{

@@ -14,8 +14,8 @@
 </head>
 
 <body>
-    <div id="initial-loader" 
-        style="position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2) 100%); background-color: var(--background); color: #c1c1c4; font-size: 2.5rem; z-index: 9999; ">
+    <div id="initial-loader"
+         style="position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2) 100%); background-color: var(--background); color: #c1c1c4; font-size: 2.5rem; z-index: 9999; ">
 
         <img src="images/Icons/modforge.png" alt="Loading ModForge..." style="width:500px;" />
     </div>
@@ -39,6 +39,20 @@
                 loader.remove();
             }
         };
+    </script>
+    <script>
+        document.addEventListener('wheel', function (e) {
+            if (e.ctrlKey) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        document.addEventListener('keydown', function (e) {
+            // Strg + +/- oder Strg + 0
+            if (e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '0')) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 

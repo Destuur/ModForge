@@ -11,8 +11,10 @@ namespace ModForge.UI.Components.MenuComponents
 {
 	public partial class Dashboard
 	{
-		private ModCollection createdMods { get; set; }
+		private ModCollection createdMods;
+		private ModCollection externalMods;
 		private string buttonContent;
+		private bool isCreatedVisible = true;
 
 		[Inject]
 		public ModService ModService { get; set; }
@@ -27,10 +29,20 @@ namespace ModForge.UI.Components.MenuComponents
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
 
+		private void ToggleModList()
+		{
+			isCreatedVisible = !isCreatedVisible;
+		}
 
 		private async Task OnButtonClicked()
 		{
 			await ChangeChildContent.InvokeAsync(typeof(NewMod));
+		}
+
+		private void RefreshMods()
+		{
+			createdMods = ModService.ModCollection;
+			externalMods = ModService.ExternalModCollection;
 		}
 
 		protected override async Task OnInitializedAsync()
@@ -43,6 +55,7 @@ namespace ModForge.UI.Components.MenuComponents
 			}
 
 			createdMods = ModService.ModCollection;
+			externalMods = ModService.ExternalModCollection;
 
 			var culture = new CultureInfo(string.IsNullOrEmpty(UserConfigurationService.Current.Language) ? "en" : UserConfigurationService.Current.Language);
 			Thread.CurrentThread.CurrentCulture = culture;
