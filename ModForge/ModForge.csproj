@@ -48,9 +48,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="wwwroot\images\Icons\modforge.png">
+		<None Include="wwwroot\images\Icons\modforge.png">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</Resource>
+		</None>
 	</ItemGroup>
 
 </Project>
