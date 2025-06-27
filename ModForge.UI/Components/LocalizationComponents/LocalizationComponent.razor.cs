@@ -31,31 +31,31 @@ namespace ModForge.UI.Components.LocalizationComponents
 			}
 			else
 			{
-				SelectedLanguageCodes.Add(key);
+				//SelectedLanguageCodes.Add(key);
 
-				OriginalModItem.Localization.Names.TryGetValue(key, out Dictionary<string, string> nameValue);
-				OriginalModItem.Localization.Descriptions.TryGetValue(key, out Dictionary<string, string> descValue);
-				OriginalModItem.Localization.LoreDescriptions.TryGetValue(key, out Dictionary<string, string> loreValue);
+				//OriginalModItem.Localization.Names.TryGetValue(key, out Dictionary<string, string> nameValue);
+				//OriginalModItem.Localization.Descriptions.TryGetValue(key, out Dictionary<string, string> descValue);
+				//OriginalModItem.Localization.LoreDescriptions.TryGetValue(key, out Dictionary<string, string> loreValue);
 
-				if (nameValue is not null)
-				{
-					NameKey = nameValue.Keys.First();
-				}
+				//if (nameValue is not null)
+				//{
+				//	NameKey = nameValue.Keys.First();
+				//}
 
-				if (descValue is not null)
-				{
-					DescKey = descValue.Keys.First();
-				}
+				//if (descValue is not null)
+				//{
+				//	DescKey = descValue.Keys.First();
+				//}
 
-				if (loreValue is not null)
-				{
-					LoreKey = loreValue.Keys.First();
-				}
+				//if (loreValue is not null)
+				//{
+				//	LoreKey = loreValue.Keys.First();
+				//}
 
-				// Neue Dictionaries für diese Sprache hinzufügen, wenn sie nicht existieren
-				name.TryAdd(key, new Dictionary<string, string>() { { NameKey, "" } });
-				description.TryAdd(key, new Dictionary<string, string>() { { DescKey, "" } });
-				loreDescription.TryAdd(key, new Dictionary<string, string>() { { LoreKey, "" } });
+				//// Neue Dictionaries für diese Sprache hinzufügen, wenn sie nicht existieren
+				//name.TryAdd(key, new Dictionary<string, string>() { { NameKey, "" } });
+				//description.TryAdd(key, new Dictionary<string, string>() { { DescKey, "" } });
+				//loreDescription.TryAdd(key, new Dictionary<string, string>() { { LoreKey, "" } });
 			}
 
 			StateHasChanged();

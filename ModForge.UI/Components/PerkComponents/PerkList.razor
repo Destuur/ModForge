@@ -57,7 +57,7 @@
 					<MudPaper Class="attribute-card" Outlined="true" Elevation="0" Height="4rem">
 
 
-						@if (modItem.Localization == null ||
+						@* @if (modItem.Localization == null ||
 										(modItem.Localization.Names == null ||
 										modItem.Localization.Names.Count == 0))
 						{
@@ -76,7 +76,7 @@
 							<div style="display:flex; justify-content:center;">
 								<MudText Align="Align.Center" Style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 20rem;" Typo="Typo.subtitle1">@(modItem.Localization.GetName(languageKey) ?? "No Name")</MudText>
 							</div>
-						}
+						} *@
 					</MudPaper>
 				</MudListItem>
 

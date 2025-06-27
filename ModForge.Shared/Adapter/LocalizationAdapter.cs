@@ -79,116 +79,116 @@ namespace ModForge.Shared.Adapter
 
 		public void WriteLocalizationAsXml(string path, ModDescription mod)
 		{
-			CreateLocalization(path, mod);
-			AppendLocalization(path, mod);
+			//CreateLocalization(path, mod);
+			//AppendLocalization(path, mod);
 		}
 
-		private bool CreateLocalization(string path, ModDescription mod)
-		{
-			string localizationPath;
-			Dictionary<string, Dictionary<string, string>> names;
-			Dictionary<string, Dictionary<string, string>> descriptions;
-			Dictionary<string, Dictionary<string, string>> loreDescriptions;
+		//private bool CreateLocalization(string path, ModDescription mod)
+		//{
+		//	string localizationPath;
+		//	Dictionary<string, Dictionary<string, string>> names;
+		//	Dictionary<string, Dictionary<string, string>> descriptions;
+		//	Dictionary<string, Dictionary<string, string>> loreDescriptions;
 
-			foreach (var moditem in mod.ModItems)
-			{
-				if (moditem.Localization.Names.Count == 0 &&
-					moditem.Localization.Descriptions.Count == 0 &&
-					moditem.Localization.LoreDescriptions.Count == 0)
-				{
-					continue;
-				}
+		//	foreach (var moditem in mod.ModItems)
+		//	{
+		//		if (moditem.Localization.Names.Count == 0 &&
+		//			moditem.Localization.Descriptions.Count == 0 &&
+		//			moditem.Localization.LoreDescriptions.Count == 0)
+		//		{
+		//			continue;
+		//		}
 
-				names = moditem.Localization.Names;
-				descriptions = moditem.Localization.Descriptions;
-				loreDescriptions = moditem.Localization.LoreDescriptions;
+		//		names = moditem.Localization.Names;
+		//		descriptions = moditem.Localization.Descriptions;
+		//		loreDescriptions = moditem.Localization.LoreDescriptions;
 
-				var allLanguages = names.Keys
-					.Union(descriptions.Keys)
-					.Union(loreDescriptions.Keys)
-					.Distinct();
+		//		var allLanguages = names.Keys
+		//			.Union(descriptions.Keys)
+		//			.Union(loreDescriptions.Keys)
+		//			.Distinct();
 
-				foreach (var languageKey in allLanguages)
-				{
-					var language = Languages.Map.FirstOrDefault(x => x.Value == languageKey).Key;
-					localizationPath = PathFactory.CreateExportLocalizationPath(path, language, mod.Id);
+		//		foreach (var languageKey in allLanguages)
+		//		{
+		//			var language = Languages.Map.FirstOrDefault(x => x.Value == languageKey).Key;
+		//			localizationPath = PathFactory.CreateExportLocalizationPath(path, language, mod.Id);
 
-					var directory = Path.GetDirectoryName(localizationPath);
+		//			var directory = Path.GetDirectoryName(localizationPath);
 
-					if (!Directory.Exists(directory))
-					{
-						Directory.CreateDirectory(directory);
-					}
+		//			if (!Directory.Exists(directory))
+		//			{
+		//				Directory.CreateDirectory(directory);
+		//			}
 
-					var doc = new XDocument(new XElement("Table"));
-					doc.Save(localizationPath);
-				}
-			}
-			return true;
-		}
+		//			var doc = new XDocument(new XElement("Table"));
+		//			doc.Save(localizationPath);
+		//		}
+		//	}
+		//	return true;
+		//}
 
-		private bool AppendLocalization(string path, ModDescription mod)
-		{
-			var modifiedLocalizationFolders = new HashSet<string>();
+		//private bool AppendLocalization(string path, ModDescription mod)
+		//{
+		//	var modifiedLocalizationFolders = new HashSet<string>();
 
-			foreach (var modItem in mod.ModItems)
-			{
-				var loc = modItem.Localization;
+		//	foreach (var modItem in mod.ModItems)
+		//	{
+		//		var loc = modItem.Localization;
 
-				if (loc.Names.Count == 0 &&
-					   loc.Descriptions.Count == 0 &&
-					   loc.LoreDescriptions.Count == 0)
-				{
-					continue;
-				}
+		//		if (loc.Names.Count == 0 &&
+		//			   loc.Descriptions.Count == 0 &&
+		//			   loc.LoreDescriptions.Count == 0)
+		//		{
+		//			continue;
+		//		}
 
-				var allLanguages = loc.Names.Keys
-					.Union(loc.Descriptions.Keys)
-					.Union(loc.LoreDescriptions.Keys)
-					.Distinct();
+		//		var allLanguages = loc.Names.Keys
+		//			.Union(loc.Descriptions.Keys)
+		//			.Union(loc.LoreDescriptions.Keys)
+		//			.Distinct();
 
-				foreach (var languageKey in allLanguages)
-				{
-					var language = Languages.Map.FirstOrDefault(x => x.Value == languageKey).Key;
-					if (language == null)
-						continue;
+		//		foreach (var languageKey in allLanguages)
+		//		{
+		//			var language = Languages.Map.FirstOrDefault(x => x.Value == languageKey).Key;
+		//			if (language == null)
+		//				continue;
 
-					var localizationFolder = Path.Combine(path, "Mods", mod.Id, "Localization", language + "_xml");
-					var localizationPath = Path.Combine(localizationFolder, "text__" + mod.Id + ".xml");
+		//			var localizationFolder = Path.Combine(path, "Mods", mod.Id, "Localization", language + "_xml");
+		//			var localizationPath = Path.Combine(localizationFolder, "text__" + mod.Id + ".xml");
 
-					if (!File.Exists(localizationPath))
-						continue;
+		//			if (!File.Exists(localizationPath))
+		//				continue;
 
-					var doc = XDocument.Load(localizationPath);
-					var root = doc.Element("Table");
+		//			var doc = XDocument.Load(localizationPath);
+		//			var root = doc.Element("Table");
 
-					if (root == null)
-						continue;
+		//			if (root == null)
+		//				continue;
 
-					if (loc.Names.TryGetValue(languageKey, out var nameValue))
-						root.Add(CreateRow(nameValue.Keys.First(), nameValue.Values.First()));
+		//			if (loc.Names.TryGetValue(languageKey, out var nameValue))
+		//				root.Add(CreateRow(nameValue.Keys.First(), nameValue.Values.First()));
 
-					if (loc.Descriptions.TryGetValue(languageKey, out var descValue))
-						root.Add(CreateRow(descValue.Keys.First(), descValue.Values.First()));
+		//			if (loc.Descriptions.TryGetValue(languageKey, out var descValue))
+		//				root.Add(CreateRow(descValue.Keys.First(), descValue.Values.First()));
 
-					if (loc.LoreDescriptions.TryGetValue(languageKey, out var loreValue))
-						root.Add(CreateRow(loreValue.Keys.First(), loreValue.Values.First()));
+		//			if (loc.LoreDescriptions.TryGetValue(languageKey, out var loreValue))
+		//				root.Add(CreateRow(loreValue.Keys.First(), loreValue.Values.First()));
 
-					doc.Save(localizationPath);
+		//			doc.Save(localizationPath);
 
-					modifiedLocalizationFolders.Add(localizationFolder); // merken
-				}
-			}
+		//			modifiedLocalizationFolders.Add(localizationFolder); // merken
+		//		}
+		//	}
 
-			// Jetzt alle geänderten Ordner packen
-			foreach (var folder in modifiedLocalizationFolders)
-			{
-				var pakPath = folder + ".pak";
-				CreateLocalizationPak(folder, pakPath);
-			}
+		//	// Jetzt alle geänderten Ordner packen
+		//	foreach (var folder in modifiedLocalizationFolders)
+		//	{
+		//		var pakPath = folder + ".pak";
+		//		CreateLocalizationPak(folder, pakPath);
+		//	}
 
-			return true;
-		}
+		//	return true;
+		//}
 
 		private void CreateLocalizationPak(string sourceFolder, string localizationPakFile)
 		{

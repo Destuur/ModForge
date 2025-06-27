@@ -64,23 +64,23 @@ namespace ModForge.UI.Components.PerkComponents
 
 			string filter = SearchPerk;
 
-			var filtered = XmlToJsonService.Perks.Where(x =>
-				(!string.IsNullOrEmpty(x.Id) && x.Id.Contains(filter, StringComparison.OrdinalIgnoreCase)) ||
+			//var filtered = XmlToJsonService.Perks.Where(x =>
+			//	(!string.IsNullOrEmpty(x.Id) && x.Id.Contains(filter, StringComparison.OrdinalIgnoreCase)) ||
 
-				(x.Localization.Names != null &&
-				 x.Localization.Names.TryGetValue(languageKey, out var names) &&
-				 names.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase))) ||
+			//	(x.Localization.Names != null &&
+			//	 x.Localization.Names.TryGetValue(languageKey, out var names) &&
+			//	 names.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase))) ||
 
-				(x.Localization.Descriptions != null &&
-				 x.Localization.Descriptions.TryGetValue(languageKey, out var descriptions) &&
-				 descriptions.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase))) ||
+			//	(x.Localization.Descriptions != null &&
+			//	 x.Localization.Descriptions.TryGetValue(languageKey, out var descriptions) &&
+			//	 descriptions.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase))) ||
 
-				(x.Localization.LoreDescriptions != null &&
-				 x.Localization.LoreDescriptions.TryGetValue(languageKey, out var lores) &&
-				 lores.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase)))
-			);
+			//	(x.Localization.LoreDescriptions != null &&
+			//	 x.Localization.LoreDescriptions.TryGetValue(languageKey, out var lores) &&
+			//	 lores.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase)))
+			//);
 
-			PerkItems = filtered.ToList();
+			//PerkItems = filtered.ToList();
 		}
 
 		protected override async Task OnInitializedAsync()

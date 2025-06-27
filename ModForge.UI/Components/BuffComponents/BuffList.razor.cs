@@ -63,23 +63,23 @@ namespace ModForge.UI.Components.BuffComponents
 
 			string filter = SearchBuff;
 
-			var filtered = XmlToJsonService.Buffs.Where(x =>
-				(!string.IsNullOrEmpty(x.Id) && x.Id.Contains(filter, StringComparison.OrdinalIgnoreCase)) ||
+			//var filtered = XmlToJsonService.Buffs.Where(x =>
+			//	(!string.IsNullOrEmpty(x.Id) && x.Id.Contains(filter, StringComparison.OrdinalIgnoreCase)) ||
 
-				(x.Localization.Names != null &&
-				 x.Localization.Names.TryGetValue(languageKey, out var names) &&
-				 names.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase))) ||
+			//	(x.Localization.Names != null &&
+			//	 x.Localization.Names.TryGetValue(languageKey, out var names) &&
+			//	 names.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase))) ||
 
-				(x.Localization.Descriptions != null &&
-				 x.Localization.Descriptions.TryGetValue(languageKey, out var descriptions) &&
-				 descriptions.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase))) ||
+			//	(x.Localization.Descriptions != null &&
+			//	 x.Localization.Descriptions.TryGetValue(languageKey, out var descriptions) &&
+			//	 descriptions.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase))) ||
 
-				(x.Localization.LoreDescriptions != null &&
-				 x.Localization.LoreDescriptions.TryGetValue(languageKey, out var lores) &&
-				 lores.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase)))
-			);
+			//	(x.Localization.LoreDescriptions != null &&
+			//	 x.Localization.LoreDescriptions.TryGetValue(languageKey, out var lores) &&
+			//	 lores.Values.Any(v => v.Contains(filter, StringComparison.OrdinalIgnoreCase)))
+			//);
 
-			BuffItems = filtered.ToList();
+			//BuffItems = filtered.ToList();
 		}
 
 		protected override async Task OnInitializedAsync()
@@ -90,7 +90,7 @@ namespace ModForge.UI.Components.BuffComponents
 			}
 
 			await base.OnInitializedAsync();
-			BuffItems = XmlToJsonService.Buffs.Where(x => x.Localization == null || (x.Localization.Names == null || x.Localization.Names.Count == 0) == false).ToList();
+			//BuffItems = XmlToJsonService.Buffs.Where(x => x.Localization == null || (x.Localization.Names == null || x.Localization.Names.Count == 0) == false).ToList();
 		}
 
 		protected override async Task OnParametersSetAsync()

@@ -44,7 +44,7 @@
 		{
 			@foreach (var code in SelectedLanguageCodes)
 			{
-				<MudItem xs="12" sm="12" md="12" lg="12">
+				@* <MudItem xs="12" sm="12" md="12" lg="12">
 					<MudText Class="pl-2">@(Languages.Map.FirstOrDefault(x => x.Value == code).Key)</MudText>
 					<MudPaper Class="attribute-card" Outlined="true" Elevation="0">
 
@@ -80,7 +80,7 @@
 						}
 
 					</MudPaper>
-				</MudItem>
+				</MudItem> *@
 			}
 		}
 	</MudGrid>

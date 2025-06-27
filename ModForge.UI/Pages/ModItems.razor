@@ -1,54 +1,33 @@
 ﻿@page "/moditems/{ModId}"
+@using ModForge.UI.Components.MenuComponents
 
-<div style="height: calc(100vh - 6px)">
-	<div class="tabs-header">
-		<MudTabs @bind-ActivePanelIndex="selectedTab" Class="custom-tabs" Elevation="0">
-			<MudTabPanel Text="Perks" />
-			<MudTabPanel Text="Buffs" />
-			<MudTabPanel Disabled="true" Text="RPG Params" Visible="false" />
-			<MudTabPanel Disabled="true" Text="Items" Visible="false" />
-			<MudTabPanel Disabled="true" Text="Recipes" Visible="false" />
-			<MudTabPanel Disabled="true" Text="STORM" Visible="false" />
-		</MudTabs>
-	</div>
+<MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
 
+	<MudItem Style=" padding: 0px; width: 56px;">
+		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="0">
+			<MudTooltip Text="Dashboard">
+				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Dashboard)))" Icon="@Icons.Material.Filled.Adb" Style="color: var(--icon-primary);" />
+			</MudTooltip>
+			<MudTooltip Text="Install Mod">
+				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(ModInstall)))" Icon="@Icons.Material.Filled.Adb" Style="color: var(--icon-primary);" />
+			</MudTooltip>
+			<MudTooltip Text="Loadouts">
+				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Loadouts)))" Icon="@Icons.Material.Filled.Adb" Style="color: var(--icon-primary);" />
+			</MudTooltip>
+			<MudSpacer />
+			<MudTooltip Text="Settings">
+				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Settings)))" Icon="@Icons.Material.Filled.Settings" Style="color: var(--icon-primary);" />
+			</MudTooltip>
+			<MudTooltip Text="Help">
+				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" />
+			</MudTooltip>
+		</MudStack>
+	</MudItem>
 
-	<div class="tabs-content">
-		@if (selectedTab == 0)
-		{
-			<PerkList />
-		}
-		else if (selectedTab == 1)
-		{
-			<BuffList />
-		}
-		else if (selectedTab == 2)
-		{
-			<MudText>RPG Params</MudText>
-		}
-		else if (selectedTab == 3)
-		{
-			<MudText>Items</MudText>
-		}
-		else if (selectedTab == 4)
-		{
-			<MudText>Recipes</MudText>
-		}
-		else if (selectedTab == 5)
-		{
-			<MudText>STORM</MudText>
-		}
-	</div>
+	<MudItem Style="padding: 0px; width: calc(100% - 56px);">
 
-	<MudGrid Class="px-4 pt-3">
-		<MudItem xs="2" sm="2" md="2" lg="2">
-			<MudButton Class="button-cancel" FullWidth="true" Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
-		</MudItem>
-		<MudItem xs="5" sm="5" md="5" lg="5">
-			<MudButton Class="button-prominent" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveMod">Save and Leave</MudButton>
-		</MudItem>
-		<MudItem xs="5" sm="5" md="5" lg="5">
-			<MudButton Class="button-prominent" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="Checkout">Create Mod</MudButton>
-		</MudItem>
-	</MudGrid>
-</div>
+		@CustomRender
+
+	</MudItem>
+
+</MudGrid>

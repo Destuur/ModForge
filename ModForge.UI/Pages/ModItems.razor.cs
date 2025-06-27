@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
+using ModForge.Localizations;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
+using ModForge.UI.Components.ModItemComponents;
 using MudBlazor;
 
 namespace ModForge.UI.Pages
 {
 	public partial class ModItems
 	{
+		public RenderFragment? CustomRender { get; set; }
 		private int selectedTab = 0;
 
 		[Inject]
@@ -19,6 +23,20 @@ namespace ModForge.UI.Pages
 		public IDialogService DialogService { get; set; }
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
+
+		private RenderFragment CreateComponent(Type type, EventCallback<Type> changeChildContent) => builder =>
+		{
+			builder.OpenComponent(0, type);
+			builder.AddAttribute(1, "ChangeChildContent", changeChildContent);
+			builder.CloseComponent();
+		};
+
+		private void OnChangeChildContent(Type type)
+		{
+			CustomRender = CreateComponent(type, EventCallback.Factory.Create<Type>(this, OnChangeChildContent));
+		}
 
 
 		private async Task Checkout()
@@ -75,13 +93,15 @@ namespace ModForge.UI.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
+			await base.OnInitializedAsync();
 			if (ModService is null ||
 				string.IsNullOrEmpty(ModId))
 			{
 				return;
 			}
 			ModService.TryGetModFromCollection(ModId);
-			await base.OnInitializedAsync();
+
+			OnChangeChildContent(typeof(PerkItems));
 		}
 	}
 }

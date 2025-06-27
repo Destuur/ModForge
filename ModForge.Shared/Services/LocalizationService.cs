@@ -2,6 +2,7 @@
 using ModForge.Shared.Adapter;
 using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.Mods;
+using ModForge.Shared.Models.User;
 
 namespace ModForge.Shared.Services
 {
@@ -9,12 +10,31 @@ namespace ModForge.Shared.Services
 	{
 		private readonly LocalizationAdapter adapter;
 		private readonly ILogger<LocalizationService> logger;
+		private Dictionary<string, Dictionary<string, string>> localizations;
+		private UserConfigurationService userConfigurationService;
 
-		public LocalizationService(LocalizationAdapter adapter, ILogger<LocalizationService> logger)
+		public LocalizationService(LocalizationAdapter adapter, ILogger<LocalizationService> logger, UserConfigurationService userConfigurationService)
 		{
 			this.adapter = adapter;
 			this.logger = logger;
+			this.userConfigurationService = userConfigurationService;
+
+			InitializeLocalizations(userConfigurationService.Current);
 		}
+
+		private void InitializeLocalizations(UserConfiguration userConfiguration)
+		{
+			if (userConfiguration is not null)
+			{
+				localizations = ReadLocalizationFromXml(userConfiguration.GameDirectory);
+			}
+		}
+
+		public string? GetName(string language, string key)
+		{
+			return localizations.TryGetValue(language, out var value) ? value[key] : null;
+		}
+
 
 		public Dictionary<string, Dictionary<string, string>> ReadLocalizationFromXml(string path)
 		{

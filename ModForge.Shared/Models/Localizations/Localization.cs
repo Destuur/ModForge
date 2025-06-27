@@ -42,6 +42,11 @@
 			return Names.TryGetValue(language, out var value) ? value.Values.First() : null;
 		}
 
+		public string? GetName(string language, string key)
+		{
+			return Names.TryGetValue(language, out var value) ? value[key] : null;
+		}
+
 		public string? GetNameKey(string language)
 		{
 			return Names.TryGetValue(language, out var value) ? value.Keys.First() : null;
@@ -52,6 +57,11 @@
 			return Descriptions.TryGetValue(language, out var value) ? value.Values.First() : null;
 		}
 
+		public string? GetDescription(string language, string key)
+		{
+			return Descriptions.TryGetValue(language, out var value) ? value[key] : null;
+		}
+
 		public string? GetDescriptionKey(string language)
 		{
 			return Descriptions.TryGetValue(language, out var value) ? value.Keys.First() : null;
@@ -60,6 +70,11 @@
 		public string? GetLoreDescription(string language)
 		{
 			return LoreDescriptions.TryGetValue(language, out var value) ? value.Values.First() : null;
+		}
+
+		public string? GetLoreDescription(string language, string key)
+		{
+			return LoreDescriptions.TryGetValue(language, out var value) ? value[key] : null;
 		}
 
 		public string? GetLoreDescriptionKey(string language)

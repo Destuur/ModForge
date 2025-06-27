@@ -1,0 +1,27 @@
+﻿<div style="overflow-y: auto; height: 75.5dvh;">
+	<MudGrid Spacing="2">
+
+		@if (ModItems is not null)
+		{
+			@foreach (var modItem in ModItems)
+			{
+				<MudItem md="3" lg="2">
+					<MudCard Class="mod-item-card" Style="border-radius: 8px;" Elevation="10">
+						<MudStack Spacing="0" Class="px-3 py-3">
+							<MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" class="pb-2">
+								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(GetName(modItem))</MudText>
+								<MudText Typo="Typo.caption" Align="Align.Right">@(GetLevel(modItem))</MudText>
+							</MudStack>
+
+							<MudStack Row Justify="Justify.SpaceBetween">
+								<MudText Typo="Typo.body2">Skill:</MudText>
+								<MudText Typo="Typo.body2">@(GetSkillSelector(modItem))</MudText>
+							</MudStack>
+						</MudStack>
+					</MudCard>
+				</MudItem>
+			}
+		}
+
+	</MudGrid>
+</div>
