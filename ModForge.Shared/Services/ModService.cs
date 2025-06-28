@@ -65,6 +65,12 @@ namespace ModForge.Shared.Services
 				return;
 			}
 
+			if (string.IsNullOrEmpty(userConfigurationService.Current.GameDirectory))
+			{
+				logger.LogWarning($"'{userConfigurationService.Current.GameDirectory}' is no valid directory path.");
+				return;
+			}
+
 			var modFolder = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods");
 			var modDirectories = Directory.EnumerateDirectories(modFolder);
 

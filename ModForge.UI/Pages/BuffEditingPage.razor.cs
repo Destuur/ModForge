@@ -21,7 +21,7 @@ namespace ModForge.UI.Pages
 		[Parameter]
 		public string Id { get; set; }
 		[Inject]
-		public XmlToJsonService XmlToJsonService { get; set; }
+		public XmlService XmlToJsonService { get; set; }
 		[Inject]
 		public NavigationManager Navigation { get; set; }
 		[Inject]

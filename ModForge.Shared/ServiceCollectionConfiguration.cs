@@ -13,7 +13,7 @@ namespace ModForge.Shared
 			services.AddSingleton<LocalizationService>();
 			services.AddSingleton<ModService>();
 			services.AddSingleton<UserConfigurationService>();
-			services.AddSingleton<XmlToJsonService>();
+			services.AddSingleton<XmlService>();
 			services.AddSingleton<ModCollection>();
 			services.AddSingleton<DataSource>();
 			return services;

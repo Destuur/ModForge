@@ -9,5 +9,6 @@ namespace ModForge.Shared.Models.ModItems
 		public string Path { get; set; }
 		public IList<string> LinkedIds { get; set; }
 		public IList<IAttribute> Attributes { get; set; }
+		public Localization Localization { get; set; }
 	}
 }

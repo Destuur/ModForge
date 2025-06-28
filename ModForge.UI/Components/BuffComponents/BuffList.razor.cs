@@ -15,7 +15,7 @@ namespace ModForge.UI.Components.BuffComponents
 		[Inject]
 		public ModService? ModService { get; set; }
 		[Inject]
-		public XmlToJsonService? XmlToJsonService { get; set; }
+		public XmlService? XmlToJsonService { get; set; }
 		public IList<IModItem> BuffItems { get; set; } = new List<IModItem>();
 		public string? SearchBuff { get; set; }
 

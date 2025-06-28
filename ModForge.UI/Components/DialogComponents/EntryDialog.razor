@@ -1,13 +1,13 @@
-﻿<MudDialog Class="my-rounded-menu">
+﻿<MudDialog>
     <DialogContent>
-        <MudText Typo="Typo.h6" Style="font-weight: bold;">
-            "I’m feeling quite hungry... 
-        </MudText>
-        <MudText GutterBottom="true" Typo="Typo.h6" Style="font-weight: bold;">
-            for mods."
+        <MudText Typo="Typo.h6" Class="pb-6 header-primary" Style="font-weight: bold;">
+            "I’m feeling quite hungry - for mods."
         </MudText>
         <MudText GutterBottom="true">
-            A noble sentiment indeed. You've launched ModForge for the first time, which probably means you're ready to start shaping the world—or at least breaking it in style.
+            A noble sentiment indeed.
+        </MudText>
+        <MudText GutterBottom="true">
+            You've launched ModForge for the first time, which probably means you're ready to start shaping the world—or at least breaking it in style.
         </MudText>
         <MudText GutterBottom="true">
             But hold, noble tinkerer! Before we begin, there's one small issue: we're missing the sacred game data.
@@ -24,6 +24,6 @@
 
     </DialogContent>
     <DialogActions>
-        <MudButton Class="button-prominent" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" OnClick="Submit">@ButtonText</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit">@ButtonText</MudButton>
     </DialogActions>
 </MudDialog>

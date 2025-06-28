@@ -19,7 +19,7 @@ namespace ModForge.UI.Components.MenuComponents
 		[Inject]
 		public UserConfigurationService? UserConfigurationService { get; set; }
 		[Inject]
-		public XmlToJsonService? XmlToJsonService { get; set; }
+		public XmlService? XmlToJsonService { get; set; }
 		[Inject]
 		public ISnackbar SnackBar { get; set; }
 		[Inject]
@@ -86,7 +86,7 @@ namespace ModForge.UI.Components.MenuComponents
 			}
 			try
 			{
-				XmlToJsonService.ConvertXmlToJsonAsync();
+				XmlToJsonService.ConvertXml();
 			}
 			finally
 			{
@@ -189,7 +189,7 @@ namespace ModForge.UI.Components.MenuComponents
 			{
 				return;
 			}
-			XmlToJsonService.ConvertXmlToJsonAsync();
+			XmlToJsonService.ConvertXml();
 		}
 
 		private void ChangeLanguage(string language)

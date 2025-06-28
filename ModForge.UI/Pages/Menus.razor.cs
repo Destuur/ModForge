@@ -49,32 +49,7 @@ namespace ModForge.UI.Pages
 				return;
 			}
 			ModService.InitiateModCollections();
-
 			OnChangeChildContent(typeof(Dashboard));
-
-			createdMods = ModService.ModCollection;
-
-			var culture = new CultureInfo(UserConfigurationService.Current.Language);
-			Thread.CurrentThread.CurrentCulture = culture;
-			Thread.CurrentThread.CurrentUICulture = culture;
-
-			if (string.IsNullOrEmpty(UserConfigurationService.Current.GameDirectory))
-			{
-				var parameters = new DialogParameters<MoreModItemsDialog>
-				{
-					{ x => x.ButtonText, "Bring me the sacred data." }
-				};
-
-				var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, BackdropClick = false, BackgroundClass = "entry-dialog", CloseOnEscapeKey = false, FullWidth = true };
-
-				var dialog = await DialogService.ShowAsync<EntryDialog>("A Peasant With No Pitchfork entered", parameters, options);
-				var result = await dialog.Result;
-
-				if (result.Canceled == false)
-				{
-					Navigation.NavigateTo("/settings");
-				}
-			}
 		}
 	}
 }

@@ -10,20 +10,20 @@ namespace ModForge.UI.Layout
 		private bool _isLoaded = false;
 
 		[Inject]
-		public XmlToJsonService? XmlToJsonService { get; set; }
+		public XmlService? XmlToJsonService { get; set; }
 
 		protected override async Task OnAfterRenderAsync(bool firstRender)
 		{
 			if (firstRender)
 			{
-				_isLoaded = true;
-				StateHasChanged();
 				await base.OnInitializedAsync();
+				_isLoaded = true;
 				if (XmlToJsonService is null)
 				{
 					return;
 				}
 				XmlToJsonService.TryReadJsonFilesWithFallback();
+				StateHasChanged();
 			}
 		}
 	}

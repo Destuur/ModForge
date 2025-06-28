@@ -13,7 +13,7 @@ namespace ModForge.UI.Components.PerkComponents
 		[Inject]
 		public ModService? ModService { get; set; }
 		[Inject]
-		public XmlToJsonService? XmlToJsonService { get; set; }
+		public XmlService? XmlToJsonService { get; set; }
 		[Inject]
 		public UserConfigurationService UserConfigurationService { get; set; }
 		public IList<IModItem> PerkItems { get; set; } = new List<IModItem>();

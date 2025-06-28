@@ -77,7 +77,7 @@ namespace ModForge.UI.Components.MenuComponents
 
 				if (result.Canceled == false)
 				{
-					Navigation.NavigateTo("/settings");
+					await ChangeChildContent.InvokeAsync(typeof(Settings));
 				}
 			}
 			StateHasChanged();

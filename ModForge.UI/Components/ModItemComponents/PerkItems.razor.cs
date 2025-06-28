@@ -17,6 +17,6 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
 		[Inject]
-		public XmlToJsonService XmlToJsonService { get; set; }
+		public XmlService XmlToJsonService { get; set; }
 	}
 }
