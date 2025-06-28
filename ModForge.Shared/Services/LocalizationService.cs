@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using ModForge.Shared.Adapter;
 using ModForge.Shared.Models.Localizations;
+using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Models.User;
 
@@ -22,7 +23,7 @@ namespace ModForge.Shared.Services
 			InitializeLocalizations(userConfigurationService.Current);
 		}
 
-		private void InitializeLocalizations(UserConfiguration userConfiguration)
+		public void InitializeLocalizations(UserConfiguration userConfiguration)
 		{
 			if (userConfiguration is not null)
 			{
@@ -30,9 +31,68 @@ namespace ModForge.Shared.Services
 			}
 		}
 
-		public string? GetName(string language, string key)
+		public string? GetName(IModItem modItem)
 		{
-			return localizations.TryGetValue(language, out var value) ? value[key] : null;
+			try
+			{
+				var lang = userConfigurationService.Current.Language;
+				var attribute = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("ui_name"));
+
+				if (attribute is null)
+				{
+					var name = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("name")).Value;
+					return name.ToString();
+				}
+
+				var key = attribute.Value.ToString();
+				return localizations.TryGetValue(lang, out var value) ? value[key] : null;
+			}
+			catch (Exception e)
+			{
+				return "Test";
+			}
+		}
+
+		public string? GetLoreDescription(IModItem modItem)
+		{
+			try
+			{
+				var lang = userConfigurationService.Current.Language;
+				var attribute = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("ui_lore_desc"));
+
+				if (attribute is null)
+				{
+					return "No lore description found";
+				}
+
+				var key = attribute.Value.ToString();
+				return localizations.TryGetValue(lang, out var value) ? value[key] : null;
+			}
+			catch (Exception e)
+			{
+				return "Test";
+			}
+		}
+
+		public string? GetDescription(IModItem modItem)
+		{
+			try
+			{
+				var lang = userConfigurationService.Current.Language;
+				var attribute = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("ui_desc"));
+
+				if (attribute is null)
+				{
+					return "No description found";
+				}
+
+				var key = attribute.Value.ToString();
+				return localizations.TryGetValue(lang, out var value) ? value[key] : null;
+			}
+			catch (Exception e)
+			{
+				return "Test";
+			}
 		}
 
 

@@ -21,6 +21,8 @@ namespace ModForge.UI.Components.MenuComponents
 		[Inject]
 		public XmlService? XmlToJsonService { get; set; }
 		[Inject]
+		public LocalizationService? LocalizationService { get; set; }
+		[Inject]
 		public ISnackbar SnackBar { get; set; }
 		[Inject]
 		public NavigationManager Navigation { get; set; }
@@ -42,6 +44,16 @@ namespace ModForge.UI.Components.MenuComponents
 				{
 					config.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
 				});
+
+			if (XmlToJsonService is not null)
+			{
+				XmlToJsonService.ConvertXml();
+			}
+
+			if (LocalizationService is not null)
+			{
+				LocalizationService.InitializeLocalizations(UserConfigurationService.Current);
+			}
 
 			await BackToDashboard();
 		}

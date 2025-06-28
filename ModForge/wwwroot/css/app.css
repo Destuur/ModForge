@@ -160,10 +160,18 @@ h1:focus {
 
 .mod-item-card {
     height: auto;
-    min-height: 110px;
     width: 100%;
     border-radius: 8px;
     transition: all ease-in-out 0.1s;
+}
+
+.mod-item-card:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.mod-item-card:active {
+    opacity: 0.6;
 }
 
 .mod-item-hidden {

@@ -101,7 +101,7 @@ namespace ModForge.UI.Pages
 			}
 			ModService.TryGetModFromCollection(ModId);
 
-			OnChangeChildContent(typeof(PerkItems));
+			OnChangeChildContent(typeof(Perks));
 		}
 	}
 }

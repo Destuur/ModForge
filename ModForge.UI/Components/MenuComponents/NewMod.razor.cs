@@ -42,6 +42,7 @@ namespace ModForge.UI.Components.MenuComponents
 		}
 		[Inject]
 		public ILogger<NewMod> Logger { get; set; }
+
 		public bool HasSupportedVersion
 		{
 			get => hasSupportVersion;
@@ -54,7 +55,6 @@ namespace ModForge.UI.Components.MenuComponents
 				}
 			}
 		}
-
 
 		public void GetModId()
 		{
@@ -85,7 +85,6 @@ namespace ModForge.UI.Components.MenuComponents
 
 			return removed;
 		}
-
 
 		public async Task BackToDashboard()
 		{
