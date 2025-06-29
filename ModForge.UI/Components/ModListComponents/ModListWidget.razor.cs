@@ -5,7 +5,11 @@ namespace ModForge.UI.Components.ModListComponents
 	public partial class ModListWidget
 	{
 		[Parameter]
-		public string Title { get; set; }
+		public string FirstTitle { get; set; }
+		[Parameter]
+		public string SecondTitle { get; set; }
+		[Parameter]
+		public bool FirstTitleActive { get; set; }
 		[Parameter]
 		public RenderFragment ChildContent { get; set; }
 		[Parameter]

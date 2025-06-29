@@ -6,7 +6,7 @@
 			<MudText Class="header-primary pr-2" Typo="Typo.h6">Settings</MudText>
 			<MudSpacer />
 			<MudButton OnClick="BackToDashboard" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">Back</MudButton>
-			<MudButton OnClick="Save" Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background); width: 150px;">Save</MudButton>
+			<MudButton OnClick="Save" Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background); width: 150px;" Disabled="@(gameDirectory.Length == 0)">Save</MudButton>
 		</MudStack>
 	</MudItem>
 

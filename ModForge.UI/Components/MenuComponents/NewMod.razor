@@ -4,7 +4,7 @@
 		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
 			<MudText Class="header-primary pr-2" Typo="Typo.h6">Create New Mod</MudText>
 			<MudSpacer />
-			<MudButton OnClick="BackToDashboard" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">Back</MudButton>
+			<MudButton OnClick="Cancel" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">Back</MudButton>
 			<MudTooltip Text="@(isValid ? "Let the modding begin" : "Fill out the form, peasant!" )">
 				<MudButton Disabled="@(isValid == false)" OnClick="StartModding" Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background); width: 150px;">Start Modding</MudButton>
 			</MudTooltip>

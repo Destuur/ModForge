@@ -394,7 +394,7 @@ namespace ModForge.Shared.Services
 				&& !string.IsNullOrWhiteSpace(mod.Name);
 		}
 
-		private bool WriteModManifest(ModDescription mod)
+		public bool WriteModManifest(ModDescription mod)
 		{
 			if (IsValidModDescription(mod) == false)
 			{

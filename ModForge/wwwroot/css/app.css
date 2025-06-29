@@ -138,6 +138,10 @@ h1:focus {
     background-clip: text;
 }
 
+.header-inactive {
+    color: #7a7a7d;
+}
+
 .button-widget {
     display: flex;
     align-items: center;

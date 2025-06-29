@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace ModForge.UI.Components.DialogComponents
 {
-	public partial class ChangesDetectedDialog
+	public partial class HelpDialog
 	{
 		[CascadingParameter]
 		private IMudDialogInstance MudDialog { get; set; }

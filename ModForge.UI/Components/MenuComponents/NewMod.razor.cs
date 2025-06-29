@@ -42,6 +42,8 @@ namespace ModForge.UI.Components.MenuComponents
 		}
 		[Inject]
 		public ILogger<NewMod> Logger { get; set; }
+		[Inject]
+		public ISnackbar Snackbar { get; set; }
 
 		public bool HasSupportedVersion
 		{
@@ -86,11 +88,6 @@ namespace ModForge.UI.Components.MenuComponents
 			return removed;
 		}
 
-		public async Task BackToDashboard()
-		{
-			await ChangeChildContent.InvokeAsync(typeof(Dashboard));
-		}
-
 		public void StartModding()
 		{
 			if (ModService is null)
@@ -119,13 +116,14 @@ namespace ModForge.UI.Components.MenuComponents
 
 		private async Task Cancel()
 		{
-			var parameters = new DialogParameters<ChangesDetectedDialog>()
+			var parameters = new DialogParameters<TwoButtonExitDialog>()
 			{
-				{ x => x.ContentText, "Are you sure you want to cancel? Any unsaved progress will be lost." },
-				{ x => x.ButtonText, "Cancel" }
+				{ x => x.ContentText, "Are you sure you want to cancel?" },
+				{ x => x.CancelButton, "Cancel" },
+				{ x => x.ExitButton, "Discard & Exit" }
 			};
 
-			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
 
 			if (DialogService is null)
 			{
@@ -133,18 +131,16 @@ namespace ModForge.UI.Components.MenuComponents
 				return;
 			}
 
-			var dialog = await DialogService.ShowAsync<ChangesDetectedDialog>("No Epic Mod Today?", parameters, options);
+			var dialog = await DialogService.ShowAsync<TwoButtonExitDialog>("No Epic Mod Today?", parameters, options);
 			var result = await dialog.Result;
 
-			if (!result.Canceled)
+
+			if (result.Canceled)
 			{
-				if (Navigation is null)
-				{
-					Logger?.LogWarning("Navigation service is null. Cannot navigate after cancel.");
-					return;
-				}
-				await ChangeChildContent.InvokeAsync(typeof(Dashboard));
+				return;
 			}
+
+			await ChangeChildContent.InvokeAsync(typeof(Dashboard));
 		}
 
 		public void AddVersion()

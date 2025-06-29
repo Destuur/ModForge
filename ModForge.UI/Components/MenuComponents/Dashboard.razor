@@ -5,13 +5,13 @@
 	</MudItem>
 
 	<MudItem md="12" Style="height: 85%; padding: 0px;" Class="@(isCreatedVisible ? string.Empty : "modlist-no-display")">
-		<ModListWidget Title="Created Mods" ToggledModList="ToggleModList">
+		<ModListWidget FirstTitle="Created Mods" SecondTitle="External Mods" FirstTitleActive="true" ToggledModList="ToggleModList">
 			<ModListItems Mods="createdMods" ModDeleted="RefreshMods" />
 		</ModListWidget>
 	</MudItem>
 
 	<MudItem md="12" Style="height: 85%; padding: 0px;" Class="@(isCreatedVisible ? "modlist-no-display" : string.Empty)">
-		<ModListWidget Title="External Mods" ToggledModList="ToggleModList">
+		<ModListWidget FirstTitle="Created Mods" SecondTitle="External Mods" FirstTitleActive="false" ToggledModList="ToggleModList">
 			<ModListItems Mods="externalMods" ModDeleted="RefreshMods" />
 		</ModListWidget>
 	</MudItem>

@@ -217,15 +217,14 @@ namespace ModForge.UI.Pages
 		{
 			Logger?.LogInformation("Cancel operation initiated: showing discard confirmation dialog.");
 
-			var parameters = new DialogParameters<ChangesDetectedDialog>
+			var parameters = new DialogParameters<ExitDialog>
 	{
-		{ x => x.ContentText, "Do you really want to discard all changes?" },
-		{ x => x.ButtonText, "Discard" }
+		{ x => x.ContentText, "Do you really want to discard all changes?" }
 	};
 
 			var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-			var dialog = await DialogService.ShowAsync<ChangesDetectedDialog>("Discard Changes", parameters, options);
+			var dialog = await DialogService.ShowAsync<ExitDialog>("Discard Changes", parameters, options);
 			var result = await dialog.Result;
 
 			if (!result.Canceled)

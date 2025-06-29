@@ -159,15 +159,14 @@ namespace ModForge.UI.Pages
 				return true;
 			}
 
-			var parameters = new DialogParameters<ChangesDetectedDialog>()
+			var parameters = new DialogParameters<ExitDialog>()
 			{
-				{ x => x.ContentText, "If you leave now, you might lose some changes.\r\nDo you want to continue or stay on this page?" },
-				{ x => x.ButtonText, "Leave Anyway" }
+				{ x => x.ContentText, "If you leave now, you might lose some changes.\r\nDo you want to continue or stay on this page?" }
 			};
 
 			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-			var dialog = await DialogService.ShowAsync<ChangesDetectedDialog>("Leave Page?", parameters, options);
+			var dialog = await DialogService.ShowAsync<ExitDialog>("Leave Page?", parameters, options);
 			var result = await dialog.Result;
 
 			if (result.Canceled)
@@ -212,15 +211,14 @@ namespace ModForge.UI.Pages
 
 		private async Task Cancel()
 		{
-			var parameters = new DialogParameters<ChangesDetectedDialog>
+			var parameters = new DialogParameters<ExitDialog>
 		{
-			{ x => x.ContentText, "Do you really want to discard all changes?" },
-			{ x => x.ButtonText, "Discard" }
+			{ x => x.ContentText, "Do you really want to discard all changes?" }
 		};
 
 			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-			var dialog = await DialogService.ShowAsync<ChangesDetectedDialog>("Discard Changes", parameters, options);
+			var dialog = await DialogService.ShowAsync<ExitDialog>("Discard Changes", parameters, options);
 			var result = await dialog.Result;
 
 			if (result.Canceled == false)

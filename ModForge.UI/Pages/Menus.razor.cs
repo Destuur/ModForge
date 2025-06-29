@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using ModForge.Localizations;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
@@ -38,6 +39,18 @@ namespace ModForge.UI.Pages
 		private void OnChangeChildContent(Type type)
 		{
 			CustomRender = CreateComponent(type, EventCallback.Factory.Create<Type>(this, OnChangeChildContent));
+		}
+
+		private async Task GetHelp()
+		{
+			var parameters = new DialogParameters<HelpDialog>()
+			{
+				{ x => x.ContentText, "This section may be helpful in the future. Who knows..." },
+				{ x => x.ButtonText, "Stop yanking my pizzle!" },
+			};
+
+			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+			await DialogService.ShowAsync<HelpDialog>("Error 1403: Help not found!", parameters, options);
 		}
 
 		protected override async Task OnInitializedAsync()

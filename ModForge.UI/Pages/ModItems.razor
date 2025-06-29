@@ -13,10 +13,10 @@
 			</MudTooltip>
 			<MudSpacer />
 			<MudTooltip Text="Exit Modding">
-				<MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Error" />
+				<MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Error" Onclick="ExitModding" />
 			</MudTooltip>
 			<MudTooltip Text="Help">
-				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" />
+				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" OnClick="GetHelp" />
 			</MudTooltip>
 		</MudStack>
 	</MudItem>
@@ -52,7 +52,7 @@
 			<MudItem Style="width: 100%;">
 			</MudItem>
 		</MudStack>
-		<MudButton FullWidth Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background);"><b>Create Mod</b></MudButton>
+		<MudButton FullWidth Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background);" OnClick="Checkout" Disabled="@(ModService.Mod.ModItems.Count == 0)"><b>Create Mod</b></MudButton>
 	</MudDrawer>
 
 </MudGrid>

@@ -19,7 +19,7 @@
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Settings)))" Icon="@Icons.Material.Filled.Settings" Style="color: var(--icon-primary);" />
 			</MudTooltip>
 			<MudTooltip Text="Help">
-				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" />
+				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" OnClick="GetHelp" />
 			</MudTooltip>
 		</MudStack>
 	</MudItem>
