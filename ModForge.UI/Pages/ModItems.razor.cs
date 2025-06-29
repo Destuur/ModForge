@@ -12,6 +12,7 @@ namespace ModForge.UI.Pages
 	{
 		public RenderFragment? CustomRender { get; set; }
 		private int selectedTab = 0;
+		private bool isOpen;
 
 		[Inject]
 		public ModService? ModService { get; private set; }
@@ -20,22 +21,30 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
 		[Inject]
+		public LocalizationService LocalizationService { get; set; }
+		[Inject]
 		public IDialogService DialogService { get; set; }
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
 
-		private RenderFragment CreateComponent(Type type, EventCallback<Type> changeChildContent) => builder =>
+		private RenderFragment CreateComponent(Type type, EventCallback<Type> changeChildContent, EventCallback toggledDrawer) => builder =>
 		{
 			builder.OpenComponent(0, type);
 			builder.AddAttribute(1, "ChangeChildContent", changeChildContent);
+			builder.AddAttribute(2, "ToggledDrawer", toggledDrawer);
 			builder.CloseComponent();
 		};
 
 		private void OnChangeChildContent(Type type)
 		{
-			CustomRender = CreateComponent(type, EventCallback.Factory.Create<Type>(this, OnChangeChildContent));
+			CustomRender = CreateComponent(type, EventCallback.Factory.Create<Type>(this, OnChangeChildContent), EventCallback.Factory.Create(this, ToggleDrawer));
+		}
+
+		private void ToggleDrawer()
+		{
+			isOpen = !isOpen;
 		}
 
 
@@ -102,6 +111,7 @@ namespace ModForge.UI.Pages
 			ModService.TryGetModFromCollection(ModId);
 
 			OnChangeChildContent(typeof(Perks));
+			isOpen = false;
 		}
 	}
 }

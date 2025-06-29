@@ -13,6 +13,8 @@ namespace ModForge.UI.Components.ModItemComponents
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
+		[Parameter]
+		public EventCallback ToggledDrawer { get; set; }
 		[Inject]
 		public ModService ModService { get; set; }
 		[Inject]
@@ -26,6 +28,11 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
 		public string SearchBuff { get; set; }
+
+		public async Task ToggleDrawer()
+		{
+			await ToggledDrawer.InvokeAsync();
+		}
 
 		public void FilterBuffs(string skill)
 		{

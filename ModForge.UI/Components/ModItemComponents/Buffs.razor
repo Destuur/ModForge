@@ -18,8 +18,7 @@
 					<MudMenuItem OnClick="@(() => FilterBuffs("Miscellaneous"))">Miscellaneous</MudMenuItem>
 
 				</MudMenu>
-				<MudImage Src="/images/Icons/forgeicon.png" Height="48" Style="cursor: pointer;" />
-
+				<MudImage Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
 			</MudStack>
 		</MudStack>
 	</MudItem>
