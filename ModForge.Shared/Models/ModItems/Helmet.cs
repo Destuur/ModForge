@@ -3,14 +3,13 @@ using ModForge.Shared.Models.Localizations;
 
 namespace ModForge.Shared.Models.ModItems
 {
-	public class MeleeWeapon : IModItem
+	public class Helmet : IModItem
 	{
-		public MeleeWeapon()
+		public Helmet()
 		{
 
 		}
-
-		public MeleeWeapon(string id, string path, IList<string> linkedIds, IList<IAttribute> attributes, Localization localization)
+		public Helmet(string id, string path, IList<string> linkedIds, IList<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
 			Path = path;
@@ -27,7 +26,7 @@ namespace ModForge.Shared.Models.ModItems
 
 		public IModItem GetDeepCopy(IModItem modItem)
 		{
-			return new MeleeWeapon(modItem.Id, modItem.Path, modItem.LinkedIds, modItem.Attributes.Select(attr => attr.DeepClone()).ToList(), modItem.Localization.DeepClone());
+			return new Helmet(modItem.Id, modItem.Path, modItem.LinkedIds, modItem.Attributes.Select(attr => attr.DeepClone()).ToList(), modItem.Localization.DeepClone());
 		}
 	}
 }

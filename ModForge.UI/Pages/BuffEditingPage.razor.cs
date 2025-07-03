@@ -261,7 +261,7 @@ namespace ModForge.UI.Pages
 				Logger?.LogInformation($"Original buff overridden with mod item buff for Id {Id}.");
 			}
 
-			editingBuff = Buff.GetDeepCopy(originalBuff);
+			//editingBuff = Buff.GetDeepCopy(originalBuff);
 			Logger?.LogInformation("Created deep copy of buff for editing.");
 
 			StateHasChanged();

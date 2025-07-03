@@ -1,0 +1,25 @@
+﻿@page "/editing/moditem/{Id}"
+
+<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - var(--mud-appbar-height))" Elevation="0" Outlined="false" Style="background-color: transparent">
+	<MudGrid Spacing="4" Class="pa-4">
+
+		<MudItem sm="11" Style="display: flex; align-items: center;">
+			<MudText Typo="Typo.h4" Style="font-weight: bold;">@(LocalizationService.GetName(editingModItem))</MudText>
+		</MudItem>
+
+		<MudItem sm="1">
+			<MudButton Class="button-neutral" FullWidth="true" OnClick="ResetModItem" Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
+		</MudItem>
+
+		@foreach (var attribute in sortedAttributes)
+		{
+			<AttributeSelector Attribute="attribute" @key="attribute.Name"></AttributeSelector>
+		}
+
+	</MudGrid>
+</MudPaper>
+
+<MudStack Row="true" Justify="Justify.FlexEnd">
+	<MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
+	@* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveBuff">Save & Continue Modding</MudButton> *@
+</MudStack>

@@ -27,7 +27,7 @@ namespace ModForge.UI.Components.BuffComponents
 
 		public void ResetBuff()
 		{
-			EditingBuff = Buff.GetDeepCopy(OriginalBuff);
+			//EditingBuff = Buff.GetDeepCopy(OriginalBuff);
 			StateHasChanged();
 		}
 
@@ -94,7 +94,7 @@ namespace ModForge.UI.Components.BuffComponents
 		{
 			base.OnInitialized();
 			Attributes = AttributeFactory.GetAllAttributes();
-			OriginalBuff = Buff.GetDeepCopy(OriginalBuff);
+			//OriginalBuff = Buff.GetDeepCopy(OriginalBuff);
 			UpdateFilteredAttributes();
 		}
 	}

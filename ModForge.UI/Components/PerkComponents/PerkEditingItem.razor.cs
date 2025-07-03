@@ -24,7 +24,7 @@ namespace ModForge.UI.Components.PerkComponents
 
 		public void ResetBuff()
 		{
-			EditingPerk = Perk.GetDeepCopy(OriginalPerk);
+			//EditingPerk = Perk.GetDeepCopy(OriginalPerk);
 			StateHasChanged();
 		}
 
@@ -90,7 +90,7 @@ namespace ModForge.UI.Components.PerkComponents
 		{
 			base.OnInitialized();
 			Attributes = AttributeFactory.GetAllAttributes();
-			OriginalPerk = Perk.GetDeepCopy(OriginalPerk);
+			//OriginalPerk = Perk.GetDeepCopy(OriginalPerk);
 			UpdateFilteredAttributes();
 		}
 

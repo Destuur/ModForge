@@ -243,7 +243,7 @@ namespace ModForge.UI.Pages
 				originalPerk = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) as Perk;
 			}
 
-			editingPerk = Perk.GetDeepCopy(originalPerk);
+			//editingPerk = Perk.GetDeepCopy(originalPerk);
 			StateHasChanged();
 		}
 	}

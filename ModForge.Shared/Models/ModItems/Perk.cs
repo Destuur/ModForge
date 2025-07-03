@@ -46,9 +46,9 @@ namespace ModForge.Shared.Models.ModItems
 		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
 		public Localization Localization { get; set; } = new();
 
-		public static Perk GetDeepCopy(Perk perk)
+		public IModItem GetDeepCopy(IModItem modItem)
 		{
-			return new Perk(perk.Id, perk.LinkedIds, perk.Path, perk.Attributes.Select(attr => attr.DeepClone()).ToList(), perk.Localization.DeepClone());
+			return new Perk(modItem.Id, modItem.LinkedIds, modItem.Path, modItem.Attributes.Select(attr => attr.DeepClone()).ToList(), modItem.Localization.DeepClone());
 		}
 	}
 }

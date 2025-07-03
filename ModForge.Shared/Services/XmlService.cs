@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
 using ModForge.Shared.Adapter;
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Attributes;
@@ -45,10 +46,10 @@ namespace ModForge.Shared.Services
 		public IList<IModItem> Perks { get; private set; }
 		public IList<IModItem> Buffs { get; private set; }
 		public IList<IModItem> Weapons { get; private set; } = new List<IModItem>();
-		public IList<IModItem> Armor { get; private set; } = new List<IModItem>();
-		public IList<IModItem> Consumeable { get; private set; } = new List<IModItem>();
-		public IList<IModItem> CraftingMaterial { get; private set; } = new List<IModItem>();
-		public IList<IModItem> Misc { get; private set; } = new List<IModItem>();
+		public IList<IModItem> Armors { get; private set; } = new List<IModItem>();
+		public IList<IModItem> Consumeables { get; private set; } = new List<IModItem>();
+		public IList<IModItem> CraftingMaterials { get; private set; } = new List<IModItem>();
+		public IList<IModItem> MiscItems { get; private set; } = new List<IModItem>();
 		public IList<BuffParam> BuffParams { get; private set; }
 		#endregion
 
@@ -83,6 +84,17 @@ namespace ModForge.Shared.Services
 
 			logger.LogError("Failed to recover JSON files after fallback conversion.");
 			return false;
+		}
+
+		public IModItem? GetModItem(string id)
+		{
+			return Perks.FirstOrDefault(x => x.Id == id) ??
+				Buffs.FirstOrDefault(x => x.Id == id) ??
+				Weapons.FirstOrDefault(x => x.Id == id) ??
+				Armors.FirstOrDefault(x => x.Id == id) ??
+				Consumeables.FirstOrDefault(x => x.Id == id) ??
+				CraftingMaterials.FirstOrDefault(x => x.Id == id) ??
+				MiscItems.FirstOrDefault(x => x.Id == id) ?? null;
 		}
 		#endregion
 
@@ -133,22 +145,22 @@ namespace ModForge.Shared.Services
 
 				foreach (var type in armorTypes)
 				{
-					Armor = Armor.Concat(ImportModItemsOfType(type)).ToList();
+					Armors = Armors.Concat(ImportModItemsOfType(type)).ToList();
 				}
 
 				foreach (var type in consumableTypes)
 				{
-					Consumeable = Consumeable.Concat(ImportModItemsOfType(type)).ToList();
+					Consumeables = Consumeables.Concat(ImportModItemsOfType(type)).ToList();
 				}
 
 				foreach (var type in craftingMaterialTypes)
 				{
-					CraftingMaterial = CraftingMaterial.Concat(ImportModItemsOfType(type)).ToList();
+					CraftingMaterials = CraftingMaterials.Concat(ImportModItemsOfType(type)).ToList();
 				}
 
 				foreach (var type in miscTypes)
 				{
-					Misc = Misc.Concat(ImportModItemsOfType(type)).ToList();
+					MiscItems = MiscItems.Concat(ImportModItemsOfType(type)).ToList();
 				}
 
 				localizationCache = localizationService.ReadLocalizationFromXml(userConfigurationService.Current.GameDirectory);

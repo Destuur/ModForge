@@ -1,0 +1,56 @@
+﻿@using ModForge.Shared.Models.Enums
+<MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
+
+	<MudItem md="12" Style="height: 10%; width: 100%;">
+		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
+			<MudText Class="header-primary pr-2" Typo="Typo.h6">Armors</MudText>
+			<MudSpacer />
+			<MudTextField Onkeyup="SearchArmors" Immediate @bind-Value="SearchArmor" Placeholder="Search" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
+
+			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2" Class="pr-2">
+
+				<MudMenu Icon="@Icons.Material.Filled.FilterList" Style="color: var(--mud-palette-textprimary)">
+
+					@foreach (var item in Enum.GetNames(typeof(SkillSelector)))
+					{
+						<MudMenuItem OnClick="@(() => FilterArmors(item))">@item</MudMenuItem>
+					}
+
+					<MudMenuItem OnClick="@(() => FilterArmors("Miscellaneous"))">Miscellaneous</MudMenuItem>
+
+				</MudMenu>
+				<MudImage Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
+			</MudStack>
+		</MudStack>
+	</MudItem>
+
+	<MudItem md="12" Style="height: 90%; padding: 0px;">
+		<div style="overflow-y: auto; height: 98%;">
+			<MudGrid Spacing="2" Class="pr-2">
+
+				@if (armors is not null)
+				{
+					@foreach (var armor in armors)
+					{
+						<MudItem md="12" lg="12">
+							<MudCard Class="mod-item-card" Style="border-radius: 8px;" Elevation="10" onclick="@(() => NavigateToArmor(armor))">
+								<MudTooltip Text="@(GetDescription(armor))" Placement="Placement.Bottom" Arrow>
+									<MudStack Spacing="0" Class="px-3 pt-3 pb-2">
+										<MudText Class="pb-3" Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(GetName(armor))</MudText>
+
+										<MudStack Row Justify="Justify.SpaceBetween">
+											<MudText Typo="Typo.caption">Skill: @(GetSkillSelector(armor))</MudText>
+											<MudText Typo="Typo.caption">@(GetLevel(armor))</MudText>
+										</MudStack>
+									</MudStack>
+								</MudTooltip>
+							</MudCard>
+						</MudItem>
+					}
+				}
+
+			</MudGrid>
+		</div>
+	</MudItem>
+
+</MudGrid>

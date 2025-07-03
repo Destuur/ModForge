@@ -45,9 +45,9 @@ namespace ModForge.Shared.Models.ModItems
 		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
 		public Localization Localization { get; set; } = new();
 
-		public static Buff GetDeepCopy(Buff buff)
+		public IModItem GetDeepCopy(IModItem modItem)
 		{
-			return new Buff(buff.Id, buff.LinkedIds, buff.Path, buff.Attributes.Select(attr => attr.DeepClone()).ToList(), buff.Localization.DeepClone());
+			return new Buff(modItem.Id, modItem.LinkedIds, modItem.Path, modItem.Attributes.Select(attr => attr.DeepClone()).ToList(), modItem.Localization.DeepClone());
 		}
 	}
 }

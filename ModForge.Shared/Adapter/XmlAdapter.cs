@@ -46,7 +46,6 @@ namespace ModForge.Shared.Adapter
 								XDocument doc = XDocument.Load(stream);
 
 								AttributeFactory.DiscoverAndAddAttributeTypes(doc);
-								AttributeFactory.DiscoverAndAddAttributeTypes(doc);
 
 								var descandants = doc.Descendants(type);
 
