@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ModForge.Localizations;
 using ModForge.Services;
-using ModForge.Shared;
+using ModForge.Shared.Configurations;
 using ModForge.Shared.Services;
 using MudBlazor.Services;
 using Serilog;
@@ -45,6 +45,8 @@ namespace ModForge
 #endif
 
 			var serviceProvider = serviceCollection.BuildServiceProvider();
+
+			serviceProvider.AddBuildHandler();
 			Resources.Add("services", serviceProvider);
 
 			InitializeComponent();

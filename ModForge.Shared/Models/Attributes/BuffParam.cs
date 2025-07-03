@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using ModForge.Shared.Models.Enums;
+using System.Globalization;
 
 namespace ModForge.Shared.Models.Attributes
 {

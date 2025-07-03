@@ -1,61 +1,56 @@
 ﻿using ModForge.Shared.Models.Attributes;
+using ModForge.Shared.Models.Enums;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace ModForge.Shared.Factories
 {
 	public static class AttributeFactory
 	{
-		// TODO: Vielleicht ein Dictionary<string<string, Type> machen in dem auch der Anzeigename in der App stehen könnte?
-		private static readonly Dictionary<string, Type> AttributeTypeMap = new()
+		private static readonly Dictionary<string, Type> knownAttributeEnums = new()
 		{
-			{ "autolearnable", typeof(bool) },
 			{ "buff_ai_tag_id", typeof(BuffAiTag) },
 			{ "buff_class_id", typeof(BuffClass) },
-			{ "buff_desc", typeof(string) },
 			{ "buff_exclusivity_id", typeof(BuffExclusivity) },
 			{ "buff_family_id", typeof(BuffFamily) },
-			{ "buff_hc_mode_ui_visibility_id", typeof(int) },
-			{ "buff_id", typeof(string) },
 			{ "buff_lifetime_id", typeof(BuffLifetime) },
-			{ "buff_name", typeof(string) },
-			{ "buff_params", typeof(IList<BuffParam>) },
-			{ "buff_ui_name", typeof(string) },
-			{ "buff_ui_order", typeof(int) },
 			{ "buff_ui_type_id", typeof(BuffUiType) },
 			{ "buff_ui_visibility_id", typeof(BuffUiVisibility) },
-			{ "combat_technique_id", typeof(string) },
-			{ "duration", typeof(double) },
 			{ "exclude_in_game_mode", typeof(ExcludeInGameMode) },
-			{ "first_perk_id", typeof(string) },
-			{ "icon_id", typeof(string) },
-			{ "implementation", typeof(string) },
-			{ "is_persistent", typeof(bool) },
-			{ "level", typeof(int) },
-			{ "metaperk_id", typeof(string) },
-			{ "parent_id", typeof(string) },
-			{ "perk_id", typeof(string) },
-			{ "perk_name", typeof(string) },
-			{ "perk_ui_desc", typeof(string) },
-			{ "perk_ui_lore_desc", typeof(string) },
-			{ "perk_ui_name", typeof(string) },
-			{ "second_perk_id", typeof(string) },
-			{ "skill_selector", typeof(SkillSelector) },
-			{ "slot_buff_ui_name", typeof(string) },
-			// Vielleicht die Ziffern am Ende des Icon Namens?
-			{ "slot_icon_id", typeof(int) },
-			{ "source_buff_id", typeof(string) },
 			{ "stat_selector", typeof(StatSelector) },
-			{ "target_buff_id", typeof(string) },
-			{ "ui_priority", typeof(int) },
 			{ "visibility", typeof(Visibility) },
-			{ "visual_effect", typeof(string) },
+			{ "AmmoClass", typeof(AmmoClass) },
+			{ "ArmorArchetype", typeof(ArmorArchetype) },
+			{ "ArmorSurface", typeof(ArmorSurface) },
+			{ "BodyLayerType", typeof(BodyLayerType) },
+			{ "CraftingMaterialSubtype", typeof(CraftingMaterialSubtype) },
+			{ "CraftingMaterialType", typeof(CraftingMaterialType) },
+			{ "DiceBadgeSubtype", typeof(DiceBadgeSubtype) },
+			{ "DiceBadgeType", typeof(DiceBadgeType) },
+			{ "DocumentClass", typeof(DocumentClass) },
+			{ "FoodSubtype", typeof(FoodSubtype) },
+			{ "FoodType", typeof(FoodType) },
+			{ "ItemCategory", typeof(ItemCategory) },
+			{ "ItemTag", typeof(ItemTag) },
+			{ "ItemUiSound", typeof(ItemUiSound) },
+			{ "KeySubtype", typeof(KeySubtype) },
+			{ "KeyType", typeof(KeyType) },
+			{ "MiscSubtype", typeof(MiscSubtype) },
+			{ "MiscType", typeof(MiscType) },
+			{ "NpcToolSubtype", typeof(NpcToolSubtype) },
+			{ "OintmentItemSubtype", typeof(OintmentItemSubtype) },
+			{ "OintmentItemType", typeof(OintmentItemType) },
+			{ "WeaponSubClass", typeof(WeaponSubClass) }
 		};
+
+		// TODO: Vielleicht ein Dictionary<string<string, Type> machen in dem auch der Anzeigename in der App stehen könnte?
+		private static readonly Dictionary<string, Type> attributeTypeMap = new();
 
 		public static IAttribute CreateAttribute(string name, string valueStr)
 		{
-			if (!AttributeTypeMap.TryGetValue(name, out var type))
+			if (!attributeTypeMap.TryGetValue(name, out var type))
 			{
 				throw new InvalidOperationException($"No type mapping defined for attribute '{name}'.");
 			}
@@ -177,11 +172,72 @@ namespace ModForge.Shared.Factories
 
 		}
 
+		public static void DiscoverAndAddAttributeTypes(XDocument xmlDoc)
+		{
+			if (xmlDoc.Root == null)
+				return;
+
+			TraverseElements(xmlDoc.Root);
+		}
+
+		private static void TraverseElements(XElement element)
+		{
+			// Analysiere alle Attribute des aktuellen Elements
+			foreach (var attr in element.Attributes())
+			{
+				var name = attr.Name.LocalName;
+				var value = attr.Value;
+
+				if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(value))
+					continue;
+
+				if (!attributeTypeMap.ContainsKey(name))
+				{
+					Type inferredType = InferType(name, value);
+					attributeTypeMap[name] = inferredType;
+					Console.WriteLine($"[DISCOVERED] \"{name}\" → {inferredType.Name}");
+				}
+			}
+
+			// Rekursiv alle Kindelemente analysieren
+			foreach (var child in element.Elements())
+			{
+				TraverseElements(child);
+			}
+		}
+
+		private static Type InferType(string name, string value)
+		{
+			if (knownAttributeEnums.TryGetValue(name, out var enumType))
+				return enumType;
+
+			if (name == "buff_params")
+				return typeof(IList<BuffParam>);
+
+			if (name.Equals("Id", StringComparison.OrdinalIgnoreCase) ||
+				name.EndsWith("Id", StringComparison.OrdinalIgnoreCase) ||
+				Guid.TryParse(value, out _))
+			{
+				return typeof(string);
+			}
+
+			if (bool.TryParse(value, out _))
+				return typeof(bool);
+
+			if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out _))
+				return typeof(float);
+
+			if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out _))
+				return typeof(int);
+
+			return typeof(string);
+		}
+
 		public static IList<IAttribute> GetAllAttributes()
 		{
 			var newList = new List<IAttribute>();
 
-			foreach (var attribute in AttributeTypeMap)
+			foreach (var attribute in attributeTypeMap)
 			{
 				newList.Add(CreateAttribute(attribute.Key, ""));
 			}

@@ -1,0 +1,30 @@
+﻿namespace ModForge.Shared.Models.Enums
+{
+	public enum ItemUiSound
+	{
+		UiConsumeApple,
+		UiConsumeCake,
+		UiConsumeDrink,
+		UiInvItemArmorChainmail,
+		UiInvItemArmorGambeson,
+		UiInvItemArmorGauntlets,
+		UiInvItemArmorHelmet,
+		UiInvItemArmorLeather,
+		UiInvItemArmorPlate,
+		UiInvItemCap,
+		UiInvItemClothes,
+		UiInvItemHorseshoe,
+		UiInvItemJewel,
+		UiInvItemSpurs,
+		UiInvItemWeaponArrows,
+		UiInvItemWeaponAxe,
+		UiInvItemWeaponBow,
+		UiInvItemWeaponBullets,
+		UiInvItemWeaponDagger,
+		UiInvItemWeaponHalberd,
+		UiInvItemWeaponMace,
+		UiInvItemWeaponShield,
+		UiInvItemWeaponSword,
+		UiInvItemWeaponTorch
+	}
+}

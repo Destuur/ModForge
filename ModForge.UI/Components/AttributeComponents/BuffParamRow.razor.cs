@@ -1,7 +1,7 @@
-﻿using ModForge.Shared;
-using ModForge.Shared.Models.Attributes;
+﻿using ModForge.Shared.Models.Attributes;
 using Microsoft.AspNetCore.Components;
 using System.Text.RegularExpressions;
+using ModForge.Shared.Models.Enums;
 
 namespace ModForge.UI.Components.AttributeComponents
 {

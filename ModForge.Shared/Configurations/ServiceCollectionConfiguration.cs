@@ -1,10 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ModForge.Shared.Adapter;
+using ModForge.Shared.Builders;
 using ModForge.Shared.Models.Data;
+using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
+using System.Xml.Linq;
 
-namespace ModForge.Shared
+namespace ModForge.Shared.Configurations
 {
 	public static class ServiceCollectionConfiguration
 	{
@@ -16,6 +19,7 @@ namespace ModForge.Shared
 			services.AddSingleton<XmlService>();
 			services.AddSingleton<ModCollection>();
 			services.AddSingleton<DataSource>();
+			services.AddSingleton<IBuilder<XElement, IModItem>, Builder<XElement, IModItem>>();
 			return services;
 		}
 
@@ -27,4 +31,5 @@ namespace ModForge.Shared
 			return services;
 		}
 	}
+
 }

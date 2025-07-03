@@ -19,6 +19,7 @@ namespace ModForge.Shared.Services
 		private Dictionary<string, Dictionary<string, string>> localizationCache;
 		private readonly UserConfigurationService userConfigurationService;
 		private readonly ILogger<XmlService> logger;
+		private readonly List<Type> itemTypes = ToolResources.Keys.GetItemTypes();
 		#endregion
 
 		public XmlService(
@@ -39,6 +40,7 @@ namespace ModForge.Shared.Services
 		#region Properties
 		public IList<IModItem> Perks { get; private set; }
 		public IList<IModItem> Buffs { get; private set; }
+		public IList<IModItem> Items { get; private set; } = new List<IModItem>();
 		public IList<BuffParam> BuffParams { get; private set; }
 		#endregion
 
@@ -151,9 +153,23 @@ namespace ModForge.Shared.Services
 			try
 			{
 				GetDataPoints();
-
+				var watch1 = new Stopwatch();
+				watch1.Start();
 				Perks = ImportModItemsOfType(typeof(Perk));
+				watch1.Stop();
+
+				var watch2 = new Stopwatch();
+				watch2.Start();
 				Buffs = ImportModItemsOfType(typeof(Buff));
+				watch2.Stop();
+
+				var watch3 = new Stopwatch();
+				watch3.Start();
+				foreach (var type in itemTypes)
+				{
+					Items = Items.Concat(ImportModItemsOfType(type)).ToList();
+				}
+				watch3.Stop();
 
 				localizationCache = localizationService.ReadLocalizationFromXml(userConfigurationService.Current.GameDirectory);
 

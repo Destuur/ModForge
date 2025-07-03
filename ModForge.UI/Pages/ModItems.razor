@@ -11,6 +11,9 @@
 			<MudTooltip Text="Buffs">
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Buffs)))" Icon="@Icons.Material.Filled.Filter2" Style="color: var(--icon-primary);" />
 			</MudTooltip>
+			<MudTooltip Text="Items">
+				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Items)))" Icon="@Icons.Material.Filled.Filter2" Style="color: var(--icon-primary);" />
+			</MudTooltip>
 			<MudSpacer />
 			<MudTooltip Text="Exit Modding">
 				<MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Error" Onclick="ExitModding" />

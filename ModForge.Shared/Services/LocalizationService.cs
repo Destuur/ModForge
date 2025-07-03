@@ -36,11 +36,12 @@ namespace ModForge.Shared.Services
 			try
 			{
 				var lang = userConfigurationService.Current.Language;
-				var attribute = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("ui_name"));
+				var attribute = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("ui_name")) ?? modItem.Attributes.FirstOrDefault(x => x.Name.Contains("UIName"));
+
 
 				if (attribute is null)
 				{
-					var name = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("name")).Value;
+					var name = modItem.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value;
 					return name.ToString();
 				}
 

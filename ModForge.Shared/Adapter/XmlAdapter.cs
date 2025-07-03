@@ -1,4 +1,5 @@
-﻿using ModForge.Shared.Factories;
+﻿using ModForge.Shared.Builders;
+using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Data;
 using ModForge.Shared.Models.ModItems;
@@ -12,17 +13,19 @@ namespace ModForge.Shared.Adapter
 	public partial class XmlAdapter : IModItemAdapter
 	{
 		private readonly UserConfigurationService userConfigurationService;
+		private readonly IBuilder<XElement, IModItem> builder;
 
-		public XmlAdapter(UserConfigurationService userConfigurationService)
+		public XmlAdapter(UserConfigurationService userConfigurationService, IBuilder<XElement, IModItem> builder)
 		{
 			this.userConfigurationService = userConfigurationService;
+			this.builder = builder;
 		}
 
 		public IList<IModItem> ReadModItems(IDataPoint dataPoint)
 		{
 			var filePath = dataPoint.Path;
 			var foundModItems = new List<IModItem>();
-			var type = dataPoint.Type.Name.ToString().ToLower();
+			var type = dataPoint.Type.ToString();
 
 			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
@@ -42,9 +45,19 @@ namespace ModForge.Shared.Adapter
 							{
 								XDocument doc = XDocument.Load(stream);
 
-								foreach (var perkElement in doc.Descendants(type))
+								AttributeFactory.DiscoverAndAddAttributeTypes(doc);
+								AttributeFactory.DiscoverAndAddAttributeTypes(doc);
+
+								var descandants = doc.Descendants(type);
+
+								foreach (var element in doc.Descendants(type))
 								{
-									var modItem = ModItemFactory.CreateModItem(perkElement, dataPoint.Type, entry.FullName);
+									var modItem = builder.Build(element);
+
+									if (modItem is null)
+									{
+
+									}
 
 									foundModItems.Add(modItem);
 								}
@@ -58,7 +71,8 @@ namespace ModForge.Shared.Adapter
 				}
 			}
 
-			return GetLinkedModItem(filePath, foundModItems);
+			//return GetLinkedModItem(filePath, foundModItems);
+			return foundModItems;
 		}
 
 		private IList<IModItem> GetLinkedModItem(string filePath, IList<IModItem> modItems)

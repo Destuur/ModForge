@@ -49,5 +49,10 @@ namespace ModForge.Shared.Models.ModItems
 		{
 			return new Buff(buff.Id, buff.LinkedIds, buff.Path, buff.Attributes.Select(attr => attr.DeepClone()).ToList(), buff.Localization.DeepClone());
 		}
+
+		public override string ToString()
+		{
+			return Name.ToLower();
+		}
 	}
 }

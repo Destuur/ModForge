@@ -1,4 +1,5 @@
-﻿using ModForge.Shared.Services;
+﻿using ModForge.Shared.Models.Enums;
+using ModForge.Shared.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

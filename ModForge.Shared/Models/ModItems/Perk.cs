@@ -50,5 +50,10 @@ namespace ModForge.Shared.Models.ModItems
 		{
 			return new Perk(perk.Id, perk.LinkedIds, perk.Path, perk.Attributes.Select(attr => attr.DeepClone()).ToList(), perk.Localization.DeepClone());
 		}
+
+		public override string ToString()
+		{
+			return Name.ToLower();
+		}
 	}
 }
