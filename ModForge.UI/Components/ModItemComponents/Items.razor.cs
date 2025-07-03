@@ -9,7 +9,7 @@ namespace ModForge.UI.Components.ModItemComponents
 {
 	public partial class Items
 	{
-		private List<IModItem> items;
+		private List<IModItem> weapons;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -27,55 +27,55 @@ namespace ModForge.UI.Components.ModItemComponents
 		public LocalizationService LocalizationService { get; set; }
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
-		public string SearchItem { get; set; }
+		public string SearchWeapon { get; set; }
 
 		public async Task ToggleDrawer()
 		{
 			await ToggledDrawer.InvokeAsync();
 		}
 
-		public void FilterItems(string skill)
+		public void FilterWeapons(string skill)
 		{
 			if (XmlService is null)
 			{
 				return;
 			}
 
-			SearchItem = string.Empty;
+			SearchWeapon = string.Empty;
 
-			var filtered = XmlService.Perks
+			var filtered = XmlService.Weapons
 				.Where(x => x.Attributes.Any(attr =>
 					string.Equals(attr.Value.ToString(), skill, StringComparison.OrdinalIgnoreCase)));
 
 			if (!filtered.Any())
 			{
-				filtered = XmlService.Perks
+				filtered = XmlService.Weapons
 					.Where(x => !x.Attributes.Any(attr =>
 						string.Equals(attr.Name, "skill_selector", StringComparison.OrdinalIgnoreCase)));
 			}
 
-			items = filtered.ToList();
+			weapons = filtered.ToList();
 		}
 
-		public void SearchItems()
+		public void SearchWeapons()
 		{
 			if (XmlService is null)
 			{
 				return;
 			}
 
-			if (string.IsNullOrEmpty(SearchItem))
+			if (string.IsNullOrEmpty(SearchWeapon))
 			{
-				items = XmlService.Perks.ToList();
+				weapons = XmlService.Weapons.ToList();
 				return;
 			}
 
-			string filter = SearchItem;
+			string filter = SearchWeapon;
 
-			var filtered = XmlService.Perks.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
+			var filtered = XmlService.Weapons.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
 
 
-			items = filtered.ToList();
+			weapons = filtered.ToList();
 		}
 
 		private string GetName(IModItem modItem)
@@ -153,7 +153,7 @@ namespace ModForge.UI.Components.ModItemComponents
 			return $"Price: {(Double.TryParse(attribute.Value.ToString(), out var price) ? $"{price / 10} Groschen" : "-")}";
 		}
 
-		public void NavigateToItem(IModItem modItem)
+		public void NavigateToWeapon(IModItem modItem)
 		{
 			if (NavigationManager is null)
 			{
@@ -165,7 +165,7 @@ namespace ModForge.UI.Components.ModItemComponents
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
-			items = XmlService.Items.ToList();
+			weapons = XmlService.Weapons.ToList();
 		}
 	}
 }

@@ -19,7 +19,11 @@ namespace ModForge.Shared.Services
 		private Dictionary<string, Dictionary<string, string>> localizationCache;
 		private readonly UserConfigurationService userConfigurationService;
 		private readonly ILogger<XmlService> logger;
-		private readonly List<Type> itemTypes = ToolResources.Keys.GetItemTypes();
+		private readonly List<Type> weaponTypes = ToolResources.Keys.GetWeaponTypes();
+		private readonly List<Type> armorTypes = ToolResources.Keys.GetArmorTypes();
+		private readonly List<Type> consumableTypes = ToolResources.Keys.GetConsumableTypes();
+		private readonly List<Type> craftingMaterialTypes = ToolResources.Keys.GetCraftingMaterialsTypes();
+		private readonly List<Type> miscTypes = ToolResources.Keys.GetMiscTypes();
 		#endregion
 
 		public XmlService(
@@ -40,7 +44,11 @@ namespace ModForge.Shared.Services
 		#region Properties
 		public IList<IModItem> Perks { get; private set; }
 		public IList<IModItem> Buffs { get; private set; }
-		public IList<IModItem> Items { get; private set; } = new List<IModItem>();
+		public IList<IModItem> Weapons { get; private set; } = new List<IModItem>();
+		public IList<IModItem> Armor { get; private set; } = new List<IModItem>();
+		public IList<IModItem> Consumeable { get; private set; } = new List<IModItem>();
+		public IList<IModItem> CraftingMaterial { get; private set; } = new List<IModItem>();
+		public IList<IModItem> Misc { get; private set; } = new List<IModItem>();
 		public IList<BuffParam> BuffParams { get; private set; }
 		#endregion
 
@@ -79,45 +87,6 @@ namespace ModForge.Shared.Services
 		#endregion
 
 		#region Private Methods
-
-		private IEnumerable<IModItem> ReadModItemsFromJson(string filePath)
-		{
-			try
-			{
-				var items = jsonAdapter.ReadModItemsFromJson(filePath);
-				logger.LogInformation("Successfully read ModItems from JSON: {FilePath}", filePath);
-				return items;
-			}
-			catch (Exception ex)
-			{
-				logger.LogError(ex, "Failed to read ModItems from JSON: {FilePath}", filePath);
-				return Enumerable.Empty<IModItem>();
-			}
-		}
-
-		private IEnumerable<IModItem> ReadPerkJsonFile(string filePath)
-		{
-			return ReadModItemsFromJson(filePath);
-		}
-
-		private IEnumerable<IModItem> ReadBuffJsonFile(string filePath)
-		{
-			return ReadModItemsFromJson(filePath);
-		}
-
-		private string? GetAttributeValue(IEnumerable<IAttribute> attributes, params string[] names)
-		{
-			foreach (var name in names)
-			{
-				var attr = attributes.FirstOrDefault(a => string.Equals(a.Name, name, StringComparison.OrdinalIgnoreCase));
-				if (attr != null)
-				{
-					return attr.Value?.ToString();
-				}
-			}
-			return null;
-		}
-
 		private void GetDataPoints()
 		{
 			try
@@ -153,23 +122,34 @@ namespace ModForge.Shared.Services
 			try
 			{
 				GetDataPoints();
-				var watch1 = new Stopwatch();
-				watch1.Start();
+
 				Perks = ImportModItemsOfType(typeof(Perk));
-				watch1.Stop();
-
-				var watch2 = new Stopwatch();
-				watch2.Start();
 				Buffs = ImportModItemsOfType(typeof(Buff));
-				watch2.Stop();
 
-				var watch3 = new Stopwatch();
-				watch3.Start();
-				foreach (var type in itemTypes)
+				foreach (var type in weaponTypes)
 				{
-					Items = Items.Concat(ImportModItemsOfType(type)).ToList();
+					Weapons = Weapons.Concat(ImportModItemsOfType(type)).ToList();
 				}
-				watch3.Stop();
+
+				foreach (var type in armorTypes)
+				{
+					Armor = Armor.Concat(ImportModItemsOfType(type)).ToList();
+				}
+
+				foreach (var type in consumableTypes)
+				{
+					Consumeable = Consumeable.Concat(ImportModItemsOfType(type)).ToList();
+				}
+
+				foreach (var type in craftingMaterialTypes)
+				{
+					CraftingMaterial = CraftingMaterial.Concat(ImportModItemsOfType(type)).ToList();
+				}
+
+				foreach (var type in miscTypes)
+				{
+					Misc = Misc.Concat(ImportModItemsOfType(type)).ToList();
+				}
 
 				localizationCache = localizationService.ReadLocalizationFromXml(userConfigurationService.Current.GameDirectory);
 

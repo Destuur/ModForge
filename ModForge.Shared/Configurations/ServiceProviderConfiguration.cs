@@ -15,7 +15,27 @@ namespace ModForge.Shared.Configurations
 			{
 				new PerkBuildHandler<XElement, IModItem>(),
 				new BuffBuildHandler<XElement, IModItem>(),
-				new MeleeWeaponBuildHandler<XElement, IModItem>()
+				new MeleeWeaponBuildHandler<XElement, IModItem>(),
+				new NPCToolBuildHandler<XElement, IModItem>(),
+				new MiscItemBuildHandler<XElement, IModItem>(),
+				new HoodBuildHandler<XElement, IModItem>(),
+				new ArmorBuildHandler<XElement, IModItem>(),
+				new MissileWeaponBuildHandler<XElement, IModItem>(),
+				new DocumentBuildHandler<XElement, IModItem>(),
+				new HerbBuildHandler<XElement, IModItem>(),
+				new FoodBuildHandler<XElement, IModItem>(),
+				new HelmetBuildHandler<XElement, IModItem>(),
+				new DieBuildHandler<XElement, IModItem>(),
+				new AmmoBuildHandler<XElement, IModItem>(),
+				new ItemAliasBuildHandler<XElement, IModItem>(),
+				new QuickSlotContainerBuildHandler<XElement, IModItem>(),
+				new DiceBadgeBuildHandler<XElement, IModItem>(),
+				new CraftingMaterialBuildHandler<XElement, IModItem>(),
+				new PoisonBuildHandler<XElement, IModItem>(),
+				new PickableItemBuildHandler<XElement, IModItem>(),
+				new KeyBuildHandler<XElement, IModItem>(),
+				new MoneyBuildHandler<XElement, IModItem>(),
+				new KeyRingBuildHandler<XElement, IModItem>()
 			};
 			return service;
 		}

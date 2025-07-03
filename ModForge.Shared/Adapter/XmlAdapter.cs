@@ -25,7 +25,7 @@ namespace ModForge.Shared.Adapter
 		{
 			var filePath = dataPoint.Path;
 			var foundModItems = new List<IModItem>();
-			var type = dataPoint.Type.ToString();
+			var type = dataPoint.Type.Name.ToString();
 
 			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
@@ -50,16 +50,13 @@ namespace ModForge.Shared.Adapter
 
 								var descandants = doc.Descendants(type);
 
-								foreach (var element in doc.Descendants(type))
+								foreach (var element in doc.Descendants().Where(e => e.Name.LocalName.Equals(type, StringComparison.OrdinalIgnoreCase)))
 								{
 									var modItem = builder.Build(element);
-
-									if (modItem is null)
+									if (modItem != null)
 									{
-
+										foundModItems.Add(modItem);
 									}
-
-									foundModItems.Add(modItem);
 								}
 							}
 							catch (Exception ex)
