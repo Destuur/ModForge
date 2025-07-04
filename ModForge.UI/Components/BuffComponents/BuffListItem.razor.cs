@@ -38,7 +38,7 @@ namespace ModForge.UI.Components.BuffComponents
 				return;
 			}
 
-			Navigation.NavigateTo($"editing/buff/{Buff.Id}");
+			Navigation.NavigateTo($"editing/moditem/{Buff.Id}");
 		}
 	}
 }

@@ -4,12 +4,6 @@
 		<MudItem>
 			<MudText>@FormatLabel(Attribute.Name)</MudText>
 		</MudItem>
-		<MudItem>
-			<MudIconButton Icon="@Icons.Material.Filled.Close"
-						   OnClick="@(() => Remove())"
-						   Size="Size.Small"
-						   Color="Color.Error" />
-		</MudItem>
 	</MudGrid>
 
 	<div class="grow-container">
@@ -19,7 +13,7 @@
 				   FullWidth="false"
 				   Margin="Margin.Dense"
 				   Underline="false"
-				   Variant="Variant.Text" Class="ma-3" style="border-bottom: 2px solid #a14b00AA !important; text-align: center; font-size: 1.1rem; background-color: transparent !important;">
+				   Variant="Variant.Text" Class="ma-3" style="border-bottom: 2px solid var(--mud-palette-primary) !important; text-align: center; font-size: 1.1rem; background-color: transparent !important;">
 			<MudSelectItem T="string" Value="@("True")">True</MudSelectItem>
 			<MudSelectItem T="string" Value="@("False")">False</MudSelectItem>
 		</MudSelect>

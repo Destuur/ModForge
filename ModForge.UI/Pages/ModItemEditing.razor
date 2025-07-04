@@ -4,11 +4,11 @@
 	<MudGrid Spacing="4" Class="pa-4">
 
 		<MudItem sm="11" Style="display: flex; align-items: center;">
-			<MudText Typo="Typo.h4" Style="font-weight: bold;">@(LocalizationService.GetName(editingModItem))</MudText>
+			<MudText Typo="Typo.h6" Class="header-primary">@($"{editingModItem.GetType().Name}: {LocalizationService.GetName(editingModItem)}")</MudText>
 		</MudItem>
 
 		<MudItem sm="1">
-			<MudButton Class="button-neutral" FullWidth="true" OnClick="ResetModItem" Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
+			<MudButton OnClick="ResetModItem" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
 		</MudItem>
 
 		@foreach (var attribute in sortedAttributes)

@@ -58,6 +58,7 @@ namespace ModForge.UI.Components.AttributeComponents
 
 				currentEnumString = value.ToString();
 			}
+			StateHasChanged();
 		}
 
 		private string SplitCamelCase(string input)

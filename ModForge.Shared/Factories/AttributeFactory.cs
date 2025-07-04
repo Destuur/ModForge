@@ -224,8 +224,8 @@ namespace ModForge.Shared.Factories
 			if (bool.TryParse(value, out _))
 				return typeof(bool);
 
-			if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out _))
-				return typeof(float);
+			if (double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out _))
+				return typeof(double);
 
 			if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out _))
 				return typeof(int);

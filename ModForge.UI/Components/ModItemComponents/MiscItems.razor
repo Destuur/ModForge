@@ -3,10 +3,10 @@
 
 	<MudItem md="12" Style="height: 10%; width: 100%;">
 		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
-			<MudText Class="header-primary pr-2" Typo="Typo.h6">Misc Items</MudText>
+			<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>Misc Items</b></MudText>
 			<MudSpacer />
 			<MudTextField Onkeyup="SearchMiscItems" Immediate @bind-Value="SearchMiscItem" Placeholder="Search" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
-
+			<MudSpacer />
 			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2" Class="pr-2">
 
 				<MudMenu Icon="@Icons.Material.Filled.FilterList" Style="color: var(--mud-palette-textprimary)">

@@ -79,7 +79,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Perk()
 				{
-					Id = (string)element.Attribute("Id")!,
+					Id = (string)element.Attribute("perk_id")!,
 					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -110,7 +110,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Buff()
 				{
-					Id = (string)element.Attribute("Id")!,
+					Id = (string)element.Attribute("buff_id")!,
 					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;

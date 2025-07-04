@@ -167,6 +167,23 @@ h1:focus {
     width: 100%;
     border-radius: 8px;
     transition: all ease-in-out 0.1s;
+    background: rgba(255, 255, 255, 0.23);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.3px);
+    -webkit-backdrop-filter: blur(5.3px);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+.dialog-card {
+    height: auto;
+    width: 100%;
+    border-radius: 8px;
+    transition: all ease-in-out 0.1s;
+    background: rgba(255, 255, 255, 0.23);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.3px);
+    -webkit-backdrop-filter: blur(5.3px);
+    border: 1px solid rgba(255, 255, 255, 0.11);
 }
 
 .drawer-item-card {

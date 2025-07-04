@@ -159,7 +159,7 @@ namespace ModForge.UI.Components.ModItemComponents
 			{
 				return;
 			}
-			NavigationManager.NavigateTo($"editing/miscitems/{modItem.Id}");
+			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
 		protected override void OnInitialized()
