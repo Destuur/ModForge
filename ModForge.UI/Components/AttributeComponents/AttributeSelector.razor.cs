@@ -1,5 +1,7 @@
-﻿using ModForge.Shared.Models.Attributes;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using ModForge.Shared.Models.Attributes;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace ModForge.UI.Components.AttributeComponents
 {
@@ -20,6 +22,21 @@ namespace ModForge.UI.Components.AttributeComponents
 		private async Task Remove(string attribute)
 		{
 			await RemoveAttribute.InvokeAsync(attribute);
+		}
+
+		private string FormatLabel(string raw)
+		{
+			if (string.IsNullOrWhiteSpace(raw))
+				return string.Empty;
+
+			// Unterstriche durch Leerzeichen ersetzen
+			string noUnderscores = raw.Replace("_", " ");
+
+			// CamelCase trennen
+			string withSpaces = Regex.Replace(noUnderscores, "(?<!^)([A-Z])", " $1");
+
+			// Jeden Wortanfang großschreiben
+			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(withSpaces.ToLower());
 		}
 	}
 }

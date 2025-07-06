@@ -1,10 +1,10 @@
-﻿<MudGrid style="align-items:center" Spacing="2" Class="d-flex">
+﻿<MudGrid style="align-items:center;">
 
-	<MudItem xs="4" sm="4" md="4" lg="4">
-		<MudTextField @bind-Value="BuffParam.Key" Variant="Variant.Outlined" Label="Attribute" FullWidth="true" Margin="Margin.Dense"></MudTextField>
+	<MudItem xs="7">
+		<MudAutocomplete FullWidth Margin="Margin.Dense" T="string" Label="Stat"  @bind-Value="BuffParam.Key" SearchFunc="@Search" ResetValueOnEmptyText CoerceText SelectValueOnTab Immediate Variant="Variant.Outlined" ToStringFunc="x => BuffParamSerializer.GetName(x)"/>
 	</MudItem>
 
-	<MudItem xs="4" sm="4" md="4" lg="4">
+	<MudItem xs="3">
 		<MudSelect T="string" @bind-Value="CurrentEnumString" FullWidth="true" Margin="Margin.Dense" Variant="Variant.Outlined" Label="Math Operation">
 			@foreach (var enumName in enumNames)
 			{
@@ -15,8 +15,13 @@
 		</MudSelect>
 	</MudItem>
 
-	<MudItem xs="4" sm="4" md="4" lg="4">
-		<MudNumericField @bind-Value="BuffParam.Value" HideSpinButtons="true" Variant="Variant.Outlined" Label="Attribute" FullWidth="true" Margin="Margin.Dense" Immediate="true" IconSize="Size.Small" AdornmentIcon="@Icons.Material.Filled.Delete" Adornment="Adornment.End" AdornmentColor="Color.Error" OnAdornmentClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))"></MudNumericField>
+	<MudItem xs="1">
+		<MudNumericField @bind-Value="BuffParam.Value" Culture="@System.Globalization.CultureInfo.InvariantCulture" HideSpinButtons="true" Variant="Variant.Outlined" Label="Value" FullWidth="true" Margin="Margin.Dense" Immediate />
+	</MudItem>
+
+	<MudItem xs="1">
+		<MudIconButton OnClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))" Icon="@Icons.Material.Outlined.Info" Size="Size.Small" />
+		<MudIconButton OnClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" />
 	</MudItem>
 
 </MudGrid>

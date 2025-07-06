@@ -23,19 +23,24 @@
 
 			break;
 		case IList<BuffParam>:
-			<MudItem xs="12" sm="12" md="12" lg="12">
-				<MudPaper Class="mod-item-card" Outlined="true" Elevation="0">
-					<MudGrid Spacing="4">
-						<MudItem xs="12" sm="12" md="12" lg="12">
-							<MudButton class="button-prominent" Style="font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important;" FullWidth="true" OnClick="AddBuffParam">Add Buff Parameter</MudButton>
-						</MudItem>
-						<MudItem xs="12" sm="12" md="12" lg="12">
-							<BuffParamsAttribute Attribute="Attribute" @ref="childComponent" />
-						</MudItem>
-					</MudGrid>
+			<MudGrid Justify="Justify.FlexStart" Style="align-items: center; width: 100%;" Class="px-4 py-3">
 
-				</MudPaper>
-			</MudItem>
+				<MudItem xs="2">
+					<MudText Typo="Typo.h6">@FormatLabel(Attribute.Name)</MudText>
+				</MudItem>
+
+				<MudItem xs="1">
+					<MudIconButton Icon="@Icons.Material.Outlined.Info" Size="Size.Small" />
+					<MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" />
+				</MudItem>
+
+				<MudItem xs="12" Class="pt-0">
+					<MudStack style="width: 100%">
+						<BuffParamsAttribute Attribute="Attribute" @ref="childComponent" />
+						<MudButton OnClick="AddBuffParam" Color="Color.Primary" Variant="Variant.Filled" FullWidth="false">Add Buff Parameter</MudButton>
+					</MudStack>
+				</MudItem>
+			</MudGrid>
 			break;
 		default:
 			<MudText>Unknown attribute type</MudText>

@@ -3,7 +3,7 @@
 	<MudGrid Justify="Justify.FlexStart" Style="align-items: center; width: 100%;" Class="px-4">
 
 		<MudItem xs="2">
-			<MudText>@FormatLabel(Attribute.Name)</MudText>
+			<MudText Typo="Typo.h6">@FormatLabel(Attribute.Name)</MudText>
 		</MudItem>
 
 		<MudItem xs="1">
@@ -12,7 +12,7 @@
 		</MudItem>
 
 		<MudItem xs="4">
-			<MudNumericField Immediate="false" @bind-Value="CurrentValue" FullWidth="false" Margin="Margin.Dense" Underline="false" Variant="Variant.Outlined" Class="ma-3" HideSpinButtons="true" />
+			<MudNumericField Immediate="false" @bind-Value="CurrentValue" FullWidth="false" Margin="Margin.Dense" Underline="false" Variant="Variant.Outlined" Class="my-3" HideSpinButtons="true" />
 		</MudItem>
 
 	</MudGrid>

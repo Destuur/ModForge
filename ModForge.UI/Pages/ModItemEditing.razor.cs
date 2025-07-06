@@ -14,7 +14,7 @@ namespace ModForge.UI.Pages
 	public partial class ModItemEditing
 	{
 		private IModItem? editingModItem;
-		private IEnumerable<IAttribute> sortedAttributes => editingModItem.Attributes.OrderBy(x => x.Value.GetType().Name).ToList();
+		private IEnumerable<IAttribute> sortedAttributes => editingModItem.Attributes.OrderBy(attr => attr.Name == "buff_params" ? 1 : 0);
 		private List<IAttribute> filteredAttributes = new();
 
 		[Inject]
