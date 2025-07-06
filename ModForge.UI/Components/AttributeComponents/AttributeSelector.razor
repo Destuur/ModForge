@@ -3,39 +3,24 @@
 	@switch (Attribute.Value)
 	{
 		case bool:
-			<MudItem xs="2" sm="2" md="2" lg="2" Class="mx-0">
-				<MudPaper Class="mod-item-card" Outlined="true" Elevation="0" Height="100px">
-					<BoolAttribute Attribute="Attribute" RemoveAttribute="Remove" />
-				</MudPaper>
-			</MudItem>
+			<BoolAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+
 			break;
 		case Enum:
-			<MudItem xs="2" sm="2" md="2" lg="2" Class="mx-0">
-				<MudPaper Class="mod-item-card" Outlined="true" Elevation="0" Height="100px">
-					<EnumAttribute Attribute="Attribute" RemoveAttribute="Remove" />
-				</MudPaper>
-			</MudItem>
+			<EnumAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+
 			break;
 		case double:
-			<MudItem xs="2" sm="2" md="2" lg="2" Class="mx-0">
-				<MudPaper Class="mod-item-card" Outlined="true" Elevation="0" Height="100px">
-					<DoubleAttribute Attribute="Attribute" RemoveAttribute="Remove" />
-				</MudPaper>
-			</MudItem>
+			<DoubleAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+
 			break;
 		case int:
-			<MudItem xs="2" sm="2" md="2" lg="2" Class="mx-0">
-				<MudPaper Class="mod-item-card" Outlined="true" Elevation="0" Height="100px">
-					<IntAttribute Attribute="Attribute" RemoveAttribute="Remove" />
-				</MudPaper>
-			</MudItem>
+			<IntAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+
 			break;
 		case string:
-			<MudItem xs="4" sm="4" md="4" lg="4" Class="mx-0">
-				<MudPaper Class="mod-item-card" Outlined="true" Elevation="0" Height="100px">
-					<StringAttribute Attribute="Attribute" RemoveAttribute="Remove" />
-				</MudPaper>
-			</MudItem>
+			<StringAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+
 			break;
 		case IList<BuffParam>:
 			<MudItem xs="12" sm="12" md="12" lg="12">
@@ -47,7 +32,7 @@
 						<MudItem xs="12" sm="12" md="12" lg="12">
 							<BuffParamsAttribute Attribute="Attribute" @ref="childComponent" />
 						</MudItem>
-					</MudGrid>					
+					</MudGrid>
 
 				</MudPaper>
 			</MudItem>

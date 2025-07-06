@@ -20,6 +20,7 @@ namespace ModForge.Shared.Factories
 			{ "buff_ui_visibility_id", typeof(BuffUiVisibility) },
 			{ "exclude_in_game_mode", typeof(ExcludeInGameMode) },
 			{ "stat_selector", typeof(StatSelector) },
+			{ "skill_selector", typeof(SkillSelector) },
 			{ "visibility", typeof(Visibility) },
 			{ "AmmoClass", typeof(AmmoClass) },
 			{ "ArmorArchetype", typeof(ArmorArchetype) },

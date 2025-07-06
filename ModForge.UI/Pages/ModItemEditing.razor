@@ -1,25 +1,27 @@
 ﻿@page "/editing/moditem/{Id}"
 
-<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - var(--mud-appbar-height))" Elevation="0" Outlined="false" Style="background-color: transparent">
-	<MudGrid Spacing="4" Class="pa-4">
+<MudStack style="height: 100%;" Class="pa-4">
 
-		<MudItem sm="11" Style="display: flex; align-items: center;">
-			<MudText Typo="Typo.h6" Class="header-primary">@($"{editingModItem.GetType().Name}: {LocalizationService.GetName(editingModItem)}")</MudText>
-		</MudItem>
+	<MudStack Row Justify="Justify.SpaceBetween">
 
-		<MudItem sm="1">
-			<MudButton OnClick="ResetModItem" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
-		</MudItem>
+		<MudText Typo="Typo.h6" Class="header-primary">@($"{editingModItem.GetType().Name}: {LocalizationService.GetName(editingModItem)}")</MudText>
+		<MudButton OnClick="ResetModItem" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
+	</MudStack>
 
-		@foreach (var attribute in sortedAttributes)
-		{
-			<AttributeSelector Attribute="attribute" @key="attribute.Name"></AttributeSelector>
-		}
+	<MudPaper Class="overflow-y-auto" Elevation="0" Outlined="false" Style="height: 100%;">
+		<MudStack Spacing="0">
+			@foreach (var attribute in sortedAttributes)
+			{
+				<AttributeSelector Attribute="attribute" @key="attribute.Name"></AttributeSelector>
+				<MudDivider />
+			}
+		</MudStack>
+	</MudPaper>
 
-	</MudGrid>
-</MudPaper>
 
-<MudStack Row="true" Justify="Justify.FlexEnd">
-	<MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
-	@* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveBuff">Save & Continue Modding</MudButton> *@
+	<MudStack Row="true" Justify="Justify.FlexEnd">
+		<MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
+		@* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveBuff">Save & Continue Modding</MudButton> *@
+	</MudStack>
+
 </MudStack>

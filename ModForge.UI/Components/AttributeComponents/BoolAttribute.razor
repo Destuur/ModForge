@@ -1,21 +1,19 @@
 ﻿@if (Attribute is not null)
 {
-	<MudGrid Justify="Justify.SpaceBetween" Style="align-items: center;" Class="pa-1">
-		<MudItem>
+	<MudGrid Justify="Justify.FlexStart" Style="align-items: center; width: 100%;" Class="px-4">
+
+		<MudItem xs="2">
 			<MudText>@FormatLabel(Attribute.Name)</MudText>
 		</MudItem>
-	</MudGrid>
 
-	<div class="grow-container">
-		<MudSelect T="string"
-				   @bind-Value="CurrentValueString"
-				   Dense="true"
-				   FullWidth="false"
-				   Margin="Margin.Dense"
-				   Underline="false"
-				   Variant="Variant.Text" Class="ma-3" style="border-bottom: 2px solid var(--mud-palette-primary) !important; text-align: center; font-size: 1.1rem; background-color: transparent !important;">
-			<MudSelectItem T="string" Value="@("True")">True</MudSelectItem>
-			<MudSelectItem T="string" Value="@("False")">False</MudSelectItem>
-		</MudSelect>
-	</div>
+		<MudItem xs="1">
+			<MudIconButton Icon="@Icons.Material.Outlined.Info" Size="Size.Small" />
+			<MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" />
+		</MudItem>
+
+		<MudItem xs="4">
+			<MudSwitch Color="Color.Primary" @bind-Value="BoolValue" Class="my-1"  />
+		</MudItem>
+
+	</MudGrid>
 }

@@ -12,13 +12,13 @@ namespace ModForge.Shared.Adapter
 		private HashSet<string> relevantFiles = new HashSet<string>
 		{
 			"text_ui_soul.xml",
-			//"text_ui_tutorials.xml",
-			//"text_ui_quest.xml",
-			//"text_ui_misc.xml",
-			//"text_ui_minigames.xml",
+			"text_ui_tutorials.xml",
+			"text_ui_quest.xml",
+			"text_ui_misc.xml",
+			"text_ui_minigames.xml",
 			"text_ui_menus.xml",
 			"text_ui_items.xml",
-			//"text_ui_ingame.xml",
+			"text_ui_ingame.xml",
 			//"text_ui_dialog.xml"
 		};
 
