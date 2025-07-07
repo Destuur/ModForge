@@ -66,13 +66,13 @@ namespace ModForge.UI.Components.ModItemComponents
 
 			if (string.IsNullOrEmpty(SearchArmor))
 			{
-				armors = XmlService.Weapons.ToList();
+				armors = XmlService.Armors.ToList();
 				return;
 			}
 
 			string filter = SearchArmor;
 
-			var filtered = XmlService.Weapons.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
+			var filtered = XmlService.Armors.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
 
 
 			armors = filtered.ToList();

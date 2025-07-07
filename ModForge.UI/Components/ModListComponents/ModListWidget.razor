@@ -1,14 +1,16 @@
-﻿<MudGrid Spacing="0" Class="pt-4">
-	<MudItem md="12" Class="pr-2">
+﻿<MudGrid Spacing="0" Class="pt-4" Style="height: 100%;">
+	<MudItem md="12" Class="pr-2" style="height: 10%;">
 		<MudStack Row AlignItems="AlignItems.Center" Spacing="0">
 			<MudText Class="@($"{(FirstTitleActive ? "header-primary" : "header-inactive")} pb-1")" Typo="Typo.h6">@FirstTitle</MudText>
-			<MudToggleIconButton Icon="@Icons.Material.Filled.SwitchLeft" ToggledIcon="@Icons.Material.Filled.SwitchRight" Color="Color.Primary" ToggledChanged="ToggleModList" />
+			<MudIconButton Icon="@Icons.Material.Filled.Code" Color="Color.Primary" OnClick="ToggleModList" />
 			<MudText Class="@($"{(FirstTitleActive ? "header-inactive" : "header-primary")} pb-1")" Typo="Typo.h6">@SecondTitle</MudText>
 		</MudStack>
 	</MudItem>
 
-	<MudItem md="12" Style="height: 100%; padding: 0px;">
-		@ChildContent
+	<MudItem md="12" Style="height: 90%; padding: 0px;">
+		<div style="overflow-y: auto; height: 99%;">
+			@ChildContent
+		</div>
 	</MudItem>
 
 </MudGrid>

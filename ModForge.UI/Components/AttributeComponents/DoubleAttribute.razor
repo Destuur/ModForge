@@ -16,7 +16,7 @@
 		</MudItem>
 
 		<MudItem xs="5">
-			<MudText>@TimeSpan.FromSeconds(CurrentValue).ToString("hh") Stunden, @TimeSpan.FromSeconds(CurrentValue).ToString("mm") Minuten, @TimeSpan.FromSeconds(CurrentValue).ToString("ss") Sekunden</MudText>
+			<MudText>@(CurrentValue == -1 ? "No Time Limit" : $"{TimeSpan.FromSeconds(CurrentValue).ToString("hh")} Stunden, {TimeSpan.FromSeconds(CurrentValue).ToString("mm")} Minuten, {TimeSpan.FromSeconds(CurrentValue).ToString("ss")} Sekunden")</MudText>
 		</MudItem>
 
 	</MudGrid>

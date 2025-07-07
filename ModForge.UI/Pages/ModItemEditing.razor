@@ -1,27 +1,47 @@
 ﻿@page "/editing/moditem/{Id}"
 
-<MudStack style="height: 100%;" Class="pa-4">
+<MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
 
-	<MudStack Row Justify="Justify.SpaceBetween">
-
-		<MudText Typo="Typo.h6" Class="header-primary">@($"{editingModItem.GetType().Name}: {LocalizationService.GetName(editingModItem)}")</MudText>
-		<MudButton OnClick="ResetModItem" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Reset</MudButton>
-	</MudStack>
-
-	<MudPaper Class="overflow-y-auto" Elevation="0" Outlined="false" Style="height: 100%;">
-		<MudStack Spacing="0">
-			@foreach (var attribute in sortedAttributes)
-			{
-				<AttributeSelector Attribute="attribute" @key="attribute.Name"></AttributeSelector>
-				<MudDivider />
-			}
+	<MudItem Style=" padding: 0px; width: 56px;">
+		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="0" Class="pt-2">
+			<MudTooltip Text="Reset">
+				<MudIconButton Icon="@Icons.Material.Filled.Refresh" Style="color: var(--mud-palette-primary);" />
+			</MudTooltip>
+			<MudTooltip Text="Save">
+				<MudIconButton Icon="@Icons.Material.Filled.Save" Style="color: var(--mud-palette-primary);" />
+			</MudTooltip>
+			<MudSpacer />
+			<MudTooltip Text="Exit Modding">
+				<MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Error" />
+			</MudTooltip>
+			<MudTooltip Text="Help">
+				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" />
+			</MudTooltip>
 		</MudStack>
-	</MudPaper>
+	</MudItem>
 
+	<MudItem Style="padding: 0px; height: 100%; width: calc(100% - 56px);">
+		<div style="overflow-y: auto; height: 99%;">
+		<MudGrid Style="height: 100%; margin: 0px;" Spacing="0" Class="pr-2">
+			<MudItem md="12" Style="height: 10%; width: 100%;">
+				<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
+					<MudText Typo="Typo.h4" Class="header-primary"><b>@($"{editingModItem.GetType().Name}: {LocalizationService.GetName(editingModItem)}")</b></MudText>
+				</MudStack>
+			</MudItem>
 
-	<MudStack Row="true" Justify="Justify.FlexEnd">
-		<MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
-		@* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveBuff">Save & Continue Modding</MudButton> *@
-	</MudStack>
+			<MudItem md="12" Style="height: 90%; padding: 0px;">
+				<MudPaper Class="overflow-y-auto dialog-card" Elevation="0" Outlined="false" Style="height: 100%;">
+					<MudStack Spacing="0">
+						@foreach (var attribute in sortedAttributes)
+						{
+							<AttributeSelector Attribute="attribute" @key="attribute.Name"></AttributeSelector>
+							<MudDivider />
+						}
+					</MudStack>
+				</MudPaper>
+			</MudItem>
+		</MudGrid>
+		</div>
+	</MudItem>
 
-</MudStack>
+</MudGrid>

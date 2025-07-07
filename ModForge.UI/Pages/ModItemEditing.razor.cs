@@ -79,7 +79,7 @@ namespace ModForge.UI.Pages
 			if (modItem is null)
 				return;
 
-			editingModItem = modItem;
+			editingModItem = modItem.GetDeepCopy();
 			//OriginalModItem = IModItem.GetDeepCopy(editingModItem);
 		}
 	}

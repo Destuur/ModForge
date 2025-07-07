@@ -163,7 +163,6 @@ h1:focus {
     }
 
 .mod-item-card {
-    height: auto;
     width: 100%;
     border-radius: 8px;
     transition: all ease-in-out 0.1s;

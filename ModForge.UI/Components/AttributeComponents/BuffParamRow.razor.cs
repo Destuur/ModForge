@@ -2,7 +2,6 @@
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Enums;
 using System.Text.RegularExpressions;
-using static MudBlazor.Colors;
 
 namespace ModForge.UI.Components.AttributeComponents
 {

@@ -7,10 +7,10 @@ namespace ModForge.Shared.Models.ModItems
 	{
 		public string Id { get; set; }
 		public string Path { get; set; }
-		public IList<string> LinkedIds { get; set; }
-		public IList<IAttribute> Attributes { get; set; }
+		public List<string> LinkedIds { get; set; }
+		public List<IAttribute> Attributes { get; set; }
 		public Localization Localization { get; set; }
 
-		IModItem GetDeepCopy(IModItem modItem);
+		IModItem GetDeepCopy();
 	}
 }

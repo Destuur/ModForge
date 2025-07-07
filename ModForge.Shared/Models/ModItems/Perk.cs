@@ -23,32 +23,33 @@ namespace ModForge.Shared.Models.ModItems
 			Path = path;
 		}
 
-		public Perk(string path, IEnumerable<IAttribute> attributes)
+		public Perk(string path, List<IAttribute> attributes)
 		{
 			Id = attributes.FirstOrDefault(attr => attr.Name == "perk_id")?.Value.ToString() ?? string.Empty;
 			Path = path;
 			Attributes = attributes.ToList();
 		}
 
-		public Perk(string id, IList<string> buffIds, string path, IEnumerable<IAttribute> attributes, Localization localization)
+		public Perk(string id, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
-			LinkedIds = buffIds;
+			LinkedIds = linkedIds;
 			Path = path;
 			Attributes = attributes.ToList();
 			Localization = localization;
 		}
 
-		public string Id { get; set; } = string.Empty;
-		public IList<string> LinkedIds { get; set; } = new List<string>();
-		public string Path { get; set; } = string.Empty;
+		// TODO: ist das Kleinkunst oder kann das weg?
 		public string Name { get; set; } = string.Empty;
-		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
+		public string Id { get; set; } = string.Empty;
+		public string Path { get; set; } = string.Empty;
+		public List<string> LinkedIds { get; set; } = new();
+		public List<IAttribute> Attributes { get; set; } = new();
 		public Localization Localization { get; set; } = new();
 
-		public IModItem GetDeepCopy(IModItem modItem)
+		public IModItem GetDeepCopy()
 		{
-			return new Perk(modItem.Id, modItem.LinkedIds, modItem.Path, modItem.Attributes.Select(attr => attr.DeepClone()).ToList(), modItem.Localization.DeepClone());
+			return new Perk(Id, Path, LinkedIds, Attributes.Select(attr => attr.DeepClone()).ToList(), Localization.DeepClone());
 		}
 	}
 }
