@@ -9,25 +9,25 @@ namespace ModForge.UI.Components.ModItemComponents
 {
 	public partial class Consumables
 	{
-		private List<IModItem> consumables;
+		private List<IModItem>? consumables;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
 		[Parameter]
 		public EventCallback ToggledDrawer { get; set; }
 		[Inject]
-		public ModService ModService { get; set; }
+		public ModService? ModService { get; set; }
 		[Inject]
-		public ILogger<Loadouts> Logger { get; set; }
+		public ILogger<Loadouts>? Logger { get; set; }
 		[Inject]
-		public ISnackbar Snackbar { get; set; }
+		public ISnackbar? Snackbar { get; set; }
 		[Inject]
-		public XmlService XmlService { get; set; }
+		public XmlService? XmlService { get; set; }
 		[Inject]
-		public LocalizationService LocalizationService { get; set; }
+		public LocalizationService? LocalizationService { get; set; }
 		[Inject]
-		public NavigationManager NavigationManager { get; set; }
-		public string SearchConsumable { get; set; }
+		public NavigationManager? NavigationManager { get; set; }
+		public string? SearchConsumable { get; set; }
 
 		public async Task ToggleDrawer()
 		{
@@ -64,6 +64,11 @@ namespace ModForge.UI.Components.ModItemComponents
 				return;
 			}
 
+			if (LocalizationService is null)
+			{
+				return;
+			}
+
 			if (string.IsNullOrEmpty(SearchConsumable))
 			{
 				consumables = XmlService.Consumeables.ToList();
@@ -72,7 +77,7 @@ namespace ModForge.UI.Components.ModItemComponents
 
 			string filter = SearchConsumable;
 
-			var filtered = XmlService.Consumeables.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
+			var filtered = XmlService.Consumeables.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x)!.Contains(filter));
 
 
 			consumables = filtered.ToList();
@@ -164,6 +169,11 @@ namespace ModForge.UI.Components.ModItemComponents
 
 		protected override void OnInitialized()
 		{
+			if (XmlService is null)
+			{
+				return;
+			}
+
 			base.OnInitialized();
 			consumables = XmlService.Consumeables.ToList();
 		}

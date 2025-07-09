@@ -128,7 +128,6 @@ namespace ModForge.Shared.Adapter
 			var pakPath = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", modId, "Data");
 		}
 
-
 		private bool WriteModItem(string modId, IModItem modItem)
 		{
 			string directoryUpToRpg = modItem.Path.Substring(0, modItem.Path.IndexOf("rpg") + "rpg".Length);

@@ -9,7 +9,7 @@
         @if (!_isLoaded)
         {
             <div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-                Lädt...
+                <LoadingOverlay IsVisible="!_isLoaded" />
             </div>
         }
         else
