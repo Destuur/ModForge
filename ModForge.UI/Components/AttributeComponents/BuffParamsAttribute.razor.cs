@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ModForge.Shared.Models.Enums;
+using ModForge.Shared.Models.Abstractions;
 
 namespace ModForge.UI.Components.AttributeComponents
 {

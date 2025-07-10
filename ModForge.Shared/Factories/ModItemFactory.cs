@@ -1,5 +1,4 @@
-﻿using ModForge.Shared.Models.Attributes;
-using ModForge.Shared.Models.ModItems;
+﻿using ModForge.Shared.Models.Abstractions;
 using System.Linq.Expressions;
 using System.Xml;
 using System.Xml.Linq;

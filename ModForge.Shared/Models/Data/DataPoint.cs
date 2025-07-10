@@ -1,4 +1,6 @@
-﻿namespace ModForge.Shared.Models.Data
+﻿using ModForge.Shared.Models.Abstractions;
+
+namespace ModForge.Shared.Models.Data
 {
 	public class DataPoint : IDataPoint
 	{

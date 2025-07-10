@@ -34,7 +34,7 @@ html, body {
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        opacity: 0.05;
+        opacity: 0.15;
         transform: translate(-50%, -50%);
         z-index: 0;
         pointer-events: none;

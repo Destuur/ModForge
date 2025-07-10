@@ -1,4 +1,4 @@
-﻿using ModForge.Shared.Models.ModItems;
+﻿using ModForge.Shared.Models.Abstractions;
 
 namespace ModForge.Shared.Models.Mods
 {

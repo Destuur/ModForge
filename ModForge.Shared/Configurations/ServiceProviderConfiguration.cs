@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ModForge.Shared.Builders;
 using ModForge.Shared.Builders.BuildHandlers;
-using ModForge.Shared.Models.ModItems;
+using ModForge.Shared.Models.Abstractions;
 using System.Xml.Linq;
 
 namespace ModForge.Shared.Configurations

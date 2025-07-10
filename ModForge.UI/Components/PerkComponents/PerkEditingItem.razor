@@ -1,4 +1,5 @@
-﻿<MudGrid Spacing="4" Class="pa-4">
+﻿@using ModForge.Shared.Models.Abstractions
+<MudGrid Spacing="4" Class="pa-4">
 
 	<MudItem sm="10" Style="display: flex; align-items: center;">
 		<MudText Typo="Typo.h4" Style="font-weight: bold;">@(EditingPerk.Localization.GetName("en")?.ToUpper() ?? "No Name Available")</MudText>

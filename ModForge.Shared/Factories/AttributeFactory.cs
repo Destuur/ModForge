@@ -1,4 +1,5 @@
-﻿using ModForge.Shared.Models.Attributes;
+﻿using ModForge.Shared.Models.Abstractions;
+using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Enums;
 using System.Globalization;
 using System.Reflection;

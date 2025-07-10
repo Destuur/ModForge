@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using ModForge.Shared.Models.Attributes;
+using ModForge.Shared.Models.Abstractions;
 using ModForge.UI.Components.DialogComponents;
 using MudBlazor;
 using System.Globalization;

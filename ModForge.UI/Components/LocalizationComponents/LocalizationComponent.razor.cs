@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ModForge.Shared.Adapter;
+using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Localizations;
-using ModForge.Shared.Models.ModItems;
 
 namespace ModForge.UI.Components.LocalizationComponents
 {

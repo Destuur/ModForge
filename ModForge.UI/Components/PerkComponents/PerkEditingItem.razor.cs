@@ -1,10 +1,10 @@
 ﻿using ModForge.Shared.Factories;
-using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using ModForge.Shared.Models.Abstractions;
 
 namespace ModForge.UI.Components.PerkComponents
 {

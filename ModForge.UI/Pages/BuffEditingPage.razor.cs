@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.Extensions.Logging;
+using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.ModItems;

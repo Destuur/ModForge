@@ -1,7 +1,6 @@
-﻿using ModForge.Shared.Models.Attributes;
-using ModForge.Shared.Models.Localizations;
+﻿using ModForge.Shared.Models.Localizations;
 
-namespace ModForge.Shared.Models.ModItems
+namespace ModForge.Shared.Models.Abstractions
 {
 	public interface IModItem
 	{

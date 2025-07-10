@@ -1,4 +1,4 @@
-﻿using ModForge.Shared.Models.Attributes;
+﻿using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Localizations;
 using Newtonsoft.Json;
 

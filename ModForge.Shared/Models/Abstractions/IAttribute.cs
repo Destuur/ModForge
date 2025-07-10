@@ -1,4 +1,4 @@
-﻿namespace ModForge.Shared.Models.Attributes
+﻿namespace ModForge.Shared.Models.Abstractions
 {
 	public interface IAttribute
 	{

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using ModForge.Shared.Models.ModItems;
+using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.MenuComponents;
 using ModForge.UI.Pages;
