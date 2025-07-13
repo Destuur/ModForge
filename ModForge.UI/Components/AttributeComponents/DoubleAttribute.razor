@@ -12,11 +12,11 @@
 		</MudItem>
 
 		<MudItem xs="4">
-			<MudNumericField Immediate="false" @bind-Value="CurrentValue" FullWidth="false" Margin="Margin.Dense" Underline="false" Variant="Variant.Outlined" Class="my-3" HideSpinButtons="true" />
+			<MudNumericField Culture="System.Globalization.CultureInfo.InvariantCulture" T="double" Immediate="false" @bind-Value="CurrentValue" FullWidth="false" Margin="Margin.Dense" Underline="false" Variant="Variant.Outlined" Class="my-3" HideSpinButtons="true" />
 		</MudItem>
 
 		<MudItem xs="5">
-			<MudText>@(CurrentValue == -1 ? "No Time Limit" : $"{TimeSpan.FromSeconds(CurrentValue).ToString("hh")} Stunden, {TimeSpan.FromSeconds(CurrentValue).ToString("mm")} Minuten, {TimeSpan.FromSeconds(CurrentValue).ToString("ss")} Sekunden")</MudText>
+			<MudText>@* @(CurrentValue == -1 ? "No Time Limit" : $"{TimeSpan.FromSeconds(CurrentValue).ToString("hh")} Stunden, {TimeSpan.FromSeconds(CurrentValue).ToString("mm")} Minuten, {TimeSpan.FromSeconds(CurrentValue).ToString("ss")} Sekunden") *@</MudText>
 		</MudItem>
 
 	</MudGrid>

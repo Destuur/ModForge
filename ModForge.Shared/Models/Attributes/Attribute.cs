@@ -1,5 +1,6 @@
 ﻿using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Abstractions;
+using ModForge.Shared.Models.ModItems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,11 @@ namespace ModForge.Shared.Models.Attributes
 			Value = value;
 		}
 
-		public string Name { get; set; }
-		public T Value { get; set; }
+		public string Name { get; set; } = string.Empty;
+		public T Value { get; set; } = default!;
 		object IAttribute.Value
 		{
-			get => Value;
+			get => Value!;
 			set => Value = (T)value;
 		}
 
@@ -31,6 +32,10 @@ namespace ModForge.Shared.Models.Attributes
 			if (Value is IList<BuffParam> buffParams)
 			{
 				return new Attribute<IList<BuffParam>>(Name, buffParams.Select(attr => attr.DeepClone()).ToList());
+			}
+			if (Value is WeaponClasss weaponClass)
+			{
+				return new Attribute<WeaponClasss>(Name, weaponClass);
 			}
 			return new Attribute<T>(Name, Value);
 		}

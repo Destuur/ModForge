@@ -8,6 +8,8 @@ namespace ModForge.UI.Components.DialogComponents
 	public partial class BuffParamDialog
 	{
 		private string searchString = string.Empty;
+		private int selectedRowNumber = -1;
+		private MudTable<string> mudTable;
 
 		[CascadingParameter]
 		private IMudDialogInstance? MudDialog { get; set; }
@@ -21,6 +23,24 @@ namespace ModForge.UI.Components.DialogComponents
 
 		private void Submit() => MudDialog!.Close(DialogResult.Ok(SelectedBuffParamKey));
 		private void Cancel() => MudDialog!.Cancel();
+
+		private string SelectedRowClassFunc(string element, int rowNumber)
+		{
+			if (selectedRowNumber == rowNumber)
+			{
+				selectedRowNumber = -1;
+				return string.Empty;
+			}
+			else if (mudTable.SelectedItem != null && mudTable.SelectedItem.Equals(element))
+			{
+				selectedRowNumber = rowNumber;
+				return "selected";
+			}
+			else
+			{
+				return string.Empty;
+			}
+		}
 
 		private bool FilterFunc(string key)
 		{

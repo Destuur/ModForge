@@ -1,5 +1,12 @@
 ﻿@using ModForge.Shared.Models.Enums
 
+@if (!_isLoaded)
+{
+	<div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+		<LoadingOverlay IsVisible="!_isLoaded" />
+	</div>
+}
+
 <MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
 
 	<MudItem md="12" Style="height: 10%; width: 100%;">

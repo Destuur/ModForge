@@ -10,6 +10,7 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class Weapons
 	{
 		private List<IModItem> weapons;
+		private bool _isLoaded = false;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -162,10 +163,10 @@ namespace ModForge.UI.Components.ModItemComponents
 			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
-		protected override void OnInitialized()
+		protected override async Task OnInitializedAsync()
 		{
-			base.OnInitialized();
-			weapons = XmlService.Weapons.ToList();
+			weapons = await Task.Run(() => XmlService.Weapons.ToList());
+			_isLoaded = true;
 		}
 	}
 }

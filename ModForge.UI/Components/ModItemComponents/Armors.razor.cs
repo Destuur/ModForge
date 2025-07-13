@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using ModForge.Shared.Models.Abstractions;
+using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.MenuComponents;
 using MudBlazor;
@@ -10,6 +11,7 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class Armors
 	{
 		private List<IModItem> armors;
+		private bool _isLoaded = false;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -162,10 +164,11 @@ namespace ModForge.UI.Components.ModItemComponents
 			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
-		protected override void OnInitialized()
+
+		protected override async Task OnInitializedAsync()
 		{
-			base.OnInitialized();
-			armors = XmlService.Armors.ToList();
+			armors = await Task.Run(() => XmlService.Armors.ToList());
+			_isLoaded = true;
 		}
 	}
 }

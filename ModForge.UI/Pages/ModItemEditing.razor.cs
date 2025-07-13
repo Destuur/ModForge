@@ -2,18 +2,17 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Abstractions;
+using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
 using MudBlazor;
-using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace ModForge.UI.Pages
 {
 	public partial class ModItemEditing
 	{
 		private IModItem? editingModItem;
-		private IEnumerable<IAttribute> sortedAttributes => editingModItem.Attributes.OrderBy(attr => attr.Name == "buff_params" ? 1 : 0);
+		private IEnumerable<IAttribute> sortedAttributes => editingModItem!.Attributes.OrderBy(attr => attr.Name == "buff_params" ? 1 : 0);
 		private List<IAttribute> filteredAttributes = new();
 
 		[Inject]
@@ -25,32 +24,74 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public ModService? ModService { get; set; }
 		[Inject]
-		public ILogger<ModItemEditing> Logger { get; set; }
+		public ILogger<ModItemEditing>? Logger { get; set; }
 		[Inject]
-		public IDialogService DialogService { get; set; }
+		public IDialogService? DialogService { get; set; }
 		[Parameter]
 		public string? Id { get; set; }
-		public IModItem OriginalModItem { get; set; }
+		public IModItem? OriginalModItem { get; set; }
 
 		public void ResetModItem()
 		{
-			//editingModItem = Buff.GetDeepCopy(OriginalModItem);
+			if (OriginalModItem is null)
+			{
+				return;
+			}
+
+			editingModItem = OriginalModItem.GetDeepCopy();
 			StateHasChanged();
 		}
 
-		private async Task Cancel()
+		private void SaveItem()
 		{
+			if (editingModItem is null || NavigationManager is null)
+			{
+				Logger?.LogWarning("SaveItem aborted: editingModItem is null.");
+				return;
+			}
+
+			if (OriginalModItem is null)
+			{
+				Logger?.LogWarning("SaveItem aborted: originalBuff is null.");
+				return;
+			}
+
+			if (ModService is null)
+			{
+				Logger?.LogWarning("SaveItem aborted: ModService is null.");
+				return;
+			}
+
+			ModService.AddModItem(editingModItem);
+			Logger?.LogInformation($"Saved mod buff with Id: {editingModItem.Id}");
+			NavigationManager.NavigateTo($"/moditems/{ModService.Mod.Id}");
+		}
+
+		private async Task Cancle()
+		{
+			if (DialogService is null || NavigationManager is null || ModService is null)
+			{
+				return;
+			}
+
 			Logger?.LogInformation("Cancel operation initiated: showing discard confirmation dialog.");
 
-			var parameters = new DialogParameters<ExitDialog>
-	{
-		{ x => x.ContentText, "Do you really want to discard all changes?" }
-	};
+			var parameters = new DialogParameters<TwoButtonExitDialog>()
+			{
+				{ x => x.ContentText, "Are you sure you want to cancel?" },
+				{ x => x.CancelButton, "Cancel" },
+				{ x => x.ExitButton, "Discard & Exit" }
+			};
 
 			var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-			var dialog = await DialogService.ShowAsync<ExitDialog>("Discard Changes", parameters, options);
+			var dialog = await DialogService.ShowAsync<TwoButtonExitDialog>("Return to list", parameters, options);
 			var result = await dialog.Result;
+
+			if (result is null)
+			{
+				return;
+			}
 
 			if (!result.Canceled)
 			{
@@ -73,13 +114,12 @@ namespace ModForge.UI.Pages
 			if (string.IsNullOrEmpty(Id))
 				return;
 
-			var modItem = XmlService.GetModItem(Id);
+			OriginalModItem = XmlService.GetModItem(Id);
 
-			if (modItem is null)
+			if (OriginalModItem is null)
 				return;
 
-			editingModItem = modItem.GetDeepCopy();
-			//OriginalModItem = IModItem.GetDeepCopy(editingModItem);
+			editingModItem = OriginalModItem.GetDeepCopy();
 		}
 	}
 }

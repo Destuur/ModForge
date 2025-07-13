@@ -27,6 +27,17 @@ namespace ModForge.Shared.Factories
 			return func!;
 		}
 
+		public static IModItem CreateModItemDeepCopy(IModItem modItem, string path)
+		{
+			if (modItem is null)
+			{
+				throw new ArgumentNullException(nameof(modItem), "ModItem cannot be null.");
+			}
+			var type = modItem.GetType();
+			var attributes = modItem.Attributes.Select(attr => attr.DeepClone());
+			return BuildModItem(path, type, attributes).Invoke(path, attributes);
+		}
+
 		public static IModItem CreateModItem(XElement element, Type type, string path)
 		{
 			try

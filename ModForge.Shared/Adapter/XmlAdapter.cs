@@ -2,6 +2,7 @@
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Attributes;
+using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
 using System.IO.Compression;

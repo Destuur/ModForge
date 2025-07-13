@@ -21,6 +21,7 @@ html, body {
     color: #c1c1c4;
     position: relative;
     user-select: none;
+    overflow-x: hidden;
 }
 
     body::before {
@@ -34,7 +35,7 @@ html, body {
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        opacity: 0.15;
+        opacity: 0.08;
         transform: translate(-50%, -50%);
         z-index: 0;
         pointer-events: none;
@@ -142,6 +143,18 @@ h1:focus {
     color: #7a7a7d;
 }
 
+.selected {
+    background-color: var(--mud-palette-primary) !important;
+}
+
+    .selected > td {
+        color: var(--background) !important;
+    }
+
+        .selected > td .mud-input {
+            color: var(--background) !important;
+        }
+
 .button-widget {
     display: flex;
     align-items: center;
@@ -159,13 +172,13 @@ h1:focus {
     transition: all ease 0.3s;
 }
 
-    .button-widget:hover {
-        opacity: 1;
-    }
+.button-widget:hover {
+    opacity: 1;
+}
 
-    .button-widget:active {
-        opacity: 0.6;
-    }
+.button-widget:active {
+    opacity: 0.6;
+}
 
 .mod-item-card {
     width: 100%;

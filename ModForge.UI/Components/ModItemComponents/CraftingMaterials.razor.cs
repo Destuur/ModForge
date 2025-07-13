@@ -10,6 +10,7 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class CraftingMaterials
 	{
 		private List<IModItem> craftingMaterials;
+		private bool _isLoaded = false;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -162,10 +163,10 @@ namespace ModForge.UI.Components.ModItemComponents
 			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
-		protected override void OnInitialized()
+		protected override async Task OnInitializedAsync()
 		{
-			base.OnInitialized();
-			craftingMaterials = XmlService.CraftingMaterials.ToList();
+			craftingMaterials = await Task.Run(() => XmlService.CraftingMaterials.ToList());
+			_isLoaded = true;
 		}
 	}
 }

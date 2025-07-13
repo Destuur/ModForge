@@ -10,6 +10,7 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class Consumables
 	{
 		private List<IModItem>? consumables;
+		private bool _isLoaded = false;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -167,15 +168,10 @@ namespace ModForge.UI.Components.ModItemComponents
 			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
-		protected override void OnInitialized()
+		protected override async Task OnInitializedAsync()
 		{
-			if (XmlService is null)
-			{
-				return;
-			}
-
-			base.OnInitialized();
-			consumables = XmlService.Consumeables.ToList();
+			consumables = await Task.Run(() => XmlService.Consumeables.ToList());
+			_isLoaded = true;
 		}
 	}
 }

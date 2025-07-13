@@ -13,6 +13,15 @@ namespace ModForge.Shared
 		public static ToolResources Keys { get; set; } = new ToolResources();
 
 		#region Valid Methods
+		public List<Type> GetWeaponClasses()
+		{
+			return new List<Type>()
+			{
+				typeof(MeleeWeaponClass),
+				typeof(MissileWeaponClass)
+			};
+		}
+
 		public List<Type> GetWeaponTypes()
 		{
 			return new List<Type>()
@@ -92,6 +101,14 @@ namespace ModForge.Shared
 					}
 				}
 			};
+
+			foreach (var type in GetWeaponClasses())
+			{
+				dictionary.Add(type, new()
+				{
+					{ "weapon_class", Path.Combine("Data", "Tables.pak") }
+				});
+			}
 
 			foreach (var type in GetWeaponTypes())
 			{

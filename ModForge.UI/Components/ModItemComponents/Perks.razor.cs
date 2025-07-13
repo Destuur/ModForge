@@ -11,6 +11,7 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class Perks
 	{
 		private List<IModItem> perks;
+		private bool _isLoaded = false;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -164,10 +165,10 @@ namespace ModForge.UI.Components.ModItemComponents
 			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
-		protected override void OnInitialized()
+		protected override async Task OnInitializedAsync()
 		{
-			base.OnInitialized();
-			perks = XmlService.Perks.ToList();
+			perks = await Task.Run(() => XmlService.Perks.ToList());
+			_isLoaded = true;
 		}
 	}
 }

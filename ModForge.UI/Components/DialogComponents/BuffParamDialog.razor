@@ -1,6 +1,6 @@
 ﻿<MudDialog Class="dialog-card">
 	<DialogContent>
-		<MudTable Striped Elevation="0" Bordered="false" Height="400px" FixedHeader Items="@BuffParamSerializer.GetAllKeys()" Dense Hover ReadOnly Filter="new Func<string, bool>(FilterFunc)" @bind-SelectedItem="SelectedBuffParamKey" SortLabel="Sort By">
+		<MudTable RowClassFunc="@SelectedRowClassFunc" @ref="mudTable" Striped Elevation="0" Bordered="false" Height="400px" FixedHeader Items="@BuffParamSerializer.GetAllKeys()" Dense Hover ReadOnly Filter="new Func<string, bool>(FilterFunc)" @bind-SelectedItem="SelectedBuffParamKey" SortLabel="Sort By">
 			<ToolBarContent>
 				<MudText Typo="Typo.h4" Class="header-primary"><b>Buff Parameter</b></MudText>
 				<MudSpacer />

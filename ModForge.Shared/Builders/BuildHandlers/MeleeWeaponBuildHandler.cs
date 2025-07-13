@@ -35,6 +35,68 @@ namespace ModForge.Shared.Builders.BuildHandlers
 		}
 	}
 
+	public class MeleeWeaponClassBuildHandler<TInput, TOutput> : IBuildHandler<TInput, TOutput> where TOutput : class
+	{
+		public TOutput? Handle(TInput input)
+		{
+			if (input is XElement element)
+			{
+				if (element is null)
+				{
+					return null;
+				}
+
+				return new MeleeWeaponClass()
+				{
+					Id = (string)element.Attribute("id")!,
+					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
+					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
+				} as TOutput;
+			}
+			return null;
+		}
+
+		public bool IsResponsible(TInput input)
+		{
+			if (input is XElement element)
+			{
+				return element.Name.LocalName.ToLower() == typeof(MeleeWeaponClass).Name.ToLower();
+			}
+			return false;
+		}
+	}
+
+	public class MissileWeaponClassBuildHandler<TInput, TOutput> : IBuildHandler<TInput, TOutput> where TOutput : class
+	{
+		public TOutput? Handle(TInput input)
+		{
+			if (input is XElement element)
+			{
+				if (element is null)
+				{
+					return null;
+				}
+
+				return new MissileWeaponClass()
+				{
+					Id = (string)element.Attribute("id")!,
+					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
+					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
+				} as TOutput;
+			}
+			return null;
+		}
+
+		public bool IsResponsible(TInput input)
+		{
+			if (input is XElement element)
+			{
+				return element.Name.LocalName.ToLower() == typeof(MissileWeaponClass).Name.ToLower();
+			}
+			return false;
+		}
+	}
+
 	public class NPCToolBuildHandler<TInput, TOutput> : IBuildHandler<TInput, TOutput> where TOutput : class
 	{
 		public TOutput? Handle(TInput input)

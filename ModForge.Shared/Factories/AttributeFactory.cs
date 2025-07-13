@@ -1,6 +1,7 @@
 ﻿using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Enums;
+using ModForge.Shared.Models.ModItems;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -27,6 +28,7 @@ namespace ModForge.Shared.Factories
 			{ "ArmorArchetype", typeof(ArmorArchetype) },
 			{ "ArmorSurface", typeof(ArmorSurface) },
 			{ "BodyLayerType", typeof(BodyLayerType) },
+			{ "Class", typeof(Class) },
 			{ "CraftingMaterialSubtype", typeof(CraftingMaterialSubtype) },
 			{ "CraftingMaterialType", typeof(CraftingMaterialType) },
 			{ "DiceBadgeSubtype", typeof(DiceBadgeSubtype) },
@@ -44,7 +46,7 @@ namespace ModForge.Shared.Factories
 			{ "NpcToolSubtype", typeof(NpcToolSubtype) },
 			{ "OintmentItemSubtype", typeof(OintmentItemSubtype) },
 			{ "OintmentItemType", typeof(OintmentItemType) },
-			{ "WeaponSubClass", typeof(WeaponSubClass) }
+			{ "SubClass", typeof(WeaponSubClass) },
 		};
 
 		// TODO: Vielleicht ein Dictionary<string<string, Type> machen in dem auch der Anzeigename in der App stehen könnte?
@@ -55,6 +57,11 @@ namespace ModForge.Shared.Factories
 			if (!attributeTypeMap.TryGetValue(name, out var type))
 			{
 				throw new InvalidOperationException($"No type mapping defined for attribute '{name}'.");
+			}
+
+			if (name == "Class")
+			{
+
 			}
 
 			object value;
@@ -184,7 +191,6 @@ namespace ModForge.Shared.Factories
 
 		private static void TraverseElements(XElement element)
 		{
-			// Analysiere alle Attribute des aktuellen Elements
 			foreach (var attr in element.Attributes())
 			{
 				var name = attr.Name.LocalName;
@@ -197,7 +203,6 @@ namespace ModForge.Shared.Factories
 				{
 					Type inferredType = InferType(name, value);
 					attributeTypeMap[name] = inferredType;
-					Console.WriteLine($"[DISCOVERED] \"{name}\" → {inferredType.Name}");
 				}
 			}
 
@@ -216,6 +221,9 @@ namespace ModForge.Shared.Factories
 			if (name == "buff_params")
 				return typeof(IList<BuffParam>);
 
+			if (name == "Class")
+				return typeof(WeaponClasss);
+
 			if (name.Equals("Id", StringComparison.OrdinalIgnoreCase) ||
 				name.EndsWith("Id", StringComparison.OrdinalIgnoreCase) ||
 				Guid.TryParse(value, out _))
@@ -229,8 +237,8 @@ namespace ModForge.Shared.Factories
 			if (double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out _))
 				return typeof(double);
 
-			if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out _))
-				return typeof(int);
+			//if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out _))
+			//	return typeof(int);
 
 			return typeof(string);
 		}

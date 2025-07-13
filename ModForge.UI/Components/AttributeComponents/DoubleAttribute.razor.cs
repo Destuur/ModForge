@@ -41,5 +41,11 @@ namespace ModForge.UI.Components.AttributeComponents
 			// Jeden Wortanfang großschreiben
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(withSpaces.ToLower());
 		}
+
+		protected override void OnParametersSet()
+		{
+			base.OnParametersSet();
+			StateHasChanged();
+		}
 	}
 }

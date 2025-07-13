@@ -35,7 +35,10 @@ namespace ModForge.Shared.Configurations
 				new PickableItemBuildHandler<XElement, IModItem>(),
 				new KeyBuildHandler<XElement, IModItem>(),
 				new MoneyBuildHandler<XElement, IModItem>(),
-				new KeyRingBuildHandler<XElement, IModItem>()
+				new KeyRingBuildHandler<XElement, IModItem>(),
+				new MiscItemBuildHandler<XElement, IModItem>(),
+				new MeleeWeaponClassBuildHandler<XElement, IModItem>(),
+				new MissileWeaponClassBuildHandler<XElement, IModItem>(),
 			};
 			return service;
 		}

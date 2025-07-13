@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using ModForge.Shared.Models.Abstractions;
+using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.MenuComponents;
 using MudBlazor;
@@ -10,6 +11,7 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class Buffs
 	{
 		private List<IModItem> buffs;
+		private bool _isLoaded = false;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -163,10 +165,10 @@ namespace ModForge.UI.Components.ModItemComponents
 			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
-		protected override void OnInitialized()
+		protected override async Task OnInitializedAsync()
 		{
-			base.OnInitialized();
-			buffs = XmlService.Buffs.ToList();
+			buffs = await Task.Run(() => XmlService.Buffs.ToList());
+			_isLoaded = true;
 		}
 	}
 }

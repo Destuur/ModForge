@@ -22,6 +22,7 @@ namespace ModForge.Shared.Services
 		private readonly UserConfigurationService userConfigurationService;
 		private readonly ILogger<XmlService> logger;
 		private readonly List<Type> weaponTypes = ToolResources.Keys.GetWeaponTypes();
+		private readonly List<Type> weaponClasses = ToolResources.Keys.GetWeaponClasses();
 		private readonly List<Type> armorTypes = ToolResources.Keys.GetArmorTypes();
 		private readonly List<Type> consumableTypes = ToolResources.Keys.GetConsumableTypes();
 		private readonly List<Type> craftingMaterialTypes = ToolResources.Keys.GetCraftingMaterialsTypes();
@@ -52,6 +53,7 @@ namespace ModForge.Shared.Services
 		public IList<IModItem> CraftingMaterials { get; private set; } = new List<IModItem>();
 		public IList<IModItem> MiscItems { get; private set; } = new List<IModItem>();
 		public IList<BuffParam> BuffParams { get; private set; }
+		public IList<IModItem> WeaponClasses { get; private set; } = new List<IModItem>();
 		#endregion
 
 		#region Public Methods
@@ -138,6 +140,11 @@ namespace ModForge.Shared.Services
 
 				Perks = ImportModItemsOfType(typeof(Perk));
 				Buffs = ImportModItemsOfType(typeof(Buff));
+
+				foreach (var type in weaponClasses)
+				{
+					WeaponClasses = WeaponClasses.Concat(ImportModItemsOfType(type)).ToList();
+				}
 
 				foreach (var type in weaponTypes)
 				{
