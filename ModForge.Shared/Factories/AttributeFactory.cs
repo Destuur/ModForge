@@ -222,7 +222,7 @@ namespace ModForge.Shared.Factories
 				return typeof(IList<BuffParam>);
 
 			if (name == "Class")
-				return typeof(WeaponClasss);
+				return typeof(WeaponClass);
 
 			if (name.Equals("Id", StringComparison.OrdinalIgnoreCase) ||
 				name.EndsWith("Id", StringComparison.OrdinalIgnoreCase) ||

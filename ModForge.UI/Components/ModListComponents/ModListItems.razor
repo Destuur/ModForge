@@ -42,12 +42,12 @@
 							<MudText Typo="Typo.body2">@mod.ModItems.Where(x => x.GetType() == typeof(Buff)).Count()</MudText>
 						</MudStack>
 						<MudStack Row Justify="Justify.SpaceBetween">
-							<MudText style="color: var(--mud-palette-text-disabled)" Typo="Typo.body2">RPG Params:</MudText>
-							<MudText style="color: var(--mud-palette-text-disabled)" Typo="Typo.body2">Soon</MudText>
+							<MudText Typo="Typo.body2">Items:</MudText>
+							<MudText Typo="Typo.body2">@mod.ModItems.Where(x => x.GetType().GetInterface(nameof(IItem)) == typeof(IItem)).Count()</MudText>
 						</MudStack>
 						<MudStack Row Justify="Justify.SpaceBetween">
-							<MudText style="color: var(--mud-palette-text-disabled)" Typo="Typo.body2">Items:</MudText>
-							<MudText style="color: var(--mud-palette-text-disabled)" Typo="Typo.body2">@mod.ModItems.Where(x => x.GetType().GetInterface(nameof(IItem)) == typeof(IItem)).Count()</MudText>
+							<MudText style="color: var(--mud-palette-text-disabled)" Typo="Typo.body2">RPG Params:</MudText>
+							<MudText style="color: var(--mud-palette-text-disabled)" Typo="Typo.body2">Soon</MudText>
 						</MudStack>
 						<MudStack Row Justify="Justify.SpaceBetween">
 							<MudText style="color: var(--mud-palette-text-disabled)" Typo="Typo.body2">Inventory Presets:</MudText>

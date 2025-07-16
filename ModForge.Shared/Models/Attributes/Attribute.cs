@@ -33,9 +33,9 @@ namespace ModForge.Shared.Models.Attributes
 			{
 				return new Attribute<IList<BuffParam>>(Name, buffParams.Select(attr => attr.DeepClone()).ToList());
 			}
-			if (Value is WeaponClasss weaponClass)
+			if (Value is WeaponClass weaponClass)
 			{
-				return new Attribute<WeaponClasss>(Name, weaponClass);
+				return new Attribute<WeaponClass>(Name, weaponClass);
 			}
 			return new Attribute<T>(Name, Value);
 		}

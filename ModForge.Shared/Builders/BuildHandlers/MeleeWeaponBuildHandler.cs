@@ -18,7 +18,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new MeleeWeapon()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -49,7 +48,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new MeleeWeaponClass()
 				{
 					Id = (string)element.Attribute("id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -80,7 +78,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new MissileWeaponClass()
 				{
 					Id = (string)element.Attribute("id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -111,7 +108,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new NPCTool()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -142,7 +138,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Perk()
 				{
 					Id = (string)element.Attribute("perk_id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -173,7 +168,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Buff()
 				{
 					Id = (string)element.Attribute("buff_id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -204,7 +198,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new MiscItem()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -235,7 +228,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Hood()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -266,7 +258,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Armor()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -297,7 +288,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new MissileWeapon()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -328,7 +318,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Document()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -359,7 +348,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Herb()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -390,7 +378,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Food()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -421,7 +408,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Helmet()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -452,7 +438,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Die()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -483,7 +468,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Ammo()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -514,7 +498,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new ItemAlias()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -545,7 +528,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new QuickSlotContainer()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -576,7 +558,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new DiceBadge()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -607,7 +588,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new CraftingMaterial()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -638,7 +618,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Poison()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -669,7 +648,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new PickableItem()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -700,7 +678,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Key()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -731,7 +708,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new Money()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}
@@ -762,7 +738,6 @@ namespace ModForge.Shared.Builders.BuildHandlers
 				return new KeyRing()
 				{
 					Id = (string)element.Attribute("Id")!,
-					Path = string.Join("/", element.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray()),
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
 			}

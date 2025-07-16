@@ -114,12 +114,19 @@ namespace ModForge.UI.Pages
 			if (string.IsNullOrEmpty(Id))
 				return;
 
-			OriginalModItem = XmlService.GetModItem(Id);
+			editingModItem = LoadModItemForEdit(Id);
+		}
+
+		private IModItem? LoadModItemForEdit(string id)
+		{
+			OriginalModItem = ModService?.Mod.ModItems.FirstOrDefault(x => x.Id == id);
 
 			if (OriginalModItem is null)
-				return;
+			{
+				OriginalModItem = XmlService.GetModItem(Id);
+			}
 
-			editingModItem = OriginalModItem.GetDeepCopy();
+			return OriginalModItem.GetDeepCopy();
 		}
 	}
 }

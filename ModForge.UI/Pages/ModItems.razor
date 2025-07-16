@@ -44,7 +44,7 @@
 
 </MudGrid>
 
-<MudDrawer Open="isOpen" Anchor="Anchor.Right" Style="background-color: var(--mud-palette-surface); border-radius: 4px;" Elevation="20" Variant="DrawerVariant.Temporary">
+<MudDrawer @bind-Open="isOpen" Anchor="Anchor.Right" Style="background-color: var(--mud-palette-surface); border-radius: 4px;" Elevation="20" Variant="DrawerVariant.Temporary">
 	<MudDrawerHeader Dense Class="pr-1">
 		<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="pa-0" Style="width: 100%;">
 			<MudText Typo="Typo.h6" Class="header-primary">Modded Ingots</MudText>
@@ -58,8 +58,8 @@
 			<MudCard Class="drawer-item-card" Outlined Style="border-color: var(--icon-primary); width: 100%; position: relative;" Elevation="0">
 				<div style="position: absolute; background: linear-gradient(90deg,rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%); width: 100%; height: 100%; border-radius: inherit;" class="mod-item-hidden">
 					<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Style="height: 100%; padding-right: 4px;" Spacing="2">
-						<MudIconButton Icon="@Icons.Material.Filled.Edit" Style="color: var(--icon-primary)" Size="Size.Small" />
-						<MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" />
+						<MudIconButton OnClick="@(() => EditModItem(modItem.Id))" Icon="@Icons.Material.Filled.Edit" Style="color: var(--icon-primary)" Size="Size.Small" />
+						<MudIconButton OnClick="@(() => DeleteModItem(modItem.Id))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" />
 					</MudStack>
 				</div>
 				<MudText Class="pa-2">@(LocalizationService.GetName(modItem))</MudText>

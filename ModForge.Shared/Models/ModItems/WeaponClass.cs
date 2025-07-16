@@ -3,14 +3,14 @@ using ModForge.Shared.Models.Localizations;
 
 namespace ModForge.Shared.Models.ModItems
 {
-	public abstract class WeaponClasss : IModItem
+	public abstract class WeaponClass : IModItem
 	{
-		public WeaponClasss()
+		public WeaponClass()
 		{
 
 		}
 
-		public WeaponClasss(string id, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
+		public WeaponClass(string id, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
 			Path = path;
@@ -28,7 +28,7 @@ namespace ModForge.Shared.Models.ModItems
 		public abstract IModItem GetDeepCopy();
 	}
 
-	public class MeleeWeaponClass : WeaponClasss
+	public class MeleeWeaponClass : WeaponClass
 	{
 		public MeleeWeaponClass()
 		{
@@ -44,7 +44,7 @@ namespace ModForge.Shared.Models.ModItems
 		}
 	}
 
-	public class MissileWeaponClass : WeaponClasss
+	public class MissileWeaponClass : WeaponClass
 	{
 		public MissileWeaponClass()
 		{

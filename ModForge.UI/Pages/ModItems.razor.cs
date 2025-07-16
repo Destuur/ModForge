@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using ModForge.Localizations;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
-using ModForge.UI.Components.MenuComponents;
 using ModForge.UI.Components.ModItemComponents;
 using MudBlazor;
 
@@ -13,7 +12,6 @@ namespace ModForge.UI.Pages
 	public partial class ModItems
 	{
 		public RenderFragment? CustomRender { get; set; }
-		private int selectedTab = 0;
 		private bool isOpen;
 
 		[Inject]
@@ -163,6 +161,33 @@ namespace ModForge.UI.Pages
 				});
 			ModService.ExportMod(ModService.Mod);
 			ModService.ClearCurrentMod();
+		}
+
+		private void EditModItem(string id)
+		{
+			if (NavigationManager is null || string.IsNullOrEmpty(id))
+			{
+				return;
+			}
+
+			NavigationManager.NavigateTo($"/editing/moditem/{id}");
+		}
+
+		private void DeleteModItem(string id)
+		{
+			if (ModService is null || string.IsNullOrEmpty(id))
+			{
+				return;
+			}
+			var foundModItem = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == id);
+
+			if (foundModItem is null)
+			{
+				return;
+			}
+
+			ModService.Mod.ModItems.Remove(foundModItem);
+			StateHasChanged();
 		}
 
 		protected override async Task OnInitializedAsync()

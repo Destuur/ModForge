@@ -2,9 +2,12 @@
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Attributes;
+using ModForge.Shared.Models.Mapping;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
+using System.Globalization;
+using System.IO;
 using System.IO.Compression;
 using System.Xml.Linq;
 
@@ -54,6 +57,7 @@ namespace ModForge.Shared.Adapter
 									var modItem = builder.Build(element);
 									if (modItem != null)
 									{
+										modItem.Path = entry.FullName;
 										foundModItems.Add(modItem);
 									}
 								}
@@ -130,55 +134,135 @@ namespace ModForge.Shared.Adapter
 
 		private bool WriteModItem(string modId, IModItem modItem)
 		{
-			string directoryUpToRpg = modItem.Path.Substring(0, modItem.Path.IndexOf("rpg") + "rpg".Length);
-			var modItemDirectory = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", modId, "Data", directoryUpToRpg);
-			var modItemFile = Path.Combine(modItemDirectory, modItem.GetType().Name.ToLower() + "__" + modId + ".xml");
+			string typeName = modItem.GetType().Name;
+
+			if (!XmlStructureMapping.ElementMapping.TryGetValue(typeName, out var writeInfo))
+			{
+				Console.WriteLine($"Kein Mapping für Typ '{typeName}' gefunden.");
+				return false;
+			}
+
+			string fileName = $"{writeInfo.FilePrefix}__{modId}.xml";
+			string directoryUpToRpg = modItem.Path.Substring(0, modItem.Path.LastIndexOf('/')); // oder mit LastIndexOf('\\')
+			string modItemDirectory = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", modId, "Data", directoryUpToRpg);
+			string modItemFile = Path.Combine(modItemDirectory, fileName);
 
 			Directory.CreateDirectory(modItemDirectory);
 
-			if (File.Exists(modItemFile))
-				File.Delete(modItemFile);
-
-			var attributes = new List<XAttribute>();
-
-			foreach (var kv in modItem.Attributes)
+			// Neues Element generieren
+			var attributes = modItem.Attributes.Select(kv =>
 			{
-				if (kv.Name == "buff_params" && kv.Value is List<BuffParam> list)
+				object value = kv.Value;
+
+				if (kv.Name == "buff_params" && value is List<BuffParam> buffList)
+					return new XAttribute(kv.Name, BuffParamSerializer.ToAttributeString(buffList));
+
+				if (value is Enum enumValue)
+					return new XAttribute(kv.Name, Convert.ToInt32(enumValue));
+
+				if (value is bool boolValue)
+					return new XAttribute(kv.Name, boolValue.ToString().ToLowerInvariant());
+
+				if (value is IFormattable formattable)
+					return new XAttribute(kv.Name, formattable.ToString(null, CultureInfo.InvariantCulture));
+
+				return new XAttribute(kv.Name, value?.ToString() ?? string.Empty);
+			});
+
+			var newElement = new XElement(writeInfo.ElementName, attributes);
+
+			XDocument doc;
+
+			// Datei existiert bereits? Dann laden und ergänzen
+			if (File.Exists(modItemFile))
+			{
+				doc = XDocument.Load(modItemFile);
+
+				var group = doc.Descendants(writeInfo.GroupName).FirstOrDefault();
+				if (group == null)
 				{
-					string serialized = BuffParamSerializer.ToAttributeString(list);
-					attributes.Add(new XAttribute(kv.Name, serialized));
+					Console.WriteLine($"Warnung: Gruppe '{writeInfo.GroupName}' nicht gefunden in {modItemFile}. Neue Gruppe wird angelegt.");
+					group = new XElement(writeInfo.GroupName, new XAttribute("version", "1"));
+					doc.Root?.Add(group);
 				}
-				else if (kv.Value is Enum enumValue)
-				{
-					attributes.Add(new XAttribute(kv.Name, Convert.ToInt32(enumValue)));
-				}
-				else if (kv.Value is bool boolValue)
-				{
-					attributes.Add(new XAttribute(kv.Name, boolValue.ToString().ToLower()));
-				}
-				else
-				{
-					attributes.Add(new XAttribute(kv.Name, kv.Value?.ToString() ?? string.Empty));
-				}
+
+				group.Add(newElement); // Neues Element anhängen
 			}
-
-			var modItemElement = new XElement(modItem.GetType().Name.ToLower(), attributes);
-
-			var doc = new XDocument(
-				new XDeclaration("1.0", "us-ascii", null),
-				new XElement("database",
-					new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-					new XAttribute("name", "barbora"),
-					new XAttribute(XNamespace.Get("http://www.w3.org/2001/XMLSchema-instance") + "noNamespaceSchemaLocation", "../database.xsd"),
-					new XElement(modItem.GetType().Name.ToLower() + "s",
-						new XAttribute("version", "1"),
-						modItemElement
+			else
+			{
+				// Neue Datei anlegen
+				doc = new XDocument(
+					new XDeclaration("1.0", "us-ascii", null),
+					new XElement("database",
+						new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+						new XAttribute("name", "barbora"),
+						new XAttribute(XNamespace.Get("http://www.w3.org/2001/XMLSchema-instance") + "noNamespaceSchemaLocation", "../database.xsd"),
+						new XElement(writeInfo.GroupName,
+							new XAttribute("version", "1"),
+							newElement
+						)
 					)
-				)
-			);
+				);
+			}
 
 			doc.Save(modItemFile);
 			return true;
 		}
+
+
+
+
+		//private bool WriteModItem(string modId, IModItem modItem)
+		//{
+		//	string directoryUpToRpg = modItem.Path.Substring(0, modItem.Path.IndexOf("rpg") + "rpg".Length);
+		//	var modItemDirectory = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods", modId, "Data", directoryUpToRpg);
+		//	var modItemFile = Path.Combine(modItemDirectory, modItem.GetType().Name.ToLower() + "__" + modId + ".xml");
+
+		//	Directory.CreateDirectory(modItemDirectory);
+
+		//	if (File.Exists(modItemFile))
+		//		File.Delete(modItemFile);
+
+		//	var attributes = new List<XAttribute>();
+
+		//	foreach (var kv in modItem.Attributes)
+		//	{
+		//		if (kv.Name == "buff_params" && kv.Value is List<BuffParam> list)
+		//		{
+		//			string serialized = BuffParamSerializer.ToAttributeString(list);
+		//			attributes.Add(new XAttribute(kv.Name, serialized));
+		//		}
+		//		else if (kv.Value is Enum enumValue)
+		//		{
+		//			attributes.Add(new XAttribute(kv.Name, Convert.ToInt32(enumValue)));
+		//		}
+		//		else if (kv.Value is bool boolValue)
+		//		{
+		//			attributes.Add(new XAttribute(kv.Name, boolValue.ToString().ToLower()));
+		//		}
+		//		else
+		//		{
+		//			attributes.Add(new XAttribute(kv.Name, kv.Value?.ToString() ?? string.Empty));
+		//		}
+		//	}
+
+		//	var modItemElement = new XElement(modItem.GetType().Name.ToLower(), attributes);
+
+		//	var doc = new XDocument(
+		//		new XDeclaration("1.0", "us-ascii", null),
+		//		new XElement("database",
+		//			new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+		//			new XAttribute("name", "barbora"),
+		//			new XAttribute(XNamespace.Get("http://www.w3.org/2001/XMLSchema-instance") + "noNamespaceSchemaLocation", "../database.xsd"),
+		//			new XElement(modItem.GetType().Name.ToLower() + "s",
+		//				new XAttribute("version", "1"),
+		//				modItemElement
+		//			)
+		//		)
+		//	);
+
+		//	doc.Save(modItemFile);
+		//	return true;
+		//}
 	}
 }
