@@ -186,7 +186,18 @@ namespace ModForge.Shared.Adapter
 					doc.Root?.Add(group);
 				}
 
-				group.Add(newElement); // Neues Element anhängen
+				var existingElement = group.Elements(writeInfo.ElementName)
+				.FirstOrDefault(el => ElementsAreEqual(el, newElement));
+
+				if (existingElement != null)
+				{
+					existingElement.ReplaceWith(newElement);
+				}
+				else
+				{
+					group.Add(newElement);
+				}
+
 			}
 			else
 			{
@@ -209,6 +220,35 @@ namespace ModForge.Shared.Adapter
 			return true;
 		}
 
+		private static bool ElementsAreEqual(XElement a, XElement b)
+		{
+			// Beide null? Gleich
+			if (a == null && b == null) return true;
+			if (a == null || b == null) return false;
+
+			// Unterschiedlicher Elementname?
+			if (!string.Equals(a.Name.LocalName, b.Name.LocalName, StringComparison.OrdinalIgnoreCase))
+				return false;
+
+			var attrsA = a.Attributes().ToDictionary(attr => attr.Name.LocalName.ToLowerInvariant(), attr => attr.Value);
+			var attrsB = b.Attributes().ToDictionary(attr => attr.Name.LocalName.ToLowerInvariant(), attr => attr.Value);
+
+			// Gleiche Anzahl an Attributen?
+			if (attrsA.Count != attrsB.Count)
+				return false;
+
+			// Alle Attribute gleich?
+			foreach (var kv in attrsA)
+			{
+				if (!attrsB.TryGetValue(kv.Key, out var valueB))
+					return false;
+
+				if (kv.Value != valueB)
+					return false;
+			}
+
+			return true;
+		}
 
 
 
