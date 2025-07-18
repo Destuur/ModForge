@@ -1,4 +1,4 @@
-﻿using ModForge.Shared.Models.Attributes;
+﻿using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Localizations;
 using Newtonsoft.Json;
 
@@ -23,37 +23,34 @@ namespace ModForge.Shared.Models.ModItems
 			Path = path;
 		}
 
-		public Perk(string path, IEnumerable<IAttribute> attributes)
+		public Perk(string path, List<IAttribute> attributes)
 		{
 			Id = attributes.FirstOrDefault(attr => attr.Name == "perk_id")?.Value.ToString() ?? string.Empty;
 			Path = path;
 			Attributes = attributes.ToList();
 		}
 
-		public Perk(string id, IList<string> buffIds, string path, IEnumerable<IAttribute> attributes, Localization localization)
+		public Perk(string id, string idKey, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
-			LinkedIds = buffIds;
+			IdKey = idKey;
 			Path = path;
-			Attributes = attributes.ToList();
+			LinkedIds = linkedIds;
+			Attributes = attributes;
 			Localization = localization;
 		}
 
 		public string Id { get; set; } = string.Empty;
-		public IList<string> LinkedIds { get; set; } = new List<string>();
+		public string IdKey { get; set; }
 		public string Path { get; set; } = string.Empty;
 		public string Name { get; set; } = string.Empty;
-		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
+		public List<string> LinkedIds { get; set; } = new();
+		public List<IAttribute> Attributes { get; set; } = new();
 		public Localization Localization { get; set; } = new();
 
-		public static Perk GetDeepCopy(Perk perk)
+		public IModItem GetDeepCopy()
 		{
-			return new Perk(perk.Id, perk.LinkedIds, perk.Path, perk.Attributes.Select(attr => attr.DeepClone()).ToList(), perk.Localization.DeepClone());
-		}
-
-		public override string ToString()
-		{
-			return Name.ToLower();
+			return new Perk(Id, IdKey, Path, LinkedIds, Attributes.Select(attr => attr.DeepClone()).ToList(), Localization.DeepClone());
 		}
 	}
 }

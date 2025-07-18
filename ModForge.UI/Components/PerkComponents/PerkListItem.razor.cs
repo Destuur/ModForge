@@ -48,7 +48,7 @@ namespace ModForge.UI.Components.PerkComponents
 				return;
 			}
 
-			Navigation.NavigateTo($"editing/perk/{Perk.Id}");
+			Navigation.NavigateTo($"editing/moditem/{Perk.Id}");
 		}
 	}
 }

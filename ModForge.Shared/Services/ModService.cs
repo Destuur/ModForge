@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using ModForge.Shared.Adapter;
 using ModForge.Shared.Factories;
+using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Data;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
@@ -87,7 +88,7 @@ namespace ModForge.Shared.Services
 						continue;
 					}
 
-					var doc = XDocument.Load(modFiles.First());
+					var doc = XDocument.Load(modFiles.FirstOrDefault(x => x.Contains("manifest")));
 
 					if (IsModCreatedByUser(doc))
 					{
@@ -298,7 +299,7 @@ namespace ModForge.Shared.Services
 				throw new FileNotFoundException(msg);
 			}
 
-			var modFileUri = modFiles.FirstOrDefault();
+			var modFileUri = modFiles.FirstOrDefault(x => x.Contains("manifest"));
 			if (string.IsNullOrEmpty(modFileUri))
 			{
 				var msg = $"Mod info file missing in {modPath}";
@@ -377,10 +378,14 @@ namespace ModForge.Shared.Services
 				new DataPoint(pakFile, "buff", typeof(Buff))
 			};
 
-			foreach (var dataPoint in dataPoints)
+			foreach (var endpointType in ToolResources.Keys.Endpoints())
 			{
+				var key = endpointType.Value.FirstOrDefault().Key;
+				var index = key.IndexOf('_');
+				var dataPoint = DataPointFactory.CreateDataPoint(pakFile, index >= 0 ? key.Substring(0, index) : key, endpointType.Key);
+
 				var modItems = dataSource.ReadModItems(dataPoint)
-								?? throw new NullReferenceException("Fehler beim Lesen von ModItems");
+							?? throw new NullReferenceException("Fehler beim Lesen von ModItems");
 
 				foreach (var item in modItems)
 					modDescription.ModItems.Add(item);

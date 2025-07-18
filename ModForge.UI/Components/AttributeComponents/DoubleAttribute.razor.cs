@@ -1,5 +1,4 @@
-﻿using ModForge.Shared.Models.Attributes;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ModForge.Shared.Models.Abstractions;
 
 namespace ModForge.UI.Components.AttributeComponents
 {
@@ -40,6 +40,12 @@ namespace ModForge.UI.Components.AttributeComponents
 
 			// Jeden Wortanfang großschreiben
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(withSpaces.ToLower());
+		}
+
+		protected override void OnParametersSet()
+		{
+			base.OnParametersSet();
+			StateHasChanged();
 		}
 	}
 }

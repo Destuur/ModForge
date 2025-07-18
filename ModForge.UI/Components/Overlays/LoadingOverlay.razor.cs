@@ -8,11 +8,11 @@ namespace ModForge.UI.Components.Overlays
 
 		private string[] Messages = new[]
 		{
-		"Read XML Files…",
-		"Skill Perks…",
-		"Apply Buffs…",
-		"Yank Pizzles…",
-		"Save Data…"
-	};
+			"Read XML Files…",
+			"Skill Perks…",
+			"Apply Buffs…",
+			"Yank Pizzles…",
+			"Save Data…"
+		};
 	}
 }

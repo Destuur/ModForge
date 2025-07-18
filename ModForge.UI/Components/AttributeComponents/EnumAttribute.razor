@@ -1,36 +1,32 @@
 ﻿@if (Attribute is not null)
 {
 
-    @if (enumNames.Any())
-    {
-		<MudGrid Justify="Justify.SpaceBetween" Style="align-items: center;" Class="pa-1">
-			<MudItem>
-				<MudText>@GetTypeLabel()</MudText>
+	@if (enumNames.Any())
+	{
+		<MudGrid Justify="Justify.FlexStart" Style="align-items: center; width: 100%;" Class="px-4">
+
+			<MudItem xs="2">
+				<MudText Typo="Typo.h6">@GetTypeLabel()</MudText>
 			</MudItem>
-			<MudItem>
-				<MudIconButton Icon="@Icons.Material.Filled.Close"
-							   OnClick="@(() => Remove())"
-							   Size="Size.Small"
-							   Color="Color.Error" />
+
+			<MudItem xs="1">
+				<MudIconButton Icon="@Icons.Material.Outlined.Info" Size="Size.Small" />
+				<MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" />
 			</MudItem>
+
+			<MudItem xs="4">
+				<MudSelect Immediate="false" @bind-Value="CurrentEnumString" Dense="true" FullWidth="false" Margin="Margin.Dense" Underline="false" Variant="Variant.Outlined" Class="my-3 align-input-center">
+
+					@foreach (var enumName in enumNames)
+					{
+						<MudSelectItem T="string" Value="@enumName">
+							@enumDisplayNames[enumName]
+						</MudSelectItem>
+					}
+
+				</MudSelect>
+			</MudItem>
+
 		</MudGrid>
-
-		<div class="grow-container">
-		<MudSelect style="border-bottom: 2px solid #a14b00AA !important; text-align: center; font-size: 1.1rem; background-color: transparent !important;"
-				   Immediate="false" @bind-Value="CurrentEnumString" Dense="true"
-				   FullWidth="false"
-				   Margin="Margin.Dense"
-				   Underline="false"
-				   Variant="Variant.Text" Class="ma-3 align-input-center">
-
-            @foreach (var enumName in enumNames)
-            {
-                <MudSelectItem T="string" Value="@enumName">
-                    @enumDisplayNames[enumName]
-                </MudSelectItem>
-            }
-
-        </MudSelect>
-		</div>
-    }
+	}
 }

@@ -1,13 +1,19 @@
 ﻿@using ModForge.Shared.Models.Enums
+
+@if (!_isLoaded)
+{
+	<div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+		<LoadingOverlay IsVisible="!_isLoaded" />
+	</div>
+}
+
 <MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
 
 	<MudItem md="12" Style="height: 10%; width: 100%;">
 		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
-			<MudText Class="header-primary pr-2" Typo="Typo.h6">Perks</MudText>
-			<MudSpacer />
-			<MudTextField Onkeyup="SearchPerks" Immediate @bind-Value="SearchPerk" Placeholder="Search" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
-
+			<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>Perks</b></MudText>
 			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2" Class="pr-2">
+				<MudTextField Onkeyup="SearchPerks" Immediate @bind-Value="SearchPerk" Placeholder="Search" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
 
 				<MudMenu Icon="@Icons.Material.Filled.FilterList" Style="color: var(--mud-palette-textprimary)">
 
@@ -19,13 +25,13 @@
 					<MudMenuItem OnClick="@(() => FilterPerks("Miscellaneous"))">Miscellaneous</MudMenuItem>
 
 				</MudMenu>
-					<MudImage Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
+				<MudImage Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
 			</MudStack>
 		</MudStack>
 	</MudItem>
 
 	<MudItem md="12" Style="height: 90%; padding: 0px;">
-		<div style="overflow-y: auto; height: 98%;">
+		<div style="overflow-y: auto; height: 99%;">
 			<MudGrid Spacing="2" Class="pr-2">
 
 				@if (perks is not null)

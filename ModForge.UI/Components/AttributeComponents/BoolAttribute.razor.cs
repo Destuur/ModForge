@@ -1,7 +1,7 @@
-﻿using ModForge.Shared.Models.Attributes;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using ModForge.Shared.Models.Abstractions;
 
 namespace ModForge.UI.Components.AttributeComponents
 {
@@ -12,7 +12,17 @@ namespace ModForge.UI.Components.AttributeComponents
 		[Parameter]
 		public EventCallback<string> RemoveAttribute { get; set; }
 
-		// Bindet an MudSelect mit string-Werten ("True"/"False")
+
+		private bool BoolValue
+		{
+			get => CurrentValueString?.ToLower() == "true";
+			set
+			{
+				CurrentValueString = value ? "True" : "False";
+
+			}
+		}
+
 		string CurrentValueString
 		{
 			get => (Attribute.Value is bool b && b) ? "True" : "False";

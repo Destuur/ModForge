@@ -1,11 +1,11 @@
 ﻿using ModForge.Shared.Factories;
-using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using ModForge.Shared.Models.Abstractions;
 
 namespace ModForge.UI.Components.BuffComponents
 {
@@ -27,7 +27,7 @@ namespace ModForge.UI.Components.BuffComponents
 
 		public void ResetBuff()
 		{
-			EditingBuff = Buff.GetDeepCopy(OriginalBuff);
+			//EditingBuff = Buff.GetDeepCopy(OriginalBuff);
 			StateHasChanged();
 		}
 
@@ -94,7 +94,7 @@ namespace ModForge.UI.Components.BuffComponents
 		{
 			base.OnInitialized();
 			Attributes = AttributeFactory.GetAllAttributes();
-			OriginalBuff = Buff.GetDeepCopy(OriginalBuff);
+			//OriginalBuff = Buff.GetDeepCopy(OriginalBuff);
 			UpdateFilteredAttributes();
 		}
 	}

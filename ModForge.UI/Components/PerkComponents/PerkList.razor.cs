@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using ModForge.Shared.Models.ModItems;
+using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Services;
 using MudBlazor;
 

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.MenuComponents;
@@ -7,9 +8,10 @@ using MudBlazor;
 
 namespace ModForge.UI.Components.ModItemComponents
 {
-	public partial class Items
+	public partial class Armors
 	{
-		private List<IModItem> items;
+		private List<IModItem> armors;
+		private bool _isLoaded = false;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -27,55 +29,55 @@ namespace ModForge.UI.Components.ModItemComponents
 		public LocalizationService LocalizationService { get; set; }
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
-		public string SearchItem { get; set; }
+		public string SearchArmor { get; set; }
 
 		public async Task ToggleDrawer()
 		{
 			await ToggledDrawer.InvokeAsync();
 		}
 
-		public void FilterItems(string skill)
+		public void FilterArmors(string skill)
 		{
 			if (XmlService is null)
 			{
 				return;
 			}
 
-			SearchItem = string.Empty;
+			SearchArmor = string.Empty;
 
-			var filtered = XmlService.Perks
+			var filtered = XmlService.Armors
 				.Where(x => x.Attributes.Any(attr =>
 					string.Equals(attr.Value.ToString(), skill, StringComparison.OrdinalIgnoreCase)));
 
 			if (!filtered.Any())
 			{
-				filtered = XmlService.Perks
+				filtered = XmlService.Armors
 					.Where(x => !x.Attributes.Any(attr =>
 						string.Equals(attr.Name, "skill_selector", StringComparison.OrdinalIgnoreCase)));
 			}
 
-			items = filtered.ToList();
+			armors = filtered.ToList();
 		}
 
-		public void SearchItems()
+		public void SearchArmors()
 		{
 			if (XmlService is null)
 			{
 				return;
 			}
 
-			if (string.IsNullOrEmpty(SearchItem))
+			if (string.IsNullOrEmpty(SearchArmor))
 			{
-				items = XmlService.Perks.ToList();
+				armors = XmlService.Armors.ToList();
 				return;
 			}
 
-			string filter = SearchItem;
+			string filter = SearchArmor;
 
-			var filtered = XmlService.Perks.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
+			var filtered = XmlService.Armors.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
 
 
-			items = filtered.ToList();
+			armors = filtered.ToList();
 		}
 
 		private string GetName(IModItem modItem)
@@ -153,19 +155,20 @@ namespace ModForge.UI.Components.ModItemComponents
 			return $"Price: {(Double.TryParse(attribute.Value.ToString(), out var price) ? $"{price / 10} Groschen" : "-")}";
 		}
 
-		public void NavigateToItem(IModItem modItem)
+		public void NavigateToArmor(IModItem modItem)
 		{
 			if (NavigationManager is null)
 			{
 				return;
 			}
-			NavigationManager.NavigateTo($"editing/item/{modItem.Id}");
+			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
-		protected override void OnInitialized()
+
+		protected override async Task OnInitializedAsync()
 		{
-			base.OnInitialized();
-			items = XmlService.Items.ToList();
+			armors = await Task.Run(() => XmlService.Armors.ToList());
+			_isLoaded = true;
 		}
 	}
 }

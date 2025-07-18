@@ -1,4 +1,4 @@
-﻿using ModForge.Shared.Models.Attributes;
+﻿using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Localizations;
 
 namespace ModForge.Shared.Models.ModItems
@@ -29,30 +29,27 @@ namespace ModForge.Shared.Models.ModItems
 			Attributes = attributes.ToList();
 		}
 
-		public Buff(string id, IList<string> perkIds, string path, IList<IAttribute> attributes, Localization localization)
+		public Buff(string id, string idKey, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
-			LinkedIds = perkIds;
+			IdKey = idKey;
 			Path = path;
+			LinkedIds = linkedIds;
 			Attributes = attributes;
 			Localization = localization;
 		}
 
 		public string Id { get; set; } = string.Empty;
-		public IList<string> LinkedIds { get; set; } = new List<string>();
+		public string IdKey { get; set; }
 		public string Path { get; set; } = string.Empty;
 		public string Name { get; set; } = string.Empty;
-		public IList<IAttribute> Attributes { get; set; } = new List<IAttribute>();
+		public List<string> LinkedIds { get; set; } = new();
+		public List<IAttribute> Attributes { get; set; } = new();
 		public Localization Localization { get; set; } = new();
 
-		public static Buff GetDeepCopy(Buff buff)
+		public IModItem GetDeepCopy()
 		{
-			return new Buff(buff.Id, buff.LinkedIds, buff.Path, buff.Attributes.Select(attr => attr.DeepClone()).ToList(), buff.Localization.DeepClone());
-		}
-
-		public override string ToString()
-		{
-			return Name.ToLower();
+			return new Buff(Id, IdKey, Path, LinkedIds, Attributes.Select(attr => attr.DeepClone()).ToList(), Localization.DeepClone());
 		}
 	}
 }

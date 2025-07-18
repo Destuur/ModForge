@@ -1,5 +1,5 @@
 ﻿using ModForge.Shared.Adapter;
-using ModForge.Shared.Models.ModItems;
+using ModForge.Shared.Models.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

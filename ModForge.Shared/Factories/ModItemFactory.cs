@@ -1,5 +1,4 @@
-﻿using ModForge.Shared.Models.Attributes;
-using ModForge.Shared.Models.ModItems;
+﻿using ModForge.Shared.Models.Abstractions;
 using System.Linq.Expressions;
 using System.Xml;
 using System.Xml.Linq;
@@ -26,6 +25,17 @@ namespace ModForge.Shared.Factories
 			var func = lambda.Compile();
 
 			return func!;
+		}
+
+		public static IModItem CreateModItemDeepCopy(IModItem modItem, string path)
+		{
+			if (modItem is null)
+			{
+				throw new ArgumentNullException(nameof(modItem), "ModItem cannot be null.");
+			}
+			var type = modItem.GetType();
+			var attributes = modItem.Attributes.Select(attr => attr.DeepClone());
+			return BuildModItem(path, type, attributes).Invoke(path, attributes);
 		}
 
 		public static IModItem CreateModItem(XElement element, Type type, string path)

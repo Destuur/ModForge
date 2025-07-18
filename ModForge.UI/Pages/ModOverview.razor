@@ -3,40 +3,64 @@
 
 @if (mod is not null)
 {
-	<MudGrid Spacing="4" Class="pa-4">
+	<MudGrid Spacing="4" Class="px-4 py-2">
 
-		<MudItem sm="9" Style="display: flex; align-items: center;">
-			<MudText Typo="Typo.h4" Style="font-weight: bold;">OVERVIEW</MudText>
+		<MudItem md="12" Style="width: 100%;">
+			<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
+				<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>Overview</b></MudText>
+				<MudSpacer />
+				<MudButton OnClick="ContinueModding" Variant="Variant.Outlined">Continue Modding</MudButton>
+				<MudButton OnClick="ExportMod" Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background); width: 150px;">Create Mod</MudButton>
+			</MudStack>
 		</MudItem>
-
-		<MudItem sm="3">
-			<MudButton Class="button-neutral" FullWidth="true" OnClick="ContinueModding">Continue Modding</MudButton>
-		</MudItem>
-
 	</MudGrid>
 
-	<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 188px)" Elevation="0" Outlined="false" Style="background-color: transparent">
-		<MudGrid Justify="Justify.FlexStart" Class="px-6 py-4">
+	<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 60px)" Elevation="0" Outlined="false" Style="background-color: transparent;">
+		<MudGrid Spacing="2" Class="pa-2" Justify="Justify.FlexStart">
 
 
-			@foreach (var modItem in mod.ModItems)
+
+			@foreach (var modItem in ModService.Mod.ModItems)
 			{
+				<MudItem xs="12">
+					<MudCard Class="mod-item-card" Style="border-radius: 8px; position: relative;" Elevation="10">
+						<div style="position: absolute; background: linear-gradient(90deg,rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%); width: 100%; height: 100%; border-radius: inherit;" class="mod-item-hidden">
+							<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Style="height: 100%; padding-right: 8px;" Spacing="2">
+								<MudIconButton OnClick="@(() => EditModItem(modItem.Id))" Icon="@Icons.Material.Filled.Edit" Style="color: var(--icon-primary)" Size="Size.Small" />
+								<MudIconButton OnClick="@(() => DeleteModItem(modItem.Id))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" />
+							</MudStack>
+						</div>
+						<MudStack Spacing="0" Class="px-3 py-3">
+							<MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" class="pb-2">
+								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(LocalizationService.GetName(modItem))</MudText>
+							</MudStack>
 
-				@if (modItem is Perk perk)
-				{
-					<PerkListItem Perk="perk" Placeholder="@perk.Name"></PerkListItem>
-				}
-
-				@if (modItem is Buff buff)
-				{
-					<BuffListItem Buff="buff" Placeholder="@buff.Name"></BuffListItem>
-				}
+							@foreach (var attribute in modItem.Attributes)
+							{
+								@if (HasDifferenceToOriginalMod(modItem.Id, attribute))
+								{
+									<MudStack Row Justify="Justify.SpaceBetween">
+										<MudText Typo="Typo.body2">@(attribute.Name):</MudText>
+										@if (attribute.Value is IList<BuffParam> buffParams)
+										{
+											<MudStack>
+												@foreach (var buffParam in buffParams)
+												{
+													<MudText Typo="Typo.body2">@BuffParamSerializer.GetName(buffParam.Key) - @buffParam.Value</MudText>
+												}
+											</MudStack>
+										}
+										else
+										{
+											<MudText Typo="Typo.body2">@(attribute.Value)</MudText>
+										}
+									</MudStack>
+								}
+							}
+						</MudStack>
+					</MudCard>
+				</MudItem>
 			}
-
 		</MudGrid>
 	</MudPaper>
-
-	<MudStack Row="true" Class="px-4 mt-4">
-		<MudButton Class="button-prominent" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="ExportMod">Create Mod</MudButton>
-	</MudStack>
 }

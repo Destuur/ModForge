@@ -1,10 +1,10 @@
 ﻿using ModForge.Shared.Factories;
-using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using ModForge.Shared.Models.Abstractions;
 
 namespace ModForge.UI.Components.PerkComponents
 {
@@ -24,7 +24,7 @@ namespace ModForge.UI.Components.PerkComponents
 
 		public void ResetBuff()
 		{
-			EditingPerk = Perk.GetDeepCopy(OriginalPerk);
+			//EditingPerk = Perk.GetDeepCopy(OriginalPerk);
 			StateHasChanged();
 		}
 
@@ -90,7 +90,7 @@ namespace ModForge.UI.Components.PerkComponents
 		{
 			base.OnInitialized();
 			Attributes = AttributeFactory.GetAllAttributes();
-			OriginalPerk = Perk.GetDeepCopy(OriginalPerk);
+			//OriginalPerk = Perk.GetDeepCopy(OriginalPerk);
 			UpdateFilteredAttributes();
 		}
 

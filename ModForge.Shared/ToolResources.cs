@@ -13,27 +13,64 @@ namespace ModForge.Shared
 		public static ToolResources Keys { get; set; } = new ToolResources();
 
 		#region Valid Methods
-		public List<Type> GetItemTypes()
+		public List<Type> GetWeaponClasses()
+		{
+			return new List<Type>()
+			{
+				typeof(MeleeWeaponClass),
+				typeof(MissileWeaponClass)
+			};
+		}
+
+		public List<Type> GetWeaponTypes()
 		{
 			return new List<Type>()
 			{
 				typeof(MeleeWeapon),
-				typeof(NPCTool),
-				typeof(MiscItem),
+				typeof(MissileWeapon),
+				typeof(Ammo)
+			};
+		}
+
+		public List<Type> GetArmorTypes()
+		{
+			return new List<Type>()
+			{
 				typeof(Hood),
 				typeof(Armor),
-				typeof(MissileWeapon),
-				typeof(Document),
-				typeof(Herb),
-				typeof(Food),
 				typeof(Helmet),
+			};
+		}
+
+		public List<Type> GetConsumableTypes()
+		{
+			return new List<Type>()
+			{
+				typeof(Food),
+				typeof(Poison)
+			};
+		}
+
+		public List<Type> GetCraftingMaterialsTypes()
+		{
+			return new List<Type>()
+			{
+				typeof(Herb),
+				typeof(CraftingMaterial)
+			};
+		}
+
+		public List<Type> GetMiscTypes()
+		{
+			return new List<Type>()
+			{
+				typeof(NPCTool),
+				typeof(MiscItem),
+				typeof(Document),
 				typeof(Die),
-				typeof(Ammo),
 				typeof(ItemAlias),
 				typeof(QuickSlotContainer),
 				typeof(DiceBadge),
-				typeof(CraftingMaterial),
-				typeof(Poison),
 				typeof(PickableItem),
 				typeof(Key),
 				typeof(Money),
@@ -65,7 +102,79 @@ namespace ModForge.Shared
 				}
 			};
 
-			foreach (var type in GetItemTypes())
+			foreach (var type in GetWeaponClasses())
+			{
+				dictionary.Add(type, new()
+				{
+					{ "weapon_class", Path.Combine("Data", "Tables.pak") }
+				});
+			}
+
+			foreach (var type in GetWeaponTypes())
+			{
+				dictionary.Add(type, new()
+				{
+					{ "item", Path.Combine("Data", "Tables.pak") },
+					{ "item__alchemy", Path.Combine("Data", "Tables.pak") },
+					{ "item__aux", Path.Combine("Data", "Tables.pak") },
+					{ "item__deprecated", Path.Combine("Data", "Tables.pak") },
+					{ "item__dlc", Path.Combine("Data", "Tables.pak") },
+					{ "item__horse", Path.Combine("Data", "Tables.pak") },
+					{ "item__rewards", Path.Combine("Data", "Tables.pak") },
+					{ "item__system", Path.Combine("Data", "Tables.pak") },
+					{ "item__unique", Path.Combine("Data", "Tables.pak") },
+				});
+			}
+
+			foreach (var type in GetArmorTypes())
+			{
+				dictionary.Add(type, new()
+				{
+					{ "item", Path.Combine("Data", "Tables.pak") },
+					{ "item__alchemy", Path.Combine("Data", "Tables.pak") },
+					{ "item__aux", Path.Combine("Data", "Tables.pak") },
+					{ "item__deprecated", Path.Combine("Data", "Tables.pak") },
+					{ "item__dlc", Path.Combine("Data", "Tables.pak") },
+					{ "item__horse", Path.Combine("Data", "Tables.pak") },
+					{ "item__rewards", Path.Combine("Data", "Tables.pak") },
+					{ "item__system", Path.Combine("Data", "Tables.pak") },
+					{ "item__unique", Path.Combine("Data", "Tables.pak") },
+				});
+			}
+
+			foreach (var type in GetConsumableTypes())
+			{
+				dictionary.Add(type, new()
+				{
+					{ "item", Path.Combine("Data", "Tables.pak") },
+					{ "item__alchemy", Path.Combine("Data", "Tables.pak") },
+					{ "item__aux", Path.Combine("Data", "Tables.pak") },
+					{ "item__deprecated", Path.Combine("Data", "Tables.pak") },
+					{ "item__dlc", Path.Combine("Data", "Tables.pak") },
+					{ "item__horse", Path.Combine("Data", "Tables.pak") },
+					{ "item__rewards", Path.Combine("Data", "Tables.pak") },
+					{ "item__system", Path.Combine("Data", "Tables.pak") },
+					{ "item__unique", Path.Combine("Data", "Tables.pak") },
+				});
+			}
+
+			foreach (var type in GetCraftingMaterialsTypes())
+			{
+				dictionary.Add(type, new()
+				{
+					{ "item", Path.Combine("Data", "Tables.pak") },
+					{ "item__alchemy", Path.Combine("Data", "Tables.pak") },
+					{ "item__aux", Path.Combine("Data", "Tables.pak") },
+					{ "item__deprecated", Path.Combine("Data", "Tables.pak") },
+					{ "item__dlc", Path.Combine("Data", "Tables.pak") },
+					{ "item__horse", Path.Combine("Data", "Tables.pak") },
+					{ "item__rewards", Path.Combine("Data", "Tables.pak") },
+					{ "item__system", Path.Combine("Data", "Tables.pak") },
+					{ "item__unique", Path.Combine("Data", "Tables.pak") },
+				});
+			}
+
+			foreach (var type in GetMiscTypes())
 			{
 				dictionary.Add(type, new()
 				{

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
-using ModForge.Shared.Models.Attributes;
+using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
@@ -243,7 +243,7 @@ namespace ModForge.UI.Pages
 				originalPerk = ModService.Mod.ModItems.FirstOrDefault(x => x.Id == Id) as Perk;
 			}
 
-			editingPerk = Perk.GetDeepCopy(originalPerk);
+			//editingPerk = Perk.GetDeepCopy(originalPerk);
 			StateHasChanged();
 		}
 	}

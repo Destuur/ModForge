@@ -3,8 +3,8 @@
 
 <MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
 
-	<MudItem Style=" padding: 0px; width: 56px;">
-		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="0">
+	<MudItem Style="padding: 0px; width: 56px;">
+		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="0" Class="pt-2">
 			<MudTooltip Text="Dashboard">
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Dashboard)))" Icon="@Icons.Material.Filled.SpaceDashboard" Style="color: var(--icon-primary);" />
 			</MudTooltip>
@@ -24,7 +24,7 @@
 		</MudStack>
 	</MudItem>
 
-	<MudItem Style="padding: 0px; width: calc(100% - 56px);">
+	<MudItem Style="padding: 0px; height: 100%; width: calc(100% - 56px);">
 
 		@CustomRender
 

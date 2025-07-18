@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ModForge.Shared.Models.Enums;
+using ModForge.Shared.Models.Abstractions;
 
 namespace ModForge.UI.Components.AttributeComponents
 {
@@ -31,14 +32,24 @@ namespace ModForge.UI.Components.AttributeComponents
 			return SplitCamelCase(typeof(MathOperation).Name);
 		}
 
-		public void AddBuffParam()
+		public void AddBuffParam(string key)
 		{
-			CurrentValues.Add(new BuffParam("", MathOperation.AddAbsolute, 0));
+			if (CurrentValues is null)
+			{
+				return;
+			}
+
+			CurrentValues.Add(new BuffParam(key, MathOperation.AddAbsolute, 0));
 			StateHasChanged();
 		}
 
 		private void RemoveBuffParam(string key)
 		{
+			if (CurrentValues is null)
+			{
+				return;
+			}
+
 			var tempList = new List<BuffParam>();
 
 			foreach (var currentValue in CurrentValues)

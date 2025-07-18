@@ -1,5 +1,5 @@
-﻿using ModForge.Shared.Models.Data;
-using ModForge.Shared.Models.ModItems;
+﻿using ModForge.Shared.Models.Abstractions;
+using ModForge.Shared.Models.Data;
 using ModForge.Shared.Models.Mods;
 using Newtonsoft.Json;
 

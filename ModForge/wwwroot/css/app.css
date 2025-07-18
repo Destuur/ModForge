@@ -21,6 +21,7 @@ html, body {
     color: #c1c1c4;
     position: relative;
     user-select: none;
+    overflow-x: hidden;
 }
 
     body::before {
@@ -30,11 +31,11 @@ html, body {
         left: 50%;
         width: 500px;
         height: 500px;
-        background-image: url("../../Images/Icons/modforge_icon_no_letters.png"); /* Pfad zum Bild */
+        background-image: url("../../Images/Icons/modforge.png"); /* Pfad zum Bild */
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        opacity: 0.05;
+        opacity: 0.08;
         transform: translate(-50%, -50%);
         z-index: 0;
         pointer-events: none;
@@ -142,6 +143,18 @@ h1:focus {
     color: #7a7a7d;
 }
 
+.selected {
+    background-color: var(--mud-palette-primary) !important;
+}
+
+    .selected > td {
+        color: var(--background) !important;
+    }
+
+        .selected > td .mud-input {
+            color: var(--background) !important;
+        }
+
 .button-widget {
     display: flex;
     align-items: center;
@@ -154,19 +167,40 @@ h1:focus {
     transition: all ease-in-out 0.1s;
 }
 
-    .button-widget:hover {
-        opacity: 1;
-    }
+.dialog-background {
+    backdrop-filter: blur(10px);
+    transition: all ease 0.3s;
+}
 
-    .button-widget:active {
-        opacity: 0.6;
-    }
+.button-widget:hover {
+    opacity: 1;
+}
+
+.button-widget:active {
+    opacity: 0.6;
+}
 
 .mod-item-card {
+    width: 100%;
+    border-radius: 8px;
+    transition: all ease-in-out 0.1s;
+    background: rgba(255, 255, 255, 0.23);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.3px);
+    -webkit-backdrop-filter: blur(5.3px);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+.dialog-card {
     height: auto;
     width: 100%;
     border-radius: 8px;
     transition: all ease-in-out 0.1s;
+    background: rgba(255, 255, 255, 0.23);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.3px);
+    -webkit-backdrop-filter: blur(5.3px);
+    border: 1px solid rgba(255, 255, 255, 0.11);
 }
 
 .drawer-item-card {
@@ -404,7 +438,7 @@ h1:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
