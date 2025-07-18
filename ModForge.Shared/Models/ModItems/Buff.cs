@@ -29,26 +29,27 @@ namespace ModForge.Shared.Models.ModItems
 			Attributes = attributes.ToList();
 		}
 
-		public Buff(string id, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
+		public Buff(string id, string idKey, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
-			LinkedIds = linkedIds;
+			IdKey = idKey;
 			Path = path;
+			LinkedIds = linkedIds;
 			Attributes = attributes;
 			Localization = localization;
 		}
 
 		public string Id { get; set; } = string.Empty;
-		public List<string> LinkedIds { get; set; } = new();
+		public string IdKey { get; set; }
 		public string Path { get; set; } = string.Empty;
 		public string Name { get; set; } = string.Empty;
+		public List<string> LinkedIds { get; set; } = new();
 		public List<IAttribute> Attributes { get; set; } = new();
 		public Localization Localization { get; set; } = new();
 
-
 		public IModItem GetDeepCopy()
 		{
-			return new Buff(Id, Path, LinkedIds, Attributes.Select(attr => attr.DeepClone()).ToList(), Localization.DeepClone());
+			return new Buff(Id, IdKey, Path, LinkedIds, Attributes.Select(attr => attr.DeepClone()).ToList(), Localization.DeepClone());
 		}
 	}
 }

@@ -186,15 +186,36 @@ namespace ModForge.Shared.Adapter
 					doc.Root?.Add(group);
 				}
 
-				var existingElement = group.Elements(writeInfo.ElementName)
-				.FirstOrDefault(el => ElementsAreEqual(el, newElement));
+				var idKey = modItem.IdKey;
 
-				if (existingElement != null)
+				if (!string.IsNullOrWhiteSpace(idKey))
 				{
-					existingElement.ReplaceWith(newElement);
+					var idValue = newElement.Attribute(idKey)?.Value;
+
+					if (idValue != null)
+					{
+						var existingElement = group.Elements(writeInfo.ElementName)
+							.FirstOrDefault(el =>
+								string.Equals(el.Attribute(idKey)?.Value, idValue, StringComparison.Ordinal));
+
+						if (existingElement != null)
+						{
+							existingElement.ReplaceWith(newElement);
+						}
+						else
+						{
+							group.Add(newElement);
+						}
+					}
+					else
+					{
+						Console.WriteLine($"Warnung: Attribut '{idKey}' im neuen Element nicht gefunden. Element wird hinzugefügt.");
+						group.Add(newElement);
+					}
 				}
 				else
 				{
+					Console.WriteLine($"Warnung: Kein gültiger 'IdKey' für Typ '{modItem.GetType().Name}' gesetzt. Element wird hinzugefügt.");
 					group.Add(newElement);
 				}
 

@@ -17,6 +17,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new MeleeWeapon()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -47,6 +48,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new MeleeWeaponClass()
 				{
+					IdKey = "id",
 					Id = (string)element.Attribute("id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -77,6 +79,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new MissileWeaponClass()
 				{
+					IdKey = "id",
 					Id = (string)element.Attribute("id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -107,6 +110,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new NPCTool()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -137,6 +141,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Perk()
 				{
+					IdKey = "perk_id",
 					Id = (string)element.Attribute("perk_id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -167,6 +172,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Buff()
 				{
+					IdKey = "buff_id",
 					Id = (string)element.Attribute("buff_id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -197,6 +203,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new MiscItem()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -227,6 +234,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Hood()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -257,6 +265,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Armor()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -287,6 +296,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new MissileWeapon()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -317,6 +327,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Document()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -347,6 +358,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Herb()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -377,6 +389,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Food()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -407,6 +420,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Helmet()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -437,6 +451,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Die()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -467,6 +482,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Ammo()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -497,6 +513,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new ItemAlias()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -527,6 +544,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new QuickSlotContainer()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -557,6 +575,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new DiceBadge()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -587,6 +606,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new CraftingMaterial()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -617,6 +637,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Poison()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -647,6 +668,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new PickableItem()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -677,6 +699,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Key()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -707,6 +730,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new Money()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;
@@ -737,6 +761,7 @@ namespace ModForge.Shared.Builders.BuildHandlers
 
 				return new KeyRing()
 				{
+					IdKey = "Id",
 					Id = (string)element.Attribute("Id")!,
 					Attributes = element.Attributes().Select(attr => AttributeFactory.CreateAttribute(attr.Name.LocalName, attr.Value)).ToList()
 				} as TOutput;

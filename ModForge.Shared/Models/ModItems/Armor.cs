@@ -9,9 +9,11 @@ namespace ModForge.Shared.Models.ModItems
 		{
 
 		}
-		public Armor(string id, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
+
+		public Armor(string id, string idKey, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
+			IdKey = idKey;
 			Path = path;
 			LinkedIds = linkedIds;
 			Attributes = attributes;
@@ -19,15 +21,15 @@ namespace ModForge.Shared.Models.ModItems
 		}
 
 		public string Id { get; set; } = string.Empty;
+		public string IdKey { get; set; }
 		public string Path { get; set; } = string.Empty;
 		public List<string> LinkedIds { get; set; } = new();
 		public List<IAttribute> Attributes { get; set; } = new();
 		public Localization Localization { get; set; } = new();
 
-
 		public IModItem GetDeepCopy()
 		{
-			return new Armor(Id, Path, LinkedIds, Attributes.Select(attr => attr.DeepClone()).ToList(), Localization.DeepClone());
+			return new Armor(Id, IdKey, Path, LinkedIds, Attributes.Select(attr => attr.DeepClone()).ToList(), Localization.DeepClone());
 		}
 	}
 }

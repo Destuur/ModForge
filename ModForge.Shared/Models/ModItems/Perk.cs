@@ -30,26 +30,27 @@ namespace ModForge.Shared.Models.ModItems
 			Attributes = attributes.ToList();
 		}
 
-		public Perk(string id, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
+		public Perk(string id, string idKey, string path, List<string> linkedIds, List<IAttribute> attributes, Localization localization)
 		{
 			Id = id;
-			LinkedIds = linkedIds;
+			IdKey = idKey;
 			Path = path;
-			Attributes = attributes.ToList();
+			LinkedIds = linkedIds;
+			Attributes = attributes;
 			Localization = localization;
 		}
 
-		// TODO: ist das Kleinkunst oder kann das weg?
-		public string Name { get; set; } = string.Empty;
 		public string Id { get; set; } = string.Empty;
+		public string IdKey { get; set; }
 		public string Path { get; set; } = string.Empty;
+		public string Name { get; set; } = string.Empty;
 		public List<string> LinkedIds { get; set; } = new();
 		public List<IAttribute> Attributes { get; set; } = new();
 		public Localization Localization { get; set; } = new();
 
 		public IModItem GetDeepCopy()
 		{
-			return new Perk(Id, Path, LinkedIds, Attributes.Select(attr => attr.DeepClone()).ToList(), Localization.DeepClone());
+			return new Perk(Id, IdKey, Path, LinkedIds, Attributes.Select(attr => attr.DeepClone()).ToList(), Localization.DeepClone());
 		}
 	}
 }
