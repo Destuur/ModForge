@@ -30,7 +30,7 @@ namespace ModForge.Shared.Adapter
 			var foundModItems = new List<IModItem>();
 			var type = dataPoint.Type.Name.ToString();
 
-			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open))
+			using (FileStream zipToOpen = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
 			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
 			{
 				foreach (var entry in archive.Entries)

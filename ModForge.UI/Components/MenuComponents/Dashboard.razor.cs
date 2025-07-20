@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using ModForge.Localizations;
+using ModForge.Shared.Converter;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
@@ -15,6 +16,7 @@ namespace ModForge.UI.Components.MenuComponents
 		private ModCollection externalMods;
 		private string buttonContent;
 		private bool isCreatedVisible = true;
+		private string? imageDataUrl;
 
 		[Inject]
 		public ModService ModService { get; set; }
@@ -62,7 +64,22 @@ namespace ModForge.UI.Components.MenuComponents
 			Thread.CurrentThread.CurrentUICulture = culture;
 
 			buttonContent = L["NewModButton"].Value;
+			await ShowGamePathMissingDialog();
 
+			using var bc = new DdsConverter();
+			string file = @"C:\Users\User\Downloads";
+			var pngStream = DdsConverter.ConvertToPngStream(@"C:\Users\User\Downloads\BootsAnkle01_m02_C_icon.dds");
+
+			// Als Base64-String konvertieren
+			using var ms = new MemoryStream();
+			var test = pngStream.CopyToAsync(ms);
+			var base64 = Convert.ToBase64String(ms.ToArray());
+			imageDataUrl = $"data:image/png;base64,{base64}";
+			StateHasChanged();
+		}
+
+		private async Task ShowGamePathMissingDialog()
+		{
 			if (string.IsNullOrEmpty(UserConfigurationService.Current.GameDirectory))
 			{
 				var parameters = new DialogParameters<MoreModItemsDialog>
@@ -80,7 +97,6 @@ namespace ModForge.UI.Components.MenuComponents
 					await ChangeChildContent.InvokeAsync(typeof(Settings));
 				}
 			}
-			StateHasChanged();
 		}
 	}
 }

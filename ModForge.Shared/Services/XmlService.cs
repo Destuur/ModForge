@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using ModForge.Shared.Adapter;
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Data;
-using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.ModItems;
 using System.Diagnostics;
 
