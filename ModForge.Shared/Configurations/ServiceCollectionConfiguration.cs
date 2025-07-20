@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ModForge.Shared.Adapter;
 using ModForge.Shared.Builders;
+using ModForge.Shared.Converter;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Data;
 using ModForge.Shared.Models.Mods;
@@ -17,6 +18,8 @@ namespace ModForge.Shared.Configurations
 			services.AddSingleton<ModService>();
 			services.AddSingleton<UserConfigurationService>();
 			services.AddSingleton<XmlService>();
+			services.AddSingleton<IconService>();
+			services.AddSingleton<DdsConverter>();
 			services.AddSingleton<ModCollection>();
 			services.AddSingleton<DataSource>();
 			services.AddSingleton<IBuilder<XElement, IModItem>, Builder<XElement, IModItem>>();

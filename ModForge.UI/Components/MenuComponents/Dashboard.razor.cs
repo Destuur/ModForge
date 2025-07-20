@@ -65,16 +65,6 @@ namespace ModForge.UI.Components.MenuComponents
 
 			buttonContent = L["NewModButton"].Value;
 			await ShowGamePathMissingDialog();
-
-			using var bc = new DdsConverter();
-			string file = @"C:\Users\User\Downloads";
-			var pngStream = DdsConverter.ConvertToPngStream(@"C:\Users\User\Downloads\BootsAnkle01_m02_C_icon.dds");
-
-			// Als Base64-String konvertieren
-			using var ms = new MemoryStream();
-			var test = pngStream.CopyToAsync(ms);
-			var base64 = Convert.ToBase64String(ms.ToArray());
-			imageDataUrl = $"data:image/png;base64,{base64}";
 			StateHasChanged();
 		}
 

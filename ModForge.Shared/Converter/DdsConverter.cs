@@ -41,10 +41,10 @@ namespace ModForge.Shared.Converter
 			}
 		}
 
-		public static unsafe MemoryStream ConvertToPngStream(string path)
+		public static unsafe MemoryStream ConvertToPngStream(Stream inputStream)
 		{
-			using var image = Pfimage.FromFile(path)
-				?? throw new NotSupportedException($"Unsupported image format for {path}");
+			using var image = Pfimage.FromStream(inputStream)
+				?? throw new NotSupportedException("Unsupported DDS format");
 
 			var format = image.Format switch
 			{

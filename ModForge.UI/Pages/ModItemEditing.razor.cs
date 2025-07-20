@@ -14,6 +14,7 @@ namespace ModForge.UI.Pages
 		private IModItem? editingModItem;
 		private IEnumerable<IAttribute> sortedAttributes => editingModItem!.Attributes.OrderBy(attr => attr.Name == "buff_params" ? 1 : 0);
 		private List<IAttribute> filteredAttributes = new();
+		private string? icon;
 
 		[Inject]
 		public LocalizationService? LocalizationService { get; set; }
@@ -27,6 +28,8 @@ namespace ModForge.UI.Pages
 		public ILogger<ModItemEditing>? Logger { get; set; }
 		[Inject]
 		public IDialogService? DialogService { get; set; }
+		[Inject]
+		public IconService IconService { get; set; }
 		[Parameter]
 		public string? Id { get; set; }
 		public IModItem? OriginalModItem { get; set; }
@@ -115,6 +118,14 @@ namespace ModForge.UI.Pages
 				return;
 
 			editingModItem = LoadModItemForEdit(Id);
+
+			if (IconService is null)
+			{
+				return;
+			}
+
+			icon = IconService.GetBase64Icon(editingModItem.Attributes.FirstOrDefault(x => x.Name == "IconId")?.Value.ToString() ?? editingModItem.Attributes.FirstOrDefault(x => x.Name == "icon_id")?.Value.ToString() ?? string.Empty);
+			StateHasChanged();
 		}
 
 		private IModItem? LoadModItemForEdit(string id)
