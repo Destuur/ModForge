@@ -3,28 +3,28 @@
 
 <MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
 
-	<MudItem Style=" padding: 0px; width: 56px;">
-		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="0" Class="pt-2">
+	<MudItem Style="padding: 0px; width: 56px; ">
+		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2">
 			<MudTooltip Text="Perks">
-				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Perks)))" Icon="@Icons.Material.Filled.Filter1" Style="color: var(--icon-primary);" />
+				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Perks)))" Src="@IconService.GetBase64Icon("Trigger_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
 			<MudTooltip Text="Buffs">
-				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Buffs)))" Icon="@Icons.Material.Filled.Filter2" Style="color: var(--icon-primary);" />
+				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Buffs)))" Src="@IconService.GetBase64Icon("mainlevel_characterCreation_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
 			<MudTooltip Text="Weapons">
-				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Weapons)))" Icon="@Icons.Material.Filled.Filter3" Style="color: var(--icon-primary);" />
+				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Weapons)))" Src="@IconService.GetBase64Icon("warrior_characterCreation_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
 			<MudTooltip Text="Armors">
-				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Armors)))" Icon="@Icons.Material.Filled.Filter4" Style="color: var(--icon-primary);" />
+				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Armors)))" Src="@IconService.GetBase64Icon("Statistics/2_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
 			<MudTooltip Text="Consumables">
-				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Consumables)))" Icon="@Icons.Material.Filled.Filter5" Style="color: var(--icon-primary);" />
+				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Consumables)))" Src="@IconService.GetBase64Icon("Statistics/4_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
 			<MudTooltip Text="Crafting Materials">
-				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(CraftingMaterials)))" Icon="@Icons.Material.Filled.Filter6" Style="color: var(--icon-primary);" />
+				<MudImage @onclick="@(() => OnChangeChildContent(typeof(CraftingMaterials)))" Src="@IconService.GetBase64Icon("Statistics/5_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
 			<MudTooltip Text="Misc Items">
-				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(MiscItems)))" Icon="@Icons.Material.Filled.Filter7" Style="color: var(--icon-primary);" />
+				<MudImage @onclick="@(() => OnChangeChildContent(typeof(MiscItems)))" Src="@IconService.GetBase64Icon("Statistics/7_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
 			<MudSpacer />
 			<MudTooltip Text="Exit Modding">

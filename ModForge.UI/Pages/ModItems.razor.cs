@@ -23,6 +23,8 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public LocalizationService LocalizationService { get; set; }
 		[Inject]
+		public IconService IconService { get; set; }
+		[Inject]
 		public IDialogService DialogService { get; set; }
 		[Inject]
 		public ISnackbar Snackbar { get; set; }

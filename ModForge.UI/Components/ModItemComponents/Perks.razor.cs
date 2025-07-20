@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.MenuComponents;
@@ -18,6 +19,8 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Parameter]
 		public EventCallback ToggledDrawer { get; set; }
 		[Inject]
+		public IJSRuntime JSRuntime { get; set; }
+		[Inject]
 		public ModService ModService { get; set; }
 		[Inject]
 		public ILogger<Loadouts> Logger { get; set; }
@@ -29,7 +32,10 @@ namespace ModForge.UI.Components.ModItemComponents
 		public LocalizationService LocalizationService { get; set; }
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
+		[Inject]
+		public IconService IconService { get; set; }
 		public string SearchPerk { get; set; }
+		public IModItem SelectedModItem { get; set; }
 
 		public async Task ToggleDrawer()
 		{
@@ -57,6 +63,42 @@ namespace ModForge.UI.Components.ModItemComponents
 			}
 
 			perks = filtered.ToList();
+		}
+
+		private async Task CopyTextToClipboard(string text)
+		{
+			await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", text);
+			Snackbar.Add("Content copied to clipboard", Severity.Success);
+		}
+
+		private void DuplicatePerk(IModItem modItem)
+		{
+			if (modItem is null || XmlService is null)
+			{
+				return;
+			}
+			var newModItem = modItem.GetDeepCopy();
+			newModItem.Attributes.FirstOrDefault(x => x.Name.Contains("name"))!.Value = $"{LocalizationService.GetName(modItem)} (Copy)";
+			newModItem.Id = Guid.NewGuid().ToString();
+			if (ModService is null)
+			{
+				return;
+			}
+			ModService.AddModItem(newModItem);
+			Snackbar.Add("Perk duplicated successfully!", Severity.Success);
+			NavigateToPerk(newModItem);
+			StateHasChanged();
+		}
+
+		private void SelectModItem(IModItem modItem)
+		{
+			if (modItem is null)
+			{
+				return;
+			}
+
+			SelectedModItem = modItem;
+			StateHasChanged();
 		}
 
 		public void SearchPerks()

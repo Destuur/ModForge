@@ -4,6 +4,7 @@ using ModForge.Localizations;
 using ModForge.Services;
 using ModForge.Shared.Configurations;
 using ModForge.Shared.Services;
+using MudBlazor;
 using MudBlazor.Services;
 using Serilog;
 using System.Windows;
@@ -32,8 +33,19 @@ namespace ModForge
 			});
 
 			serviceCollection.AddWpfBlazorWebView();
-			serviceCollection.AddMudServices()
-							 .AddModForgeServices()
+			serviceCollection.AddMudServices(config =>
+			{
+				config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
+
+				config.SnackbarConfiguration.PreventDuplicates = false;
+				config.SnackbarConfiguration.NewestOnTop = false;
+				config.SnackbarConfiguration.ShowCloseIcon = true;
+				config.SnackbarConfiguration.VisibleStateDuration = 3000;
+				config.SnackbarConfiguration.HideTransitionDuration = 500;
+				config.SnackbarConfiguration.ShowTransitionDuration = 500;
+				config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+			});
+			serviceCollection.AddModForgeServices()
 							 .AddModForgeAdapters()
 							 .AddSingleton<IFolderPickerService, FolderPickerService>();
 
