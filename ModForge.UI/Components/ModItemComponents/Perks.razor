@@ -60,39 +60,7 @@
 	</MudItem>
 
 	<MudItem xs="3" Style="height: 90%; padding: 0px;" Class="px-2">
-		<MudCard Class="dialog-card pa-3" Style="border-radius: 8px; height: 99%;" Elevation="10">
-			@if (SelectedModItem is null)
-			{
-				<MudStack Style="height: 100%;" Justify="Justify.Center">
-					<MudText Typo="Typo.h6" Align="Align.Center">Select element for more details</MudText>
-				</MudStack>
-			}
-			else
-			{
-				<MudStack Row AlignItems="AlignItems.End" Justify="Justify.SpaceBetween">
-					<MudImage Src="@IconService.GetIcon(SelectedModItem)" />
-					<MudMenu Icon="@Icons.Material.Filled.MoreVert" Variant="Variant.Text" Class="pa-0">
-						<MudMenuItem Label="Edit" OnClick="@(() => NavigateToPerk(SelectedModItem))" />
-						<MudMenuItem Label="Duplicate" OnClick="@(() => DuplicatePerk(SelectedModItem))" />
-						<MudMenuItem Label="Copy Id" OnClick="@(() => CopyTextToClipboard(SelectedModItem.Id))" />
-						<MudMenuItem Label="Copy Console Command" OnClick="@(() => CopyTextToClipboard($"#player.soul:AddPerk(‘{SelectedModItem.Id}‘)"))" />
-					</MudMenu>
-				</MudStack>
-				<MudText Class="pb-2" Typo="Typo.subtitle1" Color="Color.Primary"><b>@(GetName(SelectedModItem))</b></MudText>
-				<div style="height: 100%; width: 100%; overflow: auto;">
-					<MudStack>
-						@foreach (var attribute in SelectedModItem.Attributes)
-						{
-							<MudStack Spacing="0" Justify="Justify.SpaceBetween">
-								<MudText Typo="Typo.subtitle2">@(attribute.Name):</MudText>
-								<MudText Typo="Typo.caption">@(attribute.Value)</MudText>
-							</MudStack>
-						}
-					</MudStack>
-				</div>
-
-			}
-		</MudCard>
+		<ModItemDetailsView SelectedModItem="@SelectedModItem" ConsoleCommand="@(SelectedModItem is null ? string.Empty : $"#player.soul:AddPerk('{SelectedModItem.Id}')")" />
 	</MudItem>
 
 </MudGrid>

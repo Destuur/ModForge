@@ -27,21 +27,23 @@ namespace ModForge.Shared.Services
 				return null;
 			}
 
-			var iconId = modItem.Attributes.FirstOrDefault(x => x.Name == "icon_id")!.Value.ToString();
+			var iconId = modItem.Attributes.FirstOrDefault(x => x.Name == "icon_id");
 
-			if (string.IsNullOrEmpty(iconId))
+			if (iconId is null)
 			{
-				iconId = modItem.Attributes.FirstOrDefault(x => x.Name == "IconId")!.Value.ToString();
+				iconId = modItem.Attributes.FirstOrDefault(x => x.Name == "IconId");
 			}
-			if (string.IsNullOrEmpty(iconId))
+			if (iconId is null ||
+				iconId.Value.ToString() == "0" ||
+				iconId.Value.ToString() == "replaceme")
 			{
-				return null;
+				return GetBase64Icon("crime_investigation_icon");
 			}
 
-			return GetBase64Icon(iconId);
+			return GetBase64Icon(iconId.Value.ToString(), "Icons");
 		}
 
-		public string? GetBase64Icon(string iconId)
+		public string? GetBase64Icon(string iconId, string matchingFolder = null!)
 		{
 			string pakPath = Path.Combine(configService.Current.GameDirectory, "Data", "IPL_GameData.pak");
 			string targetFilename = $"{iconId}";
@@ -49,10 +51,12 @@ namespace ModForge.Shared.Services
 			using FileStream zipStream = new(pakPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
 			using ZipArchive archive = new(zipStream, ZipArchiveMode.Read);
 
+			var targetDirectory = string.IsNullOrEmpty(matchingFolder) ? "Libs/UI/Textures" : $"Libs/UI/Textures/{matchingFolder}";
+
 			var entry = archive.Entries
 				.FirstOrDefault(e =>
 					e.FullName.Contains(targetFilename, StringComparison.OrdinalIgnoreCase) &&
-					e.FullName.Contains("Libs/UI/Textures", StringComparison.OrdinalIgnoreCase));
+					e.FullName.Contains(targetDirectory, StringComparison.OrdinalIgnoreCase));
 
 			if (entry == null)
 			{

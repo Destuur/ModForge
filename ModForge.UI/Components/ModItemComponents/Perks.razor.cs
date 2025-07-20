@@ -35,7 +35,7 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Inject]
 		public IconService IconService { get; set; }
 		public string SearchPerk { get; set; }
-		public IModItem SelectedModItem { get; set; }
+		public IModItem? SelectedModItem { get; set; }
 
 		public async Task ToggleDrawer()
 		{
@@ -63,31 +63,6 @@ namespace ModForge.UI.Components.ModItemComponents
 			}
 
 			perks = filtered.ToList();
-		}
-
-		private async Task CopyTextToClipboard(string text)
-		{
-			await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", text);
-			Snackbar.Add("Content copied to clipboard", Severity.Success);
-		}
-
-		private void DuplicatePerk(IModItem modItem)
-		{
-			if (modItem is null || XmlService is null)
-			{
-				return;
-			}
-			var newModItem = modItem.GetDeepCopy();
-			newModItem.Attributes.FirstOrDefault(x => x.Name.Contains("name"))!.Value = $"{LocalizationService.GetName(modItem)} (Copy)";
-			newModItem.Id = Guid.NewGuid().ToString();
-			if (ModService is null)
-			{
-				return;
-			}
-			ModService.AddModItem(newModItem);
-			Snackbar.Add("Perk duplicated successfully!", Severity.Success);
-			NavigateToPerk(newModItem);
-			StateHasChanged();
 		}
 
 		private void SelectModItem(IModItem modItem)
@@ -163,14 +138,14 @@ namespace ModForge.UI.Components.ModItemComponents
 				return string.Empty;
 			}
 
-			var name = LocalizationService.GetDescription(modItem);
+			var description = LocalizationService.GetDescription(modItem);
 
-			if (name is null)
+			if (description is null)
 			{
 				return "Description not found";
 			}
 
-			return name;
+			return description;
 		}
 
 		private string GetSkillSelector(IModItem modItem)
@@ -196,15 +171,6 @@ namespace ModForge.UI.Components.ModItemComponents
 			}
 
 			return $"Lvl {attribute.Value.ToString()}";
-		}
-
-		public void NavigateToPerk(IModItem modItem)
-		{
-			if (NavigationManager is null)
-			{
-				return;
-			}
-			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
 		protected override async Task OnInitializedAsync()

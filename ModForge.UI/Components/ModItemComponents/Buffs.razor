@@ -30,7 +30,7 @@
 		</MudStack>
 	</MudItem>
 
-	<MudItem md="12" Style="height: 90%; padding: 0px;">
+	<MudItem md="9" Style="height: 90%; padding: 0px;">
 		<div style="overflow-y: auto; height: 99%;">
 			<MudGrid Spacing="2" Class="pr-2">
 
@@ -39,7 +39,7 @@
 					@foreach (var buff in buffs)
 					{
 						<MudItem md="12" lg="12">
-							<MudCard Class="mod-item-card" Style="border-radius: 8px;" Elevation="10" onclick="@(() => NavigateToBuff(buff))">
+							<MudCard Class="mod-item-card" Style="border-radius: 8px;" Elevation="10" onclick="@(() => SelectModItem(buff))">
 								<MudTooltip Text="@(GetDescription(buff))" Placement="Placement.Bottom" Arrow>
 									<MudStack Spacing="0" Class="px-3 pt-3 pb-2">
 										<MudText Class="pb-3" Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(GetName(buff))</MudText>
@@ -57,6 +57,10 @@
 
 			</MudGrid>
 		</div>
+	</MudItem>
+
+	<MudItem xs="3" Style="height: 90%; padding: 0px;" Class="px-2">
+		<ModItemDetailsView SelectedModItem="@SelectedModItem" ConsoleCommand="@(SelectedModItem is null ? string.Empty : $"#player.soul:AddBuff(‘{SelectedModItem.Id}‘)")" />
 	</MudItem>
 
 </MudGrid>

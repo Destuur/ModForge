@@ -29,6 +29,18 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
 		public string SearchWeapon { get; set; }
+		public IModItem? SelectedModItem { get; set; }
+
+		private void SelectModItem(IModItem modItem)
+		{
+			if (modItem is null)
+			{
+				return;
+			}
+
+			SelectedModItem = modItem;
+			StateHasChanged();
+		}
 
 		public async Task ToggleDrawer()
 		{

@@ -30,6 +30,18 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
 		public string SearchBuff { get; set; }
+		public IModItem? SelectedModItem { get; set; }
+
+		private void SelectModItem(IModItem modItem)
+		{
+			if (modItem is null)
+			{
+				return;
+			}
+
+			SelectedModItem = modItem;
+			StateHasChanged();
+		}
 
 		public async Task ToggleDrawer()
 		{
@@ -154,15 +166,6 @@ namespace ModForge.UI.Components.ModItemComponents
 			}
 
 			return $"{attribute.Value.ToString()}";
-		}
-
-		public void NavigateToBuff(IModItem modItem)
-		{
-			if (NavigationManager is null)
-			{
-				return;
-			}
-			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
 		}
 
 		protected override async Task OnInitializedAsync()
