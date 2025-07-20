@@ -88,9 +88,9 @@ namespace ModForge.UI.Components.ModItemComponents
 				return;
 			}
 
-			string filter = SearchConsumable;
-
-			var filtered = XmlService.Consumeables.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x)!.Contains(filter));
+			var filtered = XmlService.Consumeables.Where(x => LocalizationService.GetName(x) is not null &&
+														LocalizationService.GetName(x)!.ToLower().Contains(SearchConsumable.ToLower()) ||
+														x.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value.ToString().ToLower().Contains(SearchConsumable.ToLower()));
 
 
 			consumables = filtered.ToList();

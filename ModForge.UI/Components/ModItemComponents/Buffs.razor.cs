@@ -84,9 +84,9 @@ namespace ModForge.UI.Components.ModItemComponents
 				return;
 			}
 
-			string filter = SearchBuff;
-
-			var filtered = XmlService.Buffs.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
+			var filtered = XmlService.Buffs.Where(x => LocalizationService.GetName(x) is not null &&
+														LocalizationService.GetName(x)!.ToLower().Contains(SearchBuff.ToLower()) ||
+														x.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value.ToString().ToLower().Contains(SearchBuff.ToLower()));
 
 
 			buffs = filtered.ToList();

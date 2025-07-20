@@ -89,9 +89,9 @@ namespace ModForge.UI.Components.ModItemComponents
 				return;
 			}
 
-			string filter = SearchPerk;
-
-			var filtered = XmlService.Perks.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
+			var filtered = XmlService.Perks.Where(x => LocalizationService.GetName(x) is not null &&
+														LocalizationService.GetName(x)!.ToLower().Contains(SearchPerk.ToLower()) ||
+														x.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value.ToString().ToLower().Contains(SearchPerk.ToLower()));
 
 
 			perks = filtered.ToList();

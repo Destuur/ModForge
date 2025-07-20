@@ -84,9 +84,9 @@ namespace ModForge.UI.Components.ModItemComponents
 				return;
 			}
 
-			string filter = SearchArmor;
-
-			var filtered = XmlService.Armors.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
+			var filtered = XmlService.Armors.Where(x => LocalizationService.GetName(x) is not null &&
+														LocalizationService.GetName(x)!.ToLower().Contains(SearchArmor.ToLower()) ||
+														x.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value.ToString().ToLower().Contains(SearchArmor.ToLower()));
 
 
 			armors = filtered.ToList();

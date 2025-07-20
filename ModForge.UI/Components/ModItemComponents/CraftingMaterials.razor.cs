@@ -83,9 +83,9 @@ namespace ModForge.UI.Components.ModItemComponents
 				return;
 			}
 
-			string filter = SearchCraftingMaterial;
-
-			var filtered = XmlService.CraftingMaterials.Where(x => LocalizationService.GetName(x) is not null && LocalizationService.GetName(x).Contains(filter));
+			var filtered = XmlService.CraftingMaterials.Where(x => LocalizationService.GetName(x) is not null &&
+														LocalizationService.GetName(x)!.ToLower().Contains(SearchCraftingMaterial.ToLower()) ||
+														x.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value.ToString().ToLower().Contains(SearchCraftingMaterial.ToLower()));
 
 
 			craftingMaterials = filtered.ToList();
