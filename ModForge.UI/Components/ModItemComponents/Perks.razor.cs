@@ -42,6 +42,23 @@ namespace ModForge.UI.Components.ModItemComponents
 			await ToggledDrawer.InvokeAsync();
 		}
 
+		private string GetModItemId(IModItem modItem)
+		{
+			if (SelectedModItem is null)
+			{
+				return null;
+			}
+
+			var foundAttribute = modItem.Attributes.FirstOrDefault(x => x.Name == "metaperk_id");
+
+			if (foundAttribute is null)
+			{
+				return $"#player.soul:AddPerk('{SelectedModItem.Id}')";
+			}
+
+			return $"#player.soul:AddPerk('{foundAttribute.Value.ToString()}')";
+		}
+
 		public void FilterPerks(string skill)
 		{
 			if (XmlService is null)

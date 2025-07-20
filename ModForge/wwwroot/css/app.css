@@ -191,6 +191,12 @@ h1:focus {
     border: 1px solid rgba(255, 255, 255, 0.11);
 }
 
+.selected-mod-item-card {
+    border-width: 2px;
+    border-color: var(--button-background-primary);
+    transition: all ease-in-out 0.1s;
+}
+
 .dialog-card {
     height: auto;
     width: 100%;

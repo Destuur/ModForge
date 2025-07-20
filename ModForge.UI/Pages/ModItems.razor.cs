@@ -198,6 +198,7 @@ namespace ModForge.UI.Pages
 			if (ModService is null ||
 				string.IsNullOrEmpty(ModId))
 			{
+				OnChangeChildContent(typeof(Perks));
 				return;
 			}
 			ModService.TryGetModFromCollection(ModId);

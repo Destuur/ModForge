@@ -21,7 +21,7 @@ namespace ModForge.UI.Pages
 		[Inject]
 		public ModService ModService { get; set; }
 		[Inject]
-		public NavigationManager Navigation { get; set; }
+		public NavigationManager NavigationManager { get; set; }
 		[Inject]
 		public UserConfigurationService UserConfigurationService { get; set; }
 		[Inject]

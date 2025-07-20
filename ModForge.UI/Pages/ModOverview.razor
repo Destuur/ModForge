@@ -16,51 +16,40 @@
 	</MudGrid>
 
 	<MudPaper Class="d-flex flex-column overflow-x-auto" Height="calc(100vh - 60px)" Elevation="0" Outlined="false" Style="background-color: transparent;">
-		<MudGrid Spacing="2" Class="pa-2" Justify="Justify.FlexStart">
+		<MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
+
+			<MudItem xs="9" Style="height: 100%; padding: 0px;">
+				<div style="overflow-y: auto; height: 99%;">
+					<MudGrid Spacing="2" Class="pr-1 pl-2">
 
 
+						@foreach (var modItem in ModService.Mod.ModItems)
+						{
+							<MudItem xs="12">
+								<MudCard Class="mod-item-card" Style="@($"border-radius: 8px; position: relative; {(SelectedModItem?.Id == modItem.Id ? "border-color: #df6f00; border-width: 3px;" : "")}")" Elevation="10" onclick="@(() => SelectModItem(modItem))">
+									<div style="position: absolute; background: linear-gradient(90deg,rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%); width: 100%; height: 100%; border-radius: inherit;" class="mod-item-hidden">
+										<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Style="height: 100%; padding-right: 8px;" Spacing="2">
+											<MudIconButton OnClick="@(() => EditModItem(modItem.Id))" Icon="@Icons.Material.Filled.Edit" Style="color: var(--icon-primary)" Size="Size.Small" />
+											<MudIconButton OnClick="@(() => DeleteModItem(modItem.Id))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" />
+										</MudStack>
+									</div>
+									<MudStack Spacing="0" Class="px-3 py-3">
+										<MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+											<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(LocalizationService.GetName(modItem))</MudText>
+										</MudStack>
 
-			@foreach (var modItem in ModService.Mod.ModItems)
-			{
-				<MudItem xs="12">
-					<MudCard Class="mod-item-card" Style="border-radius: 8px; position: relative;" Elevation="10">
-						<div style="position: absolute; background: linear-gradient(90deg,rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%); width: 100%; height: 100%; border-radius: inherit;" class="mod-item-hidden">
-							<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Style="height: 100%; padding-right: 8px;" Spacing="2">
-								<MudIconButton OnClick="@(() => EditModItem(modItem.Id))" Icon="@Icons.Material.Filled.Edit" Style="color: var(--icon-primary)" Size="Size.Small" />
-								<MudIconButton OnClick="@(() => DeleteModItem(modItem.Id))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" />
-							</MudStack>
-						</div>
-						<MudStack Spacing="0" Class="px-3 py-3">
-							<MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" class="pb-2">
-								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(LocalizationService.GetName(modItem))</MudText>
-							</MudStack>
-
-							@foreach (var attribute in modItem.Attributes)
-							{
-								@if (HasDifferenceToOriginalMod(modItem.Id, attribute))
-								{
-									<MudStack Row Justify="Justify.SpaceBetween">
-										<MudText Typo="Typo.body2">@(attribute.Name):</MudText>
-										@if (attribute.Value is IList<BuffParam> buffParams)
-										{
-											<MudStack>
-												@foreach (var buffParam in buffParams)
-												{
-													<MudText Typo="Typo.body2">@BuffParamSerializer.GetName(buffParam.Key) - @buffParam.Value</MudText>
-												}
-											</MudStack>
-										}
-										else
-										{
-											<MudText Typo="Typo.body2">@(attribute.Value)</MudText>
-										}
 									</MudStack>
-								}
-							}
-						</MudStack>
-					</MudCard>
-				</MudItem>
-			}
+								</MudCard>
+							</MudItem>
+						}
+					</MudGrid>
+				</div>
+			</MudItem>
+
+			<MudItem xs="3" Style="height: 100%; padding: 0px;" Class="px-2">
+				<ModItemDetailsView SelectedModItem="SelectedModItem" />
+			</MudItem>
+
 		</MudGrid>
 	</MudPaper>
 }

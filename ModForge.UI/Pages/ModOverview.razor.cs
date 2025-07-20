@@ -22,6 +22,18 @@ namespace ModForge.UI.Pages
 		public XmlService XmlService { get; set; }
 		[Parameter]
 		public string ModId { get; set; }
+		public IModItem? SelectedModItem { get; set; }
+
+		private void SelectModItem(IModItem modItem)
+		{
+			if (modItem is null)
+			{
+				return;
+			}
+
+			SelectedModItem = modItem;
+			StateHasChanged();
+		}
 
 		public void ContinueModding()
 		{

@@ -50,7 +50,7 @@ namespace ModForge.Shared.Services
 			}
 			catch (Exception e)
 			{
-				return "Test";
+				return modItem.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value.ToString();
 			}
 		}
 

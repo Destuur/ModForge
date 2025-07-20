@@ -14,6 +14,9 @@
 			<MudTooltip Text="Loadouts">
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Loadouts)))" Icon="@Icons.Material.Filled.Games" Style="color: var(--icon-primary);" />
 			</MudTooltip>
+			<MudTooltip Text="Browse ModItems">
+				<MudIconButton OnClick="@(() => NavigationManager.NavigateTo("/modItems"))" Icon="@Icons.Material.Filled.List" Style="color: var(--icon-primary);" />
+			</MudTooltip>
 			<MudSpacer />
 			<MudTooltip Text="Settings">
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Settings)))" Icon="@Icons.Material.Filled.Settings" Style="color: var(--icon-primary);" />

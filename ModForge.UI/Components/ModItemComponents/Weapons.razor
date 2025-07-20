@@ -25,7 +25,10 @@
 					<MudMenuItem OnClick="@(() => FilterWeapons("Miscellaneous"))">Miscellaneous</MudMenuItem>
 
 				</MudMenu>
-				<MudImage Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
+				@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
+				{
+					<MudImage Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
+				}
 			</MudStack>
 		</MudStack>
 	</MudItem>
@@ -39,7 +42,7 @@
 					@foreach (var item in weapons)
 					{
 						<MudItem md="12" lg="12">
-							<MudCard Class="mod-item-card" Style="border-radius: 8px;" Elevation="10" onclick="@(() => SelectModItem(item))">
+							<MudCard Class="mod-item-card" Style="@($"border-radius: 8px; {(SelectedModItem?.Id == item.Id ? "border-color: #df6f00; border-width: 3px;" : "")}")" Elevation="10" onclick="@(() => SelectModItem(item))">
 								<MudTooltip Text="@(GetDescription(item))" Placement="Placement.Bottom" Arrow>
 									<MudStack Spacing="0" Class="px-3 pt-3 pb-2">
 										<MudText Class="pb-3" Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(GetName(item))</MudText>

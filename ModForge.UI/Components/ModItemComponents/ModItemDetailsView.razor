@@ -11,10 +11,16 @@
 			<MudStack Row AlignItems="AlignItems.End" Justify="Justify.SpaceBetween">
 				<MudImage Src="@IconService.GetIcon(SelectedModItem)" Height="64" />
 				<MudMenu Icon="@Icons.Material.Filled.MoreVert" Variant="Variant.Text" Class="pa-0">
-					<MudMenuItem Label="Edit" OnClick="@(() => NavigateToModItem(SelectedModItem))" />
-					<MudMenuItem Label="Duplicate" OnClick="@(() => DuplicateModItem(SelectedModItem))" />
-					<MudMenuItem Label="Copy Id" OnClick="@(() => CopyTextToClipboard(SelectedModItem.Id))" />
-					<MudMenuItem Label="Copy Console Command" OnClick="@(() => CopyTextToClipboard(ConsoleCommand))" />
+					@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
+					{
+						<MudMenuItem Label="Edit" OnClick="@(() => NavigateToModItem(SelectedModItem))" />
+						<MudMenuItem Label="Duplicate" OnClick="@(() => DuplicateModItem(SelectedModItem))" />
+					}
+						<MudMenuItem Label="Copy Id" OnClick="@(() => CopyTextToClipboard(SelectedModItem.Id))" />
+					@if (string.IsNullOrEmpty(ConsoleCommand) == false)
+					{
+						<MudMenuItem Label="Copy Console Command" OnClick="@(() => CopyTextToClipboard(ConsoleCommand))" />
+					}
 				</MudMenu>
 			</MudStack>
 			<MudText Typo="Typo.subtitle1" Color="Color.Primary" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;"><b>@(GetName(SelectedModItem))</b></MudText>
@@ -24,15 +30,15 @@
 				@foreach (var attribute in SelectedModItem.Attributes)
 				{
 					<MudStack Spacing="0" Justify="Justify.SpaceBetween">
-						<MudText Typo="Typo.subtitle2">@(attribute.Name):</MudText>
+							<MudText Typo="Typo.subtitle2">@(attribute.Name):</MudText>
 						@if (attribute.Value is IList<BuffParam> buffParams)
 						{
 							<MudStack Spacing="1">
 								@foreach (var buffParam in buffParams)
 								{
 									<MudStack Spacing="0">
-									<MudText Typo="Typo.caption" GutterBottom="false">@BuffParamSerializer.GetName(buffParam.Key)</MudText>
-									<MudText Typo="Typo.caption"><i>@buffParam.Operation @buffParam.Value</i></MudText>
+										<MudText Typo="Typo.caption" GutterBottom="false">@BuffParamSerializer.GetName(buffParam.Key)</MudText>
+										<MudText Typo="Typo.caption"><i>@buffParam.Operation @buffParam.Value</i></MudText>
 									</MudStack>
 								}
 							</MudStack>
