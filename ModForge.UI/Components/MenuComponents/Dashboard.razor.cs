@@ -56,7 +56,6 @@ namespace ModForge.UI.Components.MenuComponents
 				return;
 			}
 
-			ModService.InitiateModCollections();
 			createdMods = ModService.ModCollection;
 			externalMods = ModService.ExternalModCollection;
 

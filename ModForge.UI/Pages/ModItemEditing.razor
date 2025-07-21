@@ -36,7 +36,7 @@
 				<MudItem md="12" Style="height: 90%; padding: 0px;">
 					<div style="height: 100%; overflow-y:auto;">
 						<MudStack Spacing="0">
-							@foreach (var attribute in sortedAttributes)
+							@foreach (var attribute in editingModItem.Attributes)
 							{
 								<AttributeSelector Attribute="attribute" @key="attribute.Name"></AttributeSelector>
 								<MudDivider />

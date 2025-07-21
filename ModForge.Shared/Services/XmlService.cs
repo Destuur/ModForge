@@ -81,6 +81,7 @@ namespace ModForge.Shared.Services
 			if (string.IsNullOrEmpty(userConfigurationService.Current.GameDirectory) == false)
 			{
 				ConvertXml();
+				return true;
 			}
 
 			logger.LogError("Failed to recover JSON files after fallback conversion.");

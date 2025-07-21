@@ -40,8 +40,9 @@ namespace ModForge.UI.Components.ModItemComponents
 				return;
 			}
 			var newModItem = modItem.GetDeepCopy();
-			newModItem.Attributes.FirstOrDefault(x => x.Name.Contains("name"))!.Value = $"{LocalizationService.GetName(modItem)} (Copy)";
 			newModItem.Id = Guid.NewGuid().ToString();
+			newModItem.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name"))!.Value = $"{LocalizationService.GetName(modItem)} (Copy)";
+			newModItem.Attributes.FirstOrDefault(x => x.Name == newModItem.IdKey)!.Value = newModItem.Id;
 			if (ModService is null)
 			{
 				return;

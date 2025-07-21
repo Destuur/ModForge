@@ -61,6 +61,8 @@ namespace ModForge.UI.Pages
 			{
 				return;
 			}
+			ModService.InitiateModCollections();
+
 			OnChangeChildContent(typeof(Dashboard));
 		}
 	}
