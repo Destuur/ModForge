@@ -2,6 +2,47 @@
 {
 	public static class MessageKeys
 	{
-		public const string DashboardTitle = "DashboardTitle";
+		#region Entry Dialog Keys
+		public const string EntryDialogButtonText = nameof(EntryDialogButtonText);
+		public const string EntryDialogHeader = nameof(EntryDialogHeader);
+		public const string EntryDialogLine1 = nameof(EntryDialogLine1);
+		public const string EntryDialogLine2 = nameof(EntryDialogLine2);
+		public const string EntryDialogLine3 = nameof(EntryDialogLine3);
+		public const string EntryDialogLine4 = nameof(EntryDialogLine4);
+		public const string EntryDialogLine5 = nameof(EntryDialogLine5);
+		public const string EntryDialogLine6 = nameof(EntryDialogLine6);
+		public const string EntryDialogTitle = nameof(EntryDialogTitle);
+		#endregion
+
+		#region Dashboard Keys
+		public const string Dashboard = nameof(Dashboard);
+		public const string NewModButton = nameof(NewModButton);
+		public const string BrowseModItems = nameof(BrowseModItems);
+		public const string CreatedMods = nameof(CreatedMods);
+		public const string DeleteMod = nameof(DeleteMod);
+		public const string EditMod = nameof(EditMod);
+		public const string Export = nameof(Export);
+		public const string ExternalMods = nameof(ExternalMods);
+		public const string Help = nameof(Help);
+		public const string InstallMod = nameof(InstallMod);
+		public const string LanguageKey = nameof(LanguageKey);
+		public const string Settings = nameof(Settings);
+		public const string OpenFolder = nameof(OpenFolder);
+		public const string Loadouts = nameof(Loadouts);
+		#endregion
+
+		#region ModItem Keys
+		public const string Buffs = nameof(Buffs);
+		public const string InventoryPresets = nameof(InventoryPresets);
+		public const string Items = nameof(Items);
+		public const string Perks = nameof(Perks);
+		public const string Weapons = nameof(Weapons);
+		public const string Armors = nameof(Armors);
+		public const string Consumables = nameof(Consumables);
+		public const string CraftingItems = nameof(CraftingItems);
+		public const string MiscItems = nameof(MiscItems);
+		public const string RPGParameter = nameof(RPGParameter);
+		public const string STORM = nameof(STORM);
+		#endregion
 	}
 }

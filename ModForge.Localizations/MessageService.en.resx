@@ -117,13 +117,107 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NewModButton" xml:space="preserve">
-    <value>New Mod</value>
+  <data name="Armors" xml:space="preserve">
+    <value />
+  </data>
+  <data name="BrowseModItems" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Buffs" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Consumables" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CraftingItems" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreatedMods" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="DeleteMod" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditMod" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EntryDialogButtonText" xml:space="preserve">
+    <value>Bring me the sacred data</value>
+  </data>
+  <data name="EntryDialogHeader" xml:space="preserve">
+    <value>A Peasant With No Pitchfork entered</value>
+  </data>
+  <data name="EntryDialogLine1" xml:space="preserve">
+    <value>A noble sentiment indeed.</value>
+  </data>
+  <data name="EntryDialogLine2" xml:space="preserve">
+    <value>You've launched ModForge for the first time, which probably means you're ready to start shaping the world—or at least breaking it in style.
+</value>
+  </data>
+  <data name="EntryDialogLine3" xml:space="preserve">
+    <value>But hold, noble tinkerer! Before we begin, there's one small issue: we're missing the sacred game data.</value>
+  </data>
+  <data name="EntryDialogLine4" xml:space="preserve">
+    <value>Go to Settings, perform the ritual, and import the files. Only then shall the forge be lit.</value>
+  </data>
+  <data name="EntryDialogLine5" xml:space="preserve">
+    <value>No data, no glory. No glory, no mods.</value>
+  </data>
+  <data name="EntryDialogLine6" xml:space="preserve">
+    <value>Now set out on your path, and prove you’re more than just another drunk at the tavern bragging about “big plans.”</value>
+  </data>
+  <data name="EntryDialogTitle" xml:space="preserve">
+    <value>"I’m feeling quite hungry - for mods."</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ExternalMods" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value />
+  </data>
+  <data name="InstallMod" xml:space="preserve">
+    <value />
+  </data>
+  <data name="InventoryPresets" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value />
   </data>
   <data name="LanguageKey" xml:space="preserve">
     <value>English</value>
   </data>
-  <data name="Overview" xml:space="preserve">
-    <value>Overview</value>
+  <data name="Loadouts" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MiscItems" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NewModButton" xml:space="preserve">
+    <value>New Mod</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Perks" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RPGParameter" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value />
+  </data>
+  <data name="STORM" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Weapons" xml:space="preserve">
+    <value />
   </data>
 </root>

@@ -1,29 +1,29 @@
 ﻿<MudDialog Class="dialog-card">
     <DialogContent>
         <MudText Typo="Typo.h6" Class="pb-6 header-primary" Style="font-weight: bold;">
-            "I’m feeling quite hungry - for mods."
+            @L[MessageKeys.EntryDialogTitle].Value
         </MudText>
         <MudText GutterBottom="true">
-            A noble sentiment indeed.
+            @L[MessageKeys.EntryDialogLine1].Value
         </MudText>
         <MudText GutterBottom="true">
-            You've launched ModForge for the first time, which probably means you're ready to start shaping the world—or at least breaking it in style.
+            @L[MessageKeys.EntryDialogLine2].Value
         </MudText>
         <MudText GutterBottom="true">
-            But hold, noble tinkerer! Before we begin, there's one small issue: we're missing the sacred game data.
+            @L[MessageKeys.EntryDialogLine3].Value
         </MudText>
         <MudText GutterBottom="true">
-            Go to Settings, perform the ritual, and import the files. Only then shall the forge be lit.
+            @L[MessageKeys.EntryDialogLine4].Value
         </MudText>
         <MudText GutterBottom="true" Style="font-style: italic">
-            No data, no glory. No glory, no mods.
+            @L[MessageKeys.EntryDialogLine5].Value
         </MudText>
         <MudText GutterBottom="true">
-            Now set out on your path, and prove you’re more than just another drunk at the tavern bragging about “big plans.”
+            @L[MessageKeys.EntryDialogLine6].Value
         </MudText>
 
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit">@ButtonText</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit">@L[MessageKeys.EntryDialogButtonText].Value</MudButton>
     </DialogActions>
 </MudDialog>

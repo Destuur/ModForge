@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
 using ModForge.Localizations;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
@@ -24,6 +22,8 @@ namespace ModForge.UI.Pages
 		public NavigationManager NavigationManager { get; set; }
 		[Inject]
 		public UserConfigurationService UserConfigurationService { get; set; }
+		[Inject]
+		public LocalizationService LocalizationService { get; set; }
 		[Inject]
 		public IDialogService DialogService { get; set; }
 		[Inject]
@@ -62,7 +62,6 @@ namespace ModForge.UI.Pages
 				return;
 			}
 			ModService.InitiateModCollections();
-
 			OnChangeChildContent(typeof(Dashboard));
 		}
 	}

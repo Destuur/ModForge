@@ -4,6 +4,7 @@ using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Localizations;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Models.User;
+using System.Globalization;
 
 namespace ModForge.Shared.Services
 {

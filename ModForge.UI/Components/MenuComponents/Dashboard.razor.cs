@@ -62,8 +62,7 @@ namespace ModForge.UI.Components.MenuComponents
 			var culture = new CultureInfo(string.IsNullOrEmpty(UserConfigurationService.Current.Language) ? "en" : UserConfigurationService.Current.Language);
 			Thread.CurrentThread.CurrentCulture = culture;
 			Thread.CurrentThread.CurrentUICulture = culture;
-
-			buttonContent = L["NewModButton"].Value;
+			buttonContent = L[MessageKeys.NewModButton].Value;
 			await ShowGamePathMissingDialog();
 			StateHasChanged();
 		}
@@ -72,14 +71,9 @@ namespace ModForge.UI.Components.MenuComponents
 		{
 			if (string.IsNullOrEmpty(UserConfigurationService.Current.GameDirectory))
 			{
-				var parameters = new DialogParameters<MoreModItemsDialog>
-				{
-					{ x => x.ButtonText, "Bring me the sacred data." }
-				};
-
 				var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, BackdropClick = false, BackgroundClass = "entry-dialog", CloseOnEscapeKey = false, FullWidth = true };
 
-				var dialog = await DialogService.ShowAsync<EntryDialog>("A Peasant With No Pitchfork entered", parameters, options);
+				var dialog = await DialogService.ShowAsync<EntryDialog>(@L[MessageKeys.EntryDialogHeader].Value, options);
 				var result = await dialog.Result;
 
 				if (result.Canceled == false)

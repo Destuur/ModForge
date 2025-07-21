@@ -1,6 +1,7 @@
-﻿using ModForge.Shared.Services;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using ModForge.Shared.Services;
 using MudBlazor;
+using System.Globalization;
 
 namespace ModForge.UI.Layout
 {
@@ -11,6 +12,9 @@ namespace ModForge.UI.Layout
 
 		[Inject]
 		public XmlService? XmlToJsonService { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
+
 
 		protected override async Task OnAfterRenderAsync(bool firstRender)
 		{
