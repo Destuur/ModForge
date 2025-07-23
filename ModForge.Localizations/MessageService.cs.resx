@@ -118,105 +118,123 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Armors" xml:space="preserve">
+    <value>Brnění</value>
+  </data>
+  <data name="Back" xml:space="preserve">
     <value />
   </data>
   <data name="BrowseModItems" xml:space="preserve">
-    <value />
+    <value>Procházet položky modu</value>
   </data>
   <data name="Buffs" xml:space="preserve">
-    <value />
+    <value>Buffy</value>
   </data>
   <data name="Consumables" xml:space="preserve">
-    <value />
+    <value>Spotřební zboží</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
-    <value />
+    <value>Řemeslné předměty</value>
   </data>
   <data name="CreatedMods" xml:space="preserve">
+    <value>Vytvořené mody</value>
+  </data>
+  <data name="CreateMod" xml:space="preserve">
     <value />
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>Řídicí panel</value>
+    <value>Přehled</value>
   </data>
   <data name="DeleteMod" xml:space="preserve">
-    <value />
+    <value>Smazat mod</value>
   </data>
   <data name="EditMod" xml:space="preserve">
-    <value />
+    <value>Upravit mod</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
-    <value />
+    <value>Přines mi posvátná data!</value>
   </data>
   <data name="EntryDialogHeader" xml:space="preserve">
-    <value />
+    <value>Vesničan bez vidlí vstoupil</value>
   </data>
   <data name="EntryDialogLine1" xml:space="preserve">
-    <value />
+    <value>Poprvé jsi spustil ModForge, což pravděpodobně znamená, že jsi připraven začít tvarovat svět – nebo ho alespoň stylově rozbít.</value>
   </data>
   <data name="EntryDialogLine2" xml:space="preserve">
-    <value />
+    <value>Skutečně ušlechtilý záměr.</value>
   </data>
   <data name="EntryDialogLine3" xml:space="preserve">
-    <value />
+    <value>Ale počkej, vznešený kováři! Než začneme, máme malý problém: chybí nám posvátná herní data.</value>
   </data>
   <data name="EntryDialogLine4" xml:space="preserve">
-    <value />
+    <value>Jdi do Nastavení, proveď rituál a naimportuj soubory. Teprve pak se rozžehne kovárna.</value>
   </data>
   <data name="EntryDialogLine5" xml:space="preserve">
-    <value />
+    <value>Žádná data, žádná sláva. Žádná sláva, žádné mody.</value>
   </data>
   <data name="EntryDialogLine6" xml:space="preserve">
-    <value />
+    <value>Vydáš se na svou cestu a dokážeš, že nejsi jen další opilec v hostinci, co se chlubí „velkými plány“.</value>
   </data>
   <data name="EntryDialogTitle" xml:space="preserve">
-    <value />
+    <value>„Mám velký hlad – po modech.“</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value />
+    <value>Exportovat</value>
   </data>
   <data name="ExternalMods" xml:space="preserve">
-    <value />
+    <value>Externí mody</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value />
+    <value>Nápověda</value>
   </data>
   <data name="InstallMod" xml:space="preserve">
-    <value />
+    <value>Nainstalovat mod</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
-    <value />
+    <value>Předvolby inventáře</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value />
+    <value>Předměty</value>
   </data>
   <data name="LanguageKey" xml:space="preserve">
-    <value>Čeština</value>
+    <value>čeština</value>
   </data>
   <data name="Loadouts" xml:space="preserve">
-    <value />
+    <value>Loadouty modů</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
+    <value>Různé předměty</value>
+  </data>
+  <data name="ModdedIngots" xml:space="preserve">
     <value />
   </data>
   <data name="NewModButton" xml:space="preserve">
     <value>Nový mod</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
+    <value>Otevřít složku</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
     <value />
   </data>
   <data name="Perks" xml:space="preserve">
+    <value>Vlastnosti</value>
+  </data>
+  <data name="ResetAll" xml:space="preserve">
     <value />
   </data>
   <data name="RPGParameter" xml:space="preserve">
+    <value>Parametry RPG</value>
+  </data>
+  <data name="Save" xml:space="preserve">
     <value />
   </data>
   <data name="Settings" xml:space="preserve">
-    <value />
+    <value>Nastavení</value>
   </data>
   <data name="STORM" xml:space="preserve">
-    <value />
+    <value>STORM</value>
   </data>
   <data name="Weapons" xml:space="preserve">
-    <value />
+    <value>Zbraně</value>
   </data>
 </root>

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
+using ModForge.Localizations;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
@@ -20,6 +22,8 @@ namespace ModForge.UI.Pages
 		public LocalizationService LocalizationService { get; set; }
 		[Inject]
 		public XmlService XmlService { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 		[Parameter]
 		public string ModId { get; set; }
 		public IModItem? SelectedModItem { get; set; }

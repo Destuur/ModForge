@@ -118,105 +118,123 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Armors" xml:space="preserve">
+    <value>護甲</value>
+  </data>
+  <data name="Back" xml:space="preserve">
     <value />
   </data>
   <data name="BrowseModItems" xml:space="preserve">
-    <value />
+    <value>瀏覽模組物品</value>
   </data>
   <data name="Buffs" xml:space="preserve">
-    <value />
+    <value>增益效果</value>
   </data>
   <data name="Consumables" xml:space="preserve">
-    <value />
+    <value>消耗品</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
-    <value />
+    <value>製作材料</value>
   </data>
   <data name="CreatedMods" xml:space="preserve">
+    <value>已創建模組</value>
+  </data>
+  <data name="CreateMod" xml:space="preserve">
     <value />
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>控制面板</value>
+    <value>儀表板</value>
   </data>
   <data name="DeleteMod" xml:space="preserve">
-    <value />
+    <value>刪除模組</value>
   </data>
   <data name="EditMod" xml:space="preserve">
-    <value />
+    <value>編輯模組</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
-    <value />
+    <value>帶來神聖的數據</value>
   </data>
   <data name="EntryDialogHeader" xml:space="preserve">
-    <value />
+    <value>一位沒有鋤頭的農夫進入了</value>
   </data>
   <data name="EntryDialogLine1" xml:space="preserve">
-    <value />
+    <value>你第一次啟動ModForge，這可能意味著你已準備好開始塑造世界——或者至少以風格破壞它。</value>
   </data>
   <data name="EntryDialogLine2" xml:space="preserve">
-    <value />
+    <value>確實是崇高的情感。</value>
   </data>
   <data name="EntryDialogLine3" xml:space="preserve">
-    <value />
+    <value>但且慢，高貴的工匠！在我們開始之前，有一個小問題：我們缺少神聖的遊戲數據。</value>
   </data>
   <data name="EntryDialogLine4" xml:space="preserve">
-    <value />
+    <value>前往設定，執行儀式，匯入文件。只有這樣，熔爐才會點燃。</value>
   </data>
   <data name="EntryDialogLine5" xml:space="preserve">
-    <value />
+    <value>沒有數據，沒有榮耀。沒有榮耀，沒有模組。</value>
   </data>
   <data name="EntryDialogLine6" xml:space="preserve">
-    <value />
+    <value>現在踏上你的道路，證明你不僅僅是酒館裡吹噓「大計劃」的另一個醉漢。</value>
   </data>
   <data name="EntryDialogTitle" xml:space="preserve">
-    <value />
+    <value>我感覺非常餓——想要模組。</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value />
+    <value>匯出</value>
   </data>
   <data name="ExternalMods" xml:space="preserve">
-    <value />
+    <value>外部模組</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value />
+    <value>幫助</value>
   </data>
   <data name="InstallMod" xml:space="preserve">
-    <value />
+    <value>安裝模組</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
-    <value />
+    <value>庫存預設</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value />
+    <value>物品</value>
   </data>
   <data name="LanguageKey" xml:space="preserve">
     <value>中文（繁體)</value>
   </data>
   <data name="Loadouts" xml:space="preserve">
-    <value />
+    <value>模組配置</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
+    <value>雜項物品</value>
+  </data>
+  <data name="ModdedIngots" xml:space="preserve">
     <value />
   </data>
   <data name="NewModButton" xml:space="preserve">
     <value>新模組</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
+    <value>打開資料夾</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
     <value />
   </data>
   <data name="Perks" xml:space="preserve">
+    <value>特技</value>
+  </data>
+  <data name="ResetAll" xml:space="preserve">
     <value />
   </data>
   <data name="RPGParameter" xml:space="preserve">
+    <value>RPG參數</value>
+  </data>
+  <data name="Save" xml:space="preserve">
     <value />
   </data>
   <data name="Settings" xml:space="preserve">
-    <value />
+    <value>設定</value>
   </data>
   <data name="STORM" xml:space="preserve">
-    <value />
+    <value>STORM</value>
   </data>
   <data name="Weapons" xml:space="preserve">
-    <value />
+    <value>武器</value>
   </data>
 </root>

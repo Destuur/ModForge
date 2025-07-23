@@ -8,20 +8,20 @@
 			<MudTooltip Text="@L[MessageKeys.Dashboard].Value">
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Dashboard)))" Icon="@Icons.Material.Filled.SpaceDashboard" Style="color: var(--icon-primary);" />
 			</MudTooltip>
-			<MudTooltip Text="Install Mod">
+			<MudTooltip Text="@L[MessageKeys.InstallMod].Value">
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(ModInstall)))" Icon="@Icons.Material.Filled.InstallDesktop" Style="color: var(--icon-primary);" />
 			</MudTooltip>
-			<MudTooltip Text="Loadouts">
+			<MudTooltip Text="@L[MessageKeys.Loadouts].Value">
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Loadouts)))" Icon="@Icons.Material.Filled.Games" Style="color: var(--icon-primary);" />
 			</MudTooltip>
-			<MudTooltip Text="Browse ModItems">
+			<MudTooltip Text="@L[MessageKeys.BrowseModItems].Value">
 				<MudIconButton OnClick="@(() => NavigationManager.NavigateTo("/modItems"))" Icon="@Icons.Material.Filled.List" Style="color: var(--icon-primary);" />
 			</MudTooltip>
 			<MudSpacer />
-			<MudTooltip Text="Settings">
+			<MudTooltip Text="@L[MessageKeys.Settings].Value">
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Settings)))" Icon="@Icons.Material.Filled.Settings" Style="color: var(--icon-primary);" />
 			</MudTooltip>
-			<MudTooltip Text="Help">
+			<MudTooltip Text="@L[MessageKeys.Help].Value">
 				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" OnClick="GetHelp" />
 			</MudTooltip>
 		</MudStack>

@@ -118,105 +118,123 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Armors" xml:space="preserve">
+    <value>Броня</value>
+  </data>
+  <data name="Back" xml:space="preserve">
     <value />
   </data>
   <data name="BrowseModItems" xml:space="preserve">
-    <value />
+    <value>Переглянути моделі предметів</value>
   </data>
   <data name="Buffs" xml:space="preserve">
-    <value />
+    <value>Бафи</value>
   </data>
   <data name="Consumables" xml:space="preserve">
-    <value />
+    <value>Витратні матеріали</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
-    <value />
+    <value>Ремісничі предмети</value>
   </data>
   <data name="CreatedMods" xml:space="preserve">
+    <value>Створені моди</value>
+  </data>
+  <data name="CreateMod" xml:space="preserve">
     <value />
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value> Панель керування</value>
+    <value>Панель керування</value>
   </data>
   <data name="DeleteMod" xml:space="preserve">
-    <value />
+    <value>Видалити мод</value>
   </data>
   <data name="EditMod" xml:space="preserve">
-    <value />
+    <value>Редагувати мод</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
-    <value />
+    <value>Принеси мені священні дані</value>
   </data>
   <data name="EntryDialogHeader" xml:space="preserve">
-    <value />
+    <value>Ввійшов селянин без вила</value>
   </data>
   <data name="EntryDialogLine1" xml:space="preserve">
-    <value />
+    <value>Ви вперше запустили ModForge, що, ймовірно, означає, що ви готові почати формувати світ — або принаймні стильно його ламати.</value>
   </data>
   <data name="EntryDialogLine2" xml:space="preserve">
-    <value />
+    <value>Справді благородна ідея.</value>
   </data>
   <data name="EntryDialogLine3" xml:space="preserve">
-    <value />
+    <value>Але почекай, благородний винахіднику! Перед тим, як почати, є одна маленька проблема: нам бракує священних ігрових даних.</value>
   </data>
   <data name="EntryDialogLine4" xml:space="preserve">
-    <value />
+    <value>Перейдіть у Налаштування, виконайте ритуал і імпортуйте файли. Лише тоді кузня буде запалена.</value>
   </data>
   <data name="EntryDialogLine5" xml:space="preserve">
-    <value />
+    <value>Немає даних — нема слави. Нема слави — нема модів.</value>
   </data>
   <data name="EntryDialogLine6" xml:space="preserve">
-    <value />
+    <value>Вирушай у путь і доведи, що ти більше, ніж просто черговий п’яниця в таверні, який хизується «великими планами».</value>
   </data>
   <data name="EntryDialogTitle" xml:space="preserve">
-    <value />
+    <value>Я відчуваю сильний голод — за модами.</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value />
+    <value>Експорт</value>
   </data>
   <data name="ExternalMods" xml:space="preserve">
-    <value />
+    <value>Зовнішні моди</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value />
+    <value>Допомога</value>
   </data>
   <data name="InstallMod" xml:space="preserve">
-    <value />
+    <value>Встановити мод</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
-    <value />
+    <value>Попередні налаштування інвентарю</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value />
+    <value>Предмети</value>
   </data>
   <data name="LanguageKey" xml:space="preserve">
     <value>Українська</value>
   </data>
   <data name="Loadouts" xml:space="preserve">
-    <value />
+    <value>Набори модів</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
+    <value>Різні предмети</value>
+  </data>
+  <data name="ModdedIngots" xml:space="preserve">
     <value />
   </data>
   <data name="NewModButton" xml:space="preserve">
-    <value>Нова модифікація</value>
+    <value>Новий мод</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
+    <value>Відкрити папку</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
     <value />
   </data>
   <data name="Perks" xml:space="preserve">
+    <value>Переваги</value>
+  </data>
+  <data name="ResetAll" xml:space="preserve">
     <value />
   </data>
   <data name="RPGParameter" xml:space="preserve">
+    <value>RPG-параметри</value>
+  </data>
+  <data name="Save" xml:space="preserve">
     <value />
   </data>
   <data name="Settings" xml:space="preserve">
-    <value />
+    <value>Налаштування</value>
   </data>
   <data name="STORM" xml:space="preserve">
-    <value />
+    <value>STORM</value>
   </data>
   <data name="Weapons" xml:space="preserve">
-    <value />
+    <value>Зброя</value>
   </data>
 </root>

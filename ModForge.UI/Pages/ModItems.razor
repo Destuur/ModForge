@@ -6,32 +6,32 @@
 
 	<MudItem Style="padding: 0px; width: 56px; ">
 		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2">
-			<MudTooltip Text="Perks">
+			<MudTooltip Text="@L[MessageKeys.Perks].Value">
 				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Perks)))" Src="@IconService.GetBase64Icon("Trigger_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
-			<MudTooltip Text="Buffs">
+			<MudTooltip Text="@L[MessageKeys.Buffs].Value">
 				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Buffs)))" Src="@IconService.GetBase64Icon("mainlevel_characterCreation_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
-			<MudTooltip Text="Weapons">
+			<MudTooltip Text="@L[MessageKeys.Weapons].Value">
 				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Weapons)))" Src="@IconService.GetBase64Icon("warrior_characterCreation_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
-			<MudTooltip Text="Armors">
+			<MudTooltip Text="@L[MessageKeys.Armors].Value">
 				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Armors)))" Src="@IconService.GetBase64Icon("Statistics/2_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
-			<MudTooltip Text="Consumables">
+			<MudTooltip Text="@L[MessageKeys.Consumables].Value">
 				<MudImage @onclick="@(() => OnChangeChildContent(typeof(Consumables)))" Src="@IconService.GetBase64Icon("Statistics/4_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
-			<MudTooltip Text="Crafting Materials">
+			<MudTooltip Text="@L[MessageKeys.CraftingItems].Value">
 				<MudImage @onclick="@(() => OnChangeChildContent(typeof(CraftingMaterials)))" Src="@IconService.GetBase64Icon("Statistics/5_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
-			<MudTooltip Text="Misc Items">
+			<MudTooltip Text="@L[MessageKeys.MiscItems].Value">
 				<MudImage @onclick="@(() => OnChangeChildContent(typeof(MiscItems)))" Src="@IconService.GetBase64Icon("Statistics/7_icon")" Height="32" Width="32" Style="cursor: pointer;" />
 			</MudTooltip>
 			<MudSpacer />
-			<MudTooltip Text="Exit Modding">
+			<MudTooltip Text="@L[MessageKeys.Back].Value">
 				<MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Error" Onclick="ExitModding" />
 			</MudTooltip>
-			<MudTooltip Text="Help">
+			<MudTooltip Text="@L[MessageKeys.Help].Value">
 				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" OnClick="GetHelp" />
 			</MudTooltip>
 		</MudStack>
@@ -48,7 +48,7 @@
 <MudDrawer @bind-Open="isOpen" Anchor="Anchor.Right" Style="background-color: var(--mud-palette-surface); border-radius: 4px;" Elevation="20" Variant="DrawerVariant.Temporary">
 	<MudDrawerHeader Dense Class="pr-1">
 		<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="pa-0" Style="width: 100%;">
-			<MudText Typo="Typo.h6" Class="header-primary">Modded Ingots</MudText>
+			<MudText Typo="Typo.h6" Class="header-primary">@L[MessageKeys.ModdedIngots].Value</MudText>
 			<MudIconButton Icon="@Icons.Material.Filled.ArrowForwardIos" OnClick="ToggleDrawer" Style="color: var(--icon-primary)" />
 		</MudStack>
 	</MudDrawerHeader>
@@ -70,5 +70,5 @@
 		<MudItem Style="width: 100%;">
 		</MudItem>
 	</MudStack>
-	<MudButton FullWidth Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background);" OnClick="Checkout" Disabled="@(ModService.Mod.ModItems.Count == 0)"><b>Create Mod</b></MudButton>
+	<MudButton FullWidth Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background);" OnClick="Checkout" Disabled="@(ModService.Mod.ModItems.Count == 0)"><b>@L[MessageKeys.CreateMod].Value</b></MudButton>
 </MudDrawer>

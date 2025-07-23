@@ -31,6 +31,7 @@ namespace ModForge.UI.Components.MenuComponents
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
 
+		// TODO: Import mods and loading animation
 		public async Task Save()
 		{
 			UserConfigurationService.Current.UserName = name;

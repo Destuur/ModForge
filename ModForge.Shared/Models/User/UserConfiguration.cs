@@ -1,4 +1,5 @@
 ﻿using ModForge.Shared.Models.Mods;
+using System.Globalization;
 
 namespace ModForge.Shared.Models.User
 {
@@ -6,7 +7,7 @@ namespace ModForge.Shared.Models.User
 	{
 		public string GameDirectory { get; set; } = string.Empty;
 		public string NexusModsDirectory { get; set; } = string.Empty;
-		public string Language { get; set; } = "en";
+		public string Language { get; set; } = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 		public string UserName { get; set; } = string.Empty;
 		public Dictionary<string, List<DropItem>> Loadouts { get; set; } = new();
 	}

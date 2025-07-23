@@ -118,105 +118,123 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Armors" xml:space="preserve">
+    <value>Armature</value>
+  </data>
+  <data name="Back" xml:space="preserve">
     <value />
   </data>
   <data name="BrowseModItems" xml:space="preserve">
-    <value />
+    <value>Sfoglia oggetti mod</value>
   </data>
   <data name="Buffs" xml:space="preserve">
-    <value />
+    <value>Bonus</value>
   </data>
   <data name="Consumables" xml:space="preserve">
-    <value />
+    <value>Consumabili</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
-    <value />
+    <value>Oggetti da creazione</value>
   </data>
   <data name="CreatedMods" xml:space="preserve">
+    <value>Mod create</value>
+  </data>
+  <data name="CreateMod" xml:space="preserve">
     <value />
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Cruscotto</value>
   </data>
   <data name="DeleteMod" xml:space="preserve">
-    <value />
+    <value>Elimina mod</value>
   </data>
   <data name="EditMod" xml:space="preserve">
-    <value />
+    <value>Modifica mod</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
-    <value />
+    <value>Portami i dati sacri!</value>
   </data>
   <data name="EntryDialogHeader" xml:space="preserve">
-    <value />
+    <value>È entrato un contadino senza forcone</value>
   </data>
   <data name="EntryDialogLine1" xml:space="preserve">
-    <value />
+    <value>Hai appena avviato ModForge per la prima volta, il che significa che sei pronto a plasmare il mondo — o almeno a distruggerlo con stile.</value>
   </data>
   <data name="EntryDialogLine2" xml:space="preserve">
-    <value />
+    <value>Un sentimento nobile, davvero.</value>
   </data>
   <data name="EntryDialogLine3" xml:space="preserve">
-    <value />
+    <value>Ma aspetta, nobile artigiano! Prima di cominciare, c’è un piccolo problema: ci mancano i dati sacri del gioco.</value>
   </data>
   <data name="EntryDialogLine4" xml:space="preserve">
-    <value />
+    <value>Vai nelle Impostazioni, esegui il rituale e importa i file. Solo allora la forgia potrà accendersi.</value>
   </data>
   <data name="EntryDialogLine5" xml:space="preserve">
-    <value />
+    <value>Nessun dato, nessuna gloria. Nessuna gloria, nessuna mod.</value>
   </data>
   <data name="EntryDialogLine6" xml:space="preserve">
-    <value />
+    <value>Ora intraprendi il tuo cammino e dimostra di non essere solo un altro ubriacone in taverna che si vanta dei suoi “grandi progetti.”</value>
   </data>
   <data name="EntryDialogTitle" xml:space="preserve">
-    <value />
+    <value>Ho proprio fame… di mod.</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value />
+    <value>Esporta</value>
   </data>
   <data name="ExternalMods" xml:space="preserve">
-    <value />
+    <value>Mod esterne</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value />
+    <value>Aiuto</value>
   </data>
   <data name="InstallMod" xml:space="preserve">
-    <value />
+    <value>Installa mod</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
-    <value />
+    <value>Preset inventario</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value />
+    <value>Oggetti</value>
   </data>
   <data name="LanguageKey" xml:space="preserve">
     <value>Italiano</value>
   </data>
   <data name="Loadouts" xml:space="preserve">
-    <value />
+    <value>Profili mod</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
+    <value>Oggetti vari</value>
+  </data>
+  <data name="ModdedIngots" xml:space="preserve">
     <value />
   </data>
   <data name="NewModButton" xml:space="preserve">
     <value>Nuova mod</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
+    <value>Apri cartella</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
     <value />
   </data>
   <data name="Perks" xml:space="preserve">
+    <value>Abilità</value>
+  </data>
+  <data name="ResetAll" xml:space="preserve">
     <value />
   </data>
   <data name="RPGParameter" xml:space="preserve">
+    <value>Parametro RPG</value>
+  </data>
+  <data name="Save" xml:space="preserve">
     <value />
   </data>
   <data name="Settings" xml:space="preserve">
-    <value />
+    <value>Impostazioni</value>
   </data>
   <data name="STORM" xml:space="preserve">
-    <value />
+    <value>STORM</value>
   </data>
   <data name="Weapons" xml:space="preserve">
-    <value />
+    <value>Armi</value>
   </data>
 </root>

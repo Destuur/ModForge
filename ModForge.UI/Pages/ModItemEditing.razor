@@ -4,17 +4,17 @@
 
 	<MudItem Style=" padding: 0px; width: 56px;">
 		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="0" Class="pt-2">
-			<MudTooltip Text="Reset">
+			<MudTooltip Text="@L[MessageKeys.ResetAll].Value">
 				<MudIconButton Icon="@Icons.Material.Filled.Refresh" Style="color: var(--mud-palette-primary);" OnClick="ResetModItem" />
 			</MudTooltip>
-			<MudTooltip Text="Save">
+			<MudTooltip Text="@L[MessageKeys.Save].Value">
 				<MudIconButton Icon="@Icons.Material.Filled.Save" Style="color: var(--mud-palette-primary);" OnClick="SaveItem" />
 			</MudTooltip>
 			<MudSpacer />
-			<MudTooltip Text="Exit Modding">
+			<MudTooltip Text="@L[MessageKeys.Back].Value">
 				<MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Error" OnClick="Cancle" />
 			</MudTooltip>
-			<MudTooltip Text="Help">
+			<MudTooltip Text="@L[MessageKeys.Help].Value">
 				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" />
 			</MudTooltip>
 		</MudStack>

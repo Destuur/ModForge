@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using ModForge.Localizations;
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.ModItems;
@@ -28,6 +30,8 @@ namespace ModForge.UI.Pages
 		public IDialogService? DialogService { get; set; }
 		[Inject]
 		public IconService IconService { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 		[Parameter]
 		public string? Id { get; set; }
 		public IModItem? OriginalModItem { get; set; }

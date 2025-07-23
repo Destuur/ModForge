@@ -27,6 +27,14 @@ namespace ModForge.UI.Layout
 					return;
 				}
 				await Task.Run(() => XmlToJsonService.TryReadJsonFilesWithFallback());
+
+				var language = UserConfigurationService.Current.Language;
+				var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+				CultureInfo.DefaultThreadCurrentCulture = culture;
+				CultureInfo.DefaultThreadCurrentUICulture = culture;
+				Thread.CurrentThread.CurrentCulture = culture;
+				Thread.CurrentThread.CurrentUICulture = culture;
 				StateHasChanged();
 			}
 		}

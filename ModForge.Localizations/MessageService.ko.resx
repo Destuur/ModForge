@@ -118,105 +118,123 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Armors" xml:space="preserve">
+    <value>방어구</value>
+  </data>
+  <data name="Back" xml:space="preserve">
     <value />
   </data>
   <data name="BrowseModItems" xml:space="preserve">
-    <value />
+    <value>모드 아이템 탐색</value>
   </data>
   <data name="Buffs" xml:space="preserve">
-    <value />
+    <value>버프</value>
   </data>
   <data name="Consumables" xml:space="preserve">
-    <value />
+    <value>소모품</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
-    <value />
+    <value>제작 아이템</value>
   </data>
   <data name="CreatedMods" xml:space="preserve">
+    <value>제작된 모드</value>
+  </data>
+  <data name="CreateMod" xml:space="preserve">
     <value />
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>대시보드</value>
   </data>
   <data name="DeleteMod" xml:space="preserve">
-    <value />
+    <value>모드 삭제</value>
   </data>
   <data name="EditMod" xml:space="preserve">
-    <value />
+    <value>모드 편집</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
-    <value />
+    <value>성스러운 데이터를 가져오시오</value>
   </data>
   <data name="EntryDialogHeader" xml:space="preserve">
-    <value />
+    <value>쇠스랑 없는 농부가 입장했다</value>
   </data>
   <data name="EntryDialogLine1" xml:space="preserve">
-    <value />
+    <value>당신은 ModForge를 처음 실행했습니다. 이제 세상을 빚거나, 적어도 멋지게 망칠 준비가 되었다는 뜻이겠죠.</value>
   </data>
   <data name="EntryDialogLine2" xml:space="preserve">
-    <value />
+    <value>참으로 고결한 의지이옵니다.</value>
   </data>
   <data name="EntryDialogLine3" xml:space="preserve">
-    <value />
+    <value>하지만 잠깐만요, 고귀한 장인님! 시작하기 전에 작은 문제가 있습니다. 성스러운 게임 데이터가 없군요.</value>
   </data>
   <data name="EntryDialogLine4" xml:space="preserve">
-    <value />
+    <value>설정으로 가서 의식을 수행하고, 파일을 가져오십시오. 그래야만 대장간에 불이 붙을 것입니다.</value>
   </data>
   <data name="EntryDialogLine5" xml:space="preserve">
-    <value />
+    <value>데이터 없이는 영광도 없고, 영광 없이는 모드도 없소.</value>
   </data>
   <data name="EntryDialogLine6" xml:space="preserve">
-    <value />
+    <value>이제 당신의 길을 나아가시오. 선술집에서 ‘거대한 계획’을 떠벌리는 취객이 아니라는 걸 증명해 보이시오.</value>
   </data>
   <data name="EntryDialogTitle" xml:space="preserve">
-    <value />
+    <value>나 지금 꽤 배고프군... 모드가 먹고 싶소.</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value />
+    <value>내보내기</value>
   </data>
   <data name="ExternalMods" xml:space="preserve">
-    <value />
+    <value>외부 모드</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value />
+    <value>도움말</value>
   </data>
   <data name="InstallMod" xml:space="preserve">
-    <value />
+    <value>모드 설치</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
-    <value />
+    <value>인벤토리 프리셋</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value />
+    <value>아이템</value>
   </data>
   <data name="LanguageKey" xml:space="preserve">
     <value>한국어</value>
   </data>
   <data name="Loadouts" xml:space="preserve">
-    <value />
+    <value>모드 로드아웃</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
+    <value>기타 아이템</value>
+  </data>
+  <data name="ModdedIngots" xml:space="preserve">
     <value />
   </data>
   <data name="NewModButton" xml:space="preserve">
-    <value>개요</value>
+    <value>새 모드</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
+    <value>폴더 열기</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
     <value />
   </data>
   <data name="Perks" xml:space="preserve">
+    <value>특성</value>
+  </data>
+  <data name="ResetAll" xml:space="preserve">
     <value />
   </data>
   <data name="RPGParameter" xml:space="preserve">
+    <value>RPG 매개변수</value>
+  </data>
+  <data name="Save" xml:space="preserve">
     <value />
   </data>
   <data name="Settings" xml:space="preserve">
-    <value />
+    <value>설정</value>
   </data>
   <data name="STORM" xml:space="preserve">
-    <value />
+    <value>STORM</value>
   </data>
   <data name="Weapons" xml:space="preserve">
-    <value />
+    <value>무기</value>
   </data>
 </root>
