@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Localization;
+using ModForge.Localizations;
 using ModForge.Shared.Services;
 using MudBlazor;
 using SharpCompress.Archives;
@@ -12,6 +14,7 @@ namespace ModForge.UI.Components.MenuComponents
 	public partial class ModInstall
 	{
 		private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
+		private bool isLoading;
 		private string dragClass = DefaultDragClass;
 		private readonly List<string> fileNames = new();
 		private readonly List<IBrowserFile> files = new();
@@ -33,6 +36,8 @@ namespace ModForge.UI.Components.MenuComponents
 		public UserConfigurationService UserConfigurationService { get; set; }
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
 
@@ -67,6 +72,7 @@ namespace ModForge.UI.Components.MenuComponents
 
 		private async Task Upload()
 		{
+			isLoading = true;
 			foreach (var file in files)
 			{
 				foreach (var zipFormat in zipFormats)
@@ -78,6 +84,7 @@ namespace ModForge.UI.Components.MenuComponents
 				}
 			}
 			await ClearAsync();
+			isLoading = false;
 		}
 
 		// TODO: Snackbar für Feedback und Clear Items

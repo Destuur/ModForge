@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using ModForge.Localizations;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.MenuComponents;
@@ -24,6 +26,8 @@ namespace ModForge.UI.Components.ModItemComponents
 		public ISnackbar Snackbar { get; set; }
 		[Inject]
 		public XmlService XmlService { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
 		public LocalizationService LocalizationService { get; set; }
 		[Inject]

@@ -1,4 +1,5 @@
 ﻿using System.IO.Compression;
+using System.Text;
 
 namespace ModForge.Shared
 {
@@ -22,6 +23,18 @@ namespace ModForge.Shared
 			path = pathWithoutXmlFile;
 
 			return path;
+		}
+
+		public static string ReadAllText(this Stream stream)
+		{
+			using var reader = new StreamReader(stream, Encoding.UTF8, true);
+			return reader.ReadToEnd();
+		}
+
+		public static async Task<string> ReadAllTextAsync(this Stream stream)
+		{
+			using var reader = new StreamReader(stream, Encoding.UTF8, true);
+			return await reader.ReadToEndAsync();
 		}
 	}
 }

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using ModForge.Localizations;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
@@ -21,6 +23,8 @@ namespace ModForge.UI.Components.ModItemComponents
 		public ModService ModService { get; set; }
 		[Inject]
 		public ILogger<Loadouts> Logger { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
 		[Inject]

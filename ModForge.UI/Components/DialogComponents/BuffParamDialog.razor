@@ -2,9 +2,9 @@
 	<DialogContent>
 		<MudTable RowClassFunc="@SelectedRowClassFunc" @ref="mudTable" Striped Elevation="0" Bordered="false" Height="400px" FixedHeader Items="@BuffParamSerializer.GetAllKeys()" Dense Hover ReadOnly Filter="new Func<string, bool>(FilterFunc)" @bind-SelectedItem="SelectedBuffParamKey" SortLabel="Sort By">
 			<ToolBarContent>
-				<MudText Typo="Typo.h4" Class="header-primary"><b>Buff Parameter</b></MudText>
+				<MudText Typo="Typo.h4" Class="header-primary"><b>@(L[MessageKeys.BuffParameter].Value)</b></MudText>
 				<MudSpacer />
-				<MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Outlined" Margin="Margin.Dense" Style="background-color: var(--mud-palette-surface);"></MudTextField>
+				<MudTextField @bind-Value="searchString" Placeholder="@(L[MessageKeys.Search].Value)" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Outlined" Margin="Margin.Dense" Style="background-color: var(--mud-palette-surface);"></MudTextField>
 			</ToolBarContent>
 			<ColGroup>
 				<col style="width:50px;" />
@@ -12,9 +12,9 @@
 				<col style="width:50%;" />
 			</ColGroup>
 			<HeaderContent>
-				<MudTh><MudTableSortLabel SortBy="new Func<string, object>(x => x)">Key</MudTableSortLabel></MudTh>
-				<MudTh><MudTableSortLabel SortBy="new Func<string, object>(x => BuffParamSerializer.GetName(x))">Name</MudTableSortLabel></MudTh>
-				<MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<string, object>(x => BuffParamSerializer.GetDescription(x))">Definition</MudTableSortLabel></MudTh>
+				<MudTh><MudTableSortLabel SortBy="new Func<string, object>(x => x)">@(L[MessageKeys.Abbreviation].Value)</MudTableSortLabel></MudTh>
+				<MudTh><MudTableSortLabel SortBy="new Func<string, object>(x => BuffParamSerializer.GetName(x))">@(L[MessageKeys.Name].Value)</MudTableSortLabel></MudTh>
+				<MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<string, object>(x => BuffParamSerializer.GetDescription(x))">@(L[MessageKeys.Definition].Value)</MudTableSortLabel></MudTh>
 			</HeaderContent>
 			<RowTemplate>
 				<MudTd DataLabel="Key">@context</MudTd>

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using ModForge.Localizations;
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
@@ -24,6 +26,8 @@ namespace ModForge.UI.Components.MenuComponents
 		public EventCallback<Type> ChangeChildContent { get; set; }
 		[Inject]
 		public UserConfigurationService UserConfigurationService { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
 		public ModService ModService { get; set; }
 		[Inject]

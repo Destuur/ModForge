@@ -1,21 +1,28 @@
 ﻿@using ModForge.Shared.Models.Localizations
+
+@if (isLoading)
+{
+	<div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+		<LoadingOverlay IsVisible="isLoading" />
+	</div>
+}
 <MudGrid Style="margin: 0px;" Class="pr-4" Spacing="0">
 
 	<MudItem md="12" Style="width: 100%;" Class="pb-2">
 		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
-			<MudText Class="header-primary pr-2" Typo="Typo.h6">Settings</MudText>
+			<MudText Class="header-primary pr-2" Typo="Typo.h6">@(L[MessageKeys.Settings].Value)</MudText>
 			<MudSpacer />
-			<MudButton OnClick="BackToDashboard" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">Back</MudButton>
-			<MudButton OnClick="Save" Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background); width: 150px;" Disabled="@(gameDirectory.Length == 0)">Save</MudButton>
+			<MudButton OnClick="BackToDashboard" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">@(L[MessageKeys.Back].Value)</MudButton>
+			<MudButton OnClick="Save" Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background); width: 150px;" Disabled="@(gameDirectory.Length == 0)">@(L[MessageKeys.Save].Value)</MudButton>
 		</MudStack>
 	</MudItem>
 
 	<MudItem md="12" Style="width: 100%;">
 		<MudStack Spacing="0">
 
-			<MudTextField HelperText="Henry was taken. Pick your own." Validation="ValidateName" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" Placeholder="User Name" @bind-Value="name" />
-			<MudTextField HelperText="This is the path. The one true path." Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="/home/you/games/kcd2" ReadOnly="true" @bind-Value="gameDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectGameDirectory" Style="cursor: pointer;" />
-			<MudSelect T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Language" ValueChanged="ChangeLanguage" SelectedValues="[UserConfigurationService.Current.Language]">
+			<MudTextField HelperText="@(L[MessageKeys.UserNameInfo].Value)" Validation="ValidateName" Variant="Variant.Outlined" Margin="Margin.Dense" Immediate="true" Placeholder="@(L[MessageKeys.UserName].Value)" @bind-Value="name" />
+			<MudTextField HelperText="@(L[MessageKeys.PathInfo].Value)" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="C:\...\steamapps\common\KingdomComeDeliverance2" ReadOnly="true" @bind-Value="gameDirectory" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Folder" OnAdornmentClick="SelectGameDirectory" Style="cursor: pointer;" />
+			<MudSelect T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="@(L[MessageKeys.Language].Value)" ValueChanged="ChangeLanguage" SelectedValues="[UserConfigurationService.Current.Language]">
 
 				@foreach (var language in Languages.Map)
 				{

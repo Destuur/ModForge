@@ -14,7 +14,6 @@ namespace ModForge.UI.Components.MenuComponents
 	{
 		private ModCollection createdMods;
 		private ModCollection externalMods;
-		private string buttonContent;
 		private bool isCreatedVisible = true;
 		private string? imageDataUrl;
 
@@ -58,11 +57,6 @@ namespace ModForge.UI.Components.MenuComponents
 
 			createdMods = ModService.ModCollection;
 			externalMods = ModService.ExternalModCollection;
-
-			var culture = new CultureInfo(string.IsNullOrEmpty(UserConfigurationService.Current.Language) ? "en" : UserConfigurationService.Current.Language);
-			Thread.CurrentThread.CurrentCulture = culture;
-			Thread.CurrentThread.CurrentUICulture = culture;
-			buttonContent = L[MessageKeys.NewModButton].Value;
 			await ShowGamePathMissingDialog();
 			StateHasChanged();
 		}

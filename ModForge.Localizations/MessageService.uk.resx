@@ -120,8 +120,11 @@
   <data name="Armors" xml:space="preserve">
     <value>Броня</value>
   </data>
+  <data name="AvailableMods" xml:space="preserve">
+    <value>Доступні моди</value>
+  </data>
   <data name="Back" xml:space="preserve">
-    <value />
+    <value>Назад</value>
   </data>
   <data name="BrowseModItems" xml:space="preserve">
     <value>Переглянути моделі предметів</value>
@@ -129,8 +132,23 @@
   <data name="Buffs" xml:space="preserve">
     <value>Бафи</value>
   </data>
+  <data name="Class" xml:space="preserve">
+    <value>Клас</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Очистити</value>
+  </data>
+  <data name="ClearInfo" xml:space="preserve">
+    <value>Очищує обраний файл</value>
+  </data>
   <data name="Consumables" xml:space="preserve">
     <value>Витратні матеріали</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Копіювати команду</value>
+  </data>
+  <data name="CopyId" xml:space="preserve">
+    <value>Копіювати ID</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
     <value>Ремісничі предмети</value>
@@ -139,7 +157,7 @@
     <value>Створені моди</value>
   </data>
   <data name="CreateMod" xml:space="preserve">
-    <value />
+    <value>Створити мод</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Панель керування</value>
@@ -147,7 +165,10 @@
   <data name="DeleteMod" xml:space="preserve">
     <value>Видалити мод</value>
   </data>
-  <data name="EditMod" xml:space="preserve">
+  <data name="Duplicate" xml:space="preserve">
+    <value>Дублювати</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
     <value>Редагувати мод</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
@@ -183,11 +204,26 @@
   <data name="ExternalMods" xml:space="preserve">
     <value>Зовнішні моди</value>
   </data>
+  <data name="FilePickerInfo" xml:space="preserve">
+    <value>Відкриває файловий провідник для вибору моду на жорсткому диску</value>
+  </data>
+  <data name="FileUploadInfo1" xml:space="preserve">
+    <value>Перетягніть файли сюди або клацніть</value>
+  </data>
+  <data name="FileUploadInfo2" xml:space="preserve">
+    <value>Підтримувані формати файлів: .zip, .rar, .7z, .gzip, .tar</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Допомога</value>
   </data>
+  <data name="Implementation" xml:space="preserve">
+    <value>Впровадження</value>
+  </data>
   <data name="InstallMod" xml:space="preserve">
     <value>Встановити мод</value>
+  </data>
+  <data name="InstallModInfo" xml:space="preserve">
+    <value>Встановлює обраний мод</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
     <value>Попередні налаштування інвентарю</value>
@@ -198,43 +234,142 @@
   <data name="LanguageKey" xml:space="preserve">
     <value>Українська</value>
   </data>
+  <data name="LoadoutEmptyInfo" xml:space="preserve">
+    <value>Очищає поточне навантаження цього файлу збереження</value>
+  </data>
   <data name="Loadouts" xml:space="preserve">
     <value>Набори модів</value>
+  </data>
+  <data name="Miscellaneous" xml:space="preserve">
+    <value>Різне</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
     <value>Різні предмети</value>
   </data>
   <data name="ModdedIngots" xml:space="preserve">
-    <value />
+    <value>Модифіковані злитки</value>
+  </data>
+  <data name="ModEffects" xml:space="preserve">
+    <value>Ефекти моду</value>
   </data>
   <data name="NewModButton" xml:space="preserve">
     <value>Новий мод</value>
+  </data>
+  <data name="NewModInputInvalid" xml:space="preserve">
+    <value>Заповніть форму, селянине!</value>
+  </data>
+  <data name="NewModInputValid" xml:space="preserve">
+    <value>Нехай моддинг почнеться</value>
+  </data>
+  <data name="OpenFilePicker" xml:space="preserve">
+    <value>Відкрити вибір файлу</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Відкрити папку</value>
   </data>
   <data name="Overview" xml:space="preserve">
-    <value />
+    <value>Огляд</value>
   </data>
   <data name="Perks" xml:space="preserve">
     <value>Переваги</value>
   </data>
   <data name="ResetAll" xml:space="preserve">
-    <value />
+    <value>Скинути все</value>
   </data>
   <data name="RPGParameter" xml:space="preserve">
     <value>RPG-параметри</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value />
+    <value>Зберегти</value>
+  </data>
+  <data name="SaveFileLoadout" xml:space="preserve">
+    <value>Зберегти навантаження файлу</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
+  <data name="SelectForMore" xml:space="preserve">
+    <value>Виберіть елемент для детальнішої інформації</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Налаштування</value>
   </data>
+  <data name="Skill" xml:space="preserve">
+    <value>Навик</value>
+  </data>
+  <data name="StartModding" xml:space="preserve">
+    <value>Почати моддинг</value>
+  </data>
   <data name="STORM" xml:space="preserve">
     <value>STORM</value>
   </data>
+  <data name="UseLoadout" xml:space="preserve">
+    <value>Використати навантаження</value>
+  </data>
   <data name="Weapons" xml:space="preserve">
     <value>Зброя</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Автор</value>
+  </data>
+  <data name="ModVersion" xml:space="preserve">
+    <value>Версія моду</value>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>Створено</value>
+  </data>
+  <data name="ModId" xml:space="preserve">
+    <value>ID моду</value>
+  </data>
+  <data name="ModifiesLevel" xml:space="preserve">
+    <value>Модифікує рівень</value>
+  </data>
+  <data name="ModVersionSupport" xml:space="preserve">
+    <value>Додати підтримку версії</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Версія</value>
+  </data>
+  <data name="UserNameInfo" xml:space="preserve">
+    <value>Генрі зайнятий. Оберіть своє.</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Ім’я користувача</value>
+  </data>
+  <data name="PathInfo" xml:space="preserve">
+    <value>Це шлях. Єдиний справжній шлях.</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Мова</value>
+  </data>
+  <data name="BuffParameter" xml:space="preserve">
+    <value>Параметр бафу</value>
+  </data>
+  <data name="Abbreviation" xml:space="preserve">
+    <value>Абревіатура</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ім’я</value>
+  </data>
+  <data name="Definition" xml:space="preserve">
+    <value>Визначення</value>
+  </data>
+  <data name="ThanksForNothing" xml:space="preserve">
+    <value>Дякую за ніщо...</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="ModName" xml:space="preserve">
+    <value>Назва моду</value>
+  </data>
+  <data name="ModDescription" xml:space="preserve">
+    <value>Опис моду</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Скинути</value>
+  </data>
+  <data name="ModAuthor" xml:space="preserve">
+    <value>Автор моду</value>
   </data>
 </root>

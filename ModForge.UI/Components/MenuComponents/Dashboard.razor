@@ -1,17 +1,17 @@
 ﻿<MudGrid Style="height: 100%; margin: 0px;" Class="pr-4" Spacing="0">
 
 	<MudItem md="12" Style="height: 15%; padding: 0px;">
-		<ButtonWidget Typo="Typo.h4" Title="@buttonContent" Icon="@Icons.Material.Filled.AddBox" ButtonClicked="OnButtonClicked" />
+		<ButtonWidget Typo="Typo.h4" Title="@(L[MessageKeys.NewModButton].Value)" Icon="@Icons.Material.Filled.AddBox" ButtonClicked="OnButtonClicked" />
 	</MudItem>
 
 	<MudItem md="12" Style="height: 85%; padding: 0px;" Class="@(isCreatedVisible ? string.Empty : "modlist-no-display")">
-		<ModListWidget FirstTitle="Created Mods" SecondTitle="External Mods" FirstTitleActive="true" ToggledModList="ToggleModList">
+		<ModListWidget FirstTitle="@(L[MessageKeys.CreatedMods].Value)" SecondTitle="@(L[MessageKeys.ExternalMods].Value)" FirstTitleActive="true" ToggledModList="ToggleModList">
 			<ModListItems Mods="createdMods" ModDeleted="RefreshMods" />
 		</ModListWidget>
 	</MudItem>
 
 	<MudItem md="12" Style="height: 85%; padding: 0px;" Class="@(isCreatedVisible ? "modlist-no-display" : string.Empty)">
-		<ModListWidget FirstTitle="Created Mods" SecondTitle="External Mods" FirstTitleActive="false" ToggledModList="ToggleModList">
+		<ModListWidget FirstTitle="@(L[MessageKeys.CreatedMods].Value)" SecondTitle="@(L[MessageKeys.CreatedMods].Value)" FirstTitleActive="false" ToggledModList="ToggleModList">
 			<ModListItems Mods="externalMods" ModDeleted="RefreshMods" />
 		</ModListWidget>
 	</MudItem>

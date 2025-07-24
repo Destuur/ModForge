@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
+using ModForge.Localizations;
 using ModForge.Shared.Models.Attributes;
 using MudBlazor;
 using static MudBlazor.CategoryTypes;
@@ -17,6 +19,8 @@ namespace ModForge.UI.Components.DialogComponents
 		public string? Title { get; set; }
 		[Parameter]
 		public string? ButtonText { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 		[Parameter]
 		public string? CancleText { get; set; }
 		public string? SelectedBuffParamKey { get; set; }

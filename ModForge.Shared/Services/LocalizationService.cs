@@ -81,7 +81,8 @@ namespace ModForge.Shared.Services
 			try
 			{
 				var lang = userConfigurationService.Current.Language;
-				var attribute = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("ui_desc"));
+				var attribute = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("ui_desc")) ??
+								modItem.Attributes.FirstOrDefault(x => x.Name.Contains("UIInfo"));
 
 				if (attribute is null)
 				{

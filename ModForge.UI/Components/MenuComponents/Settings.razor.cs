@@ -19,7 +19,7 @@ namespace ModForge.UI.Components.MenuComponents
 		[Inject]
 		public UserConfigurationService? UserConfigurationService { get; set; }
 		[Inject]
-		public XmlService? XmlToJsonService { get; set; }
+		public XmlService? XmlService { get; set; }
 		[Inject]
 		public LocalizationService? LocalizationService { get; set; }
 		[Inject]
@@ -34,6 +34,7 @@ namespace ModForge.UI.Components.MenuComponents
 		// TODO: Import mods and loading animation
 		public async Task Save()
 		{
+			isLoading = true;
 			UserConfigurationService.Current.UserName = name;
 			UserConfigurationService.Current.GameDirectory = gameDirectory;
 			UserConfigurationService.Save();
@@ -46,16 +47,17 @@ namespace ModForge.UI.Components.MenuComponents
 					config.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
 				});
 
-			if (XmlToJsonService is not null)
+			if (XmlService is not null)
 			{
-				XmlToJsonService.ConvertXml();
+				await Task.Run(() => XmlService.ConvertXml());
 			}
 
 			if (LocalizationService is not null)
 			{
-				LocalizationService.InitializeLocalizations(UserConfigurationService.Current);
+				await Task.Run(() => LocalizationService.InitializeLocalizations(UserConfigurationService.Current));
 			}
 
+			isLoading = false;
 			await BackToDashboard();
 		}
 
@@ -93,13 +95,13 @@ namespace ModForge.UI.Components.MenuComponents
 		public void ImportGameData()
 		{
 			isLoading = true;
-			if (XmlToJsonService is null)
+			if (XmlService is null)
 			{
 				return;
 			}
 			try
 			{
-				XmlToJsonService.ConvertXml();
+				XmlService.ConvertXml();
 			}
 			finally
 			{
@@ -198,11 +200,11 @@ namespace ModForge.UI.Components.MenuComponents
 
 		public void ParseXmlFiles()
 		{
-			if (XmlToJsonService is null)
+			if (XmlService is null)
 			{
 				return;
 			}
-			XmlToJsonService.ConvertXml();
+			XmlService.ConvertXml();
 		}
 
 		private void ChangeLanguage(string language)
@@ -210,6 +212,8 @@ namespace ModForge.UI.Components.MenuComponents
 			UserConfigurationService.Current.Language = language;
 
 			var culture = new CultureInfo(language);
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
 			Thread.CurrentThread.CurrentCulture = culture;
 			Thread.CurrentThread.CurrentUICulture = culture;
 		}

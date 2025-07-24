@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using ModForge.Localizations;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
 using MudBlazor;
@@ -28,6 +30,8 @@ namespace ModForge.UI.Components.MenuComponents
 		public EventCallback<Type> ChangeChildContent { get; set; }
 		[Inject]
 		public NavigationManager Navigation { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
 		public IDialogService DialogService { get; set; }
 		[Inject]

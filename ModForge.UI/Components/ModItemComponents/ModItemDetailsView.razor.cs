@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
+using ModForge.Localizations;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Services;
 using MudBlazor;
@@ -20,6 +22,8 @@ namespace ModForge.UI.Components.ModItemComponents
 		public ModService? ModService { get; set; }
 		[Inject]
 		public ISnackbar? Snackbar { get; set; }
+		[Inject]
+		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
 		public XmlService? XmlService { get; set; }
 		[Inject]

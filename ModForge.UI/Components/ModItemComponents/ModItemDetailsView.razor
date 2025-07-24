@@ -2,7 +2,7 @@
 	@if (SelectedModItem is null)
 	{
 		<MudStack Style="height: 100%;" Justify="Justify.Center">
-			<MudText Typo="Typo.h6" Align="Align.Center">Select element for more details</MudText>
+			<MudText Typo="Typo.h6" Align="Align.Center">@(L[MessageKeys.SelectForMore].Value)</MudText>
 		</MudStack>
 	}
 	else
@@ -13,13 +13,13 @@
 				<MudMenu Icon="@Icons.Material.Filled.MoreVert" Variant="Variant.Text" Class="pa-0">
 					@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
 					{
-						<MudMenuItem Label="Edit" OnClick="@(() => NavigateToModItem(SelectedModItem))" />
-						<MudMenuItem Label="Duplicate" OnClick="@(() => DuplicateModItem(SelectedModItem))" />
+						<MudMenuItem Label="@(L[MessageKeys.Edit].Value)" OnClick="@(() => NavigateToModItem(SelectedModItem))" />
+						<MudMenuItem Label="@(L[MessageKeys.Duplicate].Value)" OnClick="@(() => DuplicateModItem(SelectedModItem))" />
 					}
-						<MudMenuItem Label="Copy Id" OnClick="@(() => CopyTextToClipboard(SelectedModItem.Id))" />
+					<MudMenuItem Label="@(L[MessageKeys.CopyId].Value)" OnClick="@(() => CopyTextToClipboard(SelectedModItem.Id))" />
 					@if (string.IsNullOrEmpty(ConsoleCommand) == false)
 					{
-						<MudMenuItem Label="Copy Console Command" OnClick="@(() => CopyTextToClipboard(ConsoleCommand))" />
+						<MudMenuItem Label="@(L[MessageKeys.CopyCommand].Value)" OnClick="@(() => CopyTextToClipboard(ConsoleCommand))" />
 					}
 				</MudMenu>
 			</MudStack>

@@ -6,6 +6,7 @@ using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
 using ModForge.UI.Components.ModItemComponents;
 using MudBlazor;
+using System.Globalization;
 
 namespace ModForge.UI.Pages
 {
@@ -18,6 +19,8 @@ namespace ModForge.UI.Pages
 		public ModService? ModService { get; private set; }
 		[Parameter]
 		public string? ModId { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
 		[Inject]
 		public NavigationManager NavigationManager { get; set; }
 		[Inject]
@@ -192,6 +195,17 @@ namespace ModForge.UI.Pages
 			StateHasChanged();
 		}
 
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+		}
+
 		protected override async Task OnInitializedAsync()
 		{
 			await base.OnInitializedAsync();
@@ -202,7 +216,7 @@ namespace ModForge.UI.Pages
 				return;
 			}
 			ModService.TryGetModFromCollection(ModId);
-
+			SetLanguage();
 			OnChangeChildContent(typeof(Perks));
 			isOpen = false;
 		}

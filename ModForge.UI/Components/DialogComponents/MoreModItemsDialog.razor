@@ -3,7 +3,7 @@
         <MudText>@ContentText</MudText>
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">@(L[MessageKeys.Cancel].Value)</MudButton>
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit">@ButtonText</MudButton>
     </DialogActions>
 </MudDialog>

@@ -456,8 +456,8 @@ h1:focus {
     border-radius: 1rem;
     background-color: white;
     text-align: center;
-    min-width: 300px;
-    max-width: 350px;
+    min-width: 450px;
+    max-width: 550px;
     width: 100%;
     box-sizing: border-box;
 }

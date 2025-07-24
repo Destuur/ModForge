@@ -1,35 +1,42 @@
-﻿<MudGrid Style="margin: 0px;" Class="pr-4" Spacing="0">
+﻿@if (isLoading)
+{
+	<div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+		<LoadingOverlay IsVisible="isLoading" />
+	</div>
+}
+
+<MudGrid Style="margin: 0px;" Class="pr-4" Spacing="0">
 
 	<MudItem md="12" Style="width: 100%;" Class="pb-2">
 		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
-			<MudText Class="header-primary pr-2" Typo="Typo.h6">Install Mods</MudText>
+			<MudText Class="header-primary pr-2" Typo="Typo.h6">@(L[MessageKeys.InstallMod].Value)</MudText>
 			<MudSpacer />
 
-			<MudButton OnClick="BackToDashboard" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">Back</MudButton>
+			<MudButton OnClick="BackToDashboard" Color="Color.Error" Variant="Variant.Outlined" Style="width: 150px;">@(L[MessageKeys.Back].Value)</MudButton>
 
-			<MudTooltip Text="Opens file explorer, to select mod on your harddrive">
+			<MudTooltip Text="@(L[MessageKeys.FilePickerInfo].Value)">
 				<MudButton Color="Color.Primary"
 						   OnClick="@OpenFilePickerAsync"
 						   Variant="Variant.Filled">
-					Open file picker
+					@(L[MessageKeys.OpenFilePicker].Value)
 				</MudButton>
 			</MudTooltip>
 
-			<MudTooltip Text="Installs currently selected mod">
+			<MudTooltip Text="@(L[MessageKeys.InstallModInfo].Value)">
 				<MudButton Color="Color.Primary"
 						   Disabled="@(!fileNames.Any())"
 						   OnClick="@Upload"
 						   Variant="Variant.Filled">
-					Install
+					@(L[MessageKeys.InstallMod].Value)
 				</MudButton>
 			</MudTooltip>
 
-			<MudTooltip Text="Clears currently selected mod">
+			<MudTooltip Text="@(L[MessageKeys.ClearInfo].Value)">
 				<MudButton Color="Color.Error"
 						   Disabled="@(!fileNames.Any())"
 						   OnClick="@ClearAsync"
 						   Variant="Variant.Filled">
-					Clear
+					@(L[MessageKeys.Clear].Value)
 				</MudButton>
 			</MudTooltip>
 
@@ -56,8 +63,8 @@
 							  Class="@dragClass">
 						<MudStack Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center" Justify="Justify.Center">
 
-							<MudText Typo="Typo.h6" Align="Align.Center">Drag and drop files here or click</MudText>
-							<MudText Typo="Typo.subtitle2" Align="Align.Center">Supported file formats: .zip, .rar, .7z, .gzip, .tar</MudText>
+							<MudText Typo="Typo.h6" Align="Align.Center">@(L[MessageKeys.FileUploadInfo1].Value)</MudText>
+							<MudText Typo="Typo.subtitle2" Align="Align.Center">@(L[MessageKeys.FileUploadInfo2].Value)</MudText>
 
 							@foreach (var file in fileNames)
 							{

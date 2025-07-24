@@ -8,6 +8,7 @@ using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
 using MudBlazor;
+using System.Globalization;
 
 namespace ModForge.UI.Pages
 {
@@ -20,6 +21,8 @@ namespace ModForge.UI.Pages
 		public LocalizationService? LocalizationService { get; set; }
 		[Inject]
 		public NavigationManager? NavigationManager { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
 		[Inject]
 		public XmlService? XmlService { get; set; }
 		[Inject]
@@ -126,6 +129,7 @@ namespace ModForge.UI.Pages
 				return;
 			}
 
+			SetLanguage();
 			icon = IconService.GetBase64Icon(editingModItem.Attributes.FirstOrDefault(x => x.Name == "IconId")?.Value.ToString() ?? editingModItem.Attributes.FirstOrDefault(x => x.Name == "icon_id")?.Value.ToString() ?? string.Empty);
 			StateHasChanged();
 		}
@@ -140,6 +144,17 @@ namespace ModForge.UI.Pages
 			}
 
 			return OriginalModItem.GetDeepCopy();
+		}
+
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
 		}
 	}
 }

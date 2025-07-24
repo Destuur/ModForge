@@ -120,8 +120,11 @@
   <data name="Armors" xml:space="preserve">
     <value>Armaduras</value>
   </data>
+  <data name="AvailableMods" xml:space="preserve">
+    <value>Mods disponibles</value>
+  </data>
   <data name="Back" xml:space="preserve">
-    <value />
+    <value>Atrás</value>
   </data>
   <data name="BrowseModItems" xml:space="preserve">
     <value>Explorar objetos del mod</value>
@@ -129,8 +132,23 @@
   <data name="Buffs" xml:space="preserve">
     <value>Mejoras</value>
   </data>
+  <data name="Class" xml:space="preserve">
+    <value>Clase</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Limpiar</value>
+  </data>
+  <data name="ClearInfo" xml:space="preserve">
+    <value>Limpia el archivo actualmente seleccionado</value>
+  </data>
   <data name="Consumables" xml:space="preserve">
     <value>Consumibles</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Copiar comando</value>
+  </data>
+  <data name="CopyId" xml:space="preserve">
+    <value>Copiar ID</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
     <value>Objetos para fabricar</value>
@@ -139,7 +157,7 @@
     <value>Mods creados</value>
   </data>
   <data name="CreateMod" xml:space="preserve">
-    <value />
+    <value>Crear mod</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Tablero</value>
@@ -147,7 +165,10 @@
   <data name="DeleteMod" xml:space="preserve">
     <value>Eliminar mod</value>
   </data>
-  <data name="EditMod" xml:space="preserve">
+  <data name="Duplicate" xml:space="preserve">
+    <value>Duplicar</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
     <value>Editar mod</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
@@ -183,11 +204,26 @@
   <data name="ExternalMods" xml:space="preserve">
     <value>Mods externos</value>
   </data>
+  <data name="FilePickerInfo" xml:space="preserve">
+    <value>Abre el explorador de archivos para seleccionar un mod en tu disco</value>
+  </data>
+  <data name="FileUploadInfo1" xml:space="preserve">
+    <value>Arrastra y suelta archivos aquí o haz clic</value>
+  </data>
+  <data name="FileUploadInfo2" xml:space="preserve">
+    <value>Formatos compatibles: .zip, .rar, .7z, .gzip, .tar</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Ayuda</value>
   </data>
+  <data name="Implementation" xml:space="preserve">
+    <value>Implementación</value>
+  </data>
   <data name="InstallMod" xml:space="preserve">
     <value>Instalar mod</value>
+  </data>
+  <data name="InstallModInfo" xml:space="preserve">
+    <value>Instala el mod actualmente seleccionado</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
     <value>Preajustes de inventario</value>
@@ -198,43 +234,142 @@
   <data name="LanguageKey" xml:space="preserve">
     <value>Español</value>
   </data>
+  <data name="LoadoutEmptyInfo" xml:space="preserve">
+    <value>Vacía la configuración de este archivo guardado</value>
+  </data>
   <data name="Loadouts" xml:space="preserve">
     <value>Loadouts de mods</value>
+  </data>
+  <data name="Miscellaneous" xml:space="preserve">
+    <value>Varios</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
     <value>Objetos varios</value>
   </data>
   <data name="ModdedIngots" xml:space="preserve">
-    <value />
+    <value>Lingotes modificados</value>
+  </data>
+  <data name="ModEffects" xml:space="preserve">
+    <value>Efectos del mod</value>
   </data>
   <data name="NewModButton" xml:space="preserve">
     <value>Nuevo mod</value>
+  </data>
+  <data name="NewModInputInvalid" xml:space="preserve">
+    <value>¡Rellena el formulario, campesino!</value>
+  </data>
+  <data name="NewModInputValid" xml:space="preserve">
+    <value>Que comience el modding</value>
+  </data>
+  <data name="OpenFilePicker" xml:space="preserve">
+    <value>Abrir selector de archivos</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Abrir carpeta</value>
   </data>
   <data name="Overview" xml:space="preserve">
-    <value />
+    <value>Resumen</value>
   </data>
   <data name="Perks" xml:space="preserve">
     <value>Perks</value>
   </data>
   <data name="ResetAll" xml:space="preserve">
-    <value />
+    <value>Restablecer todo</value>
   </data>
   <data name="RPGParameter" xml:space="preserve">
     <value>Parámetros RPG</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value />
+    <value>Guardar</value>
+  </data>
+  <data name="SaveFileLoadout" xml:space="preserve">
+    <value>Guardar configuración de archivo</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="SelectForMore" xml:space="preserve">
+    <value>Selecciona un elemento para más detalles</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Configuración</value>
   </data>
+  <data name="Skill" xml:space="preserve">
+    <value>Habilidad</value>
+  </data>
+  <data name="StartModding" xml:space="preserve">
+    <value>Comenzar a modear</value>
+  </data>
   <data name="STORM" xml:space="preserve">
     <value>STORM</value>
   </data>
+  <data name="UseLoadout" xml:space="preserve">
+    <value>Usar configuración</value>
+  </data>
   <data name="Weapons" xml:space="preserve">
     <value>Armas</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="ModVersion" xml:space="preserve">
+    <value>Versión del mod</value>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>Creado el</value>
+  </data>
+  <data name="ModId" xml:space="preserve">
+    <value>ID del mod</value>
+  </data>
+  <data name="ModifiesLevel" xml:space="preserve">
+    <value>Modifica el nivel</value>
+  </data>
+  <data name="ModVersionSupport" xml:space="preserve">
+    <value>Agregar compatibilidad de versión</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="UserNameInfo" xml:space="preserve">
+    <value>Henry ya estaba cogido. Elige otro.</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Nombre de usuario</value>
+  </data>
+  <data name="PathInfo" xml:space="preserve">
+    <value>Este es el camino. El único verdadero.</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="BuffParameter" xml:space="preserve">
+    <value>Parámetro de mejora</value>
+  </data>
+  <data name="Abbreviation" xml:space="preserve">
+    <value>Abreviatura</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Definition" xml:space="preserve">
+    <value>Definición</value>
+  </data>
+  <data name="ThanksForNothing" xml:space="preserve">
+    <value>Gracias por nada...</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ModName" xml:space="preserve">
+    <value>Nombre del mod</value>
+  </data>
+  <data name="ModDescription" xml:space="preserve">
+    <value>Descripción del mod</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Restablecer</value>
+  </data>
+  <data name="ModAuthor" xml:space="preserve">
+    <value>Autor del mod</value>
   </data>
 </root>

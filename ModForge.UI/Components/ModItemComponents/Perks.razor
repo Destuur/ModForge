@@ -11,18 +11,18 @@
 
 	<MudItem md="12" Style="height: 10%; width: 100%;">
 		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
-			<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>Perks</b></MudText>
+			<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>@(L[MessageKeys.Perks].Value)</b></MudText>
 			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2" Class="pr-2">
-				<MudTextField Onkeyup="SearchPerks" Immediate @bind-Value="SearchPerk" Placeholder="Search" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
+				<MudTextField Onkeyup="SearchPerks" Immediate @bind-Value="SearchPerk" Placeholder="@(L[MessageKeys.Search].Value)" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
 
 				<MudMenu Icon="@Icons.Material.Filled.FilterList" Style="color: var(--mud-palette-textprimary)">
 
-					@foreach (var item in Enum.GetNames(typeof(SkillSelector)))
+					@foreach (var name in Enum.GetNames(typeof(SkillSelector)))
 					{
-						<MudMenuItem OnClick="@(() => FilterPerks(item))">@item</MudMenuItem>
+						<MudMenuItem OnClick="@(() => FilterPerks(name))">@name</MudMenuItem>
 					}
 
-					<MudMenuItem OnClick="@(() => FilterPerks("Miscellaneous"))">Miscellaneous</MudMenuItem>
+					<MudMenuItem OnClick="@(() => FilterPerks("Miscellaneous"))">@(L[MessageKeys.Miscellaneous].Value)</MudMenuItem>
 
 				</MudMenu>
 				@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
@@ -48,7 +48,7 @@
 										<MudText Class="pb-3" Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(GetName(perk))</MudText>
 
 										<MudStack Row Justify="Justify.SpaceBetween">
-											<MudText Typo="Typo.caption">Skill: @(GetSkillSelector(perk))</MudText>
+											<MudText Typo="Typo.caption">@(L[MessageKeys.Skill].Value): @(GetSkillSelector(perk))</MudText>
 											<MudText Typo="Typo.caption">@(GetLevel(perk))</MudText>
 										</MudStack>
 									</MudStack>

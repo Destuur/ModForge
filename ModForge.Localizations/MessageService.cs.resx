@@ -120,8 +120,11 @@
   <data name="Armors" xml:space="preserve">
     <value>Brnění</value>
   </data>
+  <data name="AvailableMods" xml:space="preserve">
+    <value>Dostupné módy</value>
+  </data>
   <data name="Back" xml:space="preserve">
-    <value />
+    <value>Zpět</value>
   </data>
   <data name="BrowseModItems" xml:space="preserve">
     <value>Procházet položky modu</value>
@@ -129,8 +132,23 @@
   <data name="Buffs" xml:space="preserve">
     <value>Buffy</value>
   </data>
+  <data name="Class" xml:space="preserve">
+    <value>Třída</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Vymazat</value>
+  </data>
+  <data name="ClearInfo" xml:space="preserve">
+    <value>Vymaže aktuálně vybraný soubor</value>
+  </data>
   <data name="Consumables" xml:space="preserve">
     <value>Spotřební zboží</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Zkopírovat příkaz</value>
+  </data>
+  <data name="CopyId" xml:space="preserve">
+    <value>Zkopírovat ID</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
     <value>Řemeslné předměty</value>
@@ -139,7 +157,7 @@
     <value>Vytvořené mody</value>
   </data>
   <data name="CreateMod" xml:space="preserve">
-    <value />
+    <value>Vytvořit mód</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Přehled</value>
@@ -147,7 +165,10 @@
   <data name="DeleteMod" xml:space="preserve">
     <value>Smazat mod</value>
   </data>
-  <data name="EditMod" xml:space="preserve">
+  <data name="Duplicate" xml:space="preserve">
+    <value>Duplikovat</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
     <value>Upravit mod</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
@@ -183,11 +204,26 @@
   <data name="ExternalMods" xml:space="preserve">
     <value>Externí mody</value>
   </data>
+  <data name="FilePickerInfo" xml:space="preserve">
+    <value>Otevře průzkumníka souborů pro výběr módu na disku</value>
+  </data>
+  <data name="FileUploadInfo1" xml:space="preserve">
+    <value>Přetáhněte sem soubory nebo klikněte</value>
+  </data>
+  <data name="FileUploadInfo2" xml:space="preserve">
+    <value>Podporované formáty: .zip, .rar, .7z, .gzip, .tar</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Nápověda</value>
   </data>
+  <data name="Implementation" xml:space="preserve">
+    <value>Implementace</value>
+  </data>
   <data name="InstallMod" xml:space="preserve">
     <value>Nainstalovat mod</value>
+  </data>
+  <data name="InstallModInfo" xml:space="preserve">
+    <value>Nainstaluje aktuálně vybraný mód</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
     <value>Předvolby inventáře</value>
@@ -198,43 +234,142 @@
   <data name="LanguageKey" xml:space="preserve">
     <value>čeština</value>
   </data>
+  <data name="LoadoutEmptyInfo" xml:space="preserve">
+    <value>Vyprázdní aktuální loadout tohoto uloženého souboru</value>
+  </data>
   <data name="Loadouts" xml:space="preserve">
     <value>Loadouty modů</value>
+  </data>
+  <data name="Miscellaneous" xml:space="preserve">
+    <value>Různé</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
     <value>Různé předměty</value>
   </data>
   <data name="ModdedIngots" xml:space="preserve">
-    <value />
+    <value>Modifikované ingoty</value>
+  </data>
+  <data name="ModEffects" xml:space="preserve">
+    <value>Efekty módu</value>
   </data>
   <data name="NewModButton" xml:space="preserve">
     <value>Nový mod</value>
+  </data>
+  <data name="NewModInputInvalid" xml:space="preserve">
+    <value>Vyplň formulář, sedláku!</value>
+  </data>
+  <data name="NewModInputValid" xml:space="preserve">
+    <value>Ať modování započne</value>
+  </data>
+  <data name="OpenFilePicker" xml:space="preserve">
+    <value>Otevřít výběr souboru</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Otevřít složku</value>
   </data>
   <data name="Overview" xml:space="preserve">
-    <value />
+    <value>Přehled</value>
   </data>
   <data name="Perks" xml:space="preserve">
     <value>Vlastnosti</value>
   </data>
   <data name="ResetAll" xml:space="preserve">
-    <value />
+    <value>Obnovit vše</value>
   </data>
   <data name="RPGParameter" xml:space="preserve">
     <value>Parametry RPG</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value />
+    <value>Uložit</value>
+  </data>
+  <data name="SaveFileLoadout" xml:space="preserve">
+    <value>Uložit loadout souboru</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Hledat</value>
+  </data>
+  <data name="SelectForMore" xml:space="preserve">
+    <value>Vyber prvek pro více detailů</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Nastavení</value>
   </data>
+  <data name="Skill" xml:space="preserve">
+    <value>Dovednost</value>
+  </data>
+  <data name="StartModding" xml:space="preserve">
+    <value>Začni modovat</value>
+  </data>
   <data name="STORM" xml:space="preserve">
     <value>STORM</value>
   </data>
+  <data name="UseLoadout" xml:space="preserve">
+    <value>Použít loadout</value>
+  </data>
   <data name="Weapons" xml:space="preserve">
     <value>Zbraně</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="ModVersion" xml:space="preserve">
+    <value>Verze módu</value>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>Vytvořeno dne</value>
+  </data>
+  <data name="ModId" xml:space="preserve">
+    <value>ID módu</value>
+  </data>
+  <data name="ModifiesLevel" xml:space="preserve">
+    <value>Upravuje úroveň</value>
+  </data>
+  <data name="ModVersionSupport" xml:space="preserve">
+    <value>Přidat podporu verze</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Verze</value>
+  </data>
+  <data name="UserNameInfo" xml:space="preserve">
+    <value>Jindřich už byl zabraný. Vyber si vlastní.</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Uživatelské jméno</value>
+  </data>
+  <data name="PathInfo" xml:space="preserve">
+    <value>Toto je cesta. Ta jediná pravá.</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Jazyk</value>
+  </data>
+  <data name="BuffParameter" xml:space="preserve">
+    <value>Parametr posílení</value>
+  </data>
+  <data name="Abbreviation" xml:space="preserve">
+    <value>Zkratka</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Jméno</value>
+  </data>
+  <data name="Definition" xml:space="preserve">
+    <value>Definice</value>
+  </data>
+  <data name="ThanksForNothing" xml:space="preserve">
+    <value>Díky za nic...</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Zrušit</value>
+  </data>
+  <data name="ModName" xml:space="preserve">
+    <value>Název módu</value>
+  </data>
+  <data name="ModDescription" xml:space="preserve">
+    <value>Popis módu</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Obnovit</value>
+  </data>
+  <data name="ModAuthor" xml:space="preserve">
+    <value>Autor modu</value>
   </data>
 </root>

@@ -120,8 +120,11 @@
   <data name="Armors" xml:space="preserve">
     <value>護甲</value>
   </data>
+  <data name="AvailableMods" xml:space="preserve">
+    <value>可用模組</value>
+  </data>
   <data name="Back" xml:space="preserve">
-    <value />
+    <value>返回</value>
   </data>
   <data name="BrowseModItems" xml:space="preserve">
     <value>瀏覽模組物品</value>
@@ -129,8 +132,23 @@
   <data name="Buffs" xml:space="preserve">
     <value>增益效果</value>
   </data>
+  <data name="Class" xml:space="preserve">
+    <value>類別</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="ClearInfo" xml:space="preserve">
+    <value>清除當前選中的文件</value>
+  </data>
   <data name="Consumables" xml:space="preserve">
     <value>消耗品</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>複製指令</value>
+  </data>
+  <data name="CopyId" xml:space="preserve">
+    <value>複製ID</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
     <value>製作材料</value>
@@ -139,7 +157,7 @@
     <value>已創建模組</value>
   </data>
   <data name="CreateMod" xml:space="preserve">
-    <value />
+    <value>建立模組</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>儀表板</value>
@@ -147,7 +165,10 @@
   <data name="DeleteMod" xml:space="preserve">
     <value>刪除模組</value>
   </data>
-  <data name="EditMod" xml:space="preserve">
+  <data name="Duplicate" xml:space="preserve">
+    <value>複製</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
     <value>編輯模組</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
@@ -183,11 +204,26 @@
   <data name="ExternalMods" xml:space="preserve">
     <value>外部模組</value>
   </data>
+  <data name="FilePickerInfo" xml:space="preserve">
+    <value>打開檔案瀏覽器，從硬碟選擇模組</value>
+  </data>
+  <data name="FileUploadInfo1" xml:space="preserve">
+    <value>拖放檔案至此或點擊</value>
+  </data>
+  <data name="FileUploadInfo2" xml:space="preserve">
+    <value>支援的檔案格式：.zip, .rar, .7z, .gzip, .tar</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>幫助</value>
   </data>
+  <data name="Implementation" xml:space="preserve">
+    <value>執行</value>
+  </data>
   <data name="InstallMod" xml:space="preserve">
     <value>安裝模組</value>
+  </data>
+  <data name="InstallModInfo" xml:space="preserve">
+    <value>安裝當前選中的模組</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
     <value>庫存預設</value>
@@ -198,43 +234,142 @@
   <data name="LanguageKey" xml:space="preserve">
     <value>中文（繁體)</value>
   </data>
+  <data name="LoadoutEmptyInfo" xml:space="preserve">
+    <value>清空此存檔當前的載入設定</value>
+  </data>
   <data name="Loadouts" xml:space="preserve">
     <value>模組配置</value>
+  </data>
+  <data name="Miscellaneous" xml:space="preserve">
+    <value>雜項</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
     <value>雜項物品</value>
   </data>
   <data name="ModdedIngots" xml:space="preserve">
-    <value />
+    <value>已修改的錠子</value>
+  </data>
+  <data name="ModEffects" xml:space="preserve">
+    <value>模組效果</value>
   </data>
   <data name="NewModButton" xml:space="preserve">
     <value>新模組</value>
+  </data>
+  <data name="NewModInputInvalid" xml:space="preserve">
+    <value>填寫表格，農夫！</value>
+  </data>
+  <data name="NewModInputValid" xml:space="preserve">
+    <value>開始製作模組</value>
+  </data>
+  <data name="OpenFilePicker" xml:space="preserve">
+    <value>打開檔案選擇器</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>打開資料夾</value>
   </data>
   <data name="Overview" xml:space="preserve">
-    <value />
+    <value>概覽</value>
   </data>
   <data name="Perks" xml:space="preserve">
     <value>特技</value>
   </data>
   <data name="ResetAll" xml:space="preserve">
-    <value />
+    <value>全部重置</value>
   </data>
   <data name="RPGParameter" xml:space="preserve">
     <value>RPG參數</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value />
+    <value>儲存</value>
+  </data>
+  <data name="SaveFileLoadout" xml:space="preserve">
+    <value>儲存檔案載入設定</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜尋</value>
+  </data>
+  <data name="SelectForMore" xml:space="preserve">
+    <value>選擇元素以查看更多細節</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="Skill" xml:space="preserve">
+    <value>技能</value>
+  </data>
+  <data name="StartModding" xml:space="preserve">
+    <value>開始製作模組</value>
+  </data>
   <data name="STORM" xml:space="preserve">
     <value>STORM</value>
   </data>
+  <data name="UseLoadout" xml:space="preserve">
+    <value>使用載入設定</value>
+  </data>
   <data name="Weapons" xml:space="preserve">
     <value>武器</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="ModVersion" xml:space="preserve">
+    <value>模組版本</value>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>建立日期</value>
+  </data>
+  <data name="ModId" xml:space="preserve">
+    <value>模組ID</value>
+  </data>
+  <data name="ModifiesLevel" xml:space="preserve">
+    <value>修改等級</value>
+  </data>
+  <data name="ModVersionSupport" xml:space="preserve">
+    <value>新增版本支援</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="UserNameInfo" xml:space="preserve">
+    <value>亨利已被佔用。請選擇自己的名字。</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>用戶名</value>
+  </data>
+  <data name="PathInfo" xml:space="preserve">
+    <value>這就是路。唯一真正的路。</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>語言</value>
+  </data>
+  <data name="BuffParameter" xml:space="preserve">
+    <value>增益參數</value>
+  </data>
+  <data name="Abbreviation" xml:space="preserve">
+    <value>縮寫</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="Definition" xml:space="preserve">
+    <value>定義</value>
+  </data>
+  <data name="ThanksForNothing" xml:space="preserve">
+    <value>謝謝你什麼都沒做……</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ModName" xml:space="preserve">
+    <value>模組名稱</value>
+  </data>
+  <data name="ModDescription" xml:space="preserve">
+    <value>模組描述</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="ModAuthor" xml:space="preserve">
+    <value>模組作者</value>
   </data>
 </root>

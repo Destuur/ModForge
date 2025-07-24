@@ -120,8 +120,11 @@
   <data name="Armors" xml:space="preserve">
     <value>防具</value>
   </data>
+  <data name="AvailableMods" xml:space="preserve">
+    <value>利用可能なMOD</value>
+  </data>
   <data name="Back" xml:space="preserve">
-    <value />
+    <value>戻る</value>
   </data>
   <data name="BrowseModItems" xml:space="preserve">
     <value>Modアイテムを閲覧</value>
@@ -129,8 +132,23 @@
   <data name="Buffs" xml:space="preserve">
     <value>バフ</value>
   </data>
+  <data name="Class" xml:space="preserve">
+    <value>クラス</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="ClearInfo" xml:space="preserve">
+    <value>現在選択されているファイルをクリア</value>
+  </data>
   <data name="Consumables" xml:space="preserve">
     <value>消耗品</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>コマンドをコピー</value>
+  </data>
+  <data name="CopyId" xml:space="preserve">
+    <value>IDをコピー</value>
   </data>
   <data name="CraftingItems" xml:space="preserve">
     <value>クラフト素材</value>
@@ -139,7 +157,7 @@
     <value>作成済みMod</value>
   </data>
   <data name="CreateMod" xml:space="preserve">
-    <value />
+    <value>MODを作成</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>ダッシュボード</value>
@@ -147,7 +165,10 @@
   <data name="DeleteMod" xml:space="preserve">
     <value>Modを削除</value>
   </data>
-  <data name="EditMod" xml:space="preserve">
+  <data name="Duplicate" xml:space="preserve">
+    <value>複製</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
     <value>Modを編集</value>
   </data>
   <data name="EntryDialogButtonText" xml:space="preserve">
@@ -183,11 +204,26 @@
   <data name="ExternalMods" xml:space="preserve">
     <value>外部Mod</value>
   </data>
+  <data name="FilePickerInfo" xml:space="preserve">
+    <value>ファイルエクスプローラーを開いて、ローカルのMODを選択</value>
+  </data>
+  <data name="FileUploadInfo1" xml:space="preserve">
+    <value>ここにファイルをドラッグ＆ドロップ、またはクリック</value>
+  </data>
+  <data name="FileUploadInfo2" xml:space="preserve">
+    <value>対応ファイル形式: .zip, .rar, .7z, .gzip, .tar</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>ヘルプ</value>
   </data>
+  <data name="Implementation" xml:space="preserve">
+    <value>実装</value>
+  </data>
   <data name="InstallMod" xml:space="preserve">
     <value>Modをインストール</value>
+  </data>
+  <data name="InstallModInfo" xml:space="preserve">
+    <value>現在選択されているMODをインストール</value>
   </data>
   <data name="InventoryPresets" xml:space="preserve">
     <value>インベントリプリセット</value>
@@ -198,43 +234,142 @@
   <data name="LanguageKey" xml:space="preserve">
     <value>日本語</value>
   </data>
+  <data name="LoadoutEmptyInfo" xml:space="preserve">
+    <value>このセーブファイルの現在のロードアウトを空にする</value>
+  </data>
   <data name="Loadouts" xml:space="preserve">
     <value>Modロードアウト</value>
+  </data>
+  <data name="Miscellaneous" xml:space="preserve">
+    <value>その他</value>
   </data>
   <data name="MiscItems" xml:space="preserve">
     <value>その他のアイテム</value>
   </data>
   <data name="ModdedIngots" xml:space="preserve">
-    <value />
+    <value>改造されたインゴット</value>
+  </data>
+  <data name="ModEffects" xml:space="preserve">
+    <value>MODの効果</value>
   </data>
   <data name="NewModButton" xml:space="preserve">
     <value>新規Mod</value>
+  </data>
+  <data name="NewModInputInvalid" xml:space="preserve">
+    <value>フォームに記入せよ、農民よ！</value>
+  </data>
+  <data name="NewModInputValid" xml:space="preserve">
+    <value>さあ、MOD作成の始まりだ</value>
+  </data>
+  <data name="OpenFilePicker" xml:space="preserve">
+    <value>ファイルピッカーを開く</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>フォルダーを開く</value>
   </data>
   <data name="Overview" xml:space="preserve">
-    <value />
+    <value>概要</value>
   </data>
   <data name="Perks" xml:space="preserve">
     <value>パーク</value>
   </data>
   <data name="ResetAll" xml:space="preserve">
-    <value />
+    <value>すべてリセット</value>
   </data>
   <data name="RPGParameter" xml:space="preserve">
     <value>RPGパラメーター</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value />
+    <value>保存</value>
+  </data>
+  <data name="SaveFileLoadout" xml:space="preserve">
+    <value>ファイルのロードアウトを保存</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="SelectForMore" xml:space="preserve">
+    <value>詳細を見るには要素を選択</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="Skill" xml:space="preserve">
+    <value>スキル</value>
+  </data>
+  <data name="StartModding" xml:space="preserve">
+    <value>MOD作成を始める</value>
+  </data>
   <data name="STORM" xml:space="preserve">
     <value>STORM</value>
   </data>
+  <data name="UseLoadout" xml:space="preserve">
+    <value>ロードアウトを使う</value>
+  </data>
   <data name="Weapons" xml:space="preserve">
     <value>武器</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="ModVersion" xml:space="preserve">
+    <value>MODバージョン</value>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>作成日</value>
+  </data>
+  <data name="ModId" xml:space="preserve">
+    <value>MOD ID</value>
+  </data>
+  <data name="ModifiesLevel" xml:space="preserve">
+    <value>レベルを変更</value>
+  </data>
+  <data name="ModVersionSupport" xml:space="preserve">
+    <value>バージョン対応を追加</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="UserNameInfo" xml:space="preserve">
+    <value>ヘンリーは既に使われている。自分の名前を選べ。</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="PathInfo" xml:space="preserve">
+    <value>これが道だ。唯一無二の道だ。</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="BuffParameter" xml:space="preserve">
+    <value>バフパラメータ</value>
+  </data>
+  <data name="Abbreviation" xml:space="preserve">
+    <value>略語</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="Definition" xml:space="preserve">
+    <value>定義</value>
+  </data>
+  <data name="ThanksForNothing" xml:space="preserve">
+    <value>なんてこった…ありがとう、いやほんとに。</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="ModName" xml:space="preserve">
+    <value>MOD名</value>
+  </data>
+  <data name="ModDescription" xml:space="preserve">
+    <value>MODの説明</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="ModAuthor" xml:space="preserve">
+    <value>モッド作者</value>
   </data>
 </root>

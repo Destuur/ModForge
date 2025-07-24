@@ -2,20 +2,20 @@
 
 	<MudItem md="12" Style="height: 7%; width: 100%;" Class="pb-2">
 		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
-			<MudText Class="header-primary pr-2" Typo="Typo.h6">Loadouts</MudText>
+			<MudText Class="header-primary pr-2" Typo="Typo.h6">@(L[MessageKeys.Loadouts].Value)</MudText>
 			<MudSpacer />
 			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2">
 
-				<MudTooltip Text="Emptys the current loadout of this savefile">
-					<MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="ClearLoadout">Clear Loadout</MudButton>
+				<MudTooltip Text="@(L[MessageKeys.LoadoutEmptyInfo].Value)">
+					<MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="ClearLoadout">@(L[MessageKeys.Clear].Value)</MudButton>
 				</MudTooltip>
 
 				<MudTooltip Text="Sets 'mod_order.txt' to the current loadout">
-					<MudButton Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background)" OnClick="SetLoadout">Use Loadout</MudButton>
+					<MudButton Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background)" OnClick="SetLoadout">@(L[MessageKeys.UseLoadout].Value)</MudButton>
 				</MudTooltip>
 
 				<MudTooltip Text="Saves all loadouts of each savefile">
-					<MudButton Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background)" OnClick="SaveLoadouts">Save Loadout</MudButton>
+					<MudButton Color="Color.Primary" Variant="Variant.Filled" Style="color: var(--background)" OnClick="SaveLoadouts">@(L[MessageKeys.Save].Value)</MudButton>
 				</MudTooltip>
 
 				<MudSelect @bind-Value="SelectedSavefile" MultiSelection="false" class="ma-0" Style="max-width: 200px; width: 200px;" FullWidth="false" Variant="Variant.Outlined" Margin="Margin.Dense" Placeholder="Select Loadout" Dense T="string">
@@ -37,7 +37,7 @@
 					<MudItem md="4" Style="height: 100%;">
 						<MudCard Style="height: 100%;" Class="mod-item-card">
 							<MudCardHeader>
-								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Available Mods</MudText>
+								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(L[MessageKeys.AvailableMods].Value)</MudText>
 							</MudCardHeader>
 							<MudList T="string" Class="d-flex flex-column mud-height-full" Style=" overflow-y: auto;">
 								<MudDropZone T="DropItem" Identifier="1" Class="flex-grow-1" />
@@ -47,7 +47,7 @@
 					<MudItem md="4" Style="height: 100%;">
 						<MudCard Style="height: 100%;" Class="mod-item-card">
 							<MudCardHeader>
-								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Loadout</MudText>
+								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(L[MessageKeys.SaveFileLoadout].Value)</MudText>
 							</MudCardHeader>
 							<MudList T="string" Class="d-flex flex-column mud-height-full" Style=" overflow-y: auto;">
 								<MudDropZone T="DropItem" Identifier="2" Class="flex-grow-1" />
@@ -57,7 +57,7 @@
 					<MudItem md="4" Style="height: 100%;">
 						<MudCard Style="height: 100%;" Class="mod-item-card">
 							<MudCardHeader>
-								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Mod Effects</MudText>
+								<MudText Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(L[MessageKeys.ModEffects].Value)</MudText>
 							</MudCardHeader>
 
 							<MudList T="BuffParam" Class="d-flex flex-column mud-height-full" Style=" overflow-y: auto;" ReadOnly Dense>
