@@ -1,4 +1,5 @@
-﻿using ModForge.Shared.Models.STORM.Rules;
+﻿using ModForge.Shared.Models.STORM.Operations;
+using ModForge.Shared.Models.STORM.Rules;
 using ModForge.Shared.Models.STORM.Selectors;
 using ModForge.Shared.Models.STORM.Tasks;
 using System;
@@ -17,10 +18,12 @@ namespace ModForge.Shared.Models.STORM
 		[XmlElement("common")]
 		public Common Common { get; set; }
 		[XmlElement("tasks")]
-		public TaskCollection Tasks { get; set; }
+		public TaskContainer Tasks { get; set; }
 		[XmlElement("customSelectors")]
-		public CustomSelectors CustomSelectors { get; set; }
+		public CustomSelectorContainer CustomSelectors { get; set; }
+		[XmlElement("customOperations")]
+		public CustomOperationContainer CustomOperations { get; set; }
 		[XmlElement("rules")]
-		public RuleCollection Rules { get; set; }
+		public RuleContainer Rules { get; set; }
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace ModForge.Shared.Models.STORM.Rules
 {
-	public class RuleCollection
+	public class RuleContainer
 	{
 		[XmlElement("rule")]
 		public List<Rule> RuleList { get; set; } = new();

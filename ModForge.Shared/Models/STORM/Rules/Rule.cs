@@ -6,13 +6,10 @@ namespace ModForge.Shared.Models.STORM.Rules
 {
 	public class Rule
 	{
-		[XmlAttribute("name")]
 		public string Name { get; set; }
-
-		[XmlElement("selectors")]
+		public string Mode { get; set; }
+		public string Comment { get; set; }
 		public SelectorContainer Selectors { get; set; }
-
-		[XmlElement("operations")]
 		public OperationContainer Operations { get; set; }
 	}
 }
