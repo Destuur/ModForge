@@ -4,25 +4,26 @@ namespace ModForge.Shared.Models.STORM.Selectors
 {
 	public class HasNameSelector : ISelector
 	{
-		[XmlAttribute("name")]
 		public string Name { get; set; }
 	}
 
 	public class HasFactionSelector : ISelector
 	{
-		[XmlAttribute("name")]
 		public string Name { get; set; }
 	}
 
 	public class HasSoulArchetypeSelector : ISelector
 	{
-		[XmlAttribute("name")]
 		public string Name { get; set; }
 	}
 
 	public class HasSocialClassSelector : ISelector
 	{
-		[XmlAttribute("name")]
+		public string Name { get; set; }
+	}
+
+	public class HasVoiceSelector : ISelector
+	{
 		public string Name { get; set; }
 	}
 
@@ -82,6 +83,11 @@ namespace ModForge.Shared.Models.STORM.Selectors
 	}
 
 	public class IsWomanSelector : ISelector
+	{
+
+	}
+
+	public class IsValidOpenworldNpcSelector : ISelector
 	{
 
 	}

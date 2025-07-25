@@ -26,7 +26,7 @@ namespace ModForge.UI.Layout
 				{
 					return;
 				}
-				await Task.Run(() => XmlToJsonService.TryReadJsonFilesWithFallback());
+				await Task.Run(() => XmlToJsonService.TryReadXmlFiles());
 
 				var language = UserConfigurationService.Current.Language;
 				var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);

@@ -1,0 +1,24 @@
+﻿@page "/stormItems"
+
+@foreach (var item in stormItems)
+{
+	@if (item.Tasks is not null)
+	{
+		@foreach (var task in item.Tasks)
+		{
+			<MudText>@task.Name</MudText>
+			<MudText>@task.Comment</MudText>
+			<MudText>@task.Class</MudText>
+		}
+	}
+
+	@if (item.Rules is not null)
+	{
+		@foreach ( var rule in item.Rules)
+		{
+			<MudText>@rule.Name</MudText>
+			<MudText>@rule.Comment</MudText>
+			<MudText>@rule.Mode</MudText>
+		}
+	}
+}

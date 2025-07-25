@@ -4,7 +4,6 @@ namespace ModForge.Shared.Models.STORM
 {
 	public class Source
 	{
-		[XmlAttribute("path")]
 		public string Path { get; set; }
 	}
 }

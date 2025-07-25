@@ -16,45 +16,42 @@ namespace ModForge.Test
 		{
 			var pakPath = @"G:\SteamLibrary\steamapps\common\KingdomComeDeliverance2\Data\IPL_GameData.pak";
 			var storm = ReadStormFile(pakPath, "storm.xml");
-			var dudeString = "dude.xml";
+			List<Storm> stormFiles = new();
 
-			foreach (var task in storm.Tasks.TaskItems)
+			foreach (var task in storm.Tasks)
 			{
+				// Ich gehe davon aus, dass du in Task eine Sources-Liste hast (sonst anpassen)
 				foreach (var source in task.Sources)
 				{
-					if (source.Path.Contains(dudeString) && source.Path.Contains("abilities"))
-					{
-						var dude = ReadStormFile(pakPath, source.Path);
-					}
+					stormFiles.Add(ReadStormFile(pakPath, source.Path));
 				}
 			}
+
+			var selectors = SelectorParser.SelectorAttributes;
+			var operations = OperationParser.OperationAttributes;
 		}
 
 		private static Storm ReadStormFile(string pakPath, string stormFile)
 		{
-			Storm storm = null;
+			using FileStream zipToOpen = new(pakPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
+			using ZipArchive archive = new(zipToOpen, ZipArchiveMode.Read);
 
-			using (FileStream zipToOpen = new FileStream(pakPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
-			using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
+			var normalizedStormFile = stormFile.Replace('\\', '/');
+
+			foreach (var entry in archive.Entries)
 			{
+				if (!entry.FullName.Contains(normalizedStormFile))
+					continue;
 
-				var normalizedStormFile = stormFile.Replace('\\', '/');
+				using var stream = entry.Open();
 
-				foreach (var entry in archive.Entries)
-				{
-					if (entry.FullName.Contains(normalizedStormFile) == false)
-					{
-						continue;
-					}
-
-					string xml = entry.Open().ReadAllText();
-					var serializer = new XmlSerializer(typeof(Storm));
-
-					using var reader = new StringReader(xml);
-					storm = (Storm)serializer.Deserialize(reader);
-				}
+				string xml = new StreamReader(entry.Open()).ReadToEnd();
+				var parser = new StormParser();
+				var storm = parser.Parse(xml);
+				return storm;
 			}
-			return storm;
+
+			return null; // Datei nicht gefunden
 		}
 	}
 }

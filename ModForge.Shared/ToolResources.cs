@@ -1,4 +1,5 @@
 ﻿using ModForge.Shared.Models.ModItems;
+using ModForge.Shared.Models.STORM;
 using System.Collections.Generic;
 
 namespace ModForge.Shared
@@ -98,6 +99,12 @@ namespace ModForge.Shared
 						{  "buff__perk", Path.Combine("Data", "Tables.pak")},
 						{  "buff__perk_hardcore", Path.Combine("Data", "Tables.pak")},
 						{  "buff__perk_kcd1", Path.Combine("Data", "Tables.pak")},
+					}
+				},
+				{
+					typeof(Storm), new()
+					{
+						{ "storm.xml", Path.Combine("Data", "IPL_GameData.pak") }
 					}
 				}
 			};

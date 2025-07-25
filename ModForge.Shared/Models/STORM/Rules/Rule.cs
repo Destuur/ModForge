@@ -9,7 +9,7 @@ namespace ModForge.Shared.Models.STORM.Rules
 		public string Name { get; set; }
 		public string Mode { get; set; }
 		public string Comment { get; set; }
-		public SelectorContainer Selectors { get; set; }
-		public OperationContainer Operations { get; set; }
+		public List<ISelector> Selectors { get; set; } = new();
+		public List<IOperation> Operations { get; set; } = new();
 	}
 }

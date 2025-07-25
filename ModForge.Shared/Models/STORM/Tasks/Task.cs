@@ -4,11 +4,9 @@ namespace ModForge.Shared.Models.STORM.Tasks
 {
 	public class Task
 	{
-		[XmlAttribute("name")]
 		public string Name { get; set; }
-		[XmlAttribute("class")]
 		public string Class { get; set; }
-		[XmlElement("source")]
-		public List<Source> Sources { get; set; }
+		public string Comment { get; set; }
+		public List<Source> Sources { get; set; } = new();
 	}
 }
