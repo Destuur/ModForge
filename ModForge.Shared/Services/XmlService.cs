@@ -54,7 +54,6 @@ namespace ModForge.Shared.Services
 		public IList<IModItem> MiscItems { get; private set; } = new List<IModItem>();
 		public IList<BuffParam> BuffParams { get; private set; }
 		public IList<IModItem> WeaponClasses { get; private set; } = new List<IModItem>();
-		public IList<Storm> StormItems { get; set; } = new List<Storm>();
 		#endregion
 
 		#region Public Methods
@@ -142,7 +141,6 @@ namespace ModForge.Shared.Services
 
 				Perks = ImportModItemsOfType(typeof(Perk));
 				Buffs = ImportModItemsOfType(typeof(Buff));
-				StormItems = ImportStormFiles(typeof(Storm));
 
 				foreach (var type in weaponClasses)
 				{
@@ -185,61 +183,6 @@ namespace ModForge.Shared.Services
 				Buffs = new List<IModItem>();
 				localizationCache = new Dictionary<string, Dictionary<string, string>>();
 			}
-		}
-
-		private IList<Storm> ImportStormFiles(Type type)
-		{
-			var stormFiles = new List<Storm>();
-			var dataPoint = dataPoints.FirstOrDefault(dp => dp.Type == type);
-
-			if (dataPoint == null)
-				return null;
-
-			using var pakReader = new PakReader(dataPoint.Path);
-
-			var rootPath = dataPoint.Endpoint.Replace('\\', '/');
-			var rootDirectory = Path.GetDirectoryName(rootPath)?.Replace('\\', '/');
-
-			var stormRoot = pakReader.ReadStorm(rootPath);
-
-			if (stormRoot != null)
-			{
-				IEnumerable<string> ResolvePaths(IEnumerable<Source> sources)
-				{
-					foreach (var source in sources)
-					{
-						var combined = string.IsNullOrEmpty(rootDirectory)
-							? source.Path.Replace('\\', '/')
-							: $"{rootDirectory}/{source.Path.Replace('\\', '/')}";
-						yield return combined;
-					}
-				}
-
-				// Aus Common Sources
-				foreach (var resolvedPath in ResolvePaths(stormRoot.Common.Sources))
-				{
-					var childStorm = pakReader.ReadStorm(resolvedPath);
-					if (childStorm != null)
-						stormFiles.Add(childStorm);
-				}
-
-				// Aus Tasks
-				foreach (var task in stormRoot.Tasks)
-				{
-					foreach (var resolvedPath in ResolvePaths(task.Sources))
-					{
-						var childStorm = pakReader.ReadStorm(resolvedPath);
-						if (childStorm != null)
-							stormFiles.Add(childStorm);
-					}
-				}
-			}
-			else
-			{
-				logger.LogWarning("No storm file found for data point: {DataPoint}", dataPoint);
-			}
-
-			return stormFiles;
 		}
 
 		private IList<IModItem> ImportModItemsOfType(Type type)

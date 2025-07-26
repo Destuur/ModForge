@@ -6,7 +6,6 @@ namespace ModForge.Shared.Models.STORM
 	public static partial class OperationParser
 	{
 		public static Dictionary<string, HashSet<string>> OperationAttributes { get; set; } = new();
-		public static Dictionary<XElement, string> Elements { get; set; } = new();
 
 		public static List<IOperation> ParseOperations(XElement operationsElement)
 		{

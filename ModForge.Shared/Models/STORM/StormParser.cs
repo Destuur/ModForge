@@ -40,7 +40,7 @@ namespace ModForge.Shared.Models.STORM
 			// Rules
 			var rulesElement = root.Element("rules");
 			if (rulesElement != null)
-				storm.Rules = new RuleParser().ParseRules(rulesElement);
+				storm.Rules = RuleParser.ParseRules(rulesElement);
 
 			return storm;
 		}

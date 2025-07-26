@@ -1,24 +1,14 @@
 ﻿@page "/stormItems"
 
-@foreach (var item in stormItems)
+@if (StormService is not null)
 {
-	@if (item.Tasks is not null)
-	{
-		@foreach (var task in item.Tasks)
-		{
-			<MudText>@task.Name</MudText>
-			<MudText>@task.Comment</MudText>
-			<MudText>@task.Class</MudText>
-		}
-	}
 
-	@if (item.Rules is not null)
-	{
-		@foreach ( var rule in item.Rules)
+	<MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
+		@foreach (var storm in StormService.GetStormDtos())
 		{
-			<MudText>@rule.Name</MudText>
-			<MudText>@rule.Comment</MudText>
-			<MudText>@rule.Mode</MudText>
+			<MudItem xs="12" Class="pa-2" onclick="@(() => NavigateToItem(storm.Id))">
+				<StormItem Storm="storm" />
+			</MudItem>
 		}
-	}
+	</MudGrid>
 }

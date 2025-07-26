@@ -7,7 +7,6 @@ namespace ModForge.Shared.Models.STORM
 	public static class SelectorParser
 	{
 		public static Dictionary<string, HashSet<string>> SelectorAttributes { get; set; } = new();
-		public static Dictionary<XElement, string> Elements { get; set; } = new();
 
 		public static List<ISelector> ParseSelectors(XElement selectorsElement)
 		{

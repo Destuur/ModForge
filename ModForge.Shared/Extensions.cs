@@ -1,5 +1,10 @@
-﻿using System.IO.Compression;
+﻿using Microsoft.Extensions.Logging;
+using ModForge.Shared.Converter;
+using ModForge.Shared.Factories;
+using ModForge.Shared.Models.STORM;
+using System.IO.Compression;
 using System.Text;
+using static ModForge.Shared.Models.STORM.OperationParser;
 
 namespace ModForge.Shared
 {
@@ -35,6 +40,37 @@ namespace ModForge.Shared
 		{
 			using var reader = new StreamReader(stream, Encoding.UTF8, true);
 			return await reader.ReadToEndAsync();
+		}
+
+		public static StormDto GetInitialStormDto(this Source source, string rootPath, string category = null)
+		{
+			var combined = source.Path.Replace('\\', '/');
+			var stormDto = new StormDto();
+			stormDto.DataPoint = DataPointFactory.CreateDataPoint(rootPath, combined, typeof(Storm));
+			stormDto.Category = category;
+			stormDto.Id = Guid.NewGuid().ToString();
+			return stormDto;
+		}
+
+		public static StormDto ReadStormFile(this StormDto storm)
+		{
+			var dataPoint = storm.DataPoint;
+
+			if (dataPoint == null)
+				return null;
+
+			using var pakReader = new PakReader(dataPoint.Path);
+
+			var childStorm = pakReader.ReadStorm(dataPoint.Endpoint);
+			if (childStorm != null)
+			{
+				storm.Rules = childStorm.Rules;
+				storm.Tasks = childStorm.Tasks;
+				storm.Common = childStorm.Common;
+				storm.CustomSelectors = childStorm.CustomSelectors;
+				storm.CustomOperations = childStorm.CustomOperations;
+			}
+			return storm;
 		}
 	}
 }

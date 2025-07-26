@@ -1,12 +1,13 @@
 ﻿using ModForge.Shared.Models.STORM.Rules;
 using System.Xml;
 using System.Xml.Linq;
+using static ModForge.Shared.Models.STORM.OperationParser;
 
 namespace ModForge.Shared.Models.STORM
 {
-	public class RuleParser
+	public static class RuleParser
 	{
-		public List<Rule> ParseRules(XElement rulesElement)
+		public static List<Rule> ParseRules(XElement rulesElement)
 		{
 			var rules = new List<Rule>();
 			if (rulesElement == null) return rules;
@@ -28,6 +29,17 @@ namespace ModForge.Shared.Models.STORM
 						Selectors = SelectorParser.ParseSelectors(ruleElem.Element("selectors")),
 						Operations = OperationParser.ParseOperations(ruleElem.Element("operations"))
 					};
+
+					foreach (var operation in rule.Operations)
+					{
+						if (operation is GenericOperation genericOperation)
+						{
+							if (genericOperation.Children.Count != 0)
+							{
+
+							}
+						}
+					}
 
 					rules.Add(rule);
 				}

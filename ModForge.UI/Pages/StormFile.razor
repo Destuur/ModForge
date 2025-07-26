@@ -1,0 +1,24 @@
+﻿@page "/test/{Id}"
+
+<MudText>@Storm.Category</MudText>
+
+@if (Storm.Tasks is not null)
+{
+	foreach (var task in Storm.Tasks)
+	{
+		<MudText>@task.Name</MudText>
+		<MudText>@task.Sources</MudText>
+		<MudText>@task.Class</MudText>
+		<MudText>@task.Comment</MudText>
+	}
+}
+@if (Storm.Rules is not null)
+{
+	@foreach (var rule in Storm.Rules)
+	{
+		<MudText>@rule.Name</MudText>
+		<MudText>@rule.Operations.Count</MudText>
+		<MudText>@rule.Selectors.Count</MudText>
+		<MudText>@rule.Comment</MudText>
+	}
+}

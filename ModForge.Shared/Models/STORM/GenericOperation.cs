@@ -8,7 +8,7 @@ namespace ModForge.Shared.Models.STORM
 		{
 			public string ElementName { get; set; }
 			public Dictionary<string, string> Attributes { get; set; } = new();
-			public List<GenericOperation> Children { get; set; } = new();
+			public List<IOperation> Children { get; set; } = new();
 
 			public override string ToString()
 			{

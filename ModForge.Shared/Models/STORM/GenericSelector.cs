@@ -6,7 +6,7 @@ namespace ModForge.Shared.Models.STORM
 	{
 		public string ElementName { get; set; }
 		public Dictionary<string, string> Attributes { get; set; } = new();
-		public List<GenericSelector> Children { get; set; } = new();
+		public List<ISelector> Children { get; set; } = new();
 
 		public override string ToString()
 		{

@@ -19,6 +19,7 @@ namespace ModForge.Shared.Configurations
 			services.AddSingleton<UserConfigurationService>();
 			services.AddSingleton<XmlService>();
 			services.AddSingleton<IconService>();
+			services.AddSingleton<StormService>();
 			services.AddSingleton<DdsConverter>();
 			services.AddSingleton<ModCollection>();
 			services.AddSingleton<DataSource>();
