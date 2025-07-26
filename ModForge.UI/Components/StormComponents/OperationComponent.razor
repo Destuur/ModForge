@@ -1,0 +1,20 @@
+﻿<MudStack Spacing="1">
+	<MudText Color="Color.Info" Typo="Typo.body2">@($"<{Operation.ElementName}>")</MudText>
+	@if (Operation.Attributes is not null)
+	{
+		@foreach (var attribute in Operation.Attributes)
+		{
+			<MudStack Spacing="0">
+				<MudText Typo="Typo.caption">@(attribute.Key):</MudText>
+				<MudText Typo="Typo.body2">@(attribute.Value)</MudText>
+			</MudStack>
+		}
+		@if (Operation.Children is not null)
+		{
+			@foreach (var child in Operation.Children)
+			{
+				<OperationComponent Operation="child" />
+			}
+		}
+	}
+</MudStack>

@@ -16,20 +16,19 @@ namespace ModForge.UI.Layout
 				StateHasChanged();
 			}
 		}
-		private string GetOverlayClass()
-		{
-			return _hidden ? "fade-overlay fade-out" : "fade-overlay";
-		}
+		//private string GetOverlayClass()
+		//{
+		//	return _hidden ? "fade-overlay fade-out" : "fade-overlay";
+		//}
 
-		private string GetCardClass()
-		{
-			return _hidden ? "p-6 fade-card fade-out" : "p-6 fade-card";
-		}
+		//private string GetCardClass()
+		//{
+		//	return _hidden ? "p-6 fade-card fade-out" : "p-6 fade-card";
+		//}
 
-		private string GetTextClass()
-		{
-			return _hidden ? "loading-text fade-out" : "loading-text";
-		}
-
+		//private string GetTextClass()
+		//{
+		//	return _hidden ? "loading-text fade-out" : "loading-text";
+		//}
 	}
 }

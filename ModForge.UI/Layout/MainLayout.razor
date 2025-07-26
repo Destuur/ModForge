@@ -2,23 +2,21 @@
 <MudThemeProvider @ref="_mudThemeProvider" Theme="ModForgeThemes.DarkTheme" />
 <MudPopoverProvider />
 <MudDialogProvider />
-<MudSnackbarProvider  />
+<MudSnackbarProvider />
 
-<MudLayout Style="height: 100vh; display: flex; backdrop-filter: blur(5px);">
-    <MudMainContent Style="flex-grow: 1; display: flex; justify-content: center; align-items: center;">
-        @if (!_isLoaded)
-        {
-            <div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-                <LoadingOverlay IsVisible="!_isLoaded" />
-            </div>
-        }
-        else
-        {
-            <div style="width: 100%; height: 100%;">
-                @Body
-            </div>
-        }
-    </MudMainContent>
 
-    <StartupLoader />
+@if (!isLoaded)
+{
+	<div class="loading-screen" style="width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; position: absolute; z-index: 999;">
+		<LoadingOverlay IsVisible="!isLoaded" />
+	</div>
+}
+<MudLayout Style="height: 100vh; backdrop-filter: blur(5px);">
+	<MudDrawer @bind-Open="drawerOpen" Fixed OpenMiniOnHover ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Mini" Elevation="2" Style="height: 100vh;">
+		<NavMenu />
+	</MudDrawer>
+	<MudMainContent>
+		@Body
+	</MudMainContent>
+	<StartupLoader />
 </MudLayout>

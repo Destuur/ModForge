@@ -1,4 +1,6 @@
-﻿<MudGrid Style="height: 100%; margin: 0px;" Class="pr-4" Spacing="0">
+﻿@page "/"
+
+<MudGrid Style="height: 100vh; margin: 0px;" Class="px-2" Spacing="0">
 
 	<MudItem md="12" Style="height: 15%; padding: 0px;">
 		<ButtonWidget Typo="Typo.h4" Title="@(L[MessageKeys.NewModButton].Value)" Icon="@Icons.Material.Filled.AddBox" ButtonClicked="OnButtonClicked" />

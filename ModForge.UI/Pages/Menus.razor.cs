@@ -13,6 +13,7 @@ namespace ModForge.UI.Pages
 	public partial class Menus
 	{
 		private ModCollection createdMods { get; set; }
+		private bool isLoaded;
 
 		public RenderFragment? CustomRender { get; set; }
 
@@ -55,6 +56,7 @@ namespace ModForge.UI.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
+			isLoaded = false;
 			await base.OnInitializedAsync();
 
 			if (ModService is null)
@@ -65,6 +67,7 @@ namespace ModForge.UI.Pages
 			await Task.Run(() => ModService.InitiateModCollections());
 			SetLanguage();
 			OnChangeChildContent(typeof(Dashboard));
+			isLoaded = true;
 		}
 
 		private void SetLanguage()

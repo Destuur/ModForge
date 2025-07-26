@@ -1,15 +1,14 @@
-﻿using ModForge.Shared.Models.STORM.Operations;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace ModForge.Shared.Models.STORM
 {
-	public static partial class OperationParser
+	public static class OperationParser
 	{
 		public static Dictionary<string, HashSet<string>> OperationAttributes { get; set; } = new();
 
-		public static List<IOperation> ParseOperations(XElement operationsElement)
+		public static List<GenericOperation> ParseOperations(XElement operationsElement)
 		{
-			var operations = new List<IOperation>();
+			var operations = new List<GenericOperation>();
 			if (operationsElement == null) return operations;
 
 			foreach (var elem in operationsElement.Elements())

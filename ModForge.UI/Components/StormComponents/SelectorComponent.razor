@@ -1,0 +1,23 @@
+﻿<MudStack Spacing="1" class="@($"{(IsOperatingSelector() ? "pt-4" : "")}")">
+	<MudText Color="Color.Info" Typo="Typo.body2">@($"<{Selector.ElementName}>")</MudText>
+	@if (Selector.Attributes is not null)
+	{
+		<MudStack>
+			@foreach (var attribute in Selector.Attributes)
+			{
+				<MudStack Row Spacing="0">
+					<MudText Typo="Typo.body2">@(attribute.Key): @(attribute.Value)</MudText>
+				</MudStack>
+			}
+		</MudStack>
+		if (Selector.Children is not null)
+		{
+			@foreach (var child in Selector.Children)
+			{
+				<div class="@($"{(IsOperatingSelector() ? "pl-4" : "")}")">
+					<SelectorComponent Selector="child" />
+				</div>
+			}
+		}
+	}
+</MudStack>

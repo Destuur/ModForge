@@ -1,14 +1,61 @@
 ﻿@page "/stormItems"
+@using ModForge.Shared.Models.STORM
 
-@if (StormService is not null)
+@if (!isLoaded)
 {
-
-	<MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
-		@foreach (var storm in StormService.GetStormDtos())
-		{
-			<MudItem xs="12" Class="pa-2" onclick="@(() => NavigateToItem(storm.Id))">
-				<StormItem Storm="storm" />
-			</MudItem>
-		}
-	</MudGrid>
+	<div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+		<LoadingOverlay IsVisible="!isLoaded" />
+	</div>
 }
+
+<MudGrid Style="height: 100%; margin: 0px;" Spacing="0" Class="pl-2">
+
+	<MudItem md="12" Style="height: 10%; width: 100%;">
+		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
+			<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>STORM</b></MudText>
+			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2" Class="pr-2">
+				<MudTextField OnKeyUp="SearchStormFiles" Immediate @bind-Value="SearchStorm" Placeholder="@(L[MessageKeys.Search].Value)" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
+
+				<MudMenu Icon="@Icons.Material.Filled.FilterList" Style="color: var(--mud-palette-textprimary)">
+
+					@foreach (var category in StormService.GetStormDtos().Select(x => x.Category).Distinct())
+					{
+						<MudMenuItem OnClick="@(() => FilterStormFiles(category))">@(category is null ? L[MessageKeys.Miscellaneous].Value : category.CapitalizeFirstLetterOnly())</MudMenuItem>
+					}
+
+					<MudMenuItem OnClick="@(() => FilterStormFiles("Miscellaneous"))">@(L[MessageKeys.Miscellaneous].Value)</MudMenuItem>
+
+				</MudMenu>
+				@* @if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
+				{
+					<MudImage Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
+				} *@
+			</MudStack>
+		</MudStack>
+	</MudItem>
+
+	<MudItem md="12" Style="height: 90%; padding: 0px;">
+		<div style="overflow-y: auto; height: 99%;">
+			<MudGrid Spacing="2">
+
+				@if (stormDtos is not null)
+				{
+					@foreach (var storm in stormDtos)
+					{
+						<MudItem xs="12" Class="pa-2" onclick="@(() => NavigateToItem(storm.Id))">
+							<MudCard Class="@($"mod-item-card")" Style="@($"border-radius: 8px; {(SelectedStorm?.Id == storm.Id ? "border-color: #df6f00; border-width: 3px;" : "")}")" Elevation="10" onclick="@(() => SelectStorm(storm))">
+								<StormItem Storm="storm" />
+							</MudCard>
+						</MudItem>
+					}
+				}
+
+			</MudGrid>
+		</div>
+	</MudItem>
+
+	@* <MudItem xs="3" Style="height: 90%; padding: 0px;" Class="px-2">
+		<ModItemDetailsView SelectedStorm="@SelectedStorm" ConsoleCommand="@(SelectedStorm is null ? string.Empty : $"wh_cheat_addItem {SelectedStorm.Id}")" />
+	</MudItem>
+ *@
+</MudGrid>

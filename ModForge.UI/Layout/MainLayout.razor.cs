@@ -8,7 +8,8 @@ namespace ModForge.UI.Layout
 	public partial class MainLayout
 	{
 		private MudThemeProvider? _mudThemeProvider;
-		private bool _isLoaded = false;
+		private bool isLoaded;
+		private bool drawerOpen;
 
 		[Inject]
 		public XmlService? XmlToJsonService { get; set; }
@@ -21,7 +22,6 @@ namespace ModForge.UI.Layout
 			if (firstRender)
 			{
 				await base.OnInitializedAsync();
-				_isLoaded = true;
 				if (XmlToJsonService is null)
 				{
 					return;
@@ -35,6 +35,7 @@ namespace ModForge.UI.Layout
 				CultureInfo.DefaultThreadCurrentUICulture = culture;
 				Thread.CurrentThread.CurrentCulture = culture;
 				Thread.CurrentThread.CurrentUICulture = culture;
+				isLoaded = true;
 				StateHasChanged();
 			}
 		}

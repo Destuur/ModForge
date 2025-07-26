@@ -13,7 +13,9 @@ namespace ModForge.UI.Themes
 				Background = "#00000000", // durchsichtig, damit CSS durchscheint
 				Surface = "#2e2e2e",
 				AppbarBackground = "#1a1a2e",
-				DrawerBackground = "#1a1a2e",
+				DrawerBackground = "#1e1e1e",
+				DrawerIcon = "#c1c1c4",
+				DrawerText = "#c1c1c4",
 				TextPrimary = "#c1c1c4",
 				GrayDefault = "#000000",
 				ActionDisabled = "#7a7a7d",

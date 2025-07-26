@@ -1,5 +1,4 @@
-﻿using ModForge.Shared.Models.STORM.Selectors;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace ModForge.Shared.Models.STORM
 {
@@ -8,9 +7,9 @@ namespace ModForge.Shared.Models.STORM
 	{
 		public static Dictionary<string, HashSet<string>> SelectorAttributes { get; set; } = new();
 
-		public static List<ISelector> ParseSelectors(XElement selectorsElement)
+		public static List<GenericSelector> ParseSelectors(XElement selectorsElement)
 		{
-			var selectors = new List<ISelector>();
+			var selectors = new List<GenericSelector>();
 			if (selectorsElement == null) return selectors;
 
 			foreach (var elem in selectorsElement.Elements())
@@ -117,8 +116,6 @@ namespace ModForge.Shared.Models.STORM
 				//		Elements[elem] = elem.Name.LocalName;
 				//		break;
 				//}
-				selectors.Add(ParseGenericSelector(elem));
-				selectors.Add(ParseGenericSelector(elem));
 				#endregion
 			}
 			return selectors;

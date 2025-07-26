@@ -1,5 +1,12 @@
-﻿@page "/"
+﻿
 @using ModForge.UI.Components.MenuComponents
+
+@if (!isLoaded)
+{
+	<div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+		<LoadingOverlay IsVisible="!isLoaded" />
+	</div>
+}
 
 <MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
 
@@ -17,6 +24,9 @@
 			<MudTooltip Text="@L[MessageKeys.BrowseModItems].Value">
 				<MudIconButton OnClick="@(() => NavigationManager.NavigateTo("/modItems"))" Icon="@Icons.Material.Filled.List" Style="color: var(--icon-primary);" />
 			</MudTooltip>
+			<MudTooltip Text="STORM">
+				<MudIconButton OnClick="@(() => NavigationManager.NavigateTo("/stormItems"))" Icon="@Icons.Material.Filled.Storm" Style="color: var(--icon-primary);" />
+			</MudTooltip>
 			<MudSpacer />
 			<MudTooltip Text="@L[MessageKeys.Settings].Value">
 				<MudIconButton OnClick="@(() => OnChangeChildContent(typeof(Settings)))" Icon="@Icons.Material.Filled.Settings" Style="color: var(--icon-primary);" />
@@ -26,9 +36,6 @@
 			</MudTooltip>
 		</MudStack>
 	</MudItem>
-
-	<MudButton Href="/stormItems">STORM</MudButton>
-
 	<MudItem Style="padding: 0px; height: 100%; width: calc(100% - 56px);">
 
 		@CustomRender

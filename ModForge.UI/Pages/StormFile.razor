@@ -1,24 +1,126 @@
-﻿@page "/test/{Id}"
+﻿@page "/stormfile/{Id}"
 
-<MudText>@Storm.Category</MudText>
-
-@if (Storm.Tasks is not null)
-{
-	foreach (var task in Storm.Tasks)
-	{
-		<MudText>@task.Name</MudText>
-		<MudText>@task.Sources</MudText>
-		<MudText>@task.Class</MudText>
-		<MudText>@task.Comment</MudText>
-	}
-}
-@if (Storm.Rules is not null)
-{
-	@foreach (var rule in Storm.Rules)
-	{
-		<MudText>@rule.Name</MudText>
-		<MudText>@rule.Operations.Count</MudText>
-		<MudText>@rule.Selectors.Count</MudText>
-		<MudText>@rule.Comment</MudText>
-	}
-}
+<MudGrid Style="height: 100%; margin: 0px; overflow: hidden;" Spacing="0">
+	<MudItem md="12" Style="height: 7%; width: 100%; align-content: center;" Class="pl-4">
+		<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>Category: @(Storm.Category is null ? L[MessageKeys.Miscellaneous].Value : Storm.Category.CapitalizeFirstLetterOnly())</b></MudText>
+	</MudItem>
+	<MudItem xs="12" Style="height: 93%; padding: 0px;" Class="px-2">
+		<div style="overflow-y: auto; height: 99%;">
+			<MudExpansionPanels MultiExpansion Class="px-2">
+				@if (Storm.CustomSelectors.Count != 0)
+				{
+					<MudExpansionPanel>
+						<TitleContent>
+							<MudText Typo="Typo.h6"><b>Custom Selectors</b></MudText>
+						</TitleContent>
+						<ChildContent>
+							<MudStack Spacing="2">
+								@foreach (var selector in Storm.CustomSelectors)
+								{
+									<MudStack Spacing="0">
+										<MudText Typo="Typo.subtitle2">@selector.Name</MudText>
+										<MudText Typo="Typo.caption">@selector.Comment</MudText>
+									</MudStack>
+								}
+							</MudStack>
+						</ChildContent>
+					</MudExpansionPanel>
+				}
+				@if (Storm.CustomOperations.Count != 0)
+				{
+					<MudExpansionPanel>
+						<TitleContent>
+							<MudText Typo="Typo.h6"><b>Custom Operations</b></MudText>
+						</TitleContent>
+						<ChildContent>
+							<MudStack Spacing="2">
+								@foreach (var operation in Storm.CustomOperations)
+								{
+									<MudText Typo="Typo.subtitle2">@operation.Name</MudText>
+									<MudStack Row>
+										@if (operation.ModAttributes.Count != 0)
+										{
+											foreach (var attribute in operation.ModAttributes)
+											{
+												<MudText Typo="Typo.caption">@(attribute.Stat)</MudText>
+												<MudText Typo="Typo.caption">@(attribute.MinMod)</MudText>
+												<MudText Typo="Typo.caption">@(attribute.MaxMod)</MudText>
+											}
+										}
+									</MudStack>
+								}
+							</MudStack>
+						</ChildContent>
+					</MudExpansionPanel>
+				}
+				@if (Storm.Tasks.Count != 0)
+				{
+					<MudExpansionPanel>
+						<TitleContent>
+							<MudText Typo="Typo.h6"><b>Tasks</b></MudText>
+						</TitleContent>
+						<ChildContent>
+							@foreach (var task in Storm.Tasks)
+							{
+								<MudCard>
+									<MudText Typo="Typo.caption">@task.Comment</MudText>
+									<MudText Typo="Typo.subtitle2">@task.Name</MudText>
+									<MudText Typo="Typo.caption">@task.Sources</MudText>
+									<MudText Typo="Typo.caption">@task.Class</MudText>
+								</MudCard>
+							}
+						</ChildContent>
+					</MudExpansionPanel>
+				}
+				@if (Storm.Rules.Count != 0)
+				{
+					<MudExpansionPanel>
+						<TitleContent>
+							<MudText Typo="Typo.h6"><b>Rules</b></MudText>
+						</TitleContent>
+						<ChildContent>
+							@foreach (var rule in Storm.Rules)
+							{
+								<MudGrid Class="pa-4">
+									<MudItem xs="4">
+										@if (string.IsNullOrEmpty(rule.Comment) == false)
+										{
+											<MudText Typo="Typo.caption">Comment: @rule.Comment</MudText>
+										}
+										<MudText Typo="Typo.subtitle1" Class="pb-2">Rule</MudText>
+										<MudText Typo="Typo.body2">@rule.Name</MudText>
+									</MudItem>
+									<MudItem xs="4">
+										@if (rule.Selectors.Count != 0)
+										{
+											<MudText Typo="Typo.subtitle1" Class="pb-2">Selectors</MudText>
+											<MudStack Spacing="2">
+												@foreach (var selector in rule.Selectors)
+												{
+													<SelectorComponent Selector="selector" />
+												}
+											</MudStack>
+										}
+									</MudItem>
+									<MudItem xs="4">
+										@if (rule.Operations.Count != 0)
+										{
+											<MudText Typo="Typo.subtitle1" Class="pb-2">Operations</MudText>
+											<MudStack Spacing="2" Style="max-height: 300px; overflow: auto;">
+												@foreach (var operation in rule.Operations)
+												{
+													<OperationComponent Operation="operation" />
+												}
+											</MudStack>
+										}
+									</MudItem>
+								</MudGrid>
+								<MudDivider />
+							}
+						</ChildContent>
+					</MudExpansionPanel>
+				}
+			</MudExpansionPanels>
+		</div>
+	</MudItem>
+</MudGrid>

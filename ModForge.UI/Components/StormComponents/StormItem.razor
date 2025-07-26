@@ -1,10 +1,6 @@
 ﻿@using static ModForge.Shared.Models.STORM.OperationParser
 
-<MudCard Style="width: 100%;" Class="pa-4">
-	<MudStack>
-
-		<MudText>@Storm.Category</MudText>
-		<MudText>@Storm.DataPoint.Endpoint</MudText>
-		
-	</MudStack>
-</MudCard>
+<MudStack Class="pa-4">
+	<MudText>@(Storm.Category is null ? L[MessageKeys.Miscellaneous].Value : Storm.Category.CapitalizeFirstLetterOnly())</MudText>
+	<MudText>@Storm.DataPoint.Endpoint</MudText>
+</MudStack>
