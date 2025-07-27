@@ -12,7 +12,6 @@ namespace ModForge.UI.Layout
 		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
 		public IDialogService DialogService { get; set; }
-
 		private async Task GetHelp()
 		{
 			var parameters = new DialogParameters<HelpDialog>()

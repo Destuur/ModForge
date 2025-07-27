@@ -10,18 +10,23 @@
     --button-background-neutral: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3) 100%), linear-gradient(135deg,rgba(180, 180, 180, 1) 0%, rgba(120, 120, 120, 1) 100%);
 }
 
+#app {
+    display: inherit;
+    height: inherit;
+    flex-grow: 1;
+    display: block;
+    flex-direction: column;
+}
+
 html, body {
     font-family: 'Rubik';
-    /*background: linear-gradient(to bottom, transparent, rgba(219, 80, 0, 0.2) 150%);*/
     background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2) 100%);
     background-color: #1e1e1e;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
     color: #c1c1c4;
-    position: relative;
     user-select: none;
-    overflow-x: hidden;
 }
 
     body::before {
@@ -702,7 +707,7 @@ h1:focus {
     .custom-menu-item.first:hover {
     }
 
-#splash-screen {
+/*#splash-screen {
     position: fixed;
     background: white;
     width: 100vw;
@@ -711,7 +716,7 @@ h1:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+}*/
 
 .fade-out {
     opacity: 0;

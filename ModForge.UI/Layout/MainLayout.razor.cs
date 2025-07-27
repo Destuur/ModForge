@@ -11,11 +11,16 @@ namespace ModForge.UI.Layout
 		private bool isLoaded;
 		private bool drawerOpen;
 
+
 		[Inject]
 		public XmlService? XmlToJsonService { get; set; }
 		[Inject]
 		public UserConfigurationService UserConfigurationService { get; set; }
 
+		private void ToggleDrawer()
+		{
+			drawerOpen = !drawerOpen;
+		}
 
 		protected override async Task OnAfterRenderAsync(bool firstRender)
 		{

@@ -40,7 +40,7 @@
                     </StackPanel>
                 </DockPanel>
             </Grid>
-            <blazor:BlazorWebView Grid.Row="1" HostPage="wwwroot/index.html" Services="{DynamicResource services}">
+            <blazor:BlazorWebView Grid.Row="1"  HostPage="wwwroot/index.html" Services="{DynamicResource services}">
                 <blazor:BlazorWebView.RootComponents>
                     <blazor:RootComponent Selector="#app" ComponentType="{x:Type pages:App}" />
                 </blazor:BlazorWebView.RootComponents>
