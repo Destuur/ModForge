@@ -3,7 +3,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using ModForge.Localizations;
 using ModForge.Shared.Models.Abstractions;
-using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.MenuComponents;
 using MudBlazor;

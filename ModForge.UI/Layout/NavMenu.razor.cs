@@ -12,6 +12,9 @@ namespace ModForge.UI.Layout
 		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
 		public IDialogService DialogService { get; set; }
+		[Parameter]
+		public EventCallback ToggledDrawer { get; set; }
+
 		private async Task GetHelp()
 		{
 			var parameters = new DialogParameters<HelpDialog>()
@@ -22,6 +25,11 @@ namespace ModForge.UI.Layout
 
 			var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
 			await DialogService.ShowAsync<HelpDialog>("Error 1403: Help not found!", parameters, options);
+		}
+
+		private void ToggleDrawer()
+		{
+			ToggledDrawer.InvokeAsync();
 		}
 	}
 }

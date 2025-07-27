@@ -125,7 +125,7 @@ namespace ModForge.Shared.Models.STORM
 		{
 			var selector = new GenericSelector
 			{
-				ElementName = elem.Name.LocalName
+				Name = elem.Name.LocalName
 			};
 
 			foreach (var attr in elem.Attributes())
@@ -138,7 +138,7 @@ namespace ModForge.Shared.Models.STORM
 				selector.Children.Add(ParseGenericSelector(child));
 			}
 
-			RegisterAttributes(selector.ElementName, selector.Attributes.Keys, SelectorAttributes);
+			RegisterAttributes(selector.Name, selector.Attributes.Keys, SelectorAttributes);
 			return selector;
 		}
 

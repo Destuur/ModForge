@@ -66,6 +66,8 @@ namespace ModForge.UI.Pages
 				return;
 			}
 			stormDtos = StormService.GetStormDtos();
+			var operationCategories = OperationParser.Categories;
+			var selectors = SelectorParser.SelectorAttributes;
 			isLoaded = true;
 		}
 	}

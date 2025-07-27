@@ -1,5 +1,5 @@
 ﻿<MudStack Spacing="1" class="@($"{(IsOperatingSelector() ? "pt-4" : "")}")">
-	<MudText Color="Color.Info" Typo="Typo.body2">@($"<{Selector.ElementName}>")</MudText>
+	<MudText Color="Color.Info" Typo="Typo.body2">@($"<{Selector.Name}>")</MudText>
 	@if (Selector.Attributes is not null)
 	{
 		<MudStack>

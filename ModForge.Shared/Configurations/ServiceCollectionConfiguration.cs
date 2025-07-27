@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
 using ModForge.Shared.Adapter;
 using ModForge.Shared.Builders;
 using ModForge.Shared.Converter;
@@ -20,6 +21,7 @@ namespace ModForge.Shared.Configurations
 			services.AddSingleton<XmlService>();
 			services.AddSingleton<IconService>();
 			services.AddSingleton<StormService>();
+			services.AddSingleton<NavigationService>();
 			services.AddSingleton<DdsConverter>();
 			services.AddSingleton<ModCollection>();
 			services.AddSingleton<DataSource>();

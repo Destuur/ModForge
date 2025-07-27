@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
 using ModForge.Shared.Services;
 using MudBlazor;
 using System.Globalization;
@@ -7,10 +8,9 @@ namespace ModForge.UI.Layout
 {
 	public partial class MainLayout
 	{
-		private MudThemeProvider? _mudThemeProvider;
+		private MudThemeProvider? mudThemeProvider;
 		private bool isLoaded;
 		private bool drawerOpen;
-
 
 		[Inject]
 		public XmlService? XmlToJsonService { get; set; }

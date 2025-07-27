@@ -1,14 +1,13 @@
 ﻿using ModForge.Shared.Models.STORM.Operations;
 using ModForge.Shared.Models.STORM.Selectors;
 using System.Xml.Linq;
-using static ModForge.Shared.Models.STORM.OperationParser;
 using Task = ModForge.Shared.Models.STORM.Tasks.Task;
 
 namespace ModForge.Shared.Models.STORM
 {
 	public class StormParser
 	{
-		public Storm Parse(string filePath)
+		public Storm Parse(string filePath, string category = null)
 		{
 			var doc = XDocument.Parse(filePath);
 			var root = doc.Root;
@@ -40,7 +39,7 @@ namespace ModForge.Shared.Models.STORM
 			// Rules
 			var rulesElement = root.Element("rules");
 			if (rulesElement != null)
-				storm.Rules = RuleParser.ParseRules(rulesElement);
+				storm.Rules = RuleParser.ParseRules(rulesElement, category);
 
 			return storm;
 		}
@@ -127,7 +126,7 @@ namespace ModForge.Shared.Models.STORM
 					{
 						Name = (string)opElem.Attribute("name"),
 						Mode = (string)opElem.Attribute("mode"),
-						Comment = comment
+						Comment = comment,
 						// Details ergänzen
 					};
 

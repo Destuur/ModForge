@@ -47,8 +47,10 @@ namespace ModForge.Shared.Converter
 			var xml = ReadFile(virtualPath);
 			if (xml == null) return null;
 
+			var category = virtualPath.Split('/')[0];
+
 			var parser = new StormParser();
-			return parser.Parse(xml);
+			return parser.Parse(xml, category);
 		}
 
 		public void Dispose()

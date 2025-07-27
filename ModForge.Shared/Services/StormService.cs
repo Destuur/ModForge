@@ -22,6 +22,8 @@ namespace ModForge.Shared.Services
 			InitializeStormService();
 		}
 
+		public Dictionary<string, OperationCategory> RuleCategories => OperationParser.Categories ?? new Dictionary<string, OperationCategory>();
+
 		public List<StormDto> GetStormDtos()
 		{
 			return stormDtos;
@@ -44,6 +46,7 @@ namespace ModForge.Shared.Services
 			GetRootDataPoint();
 			GetStormRoot();
 			GetStormDataPoints();
+			ImportStormFiles();
 		}
 
 		private void GetStormDataPoints()
@@ -105,59 +108,53 @@ namespace ModForge.Shared.Services
 			}
 		}
 
-		//private IList<Storm> ImportStormFiles(StormDto stormDto)
-		//{
-		//	var stormFiles = new List<Storm>();
-		//	var dataPoint = stormDto.DataPoint;
+		private IList<Storm> ImportStormFiles()
+		{
+			var stormFiles = new List<Storm>();
 
-		//	if (dataPoint == null)
-		//		return null;
+			using var pakReader = new PakReader(rootDataPoint.Path);
 
-		//	using var pakReader = new PakReader(dataPoint.Path);
+			var rootPath = rootDataPoint.Endpoint.Replace('\\', '/');
+			var rootDirectory = Path.GetDirectoryName(rootPath)?.Replace('\\', '/');
 
-		//	var rootPath = dataPoint.Endpoint.Replace('\\', '/');
-		//	var rootDirectory = Path.GetDirectoryName(rootPath)?.Replace('\\', '/');
+			if (stormRoot != null)
+			{
+				IEnumerable<string> ResolvePaths(IEnumerable<Source> sources)
+				{
+					foreach (var source in sources)
+					{
+						var combined = string.IsNullOrEmpty(rootDirectory)
+							? source.Path.Replace('\\', '/')
+							: $"{rootDirectory}/{source.Path.Replace('\\', '/')}";
+						yield return combined;
+					}
+				}
 
-		//	var stormRoot = pakReader.ReadStorm(rootPath);
+				// Aus Common Sources
+				foreach (var resolvedPath in ResolvePaths(stormRoot.Common.Sources))
+				{
+					var childStorm = pakReader.ReadStorm(resolvedPath);
+					if (childStorm != null)
+						stormFiles.Add(childStorm);
+				}
 
-		//	if (stormRoot != null)
-		//	{
-		//		IEnumerable<string> ResolvePaths(IEnumerable<Source> sources)
-		//		{
-		//			foreach (var source in sources)
-		//			{
-		//				var combined = string.IsNullOrEmpty(rootDirectory)
-		//					? source.Path.Replace('\\', '/')
-		//					: $"{rootDirectory}/{source.Path.Replace('\\', '/')}";
-		//				yield return combined;
-		//			}
-		//		}
+				// Aus Tasks
+				foreach (var task in stormRoot.Tasks)
+				{
+					foreach (var resolvedPath in ResolvePaths(task.Sources))
+					{
+						var childStorm = pakReader.ReadStorm(resolvedPath);
+						if (childStorm != null)
+							stormFiles.Add(childStorm);
+					}
+				}
+			}
+			else
+			{
+				logger.LogWarning("No storm file found for data point:");
+			}
 
-		//		// Aus Common Sources
-		//		foreach (var resolvedPath in ResolvePaths(stormRoot.Common.Sources))
-		//		{
-		//			var childStorm = pakReader.ReadStorm(resolvedPath);
-		//			if (childStorm != null)
-		//				stormFiles.Add(childStorm);
-		//		}
-
-		//		// Aus Tasks
-		//		foreach (var task in stormRoot.Tasks)
-		//		{
-		//			foreach (var resolvedPath in ResolvePaths(task.Sources))
-		//			{
-		//				var childStorm = pakReader.ReadStorm(resolvedPath);
-		//				if (childStorm != null)
-		//					stormFiles.Add(childStorm);
-		//			}
-		//		}
-		//	}
-		//	else
-		//	{
-		//		logger.LogWarning("No storm file found for data point: {DataPoint}", dataPoint);
-		//	}
-
-		//	return stormFiles;
-		//}
+			return stormFiles;
+		}
 	}
 }

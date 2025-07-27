@@ -1,6 +1,6 @@
 ﻿@page "/loadouts"
 
-<MudGrid Style="height: 100%;" Class="pr-4" Spacing="0">
+<MudGrid Style="height: 100vh;" Class="px-2" Spacing="0">
 
 	<MudItem md="12" Style="height: 7%; width: 100%;" Class="pb-2">
 		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
@@ -35,7 +35,7 @@
 	<MudItem md="12" Style="height: 93%; width: 100%;">
 		<MudDropContainer T="DropItem" Items="mods" @ref=container ItemsSelector="@((mod, dropzone) => mod.Selector == dropzone)" ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1" Style="height: 100%;">
 			<ChildContent>
-				<MudGrid Style="height: 100%; max-height: 93dvh;" class="pb-2" Spacing="2">
+				<MudGrid Style="height: 100%; max-height: 93dvh;" Spacing="2">
 					<MudItem md="4" Style="height: 100%;">
 						<MudCard Style="height: 100%;" Class="mod-item-card">
 							<MudCardHeader>

@@ -1,4 +1,5 @@
 ﻿using ModForge.Shared.Models.Abstractions;
+using ModForge.Shared.Models.STORM.Rules;
 
 namespace ModForge.Shared.Models.Mods
 {
@@ -19,6 +20,7 @@ namespace ModForge.Shared.Models.Mods
 		public List<string> SupportsGameVersions { get; set; } = new();
 		public string ImagePath { get; set; } = string.Empty;
 		public List<IModItem> ModItems { get; set; } = new();
+		public List<Rule> StormRules { get; set; } = new();
 		public string Link { get; set; }
 		public string Color { get; set; }
 

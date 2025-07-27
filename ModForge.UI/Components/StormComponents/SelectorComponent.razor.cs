@@ -11,7 +11,7 @@ namespace ModForge.UI.Components.StormComponents
 
 		private bool IsOperatingSelector()
 		{
-			return Selector.ElementName == "or" || Selector.ElementName == "and" || Selector.ElementName == "not";
+			return Selector.Name == "or" || Selector.Name == "and" || Selector.Name == "not";
 		}
 	}
 }

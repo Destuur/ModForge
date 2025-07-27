@@ -10,14 +10,6 @@
     --button-background-neutral: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3) 100%), linear-gradient(135deg,rgba(180, 180, 180, 1) 0%, rgba(120, 120, 120, 1) 100%);
 }
 
-#app {
-    display: inherit;
-    height: inherit;
-    flex-grow: 1;
-    display: block;
-    flex-direction: column;
-}
-
 html, body {
     font-family: 'Rubik';
     background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2) 100%);

@@ -4,16 +4,16 @@ namespace ModForge.Shared.Models.STORM
 {
 	public static class OperationParser
 	{
-		public static Dictionary<string, HashSet<string>> OperationAttributes { get; set; } = new();
+		public static Dictionary<string, OperationCategory> Categories { get; set; } = new();
 
-		public static List<GenericOperation> ParseOperations(XElement operationsElement)
+		public static List<GenericOperation> ParseOperations(XElement operationsElement, string category = null)
 		{
 			var operations = new List<GenericOperation>();
 			if (operationsElement == null) return operations;
 
 			foreach (var elem in operationsElement.Elements())
 			{
-				operations.Add(ParseGenericOperation(elem));
+				operations.Add(ParseGenericOperation(elem, category));
 				#region Old Code
 				//switch (elem.Name.LocalName)
 				//{
@@ -131,7 +131,7 @@ namespace ModForge.Shared.Models.STORM
 			return operations;
 		}
 
-		public static GenericOperation ParseGenericOperation(XElement elem)
+		public static GenericOperation ParseGenericOperation(XElement elem, string category = null)
 		{
 			var operation = new GenericOperation
 			{
@@ -148,20 +148,35 @@ namespace ModForge.Shared.Models.STORM
 				operation.Children.Add(ParseGenericOperation(child));
 			}
 
-			RegisterAttributes(operation.ElementName, operation.Attributes.Keys, OperationAttributes);
+			RegisterAttributes(category, operation.ElementName, operation.Attributes.Keys, Categories);
 			return operation;
 		}
 
-		private static void RegisterAttributes(string name, IEnumerable<string> attributes, Dictionary<string, HashSet<string>> dict)
+		public static void RegisterAttributes(string category, string operationName, IEnumerable<string> attributeNames, Dictionary<string, OperationCategory> categoryRegistry)
 		{
-			if (!dict.TryGetValue(name, out var attrSet))
+			if (!categoryRegistry.TryGetValue(category, out var def))
 			{
-				attrSet = new HashSet<string>();
-				dict[name] = attrSet;
+				def = new OperationCategory { Name = category };
+				categoryRegistry[category] = def;
 			}
 
-			foreach (var attr in attributes)
+			def.OperationTypes.Add(operationName);
+
+			if (!def.OperationAttributes.TryGetValue(operationName, out var attrSet))
+			{
+				attrSet = new HashSet<string>();
+				def.OperationAttributes[operationName] = attrSet;
+			}
+
+			foreach (var attr in attributeNames)
 				attrSet.Add(attr);
 		}
+	}
+
+	public class OperationCategory
+	{
+		public string Name { get; set; }
+		public HashSet<string> OperationTypes { get; set; } = new();
+		public Dictionary<string, HashSet<string>> OperationAttributes { get; set; } = new();
 	}
 }
