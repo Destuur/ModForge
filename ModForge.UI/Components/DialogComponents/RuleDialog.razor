@@ -1,6 +1,6 @@
 ﻿<MudDialog Class="dialog-card">
 	<DialogContent>
-		<MudStepper CenterLabels="true" ShowResetButton>
+		<MudStepper CenterLabels="true" ShowResetButton StepStyle="height: 400px;">
 			<MudStep Title="Select rule category">
 				<MudGrid>
 					<MudItem xs="4">
@@ -8,37 +8,61 @@
 							@foreach (var category in Storm.RuleCategories)
 							{
 								<MudListItem T="OperationCategory" Value="category.Value">
-									<MudText>@category.Key.CapitalizeFirstLetterOnly()</MudText>
+									<MudText><b>@category.Key.CapitalizeFirstLetterOnly()</b></MudText>
 								</MudListItem>
 							}
 						</MudList>
 					</MudItem>
 					<MudItem xs="8">
-						<div style="overflow-y: auto; max-height: 330px;">
-							@if (SelectedCategory is not null)
-							{
-								foreach (var operationType in SelectedCategory.OperationTypes)
+						<MudStack style="height: 100%;">
+							<MudText Typo="Typo.h6">Includes the following operations:</MudText>
+							<div style="overflow-y: auto; max-height: 280px;">
+								@if (SelectedCategory is not null)
 								{
-									<MudText>@operationType</MudText>
+									foreach (var operationType in SelectedCategory.OperationTypes)
+									{
+										<MudStack Row Spacing="2">
+											<MudText>@operationType</MudText>
+											<MudTooltip Text="@($"Attributes: {(string.Join(", ", SelectedCategory.OperationAttributes.FirstOrDefault(x => x.Key == operationType).Value))}")">
+												<MudIcon Size="Size.Small" Style="@($"visibility: {(SelectedCategory.OperationAttributes.FirstOrDefault(x => x.Key == operationType).Value.Count == 0 ? "hidden" : "visible")}")" Icon="@Icons.Material.Outlined.Info" />
+											</MudTooltip>
+										</MudStack>
+									}
 								}
-							}
-						</div>
+							</div>
+						</MudStack>
 					</MudItem>
 				</MudGrid>
 			</MudStep>
 			<MudStep Title="Add selectors">
-				<MudMenu Label="Select Selector">
-					<MudMenuItem OnClick="@(() => AddSelector("and"))">AND</MudMenuItem>
-					<MudMenuItem OnClick="@(() => AddSelector("or"))">OR</MudMenuItem>
-					<MudMenuItem OnClick="@(() => AddSelector("not"))">NOT</MudMenuItem>
-					<MudMenuItem OnClick="@(() => AddSelector("selector"))">Selector</MudMenuItem>
-				</MudMenu>
-				@if (Selectors is not null)
-				{
-					foreach (var selector in Selectors)
+
+				<MudStack Spacing="0">
+					@if (Selectors is not null)
 					{
-						<SelectorComponent Selector="selector" />
+						foreach (var selector in Selectors)
+						{
+							<RuleSelector Selector="selector" IsLast="@(Selectors.IndexOf(selector) == Selectors.Count - 1)" />
+						}
 					}
+
+				</MudStack>
+				@if (Selectors.Count == 0)
+				{
+					<MudMenu Style="width: 100%;">
+						<ActivatorContent>
+							<MudTooltip RootStyle="width: 100%;" Text="Add Selector">
+								<MudButton FullWidth Variant="Variant.Outlined" Color="Color.Primary">
+									<MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" />
+								</MudButton>
+							</MudTooltip>
+						</ActivatorContent>
+						<ChildContent>
+							<MudMenuItem OnClick="@(() => AddSelector("selector"))">Selector</MudMenuItem>
+							<MudMenuItem OnClick="@(() => AddSelector("and"))">AND</MudMenuItem>
+							<MudMenuItem OnClick="@(() => AddSelector("or"))">OR</MudMenuItem>
+							<MudMenuItem OnClick="@(() => AddSelector("not"))">NOT</MudMenuItem>
+						</ChildContent>
+					</MudMenu>
 				}
 			</MudStep>
 			<MudStep Title="Add operations">

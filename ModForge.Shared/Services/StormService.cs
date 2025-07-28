@@ -23,6 +23,7 @@ namespace ModForge.Shared.Services
 		}
 
 		public Dictionary<string, OperationCategory> RuleCategories => OperationParser.Categories ?? new Dictionary<string, OperationCategory>();
+		public Dictionary<string, HashSet<string>> Selectors => SelectorParser.SelectorAttributes;
 
 		public List<StormDto> GetStormDtos()
 		{

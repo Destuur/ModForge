@@ -27,6 +27,15 @@ namespace ModForge.UI.Components.DialogComponents
 		public OperationCategory? SelectedCategory { get; set; }
 		public List<GenericSelector>? Selectors { get; set; } = new();
 
+		private void OnAddSelector(GenericSelector selector)
+		{
+			if (selector is null)
+			{
+				return;
+			}
+			Selectors.Add(selector);
+		}
+
 		private void AddSelector(string selector)
 		{
 			switch (selector)
@@ -70,5 +79,10 @@ namespace ModForge.UI.Components.DialogComponents
 		private void Exit() => MudDialog.Close(DialogResult.Ok(false));
 
 		private void Cancel() => MudDialog.Cancel();
+
+		protected override void OnInitialized()
+		{
+			SelectedCategory = Storm.RuleCategories.FirstOrDefault().Value;
+		}
 	}
 }

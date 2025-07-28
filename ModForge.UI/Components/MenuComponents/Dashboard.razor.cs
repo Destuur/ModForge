@@ -35,9 +35,9 @@ namespace ModForge.UI.Components.MenuComponents
 			isCreatedVisible = !isCreatedVisible;
 		}
 
-		private async Task OnButtonClicked()
+		private void OnButtonClicked()
 		{
-			await ChangeChildContent.InvokeAsync(typeof(NewMod));
+			Navigation.NavigateTo("/newmod");
 		}
 
 		private void RefreshMods()

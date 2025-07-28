@@ -1,0 +1,38 @@
+﻿<MudCard Class="pl-4" Elevation="0" Outlined Style="border-color: white">
+	@if (Selector.Children is not null)
+	{
+		foreach (var selector in Selector.Children)
+		{
+			<RuleSelector Selector="Selector.Children.FirstOrDefault()" IsLast="@(Selector.Children.IndexOf(selector) == Selector.Children.Count - 1)" AddedSelector="OnAddSelector" />
+		}
+	}
+	@if (string.IsNullOrEmpty(Selector.Name))
+	{
+		<MudSelect T="string" onselect="SetSelector" @bind-Value="Selector.Name">
+			@foreach (var selectorItem in Storm.Selectors)
+			{
+				<MudSelectItem T="string" Value="@selectorItem.Key">@selectorItem.Key.CapitalizeFirstLetterOnly()</MudSelectItem>
+			}
+		</MudSelect>
+	}
+	<MudText>@Selector.Name</MudText>
+
+	@if (IsLast)
+	{
+		<MudMenu Style="width: 100%;">
+			<ActivatorContent>
+				<MudTooltip RootStyle="width: 100%;" Text="Add Selector">
+					<MudButton FullWidth Variant="Variant.Outlined" Color="Color.Primary">
+						<MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" />
+					</MudButton>
+				</MudTooltip>
+			</ActivatorContent>
+			<ChildContent>
+				<MudMenuItem OnClick="@(() => AddSelector("selector"))">Selector</MudMenuItem>
+				<MudMenuItem OnClick="@(() => AddSelector("and"))">AND</MudMenuItem>
+				<MudMenuItem OnClick="@(() => AddSelector("or"))">OR</MudMenuItem>
+				<MudMenuItem OnClick="@(() => AddSelector("not"))">NOT</MudMenuItem>
+			</ChildContent>
+		</MudMenu>
+	}
+</MudCard>
