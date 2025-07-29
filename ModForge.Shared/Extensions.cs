@@ -4,6 +4,7 @@ using ModForge.Shared.Factories;
 using ModForge.Shared.Models.STORM;
 using System.IO.Compression;
 using System.Text;
+using System.Xml.Linq;
 using static ModForge.Shared.Models.STORM.OperationParser;
 
 namespace ModForge.Shared
@@ -79,6 +80,12 @@ namespace ModForge.Shared
 				return input;
 
 			return char.ToUpper(input[0]) + input.Substring(1).ToLower();
+		}
+
+		public static string ReplaceWhiteSpace(this string text)
+		{
+			var newString = text.Trim().ToLower().Split(' ');
+			return string.Join('_', newString);
 		}
 	}
 }

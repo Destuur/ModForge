@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using ModForge.Localizations;
+using ModForge.Shared;
 using ModForge.Shared.Models.STORM;
+using ModForge.Shared.Models.STORM.Rules;
 using ModForge.Shared.Models.STORM.Selectors;
 using ModForge.Shared.Services;
+using ModForge.UI.Components.StormComponents;
 using MudBlazor;
 
 namespace ModForge.UI.Components.DialogComponents
@@ -11,6 +14,8 @@ namespace ModForge.UI.Components.DialogComponents
 	public partial class RuleDialog
 	{
 		private OperationCategory category = new();
+		private string name;
+		private string comment;
 
 		[CascadingParameter]
 		private IMudDialogInstance MudDialog { get; set; }
@@ -25,7 +30,16 @@ namespace ModForge.UI.Components.DialogComponents
 		[Inject]
 		public StormService? Storm { get; set; }
 		public OperationCategory? SelectedCategory { get; set; }
-		public List<GenericSelector>? Selectors { get; set; } = new();
+		public Rule Rule { get; set; } = new();
+
+		private void ApplyName()
+		{
+			if (string.IsNullOrEmpty(name))
+			{
+				return;
+			}
+			Rule.Name = name.ReplaceWhiteSpace();
+		}
 
 		private void OnAddSelector(GenericSelector selector)
 		{
@@ -33,7 +47,7 @@ namespace ModForge.UI.Components.DialogComponents
 			{
 				return;
 			}
-			Selectors.Add(selector);
+			Rule.Selectors.Add(selector);
 		}
 
 		private void OnRemoveSelector(GenericSelector selector)
@@ -43,7 +57,7 @@ namespace ModForge.UI.Components.DialogComponents
 				return;
 			}
 
-			Selectors.Remove(selector);
+			Rule.Selectors.Remove(selector);
 		}
 
 		private void AddSelector(string selector)
@@ -51,16 +65,16 @@ namespace ModForge.UI.Components.DialogComponents
 			switch (selector)
 			{
 				case "and":
-					Selectors.Add(new GenericSelector() { Name = "and", Children = new() { new GenericSelector() } });
+					Rule.Selectors.Add(new GenericSelector() { Name = "and", Children = new() { new GenericSelector() } });
 					break;
 				case "or":
-					Selectors.Add(new GenericSelector() { Name = "or", Children = new() { new GenericSelector() } });
+					Rule.Selectors.Add(new GenericSelector() { Name = "or", Children = new() { new GenericSelector() } });
 					break;
 				case "not":
-					Selectors.Add(new GenericSelector() { Name = "not", Children = new() { new GenericSelector() } });
+					Rule.Selectors.Add(new GenericSelector() { Name = "not", Children = new() { new GenericSelector() } });
 					break;
 				case "selector":
-					Selectors.Add(new GenericSelector() { Name = "" });
+					Rule.Selectors.Add(new GenericSelector() { Name = "" });
 					break;
 				default:
 					break;
@@ -84,10 +98,16 @@ namespace ModForge.UI.Components.DialogComponents
 			return "what?";
 		}
 
-		private void SaveAndExit() => MudDialog.Close(DialogResult.Ok(true));
+		private void OnAddedOperations(List<GenericOperation> operations)
+		{
+			if (operations is null)
+			{
+				return;
+			}
+			Rule.Operations = operations;
+		}
 
-		private void Exit() => MudDialog.Close(DialogResult.Ok(false));
-
+		private void Ok() => MudDialog.Close(DialogResult.Ok(Rule));
 		private void Cancel() => MudDialog.Cancel();
 
 		protected override void OnInitialized()
@@ -95,4 +115,5 @@ namespace ModForge.UI.Components.DialogComponents
 			SelectedCategory = Storm.RuleCategories.FirstOrDefault().Value;
 		}
 	}
+
 }

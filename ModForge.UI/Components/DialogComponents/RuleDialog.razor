@@ -1,8 +1,14 @@
 ﻿<MudDialog Class="dialog-card">
 	<DialogContent>
 		<MudStepper CenterLabels="true" ShowResetButton StepStyle="height: 400px;">
-			<MudStep Title="Select rule category">
+			<MudStep Title="Rule Configuration">
 				<MudGrid>
+					<MudItem xs="12">
+						<MudStack Row AlignItems="AlignItems.Center">
+							<MudTextField @bind-Value="name" OnKeyUp="ApplyName" Margin="Margin.Dense" Immediate Label="Rule Name" Variant="Variant.Outlined" T="string" Required />
+							<MudTextField @bind-Value="comment" Margin="Margin.Dense" Immediate Label="Comment (optional)" Variant="Variant.Outlined" T="string" />
+						</MudStack>
+					</MudItem>
 					<MudItem xs="4">
 						<MudList T="OperationCategory" @bind-SelectedValue="SelectedCategory" SelectionMode="SelectionMode.SingleSelection">
 							@foreach (var category in Storm.RuleCategories)
@@ -37,16 +43,16 @@
 			<MudStep Title="Add selectors">
 				<div style="overflow-y: auto; max-height: 400px;">
 					<MudStack Class="pl-8" Spacing="2">
-						@if (Selectors is not null)
+						@if (Rule.Selectors is not null)
 						{
-							@foreach (var selector in Selectors)
+							@foreach (var selector in Rule.Selectors)
 							{
-								<RuleSelector Selector="selector" IsLast="@(Selectors.IndexOf(selector) == Selectors.Count - 1)" AddedSelector="AddSelector" RemovedSelector="OnRemoveSelector" />
+								<RuleSelector Selector="selector" IsLast="@(Rule.Selectors.IndexOf(selector) == Rule.Selectors.Count - 1)" AddedSelector="AddSelector" RemovedSelector="OnRemoveSelector" />
 							}
 						}
 					</MudStack>
 				</div>
-				@if (Selectors.Count == 0)
+				@if (Rule.Selectors.Count == 0)
 				{
 					<MudMenu Style="width: 100%;">
 						<ActivatorContent>
@@ -66,12 +72,15 @@
 				}
 			</MudStep>
 			<MudStep Title="Add operations">
-				<MudText>@SelectedCategory.Name.CapitalizeFirstLetterOnly()</MudText>
+				<RuleOperation OperationCategory="SelectedCategory" AddedOperations="OnAddedOperations" />
+			</MudStep>
+			<MudStep Title="Overview">
+				<RuleOperation OperationCategory="SelectedCategory" AddedOperations="OnAddedOperations" />
 			</MudStep>
 		</MudStepper>
 	</DialogContent>
 	<DialogActions>
 		<MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">@CancelButton</MudButton>
-		<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveAndExit">@SaveAndExitButton</MudButton>
+		<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Ok">@SaveAndExitButton</MudButton>
 	</DialogActions>
 </MudDialog>

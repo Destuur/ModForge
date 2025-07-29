@@ -30,6 +30,7 @@ namespace ModForge.Shared.Services
 			return stormDtos;
 		}
 
+
 		public StormDto GetStormDto(string id)
 		{
 			var stormDto = stormDtos.FirstOrDefault(x => x.Id == id);
@@ -40,6 +41,25 @@ namespace ModForge.Shared.Services
 			}
 
 			return stormDto.ReadStormFile();
+		}
+
+		public GenericSelector GetSelector(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+			{
+				return new GenericSelector();
+			}
+
+			var foundAttributes = Selectors.FirstOrDefault(x => x.Key == name).Value;
+			var attributeDictionary = new Dictionary<string, string>();
+			foreach (var attribute in foundAttributes.Select(attr => attr.ToLowerInvariant()).Distinct())
+			{
+				attributeDictionary.Add(attribute, "");
+			}
+			var newSelector = new GenericSelector();
+			newSelector.Name = name;
+			newSelector.Attributes = attributeDictionary;
+			return newSelector;
 		}
 
 		private void InitializeStormService()

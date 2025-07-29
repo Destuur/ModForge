@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using ModForge.Shared.Models.STORM;
 using ModForge.Shared.Models.STORM.Selectors;
 using ModForge.Shared.Services;
+using static MudBlazor.Colors;
 
 namespace ModForge.UI.Components.StormComponents
 {
@@ -40,6 +41,13 @@ namespace ModForge.UI.Components.StormComponents
 			RemovedSelector.InvokeAsync(Selector);
 		}
 
+		private async Task<IEnumerable<string>> SearchSelector(string value, CancellationToken token)
+		{
+			if (string.IsNullOrEmpty(value))
+				return Storm.Selectors.Keys;
+			return Storm.Selectors.Keys.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+		}
+
 		private void OnAddSelector(string selector)
 		{
 			switch (selector)
@@ -65,6 +73,19 @@ namespace ModForge.UI.Components.StormComponents
 		private void AddSelector(string selector)
 		{
 			AddedSelector.InvokeAsync(selector);
+		}
+
+		private void GetSelectorAttributes(string value)
+		{
+			if (string.IsNullOrEmpty(value))
+			{
+				return;
+			}
+
+			var foundSelector = Storm.GetSelector(value);
+			Selector.Name = foundSelector.Name;
+			Selector.Attributes = foundSelector.Attributes;
+			StateHasChanged();
 		}
 	}
 }
