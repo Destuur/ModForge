@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using ModForge.Localizations;
+using ModForge.Shared.Models.STORM.Rules;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
 using ModForge.UI.Components.MenuComponents;
@@ -29,6 +30,7 @@ namespace ModForge.UI.Components.ModItemComponents
 		public NavigationManager NavigationManager { get; set; }
 		[Inject]
 		public IDialogService DialogService { get; set; }
+		public Rule SelectedRule { get; set; }
 
 		private async Task CreateNewRule()
 		{
@@ -61,6 +63,27 @@ namespace ModForge.UI.Components.ModItemComponents
 			{
 				return;
 			}
+			if (result.Data is Rule rule)
+			{
+				ModService.Mod.StormRules.Add(rule);
+			}
+
+		}
+
+		private void SelectRule(Rule rule)
+		{
+			if (rule is null)
+			{
+				return;
+			}
+			if (SelectedRule == rule)
+			{
+				SelectedRule = null;
+				StateHasChanged();
+				return;
+			}
+			SelectedRule = rule;
+			StateHasChanged();
 		}
 
 		protected override void OnInitialized()

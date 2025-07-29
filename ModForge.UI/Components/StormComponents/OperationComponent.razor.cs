@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using ModForge.Shared.Models.STORM;
+using ModForge.Shared.Models.STORM.Operations;
 
 namespace ModForge.UI.Components.StormComponents
 {

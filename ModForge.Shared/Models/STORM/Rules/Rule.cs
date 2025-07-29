@@ -1,4 +1,7 @@
-﻿namespace ModForge.Shared.Models.STORM.Rules
+﻿using ModForge.Shared.Models.STORM.Operations;
+using ModForge.Shared.Models.STORM.Selectors;
+
+namespace ModForge.Shared.Models.STORM.Rules
 {
 	public class Rule
 	{

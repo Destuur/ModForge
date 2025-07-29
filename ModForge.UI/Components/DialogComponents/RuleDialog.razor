@@ -1,4 +1,6 @@
-﻿<MudDialog Class="dialog-card">
+﻿@using ModForge.Shared.Models.STORM.Operations
+@using ModForge.Shared.Models.STORM.Operations
+<MudDialog Class="dialog-card">
 	<DialogContent>
 		<MudStepper CenterLabels="true" ShowResetButton StepStyle="height: 400px;">
 			<MudStep Title="Rule Configuration">
@@ -72,10 +74,7 @@
 				}
 			</MudStep>
 			<MudStep Title="Add operations">
-				<RuleOperation OperationCategory="SelectedCategory" AddedOperations="OnAddedOperations" />
-			</MudStep>
-			<MudStep Title="Overview">
-				<RuleOperation OperationCategory="SelectedCategory" AddedOperations="OnAddedOperations" />
+				<RuleOperation OperationCategory="SelectedCategory" Operations="Rule.Operations" />
 			</MudStep>
 		</MudStepper>
 	</DialogContent>

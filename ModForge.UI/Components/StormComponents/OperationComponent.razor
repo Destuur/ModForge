@@ -1,5 +1,5 @@
 ﻿<MudStack Spacing="1">
-	<MudText Color="Color.Info" Typo="Typo.body2">@($"<{Operation.ElementName}>")</MudText>
+	<MudText Color="Color.Info" Typo="Typo.body2">@($"<{Operation.Name}>")</MudText>
 	@if (Operation.Attributes is not null)
 	{
 		@foreach (var attribute in Operation.Attributes)

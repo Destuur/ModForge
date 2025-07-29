@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace ModForge.Shared.Models.STORM
+namespace ModForge.Shared.Models.STORM.Selectors
 {
 
 	public static class SelectorParser

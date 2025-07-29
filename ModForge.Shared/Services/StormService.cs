@@ -3,6 +3,8 @@ using ModForge.Shared.Converter;
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.STORM;
+using ModForge.Shared.Models.STORM.Operations;
+using ModForge.Shared.Models.STORM.Selectors;
 using System.Runtime.CompilerServices;
 
 namespace ModForge.Shared.Services

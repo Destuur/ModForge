@@ -1,12 +1,10 @@
-﻿using ModForge.Shared.Models.STORM.Selectors;
-
-namespace ModForge.Shared.Models.STORM
+﻿namespace ModForge.Shared.Models.STORM.Operations
 {
-	public class GenericSelector : ISelector
+	public class GenericOperation : IOperation
 	{
 		public string Name { get; set; }
 		public Dictionary<string, string> Attributes { get; set; } = new();
-		public List<GenericSelector> Children { get; set; } = new();
+		public List<GenericOperation> Children { get; set; } = new();
 
 		public override string ToString()
 		{

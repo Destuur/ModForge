@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using ModForge.Shared.Models.STORM;
+using ModForge.Shared.Models.STORM.Operations;
 using ModForge.Shared.Services;
 
 namespace ModForge.UI.Components.StormComponents
@@ -11,10 +11,9 @@ namespace ModForge.UI.Components.StormComponents
 		[Parameter]
 		public OperationCategory OperationCategory { get; set; }
 		[Parameter]
-		public EventCallback<List<GenericOperation>> AddedOperations { get; set; }
-		public List<GenericOperation> Operations { get; set; }
+		public List<GenericOperation> Operations { get; set; } = [];
 
-		private void RemoveSelector(GenericOperation operation)
+		private void RemoveOperation(GenericOperation operation)
 		{
 			if (operation is null)
 			{
@@ -23,11 +22,44 @@ namespace ModForge.UI.Components.StormComponents
 			Operations.Remove(operation);
 		}
 
-		private async Task<IEnumerable<string>> SearchSelector(string value, CancellationToken token)
+		private async Task<IEnumerable<string>> SearchOperation(string value, CancellationToken token)
 		{
 			if (string.IsNullOrEmpty(value))
-				return Storm.Selectors.Keys;
-			return Storm.Selectors.Keys.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+				return OperationCategory.OperationTypes;
+			return OperationCategory.OperationTypes.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+		}
+
+		private void AddOperation()
+		{
+			Operations.Add(new GenericOperation());
+		}
+
+		private void GetOperationAttributes(string value, GenericOperation operation)
+		{
+			if (string.IsNullOrEmpty(value))
+			{
+				return;
+			}
+			if (operation == null)
+			{
+				return;
+			}
+			OperationCategory.OperationAttributes.TryGetValue(value, out HashSet<string> attributes);
+			if (attributes == null)
+			{
+				return;
+			}
+			foreach (var attribute in attributes)
+			{
+				operation.Attributes.Add(attribute, "");
+			}
+			operation.Name = value;
+			StateHasChanged();
+		}
+
+		protected override void OnInitialized()
+		{
+			base.OnInitialized();
 		}
 	}
 }

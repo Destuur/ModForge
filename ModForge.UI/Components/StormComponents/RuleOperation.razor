@@ -1,96 +1,37 @@
-﻿@if (OperationCategory is not null)
-{
-	foreach (var operationType in OperationCategory.OperationTypes)
+﻿<MudGrid Justify="Justify.SpaceBetween" Style="align-items: center;" >
+	@foreach (var operation in Operations)
 	{
-		<MudStack Row Spacing="2">
-			<MudText>@operationType</MudText>
-			<MudTooltip Text="@($"Attributes: {(string.Join(", ", OperationCategory.OperationAttributes.FirstOrDefault(x => x.Key == operationType).Value))}")">
-				<MudIcon Size="Size.Small" Style="@($"visibility: {(OperationCategory.OperationAttributes.FirstOrDefault(x => x.Key == operationType).Value.Count == 0 ? "hidden" : "visible")}")" Icon="@Icons.Material.Outlined.Info" />
-			</MudTooltip>
-		</MudStack>
-	}
-}
-
-@* 
-<MudGrid Justify="Justify.SpaceBetween" Spacing="2" Style="align-items: center;">
-	<MudItem xs="3">
-		<MudStack Row AlignItems="AlignItems.Center">
-			@if (string.IsNullOrEmpty(Selector.Name))
-			{
-				<MudAutocomplete T="string" SearchFunc="@SearchOperation" OpenIcon="@Icons.Material.Filled.Search" Value="Selector.Name" ValueChanged="GetSelectorAttributes" Dense Variant="Variant.Outlined" Label="Select Selector" Margin="Margin.Dense" />
-			}
-			else
-			{
-				<MudText Color="@(IsCondition() ? Color.Info : Color.Default)">@(IsCondition() ? $"<{Selector.Name}>" : Selector.Name)</MudText>
-
-			}
-			@if (IsCondition())
-			{
-				<MudMenu Class="pl-8" Style="width: stretch;">
-					<ActivatorContent>
-						<MudTooltip RootStyle="width: 100%;" Text="Add Selector">
-							<MudButton FullWidth Variant="Variant.Outlined" Color="Color.Primary">
-								<MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" />
-							</MudButton>
-						</MudTooltip>
-					</ActivatorContent>
-					<ChildContent>
-						<MudMenuItem OnClick="@(() => OnAddSelector("selector"))">Selector</MudMenuItem>
-						<MudMenuItem OnClick="@(() => OnAddSelector("and"))">AND</MudMenuItem>
-						<MudMenuItem OnClick="@(() => OnAddSelector("or"))">OR</MudMenuItem>
-						<MudMenuItem OnClick="@(() => OnAddSelector("not"))">NOT</MudMenuItem>
-					</ChildContent>
-				</MudMenu>
-			}
-		</MudStack>
-	</MudItem>
-	<MudItem xs="6">
-		@foreach (var item in Selector.Attributes)
-		{
-			<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
-				<MudText>Attributes:</MudText>
-				<MudText>@item.Key</MudText>
-				<MudTextField Placeholder="@($"Insert '{item.Key}' target")" T="string" @bind-Value="Selector.Attributes[item.Key]" Margin="Margin.Dense" Variant="Variant.Outlined" Immediate FullWidth />
+		<MudItem xs="4">
+			<MudStack Row AlignItems="AlignItems.Center">
+				@if (string.IsNullOrEmpty(operation.Name))
+				{
+					<MudAutocomplete T="string" SearchFunc="@SearchOperation" OpenIcon="@Icons.Material.Filled.Search" Value="operation.Name" ValueChanged="@(value => GetOperationAttributes(value, operation))" Dense Variant="Variant.Outlined" Label="Select Operation" Margin="Margin.Dense" />
+				}
+				else
+				{
+					<MudText>@operation.Name</MudText>
+				}
 			</MudStack>
-		}
-	</MudItem>
-	<MudItem xs="3" Style="display: flex; justify-content: flex-end; align-items: center;">
-		<MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Delete" OnClick="RemoveSelector" Color="Color.Error" />
+		</MudItem>
+		<MudItem xs="7">
+			@foreach (var item in operation.Attributes)
+			{
+				<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+					<MudText>Attributes:</MudText>
+					<MudText>@item.Key</MudText>
+					<MudTextField Placeholder="@($"Insert '{item.Key}' target")" T="string" @bind-Value="operation.Attributes[item.Key]" Margin="Margin.Dense" Variant="Variant.Outlined" Immediate FullWidth />
+				</MudStack>
+			}
+		</MudItem>
+		<MudItem xs="1" Style="display: flex; justify-content: flex-end; align-items: center;">
+			<MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => RemoveOperation(operation))" Color="Color.Error" />
+		</MudItem>
+	}
+	<MudItem xs="12">
+		<MudTooltip RootStyle="width: 100%;" Text="Add Operation">
+			<MudButton FullWidth Variant="Variant.Outlined" Color="Color.Primary" OnClick="AddOperation">
+				<MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" />
+			</MudButton>
+		</MudTooltip>
 	</MudItem>
 </MudGrid>
-
-
-
-<MudStack Class="pl-8" Spacing="2">
-	@if (Selector.Children is not null && Selector.Children.Count != 0)
-	{
-		@foreach (var selector in Selector.Children)
-		{
-			<RuleSelector Selector="selector" IsLast="@(Selector.Children.IndexOf(selector) == Selector.Children.Count - 1)" AddedSelector="OnAddSelector" RemovedSelector="OnRemoveSelector" ParentSelector="Selector" />
-		}
-	}
-</MudStack>
-
-@if (IsCondition())
-{
-	<MudText Color="Color.Info">@($"</{Selector.Name}>")</MudText>
-}
-
-@if (IsLast && (ParentSelector is null || ParentSelector.Name is not "and" and not "or" and not "not"))
-{
-	<MudMenu Style="width: 100%;">
-		<ActivatorContent>
-			<MudTooltip RootStyle="width: 100%;" Text="Add Selector">
-				<MudButton FullWidth Variant="Variant.Outlined" Color="Color.Primary">
-					<MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" />
-				</MudButton>
-			</MudTooltip>
-		</ActivatorContent>
-		<ChildContent>
-			<MudMenuItem OnClick="@(() => AddSelector("selector"))">Selector</MudMenuItem>
-			<MudMenuItem OnClick="@(() => AddSelector("and"))">AND</MudMenuItem>
-			<MudMenuItem OnClick="@(() => AddSelector("or"))">OR</MudMenuItem>
-			<MudMenuItem OnClick="@(() => AddSelector("not"))">NOT</MudMenuItem>
-		</ChildContent>
-	</MudMenu>
-} *@

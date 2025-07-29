@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace ModForge.Shared.Models.STORM
+namespace ModForge.Shared.Models.STORM.Operations
 {
 	public static class OperationParser
 	{
@@ -135,7 +135,7 @@ namespace ModForge.Shared.Models.STORM
 		{
 			var operation = new GenericOperation
 			{
-				ElementName = elem.Name.LocalName
+				Name = elem.Name.LocalName
 			};
 
 			foreach (var attr in elem.Attributes())
@@ -148,7 +148,7 @@ namespace ModForge.Shared.Models.STORM
 				operation.Children.Add(ParseGenericOperation(child));
 			}
 
-			RegisterAttributes(category, operation.ElementName, operation.Attributes.Keys, Categories);
+			RegisterAttributes(category, operation.Name, operation.Attributes.Keys, Categories);
 			return operation;
 		}
 

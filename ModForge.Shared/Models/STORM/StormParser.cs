@@ -1,4 +1,5 @@
 ﻿using ModForge.Shared.Models.STORM.Operations;
+using ModForge.Shared.Models.STORM.Rules;
 using ModForge.Shared.Models.STORM.Selectors;
 using System.Xml.Linq;
 using Task = ModForge.Shared.Models.STORM.Tasks.Task;

@@ -1,7 +1,8 @@
-﻿using ModForge.Shared.Models.STORM.Rules;
+﻿using ModForge.Shared.Models.STORM.Operations;
+using ModForge.Shared.Models.STORM.Selectors;
 using System.Xml.Linq;
 
-namespace ModForge.Shared.Models.STORM
+namespace ModForge.Shared.Models.STORM.Rules
 {
 	public static class RuleParser
 	{
@@ -27,18 +28,6 @@ namespace ModForge.Shared.Models.STORM
 						Selectors = SelectorParser.ParseSelectors(ruleElem.Element("selectors")),
 						Operations = OperationParser.ParseOperations(ruleElem.Element("operations"), category)
 					};
-
-					foreach (var operation in rule.Operations)
-					{
-						if (operation is GenericOperation genericOperation)
-						{
-							if (genericOperation.Children.Count != 0)
-							{
-
-							}
-						}
-					}
-
 					rules.Add(rule);
 				}
 			}

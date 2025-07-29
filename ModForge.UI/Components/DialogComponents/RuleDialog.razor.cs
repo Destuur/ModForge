@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using ModForge.Localizations;
 using ModForge.Shared;
-using ModForge.Shared.Models.STORM;
+using ModForge.Shared.Models.STORM.Operations;
 using ModForge.Shared.Models.STORM.Rules;
 using ModForge.Shared.Models.STORM.Selectors;
 using ModForge.Shared.Services;

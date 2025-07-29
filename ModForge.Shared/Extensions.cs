@@ -5,7 +5,7 @@ using ModForge.Shared.Models.STORM;
 using System.IO.Compression;
 using System.Text;
 using System.Xml.Linq;
-using static ModForge.Shared.Models.STORM.OperationParser;
+using static ModForge.Shared.Models.STORM.Operations.OperationParser;
 
 namespace ModForge.Shared
 {
