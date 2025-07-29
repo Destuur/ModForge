@@ -36,18 +36,28 @@ namespace ModForge.UI.Components.DialogComponents
 			Selectors.Add(selector);
 		}
 
+		private void OnRemoveSelector(GenericSelector selector)
+		{
+			if (selector == null)
+			{
+				return;
+			}
+
+			Selectors.Remove(selector);
+		}
+
 		private void AddSelector(string selector)
 		{
 			switch (selector)
 			{
 				case "and":
-					Selectors.Add(new GenericSelector() { Name = "and" });
+					Selectors.Add(new GenericSelector() { Name = "and", Children = new() { new GenericSelector() } });
 					break;
 				case "or":
-					Selectors.Add(new GenericSelector() { Name = "or" });
+					Selectors.Add(new GenericSelector() { Name = "or", Children = new() { new GenericSelector() } });
 					break;
 				case "not":
-					Selectors.Add(new GenericSelector() { Name = "not" });
+					Selectors.Add(new GenericSelector() { Name = "not", Children = new() { new GenericSelector() } });
 					break;
 				case "selector":
 					Selectors.Add(new GenericSelector() { Name = "" });

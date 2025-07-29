@@ -35,17 +35,17 @@
 				</MudGrid>
 			</MudStep>
 			<MudStep Title="Add selectors">
-
-				<MudStack Spacing="0">
-					@if (Selectors is not null)
-					{
-						foreach (var selector in Selectors)
+				<div style="overflow-y: auto; max-height: 400px;">
+					<MudStack Class="pl-8" Spacing="2">
+						@if (Selectors is not null)
 						{
-							<RuleSelector Selector="selector" IsLast="@(Selectors.IndexOf(selector) == Selectors.Count - 1)" />
+							@foreach (var selector in Selectors)
+							{
+								<RuleSelector Selector="selector" IsLast="@(Selectors.IndexOf(selector) == Selectors.Count - 1)" AddedSelector="AddSelector" RemovedSelector="OnRemoveSelector" />
+							}
 						}
-					}
-
-				</MudStack>
+					</MudStack>
+				</div>
 				@if (Selectors.Count == 0)
 				{
 					<MudMenu Style="width: 100%;">
