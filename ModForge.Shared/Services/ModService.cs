@@ -5,6 +5,7 @@ using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Data;
 using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
+using ModForge.Shared.Models.STORM;
 using Newtonsoft.Json;
 using System.IO.Compression;
 using System.Xml.Linq;
@@ -23,19 +24,17 @@ namespace ModForge.Shared.Services
 			PreserveReferencesHandling = PreserveReferencesHandling.None
 		};
 		private readonly DataSource dataSource;
+		private readonly StormWriter stormWriter;
 		private readonly UserConfigurationService userConfigurationService;
 		private readonly LocalizationService localizationService;
 		private readonly ILogger<ModService> logger;
 		#endregion
 
-		public ModService(
-			DataSource dataSource,
-			UserConfigurationService userConfigurationService,
-			LocalizationService localizationService,
-			ILogger<ModService> logger)
+		public ModService(DataSource dataSource, StormWriter stormWriter, UserConfigurationService userConfigurationService, LocalizationService localizationService, ILogger<ModService> logger)
 		{
 			modCollectionFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ModForge", "modcollection.json");
 			this.dataSource = dataSource;
+			this.stormWriter = stormWriter;
 			this.userConfigurationService = userConfigurationService;
 			this.localizationService = localizationService;
 			this.logger = logger;
@@ -281,8 +280,16 @@ namespace ModForge.Shared.Services
 			localizationService.WriteLocalizationAsXml(path, mod);
 
 			dataSource.WriteModItems(mod.Id, mod.ModItems);
+			WriteStormFiles(mod, path);
 
 			CreateModPak(pakPath, Path.Combine(pakPath, mod.Id + ".pak"));
+		}
+
+		private void WriteStormFiles(ModDescription mod, string path)
+		{
+			var outputPath = PathFactory.CreateStormFilePath(path, mod.Id);
+			stormWriter.WriteEntryPointStormFile(outputPath, mod.StormRules, mod.Id);
+			stormWriter.WriteRuleFilesPerRule(outputPath, mod.StormRules);
 		}
 		#endregion
 

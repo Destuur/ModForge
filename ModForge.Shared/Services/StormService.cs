@@ -25,7 +25,7 @@ namespace ModForge.Shared.Services
 		}
 
 		public Dictionary<string, OperationCategory> RuleCategories => OperationParser.Categories ?? new Dictionary<string, OperationCategory>();
-		public Dictionary<string, HashSet<string>> Selectors => SelectorParser.SelectorAttributes;
+		public Dictionary<string, Dictionary<string, HashSet<string>>> Selectors => SelectorParser.SelectorAttributes;
 
 		public List<StormDto> GetStormDtos()
 		{
@@ -54,7 +54,7 @@ namespace ModForge.Shared.Services
 
 			var foundAttributes = Selectors.FirstOrDefault(x => x.Key == name).Value;
 			var attributeDictionary = new Dictionary<string, string>();
-			foreach (var attribute in foundAttributes.Select(attr => attr.ToLowerInvariant()).Distinct())
+			foreach (var attribute in foundAttributes.Select(attr => attr.Key.ToLowerInvariant()).Distinct())
 			{
 				attributeDictionary.Add(attribute, "");
 			}

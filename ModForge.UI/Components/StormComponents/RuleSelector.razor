@@ -30,17 +30,16 @@
 			}
 		</MudStack>
 	</MudItem>
-	<MudItem xs="6">
+	<MudItem xs="8">
 		@foreach (var item in Selector.Attributes)
 		{
 			<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
 				<MudText>Attributes:</MudText>
-				<MudText>@item.Key</MudText>
-				<MudTextField Placeholder="@($"Insert '{item.Key}' target")" T="string" @bind-Value="Selector.Attributes[item.Key]" Margin="Margin.Dense" Variant="Variant.Outlined" Immediate FullWidth />
+				<MudAutocomplete Clearable MaxItems="100" T="string" SearchFunc="@SearchAttributeValue" OpenIcon="@Icons.Material.Filled.Search" @bind-Value="Selector.Attributes[item.Key]" Dense Variant="Variant.Outlined" Label="@item.Key" Margin="Margin.Dense" />
 			</MudStack>
 		}
 	</MudItem>
-	<MudItem xs="3" Style="display: flex; justify-content: flex-end; align-items: center;">
+	<MudItem xs="1" Style="display: flex; justify-content: flex-end; align-items: center;">
 		<MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Delete" OnClick="RemoveSelector" Color="Color.Error" />
 	</MudItem>
 </MudGrid>

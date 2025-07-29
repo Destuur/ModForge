@@ -47,6 +47,21 @@ namespace ModForge.UI.Components.StormComponents
 			return Storm.Selectors.Keys.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
 		}
 
+		private async Task<IEnumerable<string>> SearchAttributeValue(string value, CancellationToken token)
+		{
+			if (!SelectorParser.SelectorAttributes.TryGetValue(Selector.Name, out var attributeDict))
+				return Enumerable.Empty<string>();
+
+			if (!attributeDict.TryGetValue("name", out var values))
+				return Enumerable.Empty<string>();
+
+			if (string.IsNullOrWhiteSpace(value))
+				return values;
+
+			return values
+				.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+		}
+
 		private void OnAddSelector(string selector)
 		{
 			switch (selector)

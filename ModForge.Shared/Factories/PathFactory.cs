@@ -55,5 +55,10 @@ namespace ModForge.Shared.Factories
 		{
 			return Path.Combine(prefix, "Mods", modId, "Data");
 		}
+
+		public static string CreateStormFilePath(string prefix, string modId)
+		{
+			return Path.Combine(prefix, "Mods", modId, "Data", "Libs", "Storm");
+		}
 	}
 }

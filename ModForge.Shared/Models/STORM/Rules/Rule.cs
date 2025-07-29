@@ -8,6 +8,7 @@ namespace ModForge.Shared.Models.STORM.Rules
 		public string Name { get; set; }
 		public string Mode { get; set; }
 		public string Comment { get; set; }
+		public string Category { get; set; }
 		public List<GenericSelector> Selectors { get; set; } = new();
 		public List<GenericOperation> Operations { get; set; } = new();
 	}

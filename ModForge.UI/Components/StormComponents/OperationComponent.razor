@@ -1,4 +1,5 @@
 ﻿<MudStack Spacing="1">
+	<MudText Color="Color.Info" Typo="Typo.body2">@($"<operations>")</MudText>
 	<MudText Color="Color.Info" Typo="Typo.body2">@($"<{Operation.Name}>")</MudText>
 	@if (Operation.Attributes is not null)
 	{
@@ -17,4 +18,5 @@
 			}
 		}
 	}
+	<MudText Color="Color.Info" Typo="Typo.body2">@($"</operations>")</MudText>
 </MudStack>

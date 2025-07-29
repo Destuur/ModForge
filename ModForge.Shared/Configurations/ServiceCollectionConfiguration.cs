@@ -6,6 +6,7 @@ using ModForge.Shared.Converter;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Data;
 using ModForge.Shared.Models.Mods;
+using ModForge.Shared.Models.STORM;
 using ModForge.Shared.Services;
 using System.Xml.Linq;
 
@@ -21,6 +22,7 @@ namespace ModForge.Shared.Configurations
 			services.AddSingleton<XmlService>();
 			services.AddSingleton<IconService>();
 			services.AddSingleton<StormService>();
+			services.AddSingleton<StormWriter>();
 			services.AddSingleton<NavigationService>();
 			services.AddSingleton<DdsConverter>();
 			services.AddSingleton<ModCollection>();

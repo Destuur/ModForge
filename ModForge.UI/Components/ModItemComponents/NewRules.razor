@@ -59,8 +59,24 @@
 		<MudCard Class="dialog-card pa-3" Style="border-radius: 8px; height: 99%;" Elevation="10">
 			@if (SelectedRule is not null)
 			{
-				<MudText>Zeige Code</MudText>
+				<pre><code>
+				<MudText Color="Color.Info" Typo="Typo.body2">@($"<storm>")</MudText>
+				<MudText Color="Color.Info" Typo="Typo.body2">@($"	<rules>")</MudText>
+				<MudText Color="Color.Info" Typo="Typo.body2">@($"		<rule name=\"{SelectedRule.Name}\">")</MudText>
+						</code></pre>
+				foreach (var selector in SelectedRule.Selectors)
+				{
+					<SelectorComponent Selector="selector" />
+				}
+				foreach (var operation in SelectedRule.Operations)
+				{
+					<OperationComponent Operation="operation" />
+				}
 			}
+			<MudText Color="Color.Info" Typo="Typo.body2">@($"		</rule>")</MudText>
+			<MudText Color="Color.Info" Typo="Typo.body2">@($"	</rules>")</MudText>
+			<MudText Color="Color.Info" Typo="Typo.body2">@($"</storm>")</MudText>
+
 		</MudCard>
 	</MudItem>
 </MudGrid>

@@ -16,6 +16,7 @@ namespace ModForge.UI.Components.DialogComponents
 		private OperationCategory category = new();
 		private string name;
 		private string comment;
+		private OperationCategory? selectedCategory;
 
 		[CascadingParameter]
 		private IMudDialogInstance MudDialog { get; set; }
@@ -29,8 +30,20 @@ namespace ModForge.UI.Components.DialogComponents
 		public string? ExitButton { get; set; }
 		[Inject]
 		public StormService? Storm { get; set; }
-		public OperationCategory? SelectedCategory { get; set; }
 		public Rule Rule { get; set; } = new();
+		public OperationCategory? SelectedCategory
+		{
+			get => selectedCategory;
+			set
+			{
+				if (value is null)
+				{
+					return;
+				}
+				selectedCategory = value;
+				Rule.Category = selectedCategory.Name;
+			}
+		}
 
 		private void ApplyName()
 		{
@@ -39,15 +52,6 @@ namespace ModForge.UI.Components.DialogComponents
 				return;
 			}
 			Rule.Name = name.ReplaceWhiteSpace();
-		}
-
-		private void OnAddSelector(GenericSelector selector)
-		{
-			if (selector is null)
-			{
-				return;
-			}
-			Rule.Selectors.Add(selector);
 		}
 
 		private void OnRemoveSelector(GenericSelector selector)
@@ -81,30 +85,6 @@ namespace ModForge.UI.Components.DialogComponents
 			}
 
 			StateHasChanged();
-		}
-
-		private string GetSelectorTitle(ISelector selector)
-		{
-			if (selector is null)
-			{
-				return "No selector found";
-			}
-
-			if (selector is IConditionalSelector conditional)
-			{
-				return conditional.GetType().Name;
-			}
-
-			return "what?";
-		}
-
-		private void OnAddedOperations(List<GenericOperation> operations)
-		{
-			if (operations is null)
-			{
-				return;
-			}
-			Rule.Operations = operations;
 		}
 
 		private void Ok() => MudDialog.Close(DialogResult.Ok(Rule));

@@ -1,7 +1,7 @@
 ﻿<MudGrid Justify="Justify.SpaceBetween" Style="align-items: center;" >
 	@foreach (var operation in Operations)
 	{
-		<MudItem xs="4">
+		<MudItem xs="3">
 			<MudStack Row AlignItems="AlignItems.Center">
 				@if (string.IsNullOrEmpty(operation.Name))
 				{
@@ -13,13 +13,13 @@
 				}
 			</MudStack>
 		</MudItem>
-		<MudItem xs="7">
+		<MudItem xs="8">
 			@foreach (var item in operation.Attributes)
 			{
 				<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
 					<MudText>Attributes:</MudText>
 					<MudText>@item.Key</MudText>
-					<MudTextField Placeholder="@($"Insert '{item.Key}' target")" T="string" @bind-Value="operation.Attributes[item.Key]" Margin="Margin.Dense" Variant="Variant.Outlined" Immediate FullWidth />
+					<MudAutocomplete Clearable MaxItems="100" T="string" SearchFunc="@CreateSearchFunc(operation.Name, item.Key)" OpenIcon="@Icons.Material.Filled.Search" @bind-Value="operation.Attributes[item.Key]" Dense Variant="Variant.Outlined" Label="@item.Key" Margin="Margin.Dense" />
 				</MudStack>
 			}
 		</MudItem>
