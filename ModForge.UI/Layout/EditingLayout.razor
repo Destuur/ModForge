@@ -1,0 +1,31 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider @ref="mudThemeProvider" Theme="ModForgeThemes.DarkTheme" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@if (!isLoaded)
+{
+	<div class="loading-screen" style="display: flex; justify-content: center; align-items: center; position: absolute; z-index: 999;">
+		<LoadingOverlay IsVisible="!isLoaded" />
+	</div>
+}
+
+<MudLayout Style="height: 100vh; overflow: hidden;">
+	@* <MudToolBar Dense Gutters="false" Style="height: 24px;" Class="pl-4 pb-2">
+		<MudStack Row Spacing="0" AlignItems="AlignItems.Center">
+			<MudIconButton Icon="@Icons.Material.Filled.Menu"  Class="mr-6 pa-0" OnClick="ToggleDrawer" />
+			<MudIconButton Disabled Icon="@Icons.Material.Filled.ArrowBackIos" Size="Size.Small" Class="pa-0"/>
+			<MudIconButton Disabled Icon="@Icons.Material.Filled.ArrowForwardIos" Size="Size.Small" Class="pa-0" />
+		</MudStack>
+	</MudToolBar> *@
+	<MudDrawer @bind-Open="drawerOpen" Fixed ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Mini" Elevation="2" Style="height: calc(100%);">
+		<EditingNavMenu ToggledDrawer="ToggleDrawer" />
+	</MudDrawer>
+	<MudMainContent>
+
+		@Body
+	</MudMainContent>
+	<StartupLoader />
+</MudLayout>

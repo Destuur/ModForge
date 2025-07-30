@@ -17,6 +17,8 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
 		[Parameter]
+		public string ModId { get; set; }
+		[Parameter]
 		public EventCallback ToggledDrawer { get; set; }
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
@@ -34,19 +36,16 @@ namespace ModForge.UI.Components.ModItemComponents
 
 		private async Task CreateNewRule()
 		{
-			var parameters = new DialogParameters<RuleDialog>()
-			{
-				{ x => x.SaveAndExitButton, "Apply" },
-				{ x => x.CancelButton, "Cancle" },
-				{ x => x.ContentText, "Create new rule" }
-			};
-
 			var options = new DialogOptions()
 			{
 				CloseButton = true,
-				MaxWidth = MaxWidth.Medium,
-				NoHeader = true,
-				BackgroundClass = "dialog-background"
+				NoHeader = false,
+				BackgroundClass = "dialog-background",
+				FullScreen = true,
+				BackdropClick = false,
+				CloseOnEscapeKey = false,
+				FullWidth = true,
+				Position = DialogPosition.Center
 			};
 
 			if (DialogService is null)
@@ -55,7 +54,7 @@ namespace ModForge.UI.Components.ModItemComponents
 				return;
 			}
 
-			var dialog = await DialogService.ShowAsync<RuleDialog>("Create new rule", parameters, options);
+			var dialog = await DialogService.ShowAsync<RuleDialog>("Create new rule", options);
 			var result = await dialog.Result;
 
 
@@ -88,6 +87,7 @@ namespace ModForge.UI.Components.ModItemComponents
 
 		protected override void OnInitialized()
 		{
+			ModService.TryGetModFromCollection(ModId);
 			isLoaded = true;
 		}
 	}

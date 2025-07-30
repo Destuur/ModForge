@@ -1,7 +1,7 @@
 ﻿@using ModForge.Shared.Models.STORM.Operations
 @using static ModForge.Shared.Models.STORM.Operations.OperationParser
 
-<MudStack Class="pa-4">
-	<MudText>@(Storm.Category is null ? L[MessageKeys.Miscellaneous].Value : Storm.Category.CapitalizeFirstLetterOnly())</MudText>
-	<MudText>@Storm.DataPoint.Endpoint</MudText>
+<MudStack Spacing="0" Class="px-3 pt-3 pb-2">
+	<MudText Class="pb-3" Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(Storm.Category is null ? L[MessageKeys.Miscellaneous].Value : Storm.Category.CapitalizeFirstLetterOnly())</MudText>
+	<MudText Typo="Typo.caption">@Storm.DataPoint.Endpoint</MudText>
 </MudStack>

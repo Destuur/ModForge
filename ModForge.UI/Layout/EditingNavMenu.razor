@@ -1,0 +1,101 @@
+﻿<MudNavMenu Color="Color.Primary" Bordered Rounded Style="height: 100%;">
+	<MudStack Style="height: 100%;" Spacing="0">
+		<MudNavLink Match="NavLinkMatch.All" Href="/perks" Ripple="false">
+			<ChildContent>
+				<MudStack Row Class="pa-0 ml-n3" AlignItems="AlignItems.Center">
+				<MudImage Src="@IconService.GetBase64Icon("Trigger_icon")" Height="28" Width="28" Style="cursor: pointer;"  Class="ma-0"/>
+					<MudText Typo="Typo.body2" Style="line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+						@L[MessageKeys.Perks].Value
+						</MudText>
+				</MudStack>
+			</ChildContent>
+		</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="/buffs" Ripple="false">
+			<ChildContent>
+				<MudStack Row Class="pa-0 ml-n3" AlignItems="AlignItems.Center">
+					<MudImage Src="@IconService.GetBase64Icon("mainlevel_characterCreation_icon")" Height="28" Width="28" Style="cursor: pointer;" Class="ma-0" />
+					<MudText Typo="Typo.body2" Style="line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+						@L[MessageKeys.Buffs].Value
+						</MudText>
+				</MudStack>
+			</ChildContent>
+		</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="/weapons" Ripple="false">
+			<ChildContent>
+				<MudStack Row Class="pa-0 ml-n3" AlignItems="AlignItems.Center">
+					<MudImage Src="@IconService.GetBase64Icon("warrior_characterCreation_icon")" Height="28" Width="28" Style="cursor: pointer;" Class="ma-0" />
+					<MudText Typo="Typo.body2" Style="line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+						@L[MessageKeys.Weapons].Value
+						</MudText>
+				</MudStack>
+			</ChildContent>
+		</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="/armors" Ripple="false">
+			<ChildContent>
+				<MudStack Row Class="pa-0 ml-n3" AlignItems="AlignItems.Center">
+					<MudImage Src="@IconService.GetBase64Icon("Statistics/2_icon")" Height="28" Width="28" Style="cursor: pointer;" Class="ma-0" />
+					<MudText Typo="Typo.body2" Style="line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+						@L[MessageKeys.Armors].Value
+						</MudText>
+				</MudStack>
+			</ChildContent>
+		</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="/consumables" Ripple="false">
+			<ChildContent>
+				<MudStack Row Class="pa-0 ml-n3" AlignItems="AlignItems.Center">
+					<MudImage Src="@IconService.GetBase64Icon("Statistics/4_icon")" Height="28" Width="28" Style="cursor: pointer;" Class="ma-0" />
+					<MudText Typo="Typo.body2" Style="line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+						@L[MessageKeys.Consumables].Value
+						</MudText>
+				</MudStack>
+			</ChildContent>
+		</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="/craftingitems" Ripple="false">
+			<ChildContent>
+				<MudStack Row Class="pa-0 ml-n3" AlignItems="AlignItems.Center">
+					<MudImage Src="@IconService.GetBase64Icon("Statistics/5_icon")" Height="28" Width="28" Style="cursor: pointer;" Class="ma-0" />
+					<MudText Typo="Typo.body2" Style="line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+						@L[MessageKeys.CraftingItems].Value
+						</MudText>
+				</MudStack>
+			</ChildContent>
+		</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="/miscitems" Ripple="false">
+			<ChildContent>
+				<MudStack Row Class="pa-0 ml-n3" AlignItems="AlignItems.Center">
+					<MudImage Src="@IconService.GetBase64Icon("Statistics/7_icon")" Height="28" Width="28" Style="cursor: pointer;" Class="ma-0" />
+					<MudText Typo="Typo.body2" Style="line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+						@L[MessageKeys.MiscItems].Value
+						</MudText>
+				</MudStack>
+			</ChildContent>
+		</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="/stormrules" Ripple="false">
+			<ChildContent>
+				<MudStack Row Class="pa-0 ml-n3" AlignItems="AlignItems.Center">
+					<MudImage Src="@IconService.GetBase64Icon("Perks/perk_whirlwind_0_icon")" Height="28" Width="28" Style="cursor: pointer;" Class="ma-0" />
+					<MudText Typo="Typo.body2" Style="line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+						STORM Rules
+						</MudText>
+				</MudStack>
+			</ChildContent>
+		</MudNavLink>
+		
+		<MudSpacer />
+		<MudNavLink Match="NavLinkMatch.All" IconColor="Color.Error" OnClick="ExitModding" Icon="@Icons.Material.Filled.Logout">@L[MessageKeys.Back].Value</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" OnClick="GetHelp">@L[MessageKeys.Help].Value</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.KeyboardDoubleArrowRight" Style="color: var(--icon-primary);" OnClick="ToggleDrawer">Collapse</MudNavLink>
+	</MudStack>
+</MudNavMenu>
+
+@* 
+<MudTooltip Text="STORM Rules">
+	<MudImage @onclick="@(() => OnChangeChildContent(typeof(NewRules)))" Src="@IconService.GetBase64Icon("Perks/perk_whirlwind_0_icon")" Height="32" Width="32" Style="cursor: pointer;" />
+</MudTooltip>
+<MudSpacer />
+<MudTooltip Text="@L[MessageKeys.Back].Value">
+	<MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Error" Onclick="ExitModding" />
+</MudTooltip>
+<MudTooltip Text="@L[MessageKeys.Help].Value">
+	<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" OnClick="GetHelp" />
+</MudTooltip> *@

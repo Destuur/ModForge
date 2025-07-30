@@ -1,13 +1,12 @@
 ﻿@using ModForge.Shared.Models.STORM.Operations
-@using ModForge.Shared.Models.STORM.Operations
-<MudDialog Class="dialog-card">
+<MudDialog Class="dialog-card" Style="display: flex; flex-direction: column; height: 100%;" ContentStyle="flex: 1; overflow: hidden;">
 	<DialogContent>
-		<MudStepper CenterLabels="true" ShowResetButton StepStyle="height: 400px;">
+		<MudStepper  OnPreviewInteraction="OnPreviewInteraction" CenterLabels="true" ShowResetButton Style="height: 100%; display: flex; flex-direction: column;" StepStyle="flex: 1; display: flex; flex-direction: column;">
 			<MudStep Title="Rule Configuration">
-				<MudGrid>
+				<MudGrid Style="flex: 1; overflow-y: auto;">
 					<MudItem xs="12">
 						<MudStack Row AlignItems="AlignItems.Center">
-							<MudTextField @bind-Value="name" OnKeyUp="ApplyName" Margin="Margin.Dense" Immediate Label="Rule Name" Variant="Variant.Outlined" T="string" Required />
+							<MudTextField @bind-Value="name" Validation="@(new Func<string, string>(ValidateRuleName))" OnKeyUp="ApplyName" Margin="Margin.Dense" Immediate Label="Rule Name" Variant="Variant.Outlined" T="string" Required />
 							<MudTextField @bind-Value="comment" Margin="Margin.Dense" Immediate Label="Comment (optional)" Variant="Variant.Outlined" T="string" />
 						</MudStack>
 					</MudItem>
@@ -31,8 +30,8 @@
 									{
 										<MudStack Row Spacing="2">
 											<MudText>@operationType</MudText>
-											<MudTooltip Text="@($"Attributes: {(string.Join(", ", SelectedCategory.OperationAttributes.FirstOrDefault(x => x.Key == operationType).Value))}")">
-												<MudIcon Size="Size.Small" Style="@($"visibility: {(SelectedCategory.OperationAttributes.FirstOrDefault(x => x.Key == operationType).Value.Count == 0 ? "hidden" : "visible")}")" Icon="@Icons.Material.Outlined.Info" />
+											<MudTooltip Text="@($"Attributes: {(string.Join(", ", SelectedCategory.OperationAttributes.FirstOrDefault(x => x.Key == operationType).Value.Keys))}")">
+												<MudIcon Size="Size.Small" Style="@($"visibility: {(SelectedCategory.OperationAttributes.FirstOrDefault(x => x.Key == operationType).Value.Keys.Count == 0 ? "hidden" : "visible")}")" Icon="@Icons.Material.Outlined.Info" />
 											</MudTooltip>
 										</MudStack>
 									}
@@ -78,8 +77,8 @@
 			</MudStep>
 		</MudStepper>
 	</DialogContent>
-	<DialogActions>
+	@* <DialogActions>
 		<MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="Cancel">@CancelButton</MudButton>
 		<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Ok">@SaveAndExitButton</MudButton>
-	</DialogActions>
+	</DialogActions> *@
 </MudDialog>

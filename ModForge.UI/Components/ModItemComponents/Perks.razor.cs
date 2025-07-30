@@ -19,6 +19,8 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
 		[Parameter]
+		public string ModId { get; set; }
+		[Parameter]
 		public EventCallback ToggledDrawer { get; set; }
 		[Inject]
 		public IJSRuntime JSRuntime { get; set; }
@@ -196,6 +198,10 @@ namespace ModForge.UI.Components.ModItemComponents
 
 		protected override async Task OnInitializedAsync()
 		{
+			if (ModService.TryGetModFromCollection(ModId) == false)
+			{
+				ModService.ClearCurrentMod();
+			}
 			perks = await Task.Run(() => XmlService.Perks.ToList());
 			_isLoaded = true;
 		}

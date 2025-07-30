@@ -1,4 +1,8 @@
-﻿@if (!isLoaded)
+﻿@page "/stormrules/{ModId}"
+@page "/stormrules"
+@layout EditingLayout
+
+@if (!isLoaded)
 {
 	<div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
 		<LoadingOverlay IsVisible="!isLoaded" />

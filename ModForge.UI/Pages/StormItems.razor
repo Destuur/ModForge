@@ -1,4 +1,5 @@
 ﻿@page "/stormItems"
+@layout EditingLayout
 @using ModForge.Shared.Models.STORM
 
 @if (!isLoaded)
@@ -8,10 +9,10 @@
 	</div>
 }
 
-<MudGrid Style="height: 100%; margin: 0px;" Spacing="0" Class="pl-2">
+<MudGrid Style="height: calc(100vh - 0px); margin: 0px;" Spacing="0" Class="pl-2">
 
-	<MudItem md="12" Style="height: 10%; width: 100%;">
-		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
+	<MudItem md="12" Style="width: 100%;">
+		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center" Class="pb-2">
 			<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>STORM</b></MudText>
 			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2" Class="pr-2">
 				<MudTextField OnKeyUp="SearchStormFiles" Immediate @bind-Value="SearchStorm" Placeholder="@(L[MessageKeys.Search].Value)" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
@@ -34,7 +35,7 @@
 		</MudStack>
 	</MudItem>
 
-	<MudItem md="12" Style="height: 90%; padding: 0px;">
+	<MudItem md="12" Style="height: 100%; padding: 0px;">
 		<div style="overflow-y: auto; height: 99%;">
 			<MudGrid Spacing="2">
 
@@ -42,7 +43,7 @@
 				{
 					@foreach (var storm in stormDtos)
 					{
-						<MudItem xs="12" Class="pa-2" onclick="@(() => NavigateToItem(storm.Id))">
+						<MudItem xs="12" Class="pr-2" onclick="@(() => NavigateToItem(storm.Id))">
 							<MudCard Class="@($"mod-item-card")" Style="@($"border-radius: 8px; {(SelectedStorm?.Id == storm.Id ? "border-color: #df6f00; border-width: 3px;" : "")}")" Elevation="10" onclick="@(() => SelectStorm(storm))">
 								<StormItem Storm="storm" />
 							</MudCard>

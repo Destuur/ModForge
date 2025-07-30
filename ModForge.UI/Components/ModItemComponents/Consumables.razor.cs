@@ -17,6 +17,8 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
 		[Parameter]
+		public string ModId { get; set; }
+		[Parameter]
 		public EventCallback ToggledDrawer { get; set; }
 		[Inject]
 		public ModService? ModService { get; set; }
@@ -186,6 +188,7 @@ namespace ModForge.UI.Components.ModItemComponents
 
 		protected override async Task OnInitializedAsync()
 		{
+			ModService.TryGetModFromCollection(ModId);
 			consumables = await Task.Run(() => XmlService.Consumeables.ToList());
 			_isLoaded = true;
 		}

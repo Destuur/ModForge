@@ -1,4 +1,7 @@
-﻿@using ModForge.Shared.Models.Enums
+﻿@layout EditingLayout
+@page "/perks/{ModId}"
+@page "/perks"
+@using ModForge.Shared.Models.Enums
 
 @if (!_isLoaded)
 {
@@ -7,10 +10,10 @@
 	</div>
 }
 
-<MudGrid Style="height: 100vh; margin: 0px;" Spacing="0">
+<MudGrid Style="height: calc(100vh - 0px); margin: 0px;" Spacing="0" Class="pl-2">
 
-	<MudItem md="12" Style="height: 10%; width: 100%;">
-		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
+	<MudItem md="12" Style="width: 100%;">
+		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center" Class="pb-2">
 			<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>@(L[MessageKeys.Perks].Value)</b></MudText>
 			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2" Class="pr-2">
 				<MudTextField Onkeyup="SearchPerks" Immediate @bind-Value="SearchPerk" Placeholder="@(L[MessageKeys.Search].Value)" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
@@ -33,7 +36,7 @@
 		</MudStack>
 	</MudItem>
 
-	<MudItem xs="9" Style="height: 90%; padding: 0px;">
+	<MudItem xs="9" Style="height: 100%; padding: 0px;">
 		<div style="overflow-y: auto; height: 99%;">
 			<MudGrid Spacing="2">
 
@@ -62,8 +65,8 @@
 		</div>
 	</MudItem>
 
-	<MudItem xs="3" Style="height: 90%; padding: 0px;" Class="px-2">
-		<ModItemDetailsView SelectedModItem="@SelectedModItem" ConsoleCommand="@(SelectedModItem is null ? string.Empty : GetModItemId(SelectedModItem))" />
+	<MudItem xs="3" Style="height: calc(100% - 63px);" Class="px-2">
+			<ModItemDetailsView SelectedModItem="@SelectedModItem" ConsoleCommand="@(SelectedModItem is null ? string.Empty : GetModItemId(SelectedModItem))" />
 	</MudItem>
 
 </MudGrid>
