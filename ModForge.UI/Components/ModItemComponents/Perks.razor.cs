@@ -14,7 +14,11 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class Perks
 	{
 		private List<IModItem> perks;
-		private bool _isLoaded = false;
+		private bool isLoaded = false;
+		private MudMenu contextMenu;
+		private IModItem? contextRow;
+		private bool rightClick = true;
+		private bool isOpen;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -23,70 +27,23 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Parameter]
 		public EventCallback ToggledDrawer { get; set; }
 		[Inject]
-		public IJSRuntime JSRuntime { get; set; }
-		[Inject]
 		public ModService ModService { get; set; }
 		[Inject]
 		public ILogger<Loadouts> Logger { get; set; }
 		[Inject]
-		public ISnackbar Snackbar { get; set; }
-		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
+		[Inject]
+		public ISnackbar Snackbar { get; set; }
 		[Inject]
 		public XmlService XmlService { get; set; }
 		[Inject]
 		public LocalizationService LocalizationService { get; set; }
 		[Inject]
-		public NavigationManager NavigationManager { get; set; }
+		public IJSRuntime JSRuntime { get; set; }
 		[Inject]
-		public IconService IconService { get; set; }
-		public string SearchPerk { get; set; }
+		public NavigationManager NavigationManager { get; set; }
+		public string SearchText { get; set; }
 		public IModItem? SelectedModItem { get; set; }
-
-		public async Task ToggleDrawer()
-		{
-			await ToggledDrawer.InvokeAsync();
-		}
-
-		private string GetModItemId(IModItem modItem)
-		{
-			if (SelectedModItem is null)
-			{
-				return null;
-			}
-
-			var foundAttribute = modItem.Attributes.FirstOrDefault(x => x.Name == "metaperk_id");
-
-			if (foundAttribute is null)
-			{
-				return $"#player.soul:AddPerk('{SelectedModItem.Id}')";
-			}
-
-			return $"#player.soul:AddPerk('{foundAttribute.Value.ToString()}')";
-		}
-
-		public void FilterPerks(string skill)
-		{
-			if (XmlService is null)
-			{
-				return;
-			}
-
-			SearchPerk = string.Empty;
-
-			var filtered = XmlService.Perks
-				.Where(x => x.Attributes.Any(attr =>
-					string.Equals(attr.Value.ToString(), skill, StringComparison.OrdinalIgnoreCase)));
-
-			if (!filtered.Any())
-			{
-				filtered = XmlService.Perks
-					.Where(x => !x.Attributes.Any(attr =>
-						string.Equals(attr.Name, "skill_selector", StringComparison.OrdinalIgnoreCase)));
-			}
-
-			perks = filtered.ToList();
-		}
 
 		private void SelectModItem(IModItem modItem)
 		{
@@ -99,26 +56,85 @@ namespace ModForge.UI.Components.ModItemComponents
 			StateHasChanged();
 		}
 
-		public void SearchPerks()
+		private async Task OpenMenuContent(DataGridRowClickEventArgs<IModItem> args)
 		{
-			if (XmlService is null)
-			{
-				return;
-			}
-
-			if (string.IsNullOrEmpty(SearchPerk))
-			{
-				perks = XmlService.Perks.ToList();
-				return;
-			}
-
-			var filtered = XmlService.Perks.Where(x => LocalizationService.GetName(x) is not null &&
-														LocalizationService.GetName(x)!.ToLower().Contains(SearchPerk.ToLower()) ||
-														x.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value.ToString().ToLower().Contains(SearchPerk.ToLower()));
-
-
-			perks = filtered.ToList();
+			contextRow = args.Item;
+			await contextMenu.OpenMenuAsync(args.MouseEventArgs);
 		}
+
+		public async Task ToggleDrawer()
+		{
+			isOpen = !isOpen;
+		}
+
+		double GetAttributeAsDouble(IModItem item, string name)
+		{
+			var attr = item.Attributes?.FirstOrDefault(a => a?.Name?.ToLower() == name.ToLower());
+			return Convert.ToDouble(attr?.Value ?? 0);
+		}
+
+		string GetAttributeAsString(IModItem item, string name)
+		{
+			var attr = item.Attributes?.FirstOrDefault(a => a?.Name?.ToLower() == name.ToLower());
+			return attr?.Value?.ToString() ?? string.Empty;
+		}
+
+
+		private async Task CopyTextToClipboard(string text)
+		{
+			await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", text);
+			Snackbar.Add("Content copied to clipboard", Severity.Success);
+		}
+
+		private void DuplicateModItem(IModItem modItem)
+		{
+			if (modItem is null || XmlService is null)
+			{
+				return;
+			}
+			var newModItem = modItem.GetDeepCopy();
+			newModItem.Id = Guid.NewGuid().ToString();
+			newModItem.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name"))!.Value = $"{LocalizationService.GetName(modItem)} (Copy)";
+			newModItem.Attributes.FirstOrDefault(x => x.Name == newModItem.IdKey)!.Value = newModItem.Id;
+			if (ModService is null)
+			{
+				return;
+			}
+			ModService.AddModItem(newModItem);
+			Snackbar.Add("Perk duplicated successfully!", Severity.Success);
+			NavigateToModItem(newModItem);
+			StateHasChanged();
+		}
+
+		public void NavigateToModItem(IModItem modItem)
+		{
+			if (NavigationManager is null)
+			{
+				return;
+			}
+			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
+		}
+
+		private Func<IModItem, bool> ModItemSearch => item =>
+		{
+			if (string.IsNullOrWhiteSpace(SearchText))
+				return true;
+
+			var search = SearchText.ToLower();
+
+			var localized = LocalizationService.GetName(item);
+			if (!string.IsNullOrEmpty(localized) && localized.ToLower().Contains(search))
+				return true;
+
+			var nameAttr = item.Attributes?.FirstOrDefault(attr => attr?.Name?.ToLower().Contains("name") == true);
+			var nameValue = nameAttr?.Value?.ToString();
+
+			if (!string.IsNullOrEmpty(nameValue) && nameValue.ToLower().Contains(search))
+				return true;
+
+			return false;
+		};
+
 
 		private string GetName(IModItem modItem)
 		{
@@ -161,49 +177,21 @@ namespace ModForge.UI.Components.ModItemComponents
 				return string.Empty;
 			}
 
-			var description = LocalizationService.GetDescription(modItem);
+			var name = LocalizationService.GetDescription(modItem);
 
-			if (description is null)
+			if (name is null)
 			{
 				return "Description not found";
 			}
 
-			return description;
-		}
-
-		private string GetSkillSelector(IModItem modItem)
-		{
-			var attribute = modItem.Attributes.FirstOrDefault(x => x.Name == "skill_selector");
-
-			if (attribute is null)
-			{
-				var name = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("name")).Value;
-				return "Miscellaneous";
-			}
-
-			return $"{attribute.Value.ToString()}";
-		}
-
-		private string GetLevel(IModItem modItem)
-		{
-			var attribute = modItem.Attributes.FirstOrDefault(x => x.Name == "level");
-
-			if (attribute is null)
-			{
-				return "System Perk";
-			}
-
-			return $"Lvl {attribute.Value.ToString()}";
+			return name;
 		}
 
 		protected override async Task OnInitializedAsync()
 		{
-			if (ModService.TryGetModFromCollection(ModId) == false)
-			{
-				ModService.ClearCurrentMod();
-			}
-			perks = await Task.Run(() => XmlService.Perks.ToList());
-			_isLoaded = true;
+			ModService.TryGetModFromCollection(ModId);
+			perks = await Task.Run(() => XmlService.Weapons.ToList());
+			isLoaded = true;
 		}
 	}
 }

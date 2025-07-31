@@ -16,6 +16,8 @@ namespace ModForge.UI.Layout
 		public XmlService? XmlToJsonService { get; set; }
 		[Inject]
 		public UserConfigurationService UserConfigurationService { get; set; }
+		[Inject]
+		public NavigationManager NavigationManager { get; set; }
 
 		private void ToggleDrawer()
 		{

@@ -21,10 +21,17 @@
 		</MudStack>
 	</MudToolBar> *@
 	<MudDrawer @bind-Open="drawerOpen" Fixed ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Mini" Elevation="2" Style="height: calc(100%);">
-		<NavMenu ToggledDrawer="ToggleDrawer" />
+		@if (NavigationManager.Uri.Contains("moditem"))
+		{
+			<EditingNavMenu ToggledDrawer="ToggleDrawer" />
+		}
+		else
+		{
+			<NavMenu ToggledDrawer="ToggleDrawer" />
+		}
 	</MudDrawer>
 	<MudMainContent>
-		
+
 		@Body
 	</MudMainContent>
 	<StartupLoader />

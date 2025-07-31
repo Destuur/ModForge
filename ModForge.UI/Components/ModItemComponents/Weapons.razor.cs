@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using ModForge.Localizations;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Services;
@@ -12,7 +13,11 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class Weapons
 	{
 		private List<IModItem> weapons;
-		private bool _isLoaded = false;
+		private bool isLoaded = false;
+		private MudMenu contextMenu;
+		private IModItem? contextRow;
+		private bool rightClick = true;
+		private bool isOpen;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -33,6 +38,8 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Inject]
 		public LocalizationService LocalizationService { get; set; }
 		[Inject]
+		public IJSRuntime JSRuntime { get; set; }
+		[Inject]
 		public NavigationManager NavigationManager { get; set; }
 		public string SearchWeapon { get; set; }
 		public IModItem? SelectedModItem { get; set; }
@@ -48,54 +55,85 @@ namespace ModForge.UI.Components.ModItemComponents
 			StateHasChanged();
 		}
 
+		private async Task OpenMenuContent(DataGridRowClickEventArgs<IModItem> args)
+		{
+			contextRow = args.Item;
+			await contextMenu.OpenMenuAsync(args.MouseEventArgs);
+		}
+
 		public async Task ToggleDrawer()
 		{
-			await ToggledDrawer.InvokeAsync();
+			isOpen = !isOpen;
 		}
 
-		public void FilterWeapons(string skill)
+		double GetAttributeAsDouble(IModItem item, string name)
 		{
-			if (XmlService is null)
-			{
-				return;
-			}
-
-			SearchWeapon = string.Empty;
-
-			var filtered = XmlService.Weapons
-				.Where(x => x.Attributes.Any(attr =>
-					string.Equals(attr.Value.ToString(), skill, StringComparison.OrdinalIgnoreCase)));
-
-			if (!filtered.Any())
-			{
-				filtered = XmlService.Weapons
-					.Where(x => !x.Attributes.Any(attr =>
-						string.Equals(attr.Name, "skill_selector", StringComparison.OrdinalIgnoreCase)));
-			}
-
-			weapons = filtered.ToList();
+			var attr = item.Attributes?.FirstOrDefault(a => a?.Name?.ToLower() == name.ToLower());
+			return Convert.ToDouble(attr?.Value ?? 0);
 		}
 
-		public void SearchWeapons()
+		string GetAttributeAsString(IModItem item, string name)
 		{
-			if (XmlService is null)
-			{
-				return;
-			}
-
-			if (string.IsNullOrEmpty(SearchWeapon))
-			{
-				weapons = XmlService.Weapons.ToList();
-				return;
-			}
-
-			var filtered = XmlService.Weapons.Where(x => LocalizationService.GetName(x) is not null &&
-														LocalizationService.GetName(x)!.ToLower().Contains(SearchWeapon.ToLower()) ||
-														x.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value.ToString().ToLower().Contains(SearchWeapon.ToLower()));
-
-
-			weapons = filtered.ToList();
+			var attr = item.Attributes?.FirstOrDefault(a => a?.Name?.ToLower() == name.ToLower());
+			return attr?.Value?.ToString() ?? string.Empty;
 		}
+
+
+		private async Task CopyTextToClipboard(string text)
+		{
+			await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", text);
+			Snackbar.Add("Content copied to clipboard", Severity.Success);
+		}
+
+		private void DuplicateModItem(IModItem modItem)
+		{
+			if (modItem is null || XmlService is null)
+			{
+				return;
+			}
+			var newModItem = modItem.GetDeepCopy();
+			newModItem.Id = Guid.NewGuid().ToString();
+			newModItem.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name"))!.Value = $"{LocalizationService.GetName(modItem)} (Copy)";
+			newModItem.Attributes.FirstOrDefault(x => x.Name == newModItem.IdKey)!.Value = newModItem.Id;
+			if (ModService is null)
+			{
+				return;
+			}
+			ModService.AddModItem(newModItem);
+			Snackbar.Add("Perk duplicated successfully!", Severity.Success);
+			NavigateToModItem(newModItem);
+			StateHasChanged();
+		}
+
+		public void NavigateToModItem(IModItem modItem)
+		{
+			if (NavigationManager is null)
+			{
+				return;
+			}
+			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
+		}
+
+		private Func<IModItem, bool> WeaponSearch => item =>
+		{
+			if (string.IsNullOrWhiteSpace(SearchWeapon))
+				return true;
+
+			var search = SearchWeapon.ToLower();
+
+			var localized = LocalizationService.GetName(item);
+			if (!string.IsNullOrEmpty(localized) && localized.ToLower().Contains(search))
+				return true;
+
+			var nameAttr = item.Attributes?.FirstOrDefault(attr => attr?.Name?.ToLower().Contains("name") == true);
+			var nameValue = nameAttr?.Value?.ToString();
+
+			if (!string.IsNullOrEmpty(nameValue) && nameValue.ToLower().Contains(search))
+				return true;
+
+			return false;
+		};
+
 
 		private string GetName(IModItem modItem)
 		{
@@ -148,44 +186,11 @@ namespace ModForge.UI.Components.ModItemComponents
 			return name;
 		}
 
-		private string GetSkillSelector(IModItem modItem)
-		{
-			var attribute = modItem.Attributes.FirstOrDefault(x => x.Name == "skill_selector");
-
-			if (attribute is null)
-			{
-				return "Miscellaneous";
-			}
-
-			return $"{attribute.Value.ToString()}";
-		}
-
-		private string GetLevel(IModItem modItem)
-		{
-			var attribute = modItem.Attributes.FirstOrDefault(x => x.Name == "Price");
-
-			if (attribute is null)
-			{
-				return "-";
-			}
-
-			return $"Price: {(Double.TryParse(attribute.Value.ToString(), out var price) ? $"{price / 10} Groschen" : "-")}";
-		}
-
-		public void NavigateToWeapon(IModItem modItem)
-		{
-			if (NavigationManager is null)
-			{
-				return;
-			}
-			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
-		}
-
 		protected override async Task OnInitializedAsync()
 		{
 			ModService.TryGetModFromCollection(ModId);
 			weapons = await Task.Run(() => XmlService.Weapons.ToList());
-			_isLoaded = true;
+			isLoaded = true;
 		}
 	}
 }

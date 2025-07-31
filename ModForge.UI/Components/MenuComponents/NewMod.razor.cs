@@ -115,7 +115,7 @@ namespace ModForge.UI.Components.MenuComponents
 			}
 
 			mod.ModItems.Clear();
-			Navigation.NavigateTo($"perks/{mod.Id}");
+			Navigation.NavigateTo($"moditems/perks/{mod.Id}");
 		}
 
 		private async Task Cancel()

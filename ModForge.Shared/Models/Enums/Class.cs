@@ -18,7 +18,9 @@
 		Unarmed = 12,
 		Rifle = 13,
 		CrossbowMedium = 14,
-		CrossbowHeavy = 15
+		CrossbowHeavy = 15,
+		HuntingSword = 16,
+		ShieldBroken = 17,
 	}
 
 }

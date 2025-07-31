@@ -1,72 +1,53 @@
-﻿@page "/weapons/{ModId}"
-@page "/weapons"
-@layout EditingLayout
+﻿@page "/moditems/weapons/{ModId}"
+@page "/moditems/weapons"
 @using ModForge.Shared.Models.Enums
 
-@if (!_isLoaded)
+@if (!isLoaded)
 {
 	<div class="loading-screen" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-		<LoadingOverlay IsVisible="!_isLoaded" />
+		<LoadingOverlay IsVisible="!isLoaded" />
 	</div>
 }
-
 <MudGrid Style="height: 100vh; margin: 0px;" Spacing="0">
-
-	<MudItem md="12" Style="height: 10%; width: 100%;">
-		<MudStack Justify="Justify.SpaceBetween" Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
-			<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>@(L[MessageKeys.Weapons].Value)</b></MudText>
-			<MudStack Row Style="height: 100%;" AlignItems="AlignItems.Center" Spacing="2" Class="pr-2">
-				<MudTextField Onkeyup="SearchWeapons" Immediate @bind-Value="SearchWeapon" Placeholder="@(L[MessageKeys.Search].Value)" T="string" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 350px; background-color: var(--mud-palette-surface);" AdornmentIcon="@Icons.Material.Filled.Search" Adornment="Adornment.Start" />
-
-				<MudMenu Icon="@Icons.Material.Filled.FilterList" Style="color: var(--mud-palette-textprimary)">
-
-					@foreach (var name in Enum.GetNames(typeof(SkillSelector)))
-					{
-						<MudMenuItem OnClick="@(() => FilterWeapons(name))">@name</MudMenuItem>
-					}
-
-					<MudMenuItem OnClick="@(() => FilterWeapons("Miscellaneous"))">@(L[MessageKeys.Miscellaneous].Value)</MudMenuItem>
-
-				</MudMenu>
-				@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
-				{
-					<MudImage Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
-				}
-			</MudStack>
-		</MudStack>
+	<MudItem md="9" Style="height: 100%; padding: 0px;">
+		<MudGrid Spacing="2">
+			@if (weapons is not null)
+			{
+				<MudItem md="12" lg="12" Class="pl-4" Style="height: 100%;">
+					<MudDataGrid Style="" RowStyle="cursor: pointer;" Dense RowContextMenuClick="@((rightClick ? OpenMenuContent : null)!)" QuickFilter="WeaponSearch" Class="dialog-card" Items="@weapons" Virtualize FixedHeader Height="89.6dvh" T="Shared.Models.Abstractions.IModItem" SelectOnRowClick SelectedItemChanged="SelectModItem" Filterable>
+						<ToolBarContent>
+							<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>@(L[MessageKeys.Weapons].Value)</b></MudText>
+							<MudSpacer />
+							<MudTextField @bind-Value="SearchWeapon" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+										  AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+							@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
+							{
+								<MudImage Class="pl-4" Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
+							}
+						</ToolBarContent>
+						<Columns>
+							<PropertyColumn Property="x => GetName(x)" Title="Name" />
+							<PropertyColumn Property="@(x => GetAttributeAsString(x, "class"))" Title="Class" />
+							<PropertyColumn Property="@(x => GetAttributeAsString(x, "weight"))" Title="Weight" />
+							<PropertyColumn Property="@(x => GetAttributeAsDouble(x, "price"))" Title="Price" />
+						</Columns>
+					</MudDataGrid>
+				</MudItem>
+			}
+		</MudGrid>
 	</MudItem>
-
-	<MudItem md="9" Style="height: 90%; padding: 0px;">
-		<div style="overflow-y: auto; height: 99%;">
-			<MudGrid Spacing="2">
-
-				@if (weapons is not null)
-				{
-					@foreach (var item in weapons)
-					{
-						<MudItem md="12" lg="12">
-							<MudCard Class="mod-item-card" Style="@($"border-radius: 8px; {(SelectedModItem?.Id == item.Id ? "border-color: #df6f00; border-width: 3px;" : "")}")" Elevation="10" onclick="@(() => SelectModItem(item))">
-								<MudTooltip Text="@(GetDescription(item))" Placement="Placement.Bottom" Arrow>
-									<MudStack Spacing="0" Class="px-3 pt-3 pb-2">
-										<MudText Class="pb-3" Typo="Typo.subtitle1" Style="font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@(GetName(item))</MudText>
-
-										<MudStack Row Justify="Justify.SpaceBetween">
-											<MudText Typo="Typo.caption">@(L[MessageKeys.Skill].Value): @(GetSkillSelector(item))</MudText>
-											<MudText Typo="Typo.caption">@(GetLevel(item))</MudText>
-										</MudStack>
-									</MudStack>
-								</MudTooltip>
-							</MudCard>
-						</MudItem>
-					}
-				}
-
-			</MudGrid>
-		</div>
-	</MudItem>
-
-	<MudItem xs="3" Style="height: 90%; padding: 0px;" Class="px-2">
+	<MudItem xs="3" Style="height: 99vh; padding: 0px;" Class="px-2">
 		<ModItemDetailsView SelectedModItem="@SelectedModItem" ConsoleCommand="@(SelectedModItem is null ? string.Empty : $"wh_cheat_addItem {SelectedModItem.Id}")" />
 	</MudItem>
-
 </MudGrid>
+<MudMenu @ref="contextMenu" Icon="@Icons.Material.Filled.MoreVert" Variant="Variant.Text" Class="pa-0" PositionAtCursor id="contextMenu">
+	@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
+	{
+		<MudMenuItem Label="@(L[MessageKeys.Edit].Value)" OnClick="@(() => NavigateToModItem(SelectedModItem))" />
+		<MudMenuItem Label="@(L[MessageKeys.Duplicate].Value)" OnClick="@(() => DuplicateModItem(SelectedModItem))" />
+	}
+	<MudMenuItem Label="@(L[MessageKeys.CopyId].Value)" OnClick="@(() => CopyTextToClipboard(SelectedModItem.Id))" />
+	<MudMenuItem Label="@(L[MessageKeys.CopyCommand].Value)" OnClick="@(() => CopyTextToClipboard($"wh_cheat_addItem {SelectedModItem.Id}"))" />
+</MudMenu>
+
+<ModItemsDrawer IsOpen="isOpen" />

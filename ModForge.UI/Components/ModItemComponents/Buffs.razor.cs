@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using ModForge.Localizations;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.ModItems;
@@ -13,7 +14,11 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class Buffs
 	{
 		private List<IModItem> buffs;
-		private bool _isLoaded = false;
+		private bool isLoaded = false;
+		private MudMenu contextMenu;
+		private IModItem? contextRow;
+		private bool rightClick = true;
+		private bool isOpen;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -34,8 +39,10 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Inject]
 		public LocalizationService LocalizationService { get; set; }
 		[Inject]
+		public IJSRuntime JSRuntime { get; set; }
+		[Inject]
 		public NavigationManager NavigationManager { get; set; }
-		public string SearchBuff { get; set; }
+		public string SearchText { get; set; }
 		public IModItem? SelectedModItem { get; set; }
 
 		private void SelectModItem(IModItem modItem)
@@ -49,54 +56,85 @@ namespace ModForge.UI.Components.ModItemComponents
 			StateHasChanged();
 		}
 
+		private async Task OpenMenuContent(DataGridRowClickEventArgs<IModItem> args)
+		{
+			contextRow = args.Item;
+			await contextMenu.OpenMenuAsync(args.MouseEventArgs);
+		}
+
 		public async Task ToggleDrawer()
 		{
-			await ToggledDrawer.InvokeAsync();
+			isOpen = !isOpen;
 		}
 
-		public void FilterBuffs(string skill)
+		double GetAttributeAsDouble(IModItem item, string name)
 		{
-			if (XmlService is null)
-			{
-				return;
-			}
-
-			SearchBuff = string.Empty;
-
-			var filtered = XmlService.Buffs
-				.Where(x => x.Attributes.Any(attr =>
-					string.Equals(attr.Value.ToString(), skill, StringComparison.OrdinalIgnoreCase)));
-
-			if (!filtered.Any())
-			{
-				filtered = XmlService.Buffs
-					.Where(x => !x.Attributes.Any(attr =>
-						string.Equals(attr.Name, "buff_class_id", StringComparison.OrdinalIgnoreCase)));
-			}
-
-			buffs = filtered.ToList();
+			var attr = item.Attributes?.FirstOrDefault(a => a?.Name?.ToLower() == name.ToLower());
+			return Convert.ToDouble(attr?.Value ?? 0);
 		}
 
-		public void SearchBuffs()
+		string GetAttributeAsString(IModItem item, string name)
 		{
-			if (XmlService is null)
-			{
-				return;
-			}
-
-			if (string.IsNullOrEmpty(SearchBuff))
-			{
-				buffs = XmlService.Buffs.ToList();
-				return;
-			}
-
-			var filtered = XmlService.Buffs.Where(x => LocalizationService.GetName(x) is not null &&
-														LocalizationService.GetName(x)!.ToLower().Contains(SearchBuff.ToLower()) ||
-														x.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name")).Value.ToString().ToLower().Contains(SearchBuff.ToLower()));
-
-
-			buffs = filtered.ToList();
+			var attr = item.Attributes?.FirstOrDefault(a => a?.Name?.ToLower() == name.ToLower());
+			return attr?.Value?.ToString() ?? string.Empty;
 		}
+
+
+		private async Task CopyTextToClipboard(string text)
+		{
+			await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", text);
+			Snackbar.Add("Content copied to clipboard", Severity.Success);
+		}
+
+		private void DuplicateModItem(IModItem modItem)
+		{
+			if (modItem is null || XmlService is null)
+			{
+				return;
+			}
+			var newModItem = modItem.GetDeepCopy();
+			newModItem.Id = Guid.NewGuid().ToString();
+			newModItem.Attributes.FirstOrDefault(x => x.Name.ToLower().Contains("name"))!.Value = $"{LocalizationService.GetName(modItem)} (Copy)";
+			newModItem.Attributes.FirstOrDefault(x => x.Name == newModItem.IdKey)!.Value = newModItem.Id;
+			if (ModService is null)
+			{
+				return;
+			}
+			ModService.AddModItem(newModItem);
+			Snackbar.Add("Perk duplicated successfully!", Severity.Success);
+			NavigateToModItem(newModItem);
+			StateHasChanged();
+		}
+
+		public void NavigateToModItem(IModItem modItem)
+		{
+			if (NavigationManager is null)
+			{
+				return;
+			}
+			NavigationManager.NavigateTo($"editing/moditem/{modItem.Id}");
+		}
+
+		private Func<IModItem, bool> ModItemSearch => item =>
+		{
+			if (string.IsNullOrWhiteSpace(SearchText))
+				return true;
+
+			var search = SearchText.ToLower();
+
+			var localized = LocalizationService.GetName(item);
+			if (!string.IsNullOrEmpty(localized) && localized.ToLower().Contains(search))
+				return true;
+
+			var nameAttr = item.Attributes?.FirstOrDefault(attr => attr?.Name?.ToLower().Contains("name") == true);
+			var nameValue = nameAttr?.Value?.ToString();
+
+			if (!string.IsNullOrEmpty(nameValue) && nameValue.ToLower().Contains(search))
+				return true;
+
+			return false;
+		};
+
 
 		private string GetName(IModItem modItem)
 		{
@@ -149,36 +187,11 @@ namespace ModForge.UI.Components.ModItemComponents
 			return name;
 		}
 
-		private string GetBuffClass(IModItem modItem)
-		{
-			var attribute = modItem.Attributes.FirstOrDefault(x => x.Name == "buff_class_id");
-
-			if (attribute is null)
-			{
-				var name = modItem.Attributes.FirstOrDefault(x => x.Name.Contains("name")).Value;
-				return "Miscellaneous";
-			}
-
-			return $"{attribute.Value.ToString()}";
-		}
-
-		private string GetImplementation(IModItem modItem)
-		{
-			var attribute = modItem.Attributes.FirstOrDefault(x => x.Name == "implementation");
-
-			if (attribute is null)
-			{
-				return "No Implementation";
-			}
-
-			return $"{attribute.Value.ToString()}";
-		}
-
 		protected override async Task OnInitializedAsync()
 		{
 			ModService.TryGetModFromCollection(ModId);
-			buffs = await Task.Run(() => XmlService.Buffs.ToList());
-			_isLoaded = true;
+			buffs = await Task.Run(() => XmlService.Weapons.ToList());
+			isLoaded = true;
 		}
 	}
 }
