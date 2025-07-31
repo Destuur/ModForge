@@ -72,7 +72,7 @@ namespace ModForge.UI.Pages
 
 			ModService.AddModItem(editingModItem);
 			Logger?.LogInformation($"Saved mod buff with Id: {editingModItem.Id}");
-			NavigationManager.NavigateTo($"/moditems/{ModService.Mod.Id}");
+			NavigationManager.NavigateTo($"/moditems/perks/{ModService.Mod.Id}");
 		}
 
 		private async Task Cancle()
@@ -104,7 +104,7 @@ namespace ModForge.UI.Pages
 			if (!result.Canceled)
 			{
 				Logger?.LogInformation("User confirmed discard. Navigating back to mod items.");
-				NavigationManager.NavigateTo($"/moditems/{ModService.Mod.Id}");
+				NavigationManager.NavigateTo($"/moditems/perks/{ModService.Mod.Id}");
 			}
 			else
 			{

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using ModForge.Localizations;
+using ModForge.Shared.Models.STORM.Rules;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
 using ModForge.UI.Pages;
@@ -22,12 +23,80 @@ namespace ModForge.UI.Components.ModItemComponents
 		public IDialogService DialogService { get; set; }
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
+		[Inject]
+		public ILogger<ModItemsDrawer> Logger { get; set; }
 		[Parameter]
 		public bool IsOpen { get; set; }
 
 		private void ToggleDrawer()
 		{
 			IsOpen = !IsOpen;
+		}
+
+		private async Task EditRule(Rule rule)
+		{
+			if (rule is null)
+			{
+				return;
+			}
+			await CreateNewRule(rule.Id);
+			StateHasChanged();
+		}
+
+
+		private void DeleteRule(Rule rule)
+		{
+			if (rule is null)
+			{
+				return;
+			}
+			ModService.Mod.StormRules.Remove(rule);
+		}
+
+		private async Task CreateNewRule(string id = null)
+		{
+			var options = new DialogOptions()
+			{
+				CloseButton = true,
+				NoHeader = false,
+				BackgroundClass = "dialog-background",
+				FullScreen = true,
+				BackdropClick = false,
+				CloseOnEscapeKey = false,
+				FullWidth = true,
+				Position = DialogPosition.Center
+			};
+
+			var parameters = new DialogParameters<RuleDialog>()
+			{
+				{ x => x.RuleId, id },
+			};
+
+			if (DialogService is null)
+			{
+				Logger?.LogError($"DialogService is null. Cannot show '{typeof(RuleDialog)}'.");
+				return;
+			}
+
+			var dialog = await DialogService.ShowAsync<RuleDialog>("Edit Rule", parameters, options);
+			var result = await dialog.Result;
+
+
+			if (result is null || result.Canceled || result.Data is null)
+			{
+				return;
+			}
+			if (result.Data is Rule rule)
+			{
+				var foundRule = ModService.Mod.StormRules.FirstOrDefault(x => x.Id == rule.Id);
+				if (foundRule is null)
+				{
+					ModService.Mod.StormRules.Add(rule);
+					return;
+				}
+				foundRule = rule;
+			}
+
 		}
 
 		private void EditModItem(string id)

@@ -15,7 +15,7 @@
 			@if (buffs is not null)
 			{
 				<MudItem md="12" lg="12" Class="pl-4" Style="height: 100%;">
-					<MudDataGrid Style="" RowStyle="cursor: pointer;" Dense RowContextMenuClick="@((rightClick ? OpenMenuContent : null)!)" QuickFilter="ModItemSearch" Class="dialog-card" Items="@perks" Virtualize FixedHeader Height="89.6dvh" T="Shared.Models.Abstractions.IModItem" SelectOnRowClick SelectedItemChanged="SelectModItem" Filterable>
+					<MudDataGrid Style="" RowStyle="cursor: pointer;" Dense RowContextMenuClick="@((rightClick ? OpenMenuContent : null)!)" QuickFilter="ModItemSearch" Class="dialog-card" Items="@buffs" Virtualize FixedHeader Height="89.6dvh" T="Shared.Models.Abstractions.IModItem" SelectOnRowClick SelectedItemChanged="SelectModItem" Filterable>
 						<ToolBarContent>
 							<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>@(L[MessageKeys.Buffs].Value)</b></MudText>
 							<MudSpacer />
@@ -23,7 +23,7 @@
 										  AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
 							@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
 							{
-								<MudImage Class="pl-4" Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
+								<MudImage Class="pl-4" Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : ModService.Mod.StormRules.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
 							}
 						</ToolBarContent>
 						<Columns>

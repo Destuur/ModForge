@@ -100,6 +100,7 @@ namespace ModForge
 		{
 			this.Close();
 		}
+
 		#endregion
 	}
 }

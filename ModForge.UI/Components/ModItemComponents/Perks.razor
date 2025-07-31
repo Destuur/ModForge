@@ -23,7 +23,7 @@
 										  AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
 							@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
 							{
-								<MudImage Class="pl-4" Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
+								<MudImage Class="pl-4" Src="@(ModService.Mod.ModItems.Count > 0 ? "/images/Icons/forgeicon2.png" : ModService.Mod.StormRules.Count > 0 ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")" Height="48" Style="cursor: pointer;" onclick="@(() => ToggleDrawer())" />
 							}
 						</ToolBarContent>
 						<Columns>

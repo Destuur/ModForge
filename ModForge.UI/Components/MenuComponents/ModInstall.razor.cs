@@ -6,6 +6,7 @@ using ModForge.Shared.Services;
 using MudBlazor;
 using SharpCompress.Archives;
 using SharpCompress.Common;
+using System.Globalization;
 using System.IO.Compression;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -32,15 +33,30 @@ namespace ModForge.UI.Components.MenuComponents
 		public NavigationManager Navigation { get; set; }
 		[Inject]
 		public ModService ModService { get; set; }
-		[Inject]
-		public UserConfigurationService UserConfigurationService { get; set; }
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
 
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+		}
+
+		protected override void OnInitialized()
+		{
+			SetLanguage();
+		}
 
 		public async Task BackToDashboard()
 		{

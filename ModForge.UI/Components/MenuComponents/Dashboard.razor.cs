@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using ModForge.Localizations;
-using ModForge.Shared.Converter;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
@@ -29,6 +28,18 @@ namespace ModForge.UI.Components.MenuComponents
 		public IStringLocalizer<MessageService> L { get; set; }
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
+
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+			StateHasChanged();
+		}
 
 		private void ToggleModList()
 		{
@@ -63,6 +74,7 @@ namespace ModForge.UI.Components.MenuComponents
 
 		private async Task ShowGamePathMissingDialog()
 		{
+			SetLanguage();
 			if (string.IsNullOrEmpty(UserConfigurationService.Current.GameDirectory))
 			{
 				var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, BackdropClick = false, BackgroundClass = "entry-dialog", CloseOnEscapeKey = false, FullWidth = true };
@@ -75,6 +87,7 @@ namespace ModForge.UI.Components.MenuComponents
 					await ChangeChildContent.InvokeAsync(typeof(Settings));
 				}
 			}
+			StateHasChanged();
 		}
 	}
 }

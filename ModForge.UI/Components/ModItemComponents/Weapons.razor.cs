@@ -7,6 +7,7 @@ using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.MenuComponents;
 using MudBlazor;
+using System.Globalization;
 
 namespace ModForge.UI.Components.ModItemComponents
 {
@@ -43,6 +44,19 @@ namespace ModForge.UI.Components.ModItemComponents
 		public NavigationManager NavigationManager { get; set; }
 		public string SearchWeapon { get; set; }
 		public IModItem? SelectedModItem { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
+
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+		}
 
 		private void SelectModItem(IModItem modItem)
 		{
@@ -188,6 +202,7 @@ namespace ModForge.UI.Components.ModItemComponents
 
 		protected override async Task OnInitializedAsync()
 		{
+			SetLanguage();
 			ModService.TryGetModFromCollection(ModId);
 			weapons = await Task.Run(() => XmlService.Weapons.ToList());
 			isLoaded = true;

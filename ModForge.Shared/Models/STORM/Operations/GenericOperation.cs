@@ -5,6 +5,9 @@
 		public string Name { get; set; }
 		public Dictionary<string, string> Attributes { get; set; } = new();
 		public List<GenericOperation> Children { get; set; } = new();
+		public bool IsStat { get; set; }
+		public bool IsSpan { get; set; }
+
 
 		public override string ToString()
 		{

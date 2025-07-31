@@ -31,6 +31,11 @@ namespace ModForge.UI.Layout
 
 		private async Task ExitModding()
 		{
+			if (string.IsNullOrEmpty(ModService.Mod.Id))
+			{
+				NavigationManager.NavigateTo($"/");
+				return;
+			}
 			if (ModService.Mod.ModItems.Count == 0)
 			{
 				await ExecuteTwoButtonExitDialog();

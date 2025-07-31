@@ -1,8 +1,8 @@
-﻿<MudGrid Justify="Justify.SpaceBetween" Style="align-items: center;" >
+﻿<MudGrid Justify="Justify.SpaceBetween" Style="align-items: center;">
 	@foreach (var operation in Operations)
 	{
 		<MudItem xs="3">
-			<MudStack Row AlignItems="AlignItems.Center">
+			<MudStack AlignItems="AlignItems.Start">
 				@if (string.IsNullOrEmpty(operation.Name))
 				{
 					<MudAutocomplete T="string" SearchFunc="@SearchOperation" OpenIcon="@Icons.Material.Filled.Search" Value="operation.Name" ValueChanged="@(value => GetOperationAttributes(value, operation))" Dense Variant="Variant.Outlined" Label="Select Operation" Margin="Margin.Dense" />
@@ -10,12 +10,30 @@
 				else
 				{
 					<MudText>@operation.Name</MudText>
+					if (operation.Name == "setAttribute" ||
+					operation.Name == "modAttribute")
+					{
+						<MudSwitch T="bool" @bind-Value="operation.IsStat" Label="Skill or Stat" LabelPlacement="Placement.Bottom" />
+						<MudSwitch T="bool" @bind-Value="operation.IsSpan" Label="Fix or Span" LabelPlacement="Placement.Bottom" />
+					}
 				}
 			</MudStack>
 		</MudItem>
 		<MudItem xs="8">
 			@foreach (var item in operation.Attributes)
 			{
+				@if (item.Key == "skill" && operation.IsStat ||
+						item.Key == "mod" && operation.IsSpan ||
+						item.Key == "value" && operation.IsSpan ||
+						item.Key == "stat" && !operation.IsStat ||
+						item.Key == "maxMod" && !operation.IsSpan ||
+						item.Key == "maxValue" && !operation.IsSpan ||
+						item.Key == "minValue" && !operation.IsSpan ||
+						item.Key == "minMod" && !operation.IsSpan ||
+						item.Key == "scaleWith" && !operation.IsSpan)
+				{
+					continue;
+				}
 				<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
 					<MudText>Attributes:</MudText>
 					<MudText>@item.Key</MudText>

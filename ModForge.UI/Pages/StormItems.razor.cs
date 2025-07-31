@@ -6,6 +6,7 @@ using ModForge.Shared.Models.STORM;
 using ModForge.Shared.Models.STORM.Operations;
 using ModForge.Shared.Models.STORM.Selectors;
 using ModForge.Shared.Services;
+using System.Globalization;
 
 namespace ModForge.UI.Pages
 {
@@ -24,6 +25,19 @@ namespace ModForge.UI.Pages
 		public IStringLocalizer<MessageService>? L { get; set; }
 		public string? SearchStorm { get; set; }
 		public StormDto? SelectedStorm { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
+
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+		}
 
 		private void NavigateToItem(string id)
 		{
@@ -67,6 +81,7 @@ namespace ModForge.UI.Pages
 			{
 				return;
 			}
+			SetLanguage();
 			stormDtos = StormService.GetStormDtos();
 			var operationCategories = OperationParser.Categories;
 			var selectors = SelectorParser.SelectorAttributes;

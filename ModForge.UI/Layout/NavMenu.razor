@@ -1,12 +1,12 @@
 ﻿<MudNavMenu Color="Color.Primary" Bordered Rounded Style="height: 100%;">
 	<MudStack Style="height: 100%;" Spacing="0">
 		<MudNavLink Match="NavLinkMatch.All" Href="" Icon="@Icons.Material.Filled.SpaceDashboard">@L[MessageKeys.Dashboard].Value</MudNavLink>
-		<MudNavLink Match="NavLinkMatch.All" Href="/modinstall" Icon="@Icons.Material.Filled.InstallDesktop">@L[MessageKeys.InstallMod].Value</MudNavLink>
-		<MudNavLink Match="NavLinkMatch.All" Href="/loadouts" Icon="@Icons.Material.Filled.Games">@L[MessageKeys.Loadouts].Value</MudNavLink>
-		<MudNavLink Match="NavLinkMatch.All" Href="/perks" Icon="@Icons.Material.Filled.List" ForceLoad>@L[MessageKeys.BrowseModItems].Value</MudNavLink>
-		<MudNavLink Match="NavLinkMatch.All" Href="/stormItems" Icon="@Icons.Material.Filled.Storm">STORM</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="modinstall" Icon="@Icons.Material.Filled.InstallDesktop">@L[MessageKeys.InstallMod].Value</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="loadouts" Icon="@Icons.Material.Filled.Games">@L[MessageKeys.Loadouts].Value</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="moditems/perks" Icon="@Icons.Material.Filled.List" ForceLoad>@L[MessageKeys.BrowseModItems].Value</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="stormItems" Icon="@Icons.Material.Filled.Storm">STORM</MudNavLink>
 		<MudSpacer />
-		<MudNavLink Match="NavLinkMatch.All" Href="/settings" Icon="@Icons.Material.Filled.Settings">@L[MessageKeys.Settings].Value</MudNavLink>
+		<MudNavLink Match="NavLinkMatch.All" Href="settings" Icon="@Icons.Material.Filled.Settings">@L[MessageKeys.Settings].Value</MudNavLink>
 		<MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" OnClick="GetHelp">@L[MessageKeys.Help].Value</MudNavLink>
 		<MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.KeyboardDoubleArrowRight" Style="color: var(--icon-primary);" OnClick="ToggleDrawer">Collapse</MudNavLink>
 	</MudStack>

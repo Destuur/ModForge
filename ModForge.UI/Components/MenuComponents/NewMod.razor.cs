@@ -5,6 +5,7 @@ using ModForge.Localizations;
 using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
 using MudBlazor;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace ModForge.UI.Components.MenuComponents
@@ -227,8 +228,20 @@ namespace ModForge.UI.Components.MenuComponents
 			}
 		}
 
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+		}
+
 		protected override void OnInitialized()
 		{
+			SetLanguage();
 			Validate();
 			StateHasChanged();
 		}

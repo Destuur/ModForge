@@ -218,15 +218,23 @@ namespace ModForge.UI.Components.MenuComponents
 			Thread.CurrentThread.CurrentUICulture = culture;
 		}
 
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+		}
+
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
 			name = UserConfigurationService.Current.UserName ?? string.Empty;
 			gameDirectory = UserConfigurationService.Current.GameDirectory ?? string.Empty;
-
-			var culture = new CultureInfo(UserConfigurationService.Current.Language);
-			Thread.CurrentThread.CurrentCulture = culture;
-			Thread.CurrentThread.CurrentUICulture = culture;
+			SetLanguage();
 		}
 	}
 }

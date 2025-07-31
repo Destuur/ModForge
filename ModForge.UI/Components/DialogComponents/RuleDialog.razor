@@ -1,7 +1,7 @@
 ﻿@using ModForge.Shared.Models.STORM.Operations
 <MudDialog Class="dialog-card" Style="display: flex; flex-direction: column; height: 100%;" ContentStyle="flex: 1; overflow: hidden;">
 	<DialogContent>
-		<MudStepper  OnPreviewInteraction="OnPreviewInteraction" CenterLabels="true" ShowResetButton Style="height: 100%; display: flex; flex-direction: column;" StepStyle="flex: 1; display: flex; flex-direction: column;">
+		<MudStepper OnPreviewInteraction="OnPreviewInteraction" CenterLabels="true" ShowResetButton Style="height: 100%; display: flex; flex-direction: column;" StepStyle="flex: 1; display: flex; flex-direction: column;">
 			<MudStep Title="Rule Configuration">
 				<MudGrid Style="flex: 1; overflow-y: auto;">
 					<MudItem xs="12">
@@ -73,7 +73,9 @@
 				}
 			</MudStep>
 			<MudStep Title="Add operations">
-				<RuleOperation OperationCategory="SelectedCategory" Operations="Rule.Operations" />
+				<div style="overflow-y: auto; max-height: 400px;">
+					<RuleOperation OperationCategory="SelectedCategory" Operations="Rule.Operations" />
+				</div>
 			</MudStep>
 		</MudStepper>
 	</DialogContent>

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using ModForge.Shared.Services;
+using System.Globalization;
+using System.Windows;
 
 namespace ModForge
 {

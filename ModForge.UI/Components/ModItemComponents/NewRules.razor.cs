@@ -7,12 +7,14 @@ using ModForge.Shared.Services;
 using ModForge.UI.Components.DialogComponents;
 using ModForge.UI.Components.MenuComponents;
 using MudBlazor;
+using System.Globalization;
 
 namespace ModForge.UI.Components.ModItemComponents
 {
 	public partial class NewRules
 	{
 		private bool isLoaded;
+		private bool isOpen;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -33,8 +35,26 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Inject]
 		public IDialogService DialogService { get; set; }
 		public Rule SelectedRule { get; set; }
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
 
-		private async Task CreateNewRule()
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+		}
+
+		public async Task ToggleDrawer()
+		{
+			isOpen = !isOpen;
+		}
+
+		private async Task CreateNewRule(string id = null)
 		{
 			var options = new DialogOptions()
 			{
@@ -48,13 +68,18 @@ namespace ModForge.UI.Components.ModItemComponents
 				Position = DialogPosition.Center
 			};
 
+			var parameters = new DialogParameters<RuleDialog>()
+			{
+				{ x => x.RuleId, id },
+			};
+
 			if (DialogService is null)
 			{
 				Logger?.LogError($"DialogService is null. Cannot show '{typeof(RuleDialog)}'.");
 				return;
 			}
 
-			var dialog = await DialogService.ShowAsync<RuleDialog>("Create new rule", options);
+			var dialog = await DialogService.ShowAsync<RuleDialog>("Create new rule", parameters, options);
 			var result = await dialog.Result;
 
 
@@ -64,9 +89,34 @@ namespace ModForge.UI.Components.ModItemComponents
 			}
 			if (result.Data is Rule rule)
 			{
-				ModService.Mod.StormRules.Add(rule);
+				var foundRule = ModService.Mod.StormRules.FirstOrDefault(x => x.Name == rule.Name);
+				if (foundRule is null)
+				{
+					ModService.Mod.StormRules.Add(rule);
+					return;
+				}
+				foundRule = rule;
 			}
+		}
 
+		private async Task EditRule(Rule rule)
+		{
+			if (rule is null)
+			{
+				return;
+			}
+			await CreateNewRule(rule.Id);
+			StateHasChanged();
+		}
+
+
+		private void DeleteRule(Rule rule)
+		{
+			if (rule is null)
+			{
+				return;
+			}
+			ModService.Mod.StormRules.Remove(rule);
 		}
 
 		private void SelectRule(Rule rule)
@@ -87,6 +137,7 @@ namespace ModForge.UI.Components.ModItemComponents
 
 		protected override void OnInitialized()
 		{
+			SetLanguage();
 			ModService.TryGetModFromCollection(ModId);
 			isLoaded = true;
 		}

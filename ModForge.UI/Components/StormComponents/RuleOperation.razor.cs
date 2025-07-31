@@ -9,6 +9,8 @@ namespace ModForge.UI.Components.StormComponents
 	{
 		private string currentOperation;
 		private string currentAttribute;
+		private bool isSpan;
+		private bool isStat;
 
 		[Inject]
 		public StormService Storm { get; set; }

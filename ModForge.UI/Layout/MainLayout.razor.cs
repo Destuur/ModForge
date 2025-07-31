@@ -24,27 +24,23 @@ namespace ModForge.UI.Layout
 			drawerOpen = !drawerOpen;
 		}
 
-		protected override async Task OnAfterRenderAsync(bool firstRender)
+		protected override async Task OnInitializedAsync()
 		{
-			if (firstRender)
+			var language = UserConfigurationService.Current.Language ?? "en";
+			var culture = new CultureInfo(language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
+
+			if (XmlToJsonService is not null)
 			{
-				await base.OnInitializedAsync();
-				if (XmlToJsonService is null)
-				{
-					return;
-				}
+				// Optional: Wenn TryReadXmlFiles IO-intensiv ist, mach es trotzdem asynchron:
 				await Task.Run(() => XmlToJsonService.TryReadXmlFiles());
-
-				var language = UserConfigurationService.Current.Language;
-				var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
-
-				CultureInfo.DefaultThreadCurrentCulture = culture;
-				CultureInfo.DefaultThreadCurrentUICulture = culture;
-				Thread.CurrentThread.CurrentCulture = culture;
-				Thread.CurrentThread.CurrentUICulture = culture;
-				isLoaded = true;
-				StateHasChanged();
 			}
+
+			isLoaded = true;
 		}
 	}
 }

@@ -18,6 +18,7 @@ namespace ModForge.UI.Components.DialogComponents
 		private string comment;
 		private OperationCategory? selectedCategory;
 		private bool firstStepComplete;
+		private bool editMode;
 		private string[] ruleAddedMessages = new[]
 		{
 			"Huzzah! Thy rule hath been added to the codex.",
@@ -40,6 +41,8 @@ namespace ModForge.UI.Components.DialogComponents
 
 		[CascadingParameter]
 		private IMudDialogInstance MudDialog { get; set; }
+		[Parameter]
+		public string RuleId { get; set; }
 		[Parameter]
 		public string? ContentText { get; set; }
 		[Parameter]
@@ -132,7 +135,7 @@ namespace ModForge.UI.Components.DialogComponents
 			var ruleString = name.Trim().ToLower().Split(' ');
 			var tempRuleString = string.Join('_', ruleString);
 
-			if (ModService.Mod.StormRules.FirstOrDefault(x => x.Name == tempRuleString) is not null)
+			if (ModService.Mod.StormRules.FirstOrDefault(x => x.Name == tempRuleString) is not null && editMode == false)
 			{
 				firstStepComplete = false;
 				return "A rule with this name is already in your collection.";
@@ -220,10 +223,28 @@ namespace ModForge.UI.Components.DialogComponents
 		}
 
 		private void Ok() => MudDialog.Close(DialogResult.Ok(Rule));
-		private void Cancel() => MudDialog.Cancel();
 
 		protected override void OnInitialized()
 		{
+			if (string.IsNullOrEmpty(RuleId) == false)
+			{
+				var foundRule = ModService.Mod.StormRules.FirstOrDefault(x => x.Id == RuleId);
+				Rule = new Rule();
+				Rule.Name = foundRule.Name;
+				Rule.Id = foundRule.Id;
+				Rule.Selectors = foundRule.Selectors;
+				Rule.Operations = foundRule.Operations;
+				Rule.Comment = foundRule.Comment;
+				Rule.Category = foundRule.Category;
+				Rule.Mode = foundRule.Mode;
+				name = Rule.Name;
+				comment = Rule.Comment;
+				selectedCategory = Storm.RuleCategories.Values.FirstOrDefault(x => x.Name == Rule.Category);
+				editMode = true;
+				firstStepComplete = true;
+				return;
+			}
+
 			SelectedCategory = Storm.RuleCategories.FirstOrDefault().Value;
 		}
 	}

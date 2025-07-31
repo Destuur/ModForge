@@ -6,6 +6,7 @@ namespace ModForge.Shared.Models.STORM.Rules
 	public class Rule
 	{
 		public string Name { get; set; }
+		public string Id { get; set; } = Guid.NewGuid().ToString();
 		public string Mode { get; set; }
 		public string Comment { get; set; }
 		public string Category { get; set; }

@@ -7,6 +7,7 @@ using ModForge.Shared.Models.ModItems;
 using ModForge.Shared.Models.Mods;
 using ModForge.Shared.Services;
 using MudBlazor;
+using System.Globalization;
 
 namespace ModForge.UI.Components.MenuComponents
 {
@@ -24,8 +25,6 @@ namespace ModForge.UI.Components.MenuComponents
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
-		[Inject]
-		public UserConfigurationService UserConfigurationService { get; set; }
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
 		[Inject]
@@ -46,6 +45,19 @@ namespace ModForge.UI.Components.MenuComponents
 				selectedSavefile = value;
 				GetLoadout(value);
 			}
+		}
+		[Inject]
+		public UserConfigurationService UserConfigurationService { get; set; }
+
+		private void SetLanguage()
+		{
+			var language = UserConfigurationService.Current.Language;
+			var culture = string.IsNullOrEmpty(language) ? CultureInfo.CurrentCulture : new CultureInfo(UserConfigurationService.Current.Language);
+
+			CultureInfo.DefaultThreadCurrentCulture = culture;
+			CultureInfo.DefaultThreadCurrentUICulture = culture;
+			Thread.CurrentThread.CurrentCulture = culture;
+			Thread.CurrentThread.CurrentUICulture = culture;
 		}
 
 		//private void Test(DropItem dropItem)
@@ -195,6 +207,7 @@ namespace ModForge.UI.Components.MenuComponents
 		protected override void OnInitialized()
 		{
 			base.OnInitialized();
+			SetLanguage();
 			PrepareModCollection();
 			PrepareLoadouts();
 			buffParams = GetBuffParams();
