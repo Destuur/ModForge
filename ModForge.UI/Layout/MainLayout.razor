@@ -23,7 +23,7 @@
 	<MudDrawer @bind-Open="drawerOpen" Fixed ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Mini" Elevation="2" Style="height: calc(100%);">
 		@if (NavigationManager.Uri.Contains("moditem"))
 		{
-			<EditingNavMenu ToggledDrawer="ToggleDrawer" />
+			<ModCreationNavMenu ToggledDrawer="ToggleDrawer" />
 		}
 		else
 		{

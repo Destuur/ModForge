@@ -2,8 +2,10 @@
 {
 	public enum BuffClass
 	{
+		TestingStatBuff = 0,
 		SystemBuff = 1,
 		WeaponSkillBuff = 2,
+		TestingCombatBuff = 3,
 		PerkBuff = 4,
 		Injury = 5,
 		Heal = 6,

@@ -14,7 +14,7 @@
 			@if (weapons is not null)
 			{
 				<MudItem md="12" lg="12" Class="pl-4" Style="height: 100%;">
-					<MudDataGrid Style="" RowStyle="cursor: pointer;" Dense RowContextMenuClick="@((rightClick ? OpenMenuContent : null)!)" QuickFilter="WeaponSearch" Class="dialog-card" Items="@weapons" Virtualize FixedHeader Height="89.6dvh" T="Shared.Models.Abstractions.IModItem" SelectOnRowClick SelectedItemChanged="SelectModItem" Filterable>
+					<MudDataGrid RowStyle="cursor: pointer;" Dense RowContextMenuClick="@((rightClick ? OpenMenuContent : null)!)" QuickFilter="WeaponSearch" Class="dialog-card" Items="@weapons" Virtualize FixedHeader Height="calc(100vh - 73px)" Style="border-radius: 8px;" T="Shared.Models.Abstractions.IModItem" SelectOnRowClick SelectedItemChanged="SelectModItem" Filterable>
 						<ToolBarContent>
 							<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>@(L[MessageKeys.Weapons].Value)</b></MudText>
 							<MudSpacer />
@@ -26,7 +26,7 @@
 							}
 						</ToolBarContent>
 						<Columns>
-							<PropertyColumn Property="x => GetName(x)" Title="Name" />
+							<PropertyColumn CellStyle="line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 400px; width: 400px" Property="x => GetName(x)" Title="Name" />
 							<PropertyColumn Property="@(x => GetAttributeAsString(x, "class"))" Title="Class" />
 							<PropertyColumn Property="@(x => GetAttributeAsString(x, "weight"))" Title="Weight" />
 							<PropertyColumn Property="@(x => GetAttributeAsDouble(x, "price"))" Title="Price" />
@@ -43,11 +43,11 @@
 <MudMenu @ref="contextMenu" Icon="@Icons.Material.Filled.MoreVert" Variant="Variant.Text" Class="pa-0" PositionAtCursor id="contextMenu">
 	@if (string.IsNullOrEmpty(ModService.Mod.Id) == false)
 	{
-		<MudMenuItem Label="@(L[MessageKeys.Edit].Value)" OnClick="@(() => NavigateToModItem(SelectedModItem))" />
-		<MudMenuItem Label="@(L[MessageKeys.Duplicate].Value)" OnClick="@(() => DuplicateModItem(SelectedModItem))" />
+		<MudMenuItem Label="@(L[MessageKeys.Edit].Value)" OnClick="@(() => NavigateToModItem(contextRow))" />
+		<MudMenuItem Label="@(L[MessageKeys.Duplicate].Value)" OnClick="@(() => DuplicateModItem(contextRow))" />
 	}
-	<MudMenuItem Label="@(L[MessageKeys.CopyId].Value)" OnClick="@(() => CopyTextToClipboard(SelectedModItem.Id))" />
-	<MudMenuItem Label="@(L[MessageKeys.CopyCommand].Value)" OnClick="@(() => CopyTextToClipboard($"wh_cheat_addItem {SelectedModItem.Id}"))" />
+	<MudMenuItem Label="@(L[MessageKeys.CopyId].Value)" OnClick="@(() => CopyTextToClipboard(contextRow.Id))" />
+	<MudMenuItem Label="@(L[MessageKeys.CopyCommand].Value)" OnClick="@(() => CopyTextToClipboard($"wh_cheat_addItem {contextRow.Id}"))" />
 </MudMenu>
 
 <ModItemsDrawer IsOpen="isOpen" />

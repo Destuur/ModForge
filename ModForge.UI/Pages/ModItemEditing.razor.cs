@@ -39,6 +39,27 @@ namespace ModForge.UI.Pages
 		public string? Id { get; set; }
 		public IModItem? OriginalModItem { get; set; }
 
+		private void ResetAttributeValue(string key)
+		{
+			if (string.IsNullOrEmpty(key))
+			{
+				return;
+			}
+			var tempModItem = OriginalModItem.GetDeepCopy();
+			var foundAttribute = tempModItem.Attributes.FirstOrDefault(x => x.Name == key);
+			if (foundAttribute is null)
+			{
+				return;
+			}
+			var editingAttribute = editingModItem.Attributes.FirstOrDefault(x => x.Name == key);
+			if (editingAttribute is null)
+			{
+				return;
+			}
+			editingAttribute.Value = foundAttribute.Value;
+			StateHasChanged();
+		}
+
 		public void ResetModItem()
 		{
 			if (OriginalModItem is null)
@@ -130,7 +151,7 @@ namespace ModForge.UI.Pages
 			}
 
 			SetLanguage();
-			icon = IconService.GetBase64Icon(editingModItem.Attributes.FirstOrDefault(x => x.Name == "IconId")?.Value.ToString() ?? editingModItem.Attributes.FirstOrDefault(x => x.Name == "icon_id")?.Value.ToString() ?? string.Empty);
+			//icon = IconService.GetBase64Icon(editingModItem.Attributes.FirstOrDefault(x => x.Name == "IconId")?.Value.ToString() ?? editingModItem.Attributes.FirstOrDefault(x => x.Name == "icon_id")?.Value.ToString() ?? string.Empty);
 			StateHasChanged();
 		}
 

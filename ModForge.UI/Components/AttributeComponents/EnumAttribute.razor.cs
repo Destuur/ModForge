@@ -44,6 +44,14 @@ namespace ModForge.UI.Components.AttributeComponents
 		}
 		[Parameter]
 		public EventCallback<string> RemoveAttribute { get; set; }
+		[Parameter]
+		public EventCallback<string> ResetedValue { get; set; }
+
+		private void ResetValue(string key)
+		{
+			ResetedValue.InvokeAsync(key);
+			currentEnumString = Attribute.Value.ToString();
+		}
 
 		private async Task Remove()
 		{

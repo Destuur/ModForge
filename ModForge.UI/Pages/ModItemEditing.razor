@@ -1,51 +1,34 @@
 ﻿@page "/editing/moditem/{Id}"
 
-<MudGrid Style="height: 100%; margin: 0px;" Spacing="0">
-
-	<MudItem Style=" padding: 0px; width: 56px;">
-		<MudStack style="height: 100%;" AlignItems="AlignItems.Center" Spacing="0" Class="pt-2">
-			<MudTooltip Text="@L[MessageKeys.ResetAll].Value">
-				<MudIconButton Icon="@Icons.Material.Filled.Refresh" Style="color: var(--mud-palette-primary);" OnClick="ResetModItem" />
-			</MudTooltip>
-			<MudTooltip Text="@L[MessageKeys.Save].Value">
-				<MudIconButton Icon="@Icons.Material.Filled.Save" Style="color: var(--mud-palette-primary);" OnClick="SaveItem" />
-			</MudTooltip>
-			<MudSpacer />
-			<MudTooltip Text="@L[MessageKeys.Back].Value">
-				<MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Error" OnClick="Cancle" />
-			</MudTooltip>
-			<MudTooltip Text="@L[MessageKeys.Help].Value">
-				<MudIconButton Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" />
-			</MudTooltip>
-		</MudStack>
-	</MudItem>
-
-	<MudItem Style="padding: 0px; height: 100%; width: calc(100% - 56px);">
-		<div style="overflow-y: auto; height: 99%;">
-			<MudGrid Style="height: 100%; margin: 0px;" Spacing="0" Class="pr-2">
-				<MudItem md="12" Style="height: 10%; width: 100%;">
-					<MudStack Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center">
-						<MudText Typo="Typo.h4" Class="header-primary"><b>@($"{editingModItem.GetType().Name}: {LocalizationService.GetName(editingModItem)}")</b></MudText>
-						@if (string.IsNullOrEmpty(icon) == false)
+<MudGrid Style="height: 100vh; margin: 0px;" Spacing="0">
+	<MudItem Style="padding: 0px; height: 100%; width: 100%;">
+		<MudGrid Style="height: 100%; margin: 0px;" Spacing="0" Class="pr-2">
+			<MudItem md="12" Style="height: 10%; width: 100%;">
+				<MudStack Row Style="height: 100%; width: 100%;" AlignItems="AlignItems.Center" Class="pl-2">
+					@if (editingModItem is not null)
+					{
+						<MudImage Src="@IconService.GetIcon(editingModItem)" Style="height: 100%;" Class="pa-2" />
+					}
+					<MudStack Spacing="0">
+						<MudText>@($"{editingModItem.GetType().Name}")</MudText>
+						<MudText Typo="Typo.h4" Class="header-primary"><b>@($"{LocalizationService.GetName(editingModItem)}")</b></MudText>
+					</MudStack>
+					<MudSpacer />
+						<MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="ResetModItem">@L[MessageKeys.ResetAll].Value</MudButton>
+						<MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveItem">@L[MessageKeys.Save].Value</MudButton>
+				</MudStack>
+			</MudItem>
+			<MudItem md="12" Style="height: 90%; padding: 0px;">
+				<div style="height: 100%; overflow-y:auto;">
+					<MudStack Spacing="0">
+						@foreach (var attribute in editingModItem.Attributes)
 						{
-							<MudImage Src="@icon" />
+							<AttributeSelector Attribute="attribute" ResetedValue="ResetAttributeValue" @key="attribute.Name"></AttributeSelector>
+							<MudDivider />
 						}
 					</MudStack>
-				</MudItem>
-
-				<MudItem md="12" Style="height: 90%; padding: 0px;">
-					<div style="height: 100%; overflow-y:auto;">
-						<MudStack Spacing="0">
-							@foreach (var attribute in editingModItem.Attributes)
-							{
-								<AttributeSelector Attribute="attribute" @key="attribute.Name"></AttributeSelector>
-								<MudDivider />
-							}
-						</MudStack>
-					</div>
-				</MudItem>
-			</MudGrid>
-		</div>
+				</div>
+			</MudItem>
+		</MudGrid>
 	</MudItem>
-
 </MudGrid>

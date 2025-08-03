@@ -18,5 +18,6 @@
 		WeaponLarge = 23,
 		WeaponUnarmed = 24,
 		Scholarship = 26,
+		Houndmaster = 34,
 	}
 }

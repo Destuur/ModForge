@@ -8,7 +8,7 @@ using MudBlazor;
 
 namespace ModForge.UI.Layout
 {
-	public partial class EditingNavMenu
+	public partial class ModCreationNavMenu
 	{
 		[Inject]
 		public IStringLocalizer<MessageService> L { get; set; }
@@ -24,10 +24,46 @@ namespace ModForge.UI.Layout
 		[Inject]
 		public ISnackbar Snackbar { get; set; }
 		[Inject]
-		public ILogger<EditingNavMenu> Logger { get; set; }
+		public ILogger<ModCreationNavMenu> Logger { get; set; }
 		[Parameter]
 		public EventCallback ToggledDrawer { get; set; }
 
+		private async Task Cancle()
+		{
+			if (DialogService is null || NavigationManager is null || ModService is null)
+			{
+				return;
+			}
+
+			Logger?.LogInformation("Cancel operation initiated: showing discard confirmation dialog.");
+
+			var parameters = new DialogParameters<TwoButtonExitDialog>()
+			{
+				{ x => x.ContentText, "Are you sure you want to cancel?" },
+				{ x => x.CancelButton, "Cancel" },
+				{ x => x.ExitButton, "Discard & Exit" }
+			};
+
+			var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+			var dialog = await DialogService.ShowAsync<TwoButtonExitDialog>("Return to list", parameters, options);
+			var result = await dialog.Result;
+
+			if (result is null)
+			{
+				return;
+			}
+
+			if (!result.Canceled)
+			{
+				Logger?.LogInformation("User confirmed discard. Navigating back to mod items.");
+				NavigationManager.NavigateTo($"/moditems/perks/{ModService.Mod.Id}");
+			}
+			else
+			{
+				Logger?.LogInformation("User canceled discard dialog. No navigation performed.");
+			}
+		}
 
 		private async Task ExitModding()
 		{

@@ -3,19 +3,19 @@
 	@switch (Attribute.Value)
 	{
 		case bool:
-			<BoolAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<BoolAttribute Attribute="Attribute" RemoveAttribute="Remove" ResetedValue="ResetValue" />
 			break;
 		case Enum:
-			<EnumAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<EnumAttribute Attribute="Attribute" RemoveAttribute="Remove" ResetedValue="ResetValue" />
 			break;
 		case double:
-			<DoubleAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<DoubleAttribute Attribute="Attribute" RemoveAttribute="Remove" ResetedValue="ResetValue" />
 			break;
 		@* case int:
-			<IntAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<IntAttribute Attribute="Attribute" RemoveAttribute="Remove" ResetedValue="ResetValue" />
 			break; *@
 		case string:
-			<StringAttribute Attribute="Attribute" RemoveAttribute="Remove" />
+			<StringAttribute Attribute="Attribute" RemoveAttribute="Remove" ResetedValue="ResetValue" />
 			break;
 		case IList<BuffParam>:
 			<MudGrid Justify="Justify.FlexStart" Style="align-items: center; width: 100%;" Class="px-4 py-3">
@@ -26,15 +26,20 @@
 
 				<MudItem xs="1">
 					<MudIconButton Icon="@Icons.Material.Outlined.Info" Size="Size.Small" />
-					<MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" />
+					<MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="@(() => ResetValue(Attribute.Name))" Size="Size.Small" />
+				</MudItem>
+
+				<MudItem xs="9" Style="width: 100%;">
+					<MudStack Row AlignItems="AlignItems.End">
+						<MudTooltip Text="Add parameter">
+							<MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="AddBuffParam" Color="Color.Primary" Variant="Variant.Filled" />
+						</MudTooltip>
+					</MudStack>
 				</MudItem>
 
 				<MudItem xs="12" Class="pt-0">
 					<MudStack style="width: 100%">
 						<BuffParamsAttribute Attribute="Attribute" @ref="childComponent" />
-						<MudButton OnClick="AddBuffParam" Color="Color.Primary" Variant="Variant.Outlined" FullWidth="false">
-							<MudIcon Color="Color.Primary" Icon="@Icons.Material.Filled.Add" />
-						</MudButton>
 					</MudStack>
 				</MudItem>
 			</MudGrid>

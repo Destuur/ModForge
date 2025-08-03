@@ -85,7 +85,14 @@
 		}
 
 		<MudSpacer />
-		<MudNavLink Match="NavLinkMatch.All" IconColor="Color.Error" OnClick="ExitModding" Icon="@Icons.Material.Filled.Logout">@L[MessageKeys.Back].Value</MudNavLink>
+		@if (NavigationManager.BaseUri.Contains("editing"))
+		{
+			<MudNavLink Match="NavLinkMatch.All" IconColor="Color.Error" OnClick="Cancle" Icon="@Icons.Material.Filled.Logout">@L[MessageKeys.Back].Value</MudNavLink>
+		}
+		else
+		{
+			<MudNavLink Match="NavLinkMatch.All" IconColor="Color.Error" OnClick="ExitModding" Icon="@Icons.Material.Filled.Logout">@L[MessageKeys.Back].Value</MudNavLink>
+		}
 		<MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Help" Style="color: var(--icon-primary);" OnClick="GetHelp">@L[MessageKeys.Help].Value</MudNavLink>
 		<MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.KeyboardDoubleArrowRight" Style="color: var(--icon-primary);" OnClick="ToggleDrawer">Collapse</MudNavLink>
 	</MudStack>

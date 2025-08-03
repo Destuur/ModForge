@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ModForge.Shared.Models.Attributes;
 using ModForge.Shared.Models.Enums;
+using ModForge.Shared.Services;
 using System.Text.RegularExpressions;
 
 namespace ModForge.UI.Components.AttributeComponents
@@ -16,6 +17,8 @@ namespace ModForge.UI.Components.AttributeComponents
 		public BuffParam BuffParam { get; set; }
 		[Parameter]
 		public EventCallback<string> RemoveBuffParam { get; set; }
+		[Inject]
+		public LocalizationService LocalizationService { get; set; }
 
 		private async Task<IEnumerable<string>> Search(string value, CancellationToken token)
 		{

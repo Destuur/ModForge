@@ -11,6 +11,13 @@ namespace ModForge.UI.Components.AttributeComponents
 		public IAttribute Attribute { get; set; }
 		[Parameter]
 		public EventCallback<string> RemoveAttribute { get; set; }
+		[Parameter]
+		public EventCallback<string> ResetedValue { get; set; }
+
+		private void ResetValue(string key)
+		{
+			ResetedValue.InvokeAsync(key);
+		}
 
 
 		private bool BoolValue

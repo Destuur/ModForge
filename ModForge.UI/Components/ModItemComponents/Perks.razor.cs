@@ -89,7 +89,7 @@ namespace ModForge.UI.Components.ModItemComponents
 
 		string GetAttributeAsString(IModItem item, string name)
 		{
-			var attr = item.Attributes?.FirstOrDefault(a => a?.Name?.ToLower() == name.ToLower());
+			var attr = item.Attributes?.FirstOrDefault(a => a?.Name?.ToLower().Contains(name.ToLower()) == true);
 			return attr?.Value?.ToString() ?? string.Empty;
 		}
 

@@ -1,7 +1,7 @@
 ﻿<MudGrid style="align-items:center;">
 
 	<MudItem xs="7">
-		<MudAutocomplete FullWidth Margin="Margin.Dense" T="string" Label="Stat"  @bind-Value="BuffParam.Key" SearchFunc="@Search" ResetValueOnEmptyText CoerceText SelectValueOnTab Immediate Variant="Variant.Outlined" ToStringFunc="x => BuffParamSerializer.GetName(x)"/>
+		<MudAutocomplete FullWidth Margin="Margin.Dense" T="string" Label="Stat" @bind-Value="BuffParam.Key" SearchFunc="@Search" ResetValueOnEmptyText CoerceText SelectValueOnTab Immediate Variant="Variant.Outlined" ToStringFunc="x => BuffParamSerializer.GetName(x)" />
 	</MudItem>
 
 	<MudItem xs="3">
@@ -20,8 +20,14 @@
 	</MudItem>
 
 	<MudItem xs="1">
-		<MudIconButton OnClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))" Icon="@Icons.Material.Outlined.Info" Size="Size.Small" />
-		<MudIconButton OnClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" />
+		<MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" style="width: 100%;">
+			<MudTooltip Text="@(BuffParamSerializer.GetDescription(BuffParam.Key))">
+				<MudIcon Icon="@Icons.Material.Outlined.Info" Size="Size.Small" />
+			</MudTooltip>
+			<MudTooltip Text="Delete parameter">
+				<MudIconButton OnClick="@(() => RemoveBuffParam.InvokeAsync(BuffParam.Key))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" />
+			</MudTooltip>
+		</MudStack>
 	</MudItem>
 
 </MudGrid>

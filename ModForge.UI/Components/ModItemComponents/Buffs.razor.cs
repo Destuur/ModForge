@@ -20,6 +20,8 @@ namespace ModForge.UI.Components.ModItemComponents
 		private IModItem? contextRow;
 		private bool rightClick = true;
 		private bool isOpen;
+		private int selectedRowNumber = -1;
+		private MudDataGrid<IModItem> dataGrid;
 
 		[Parameter]
 		public EventCallback<Type> ChangeChildContent { get; set; }
@@ -57,17 +59,6 @@ namespace ModForge.UI.Components.ModItemComponents
 			CultureInfo.DefaultThreadCurrentUICulture = culture;
 			Thread.CurrentThread.CurrentCulture = culture;
 			Thread.CurrentThread.CurrentUICulture = culture;
-		}
-
-		private void SelectModItem(IModItem modItem)
-		{
-			if (modItem is null)
-			{
-				return;
-			}
-
-			SelectedModItem = modItem;
-			StateHasChanged();
 		}
 
 		private async Task OpenMenuContent(DataGridRowClickEventArgs<IModItem> args)
