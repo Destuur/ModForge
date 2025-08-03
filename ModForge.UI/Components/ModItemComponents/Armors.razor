@@ -15,7 +15,7 @@
 			@if (armors is not null)
 			{
 				<MudItem md="12" lg="12" Class="pl-4" Style="height: 100%;">
-					<MudDataGrid RowStyle="cursor: pointer;" Dense RowContextMenuClick="@((rightClick ? OpenMenuContent : null)!)" QuickFilter="ModItemSearch" Class="dialog-card" Items="@armors" Virtualize FixedHeader Height="calc(100vh - 73px)" Style="border-radius: 8px;" T="Shared.Models.Abstractions.IModItem" SelectOnRowClick SelectedItemChanged="SelectModItem" Filterable>
+					<MudDataGrid RowClassFunc="SelectRowClass" RowStyle="cursor: pointer;" Dense RowContextMenuClick="@((rightClick ? OpenMenuContent : null)!)" QuickFilter="ModItemSearch" Class="dialog-card" Items="@armors" Virtualize FixedHeader Height="calc(100vh - 73px)" Style="border-radius: 8px;" T="Shared.Models.Abstractions.IModItem" SelectOnRowClick SelectedItemChanged="SelectModItem" Filterable>
 						<ToolBarContent>
 							<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>@(L[MessageKeys.Armors].Value)</b></MudText>
 							<MudSpacer />

@@ -1,6 +1,6 @@
 ﻿<MudDialog Class="dialog-card">
 	<DialogContent>
-		<MudTable RowClassFunc="@SelectedRowClassFunc" @ref="mudTable" Striped Elevation="0" Bordered="false" Height="400px" FixedHeader Items="@BuffParamSerializer.GetAllKeys()" Dense Hover ReadOnly Filter="new Func<string, bool>(FilterFunc)" @bind-SelectedItem="SelectedBuffParamKey" SortLabel="Sort By">
+		<MudTable RowStyle="cursor: pointer;" Virtualize="true" RowClassFunc="@SelectedRowClassFunc" @ref="mudTable" Elevation="0" Bordered="false" Height="80vh" FixedHeader Items="@BuffParamSerializer.GetAllKeys()" Dense Hover ReadOnly Filter="new Func<string, bool>(FilterFunc)" @bind-SelectedItem="SelectedBuffParamKey" SortLabel="Sort By">
 			<ToolBarContent>
 				<MudText Typo="Typo.h4" Class="header-primary"><b>@(L[MessageKeys.BuffParameter].Value)</b></MudText>
 				<MudSpacer />
@@ -21,9 +21,6 @@
 				<MudTd DataLabel="Name">@BuffParamSerializer.GetName(context)</MudTd>
 				<MudTd DataLabel="Definition">@BuffParamSerializer.GetDescription(context)</MudTd>
 			</RowTemplate>
-			<PagerContent>
-				<MudTablePager />
-			</PagerContent>
 		</MudTable>
 	</DialogContent>
 	<DialogActions>

@@ -14,6 +14,7 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class CraftingMaterials
 	{
 		private List<IModItem> craftingMaterials;
+		private int selectedRowNumber = -1;
 		private bool isLoaded = false;
 		private MudMenu contextMenu;
 		private IModItem? contextRow;
@@ -47,6 +48,24 @@ namespace ModForge.UI.Components.ModItemComponents
 		[Inject]
 		public UserConfigurationService UserConfigurationService { get; set; }
 
+
+		private Func<IModItem, int, string> SelectRowClass => (modItem, row) =>
+		{
+			if (selectedRowNumber == row)
+			{
+				selectedRowNumber = -1;
+				return string.Empty;
+			}
+			else if (modItem != null && modItem.Equals(SelectedModItem))
+			{
+				selectedRowNumber = row;
+				return "selected";
+			}
+			else
+			{
+				return string.Empty;
+			}
+		};
 		private void SetLanguage()
 		{
 			var language = UserConfigurationService.Current.Language;

@@ -8,12 +8,14 @@ using ModForge.Shared.Services;
 using ModForge.UI.Components.MenuComponents;
 using MudBlazor;
 using System.Globalization;
+using static MudBlazor.CategoryTypes;
 
 namespace ModForge.UI.Components.ModItemComponents
 {
 	public partial class Armors
 	{
 		private List<IModItem> armors;
+		private int selectedRowNumber = -1;
 		private bool isLoaded = false;
 		private MudMenu contextMenu;
 		private IModItem? contextRow;
@@ -207,5 +209,23 @@ namespace ModForge.UI.Components.ModItemComponents
 			armors = await Task.Run(() => XmlService.Armors.ToList());
 			isLoaded = true;
 		}
+
+		private Func<IModItem, int, string> SelectRowClass => (modItem, row) =>
+		{
+			if (selectedRowNumber == row)
+			{
+				selectedRowNumber = -1;
+				return string.Empty;
+			}
+			else if (modItem != null && modItem.Equals(SelectedModItem))
+			{
+				selectedRowNumber = row;
+				return "selected";
+			}
+			else
+			{
+				return string.Empty;
+			}
+		};
 	}
 }

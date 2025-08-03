@@ -15,12 +15,12 @@ namespace ModForge.UI.Components.ModItemComponents
 	public partial class Buffs
 	{
 		private List<IModItem> buffs;
+		private int selectedRowNumber = -1;
 		private bool isLoaded = false;
 		private MudMenu contextMenu;
 		private IModItem? contextRow;
 		private bool rightClick = true;
 		private bool isOpen;
-		private int selectedRowNumber = -1;
 		private MudDataGrid<IModItem> dataGrid;
 
 		[Parameter]
@@ -49,6 +49,24 @@ namespace ModForge.UI.Components.ModItemComponents
 		public IModItem? SelectedModItem { get; set; }
 		[Inject]
 		public UserConfigurationService UserConfigurationService { get; set; }
+
+		private Func<IModItem, int, string> SelectRowClass => (modItem, row) =>
+		{
+			if (selectedRowNumber == row)
+			{
+				selectedRowNumber = -1;
+				return string.Empty;
+			}
+			else if (modItem != null && modItem.Equals(SelectedModItem))
+			{
+				selectedRowNumber = row;
+				return "selected";
+			}
+			else
+			{
+				return string.Empty;
+			}
+		};
 
 		private void SetLanguage()
 		{

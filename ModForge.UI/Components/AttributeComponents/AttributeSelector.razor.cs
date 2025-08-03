@@ -43,7 +43,8 @@ namespace ModForge.UI.Components.AttributeComponents
 				CloseButton = true, 
 				MaxWidth = MaxWidth.Medium, 
 				NoHeader = true,
-				BackgroundClass = "dialog-background"
+				BackgroundClass = "dialog-background",
+				FullScreen = true
 			};
 
 			if (DialogService is null)
