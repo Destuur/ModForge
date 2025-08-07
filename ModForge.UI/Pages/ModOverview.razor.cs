@@ -44,7 +44,7 @@ namespace ModForge.UI.Pages
 
 		public void ContinueModding()
 		{
-			NavigationManager.NavigateTo($"/moditems/{mod.Id}");
+			NavigationManager.NavigateTo($"/moditems/buffs/{mod.Id}");
 		}
 
 		public void ExportMod()

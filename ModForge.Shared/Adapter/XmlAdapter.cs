@@ -1,4 +1,5 @@
-﻿using ModForge.Shared.Builders;
+﻿using Microsoft.Extensions.Logging;
+using ModForge.Shared.Builders;
 using ModForge.Shared.Factories;
 using ModForge.Shared.Models.Abstractions;
 using ModForge.Shared.Models.Attributes;
@@ -17,11 +18,17 @@ namespace ModForge.Shared.Adapter
 	{
 		private readonly UserConfigurationService userConfigurationService;
 		private readonly IBuilder<XElement, IModItem> builder;
+		private readonly ILogger<XmlAdapter> logger;
+		private List<string> blackList = new List<string>
+		{
+			"44c61b30-c20e-4267-ab01-a1e39342731e"
+		};
 
-		public XmlAdapter(UserConfigurationService userConfigurationService, IBuilder<XElement, IModItem> builder)
+		public XmlAdapter(UserConfigurationService userConfigurationService, IBuilder<XElement, IModItem> builder, ILogger<XmlAdapter> logger)
 		{
 			this.userConfigurationService = userConfigurationService;
 			this.builder = builder;
+			this.logger = logger;
 		}
 
 		public IList<IModItem> ReadModItems(IDataPoint dataPoint)
@@ -55,11 +62,18 @@ namespace ModForge.Shared.Adapter
 								foreach (var element in doc.Descendants().Where(e => e.Name.LocalName.Equals(type, StringComparison.OrdinalIgnoreCase)))
 								{
 									var modItem = builder.Build(element);
-									if (modItem != null)
+									if (modItem == null)
 									{
-										modItem.Path = entry.FullName;
-										foundModItems.Add(modItem);
+										logger.LogWarning($"ModItem of type {type} could not be built from element: {element}");
+										continue;
 									}
+									if (modItem.Id == null || blackList.Contains(modItem.Id))
+									{
+										logger.LogWarning($"ModItem with Id {modItem.Id} is on blacklist and was not added to the collection.");
+										continue;
+									}
+									modItem.Path = entry.FullName;
+									foundModItems.Add(modItem);
 								}
 							}
 							catch (Exception ex)

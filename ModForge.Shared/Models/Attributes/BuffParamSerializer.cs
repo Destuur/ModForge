@@ -371,7 +371,20 @@ namespace ModForge.Shared.Models.Attributes
 			{ "dip", new() { { "Deriv Stat Disabled Perfume", "Flag or modifier disabling perfume effects." } } },
 			{ "shadiness", new() { { "Static Stat Shadiness", "Level of shadiness or suspiciousness of a character." } } },
 			{ "combatLevel", new() { { "Static Stat Combat Level", "Character's combat skill level." } } },
-			{ "initialDirtiness", new() { { "Static Stat Initial Dirtiness", "Starting level of dirtiness on character or item." } } }
+			{ "initialDirtiness", new() { { "Static Stat Initial Dirtiness", "Starting level of dirtiness on character or item." } } },
+			{ "Run", new() { { "Run Speed", "Modifies the character's running speed. Positive values increase speed, negative values decrease it." } } },
+			{ "Walk", new() { { "Walk Speed", "Modifies the character's walking speed. Positive values increase speed, negative values decrease it." } } },
+			{ "LimitSprint", new() { { "Disable Sprinting", "Prevents the character from sprinting when present. This parameter works without a value—only its presence is required." } } },
+			{ "StaminaSprint", new() { { "Stamina Sprint Consumption", "Modifies the stamina consumption rate while sprinting. Higher values increase stamina usage, lower values reduce it." } } },
+			{ "hcd", new() { { "Hardcore Bad Back Flower Picking Chance", "Chance to trigger the Hardcore perk 'Bad Back' effect—Henry throws out his back—when picking flowers." } } },
+			{ "StaminaCooldownDefault", new() { { "Default Stamina Cooldown", "Delay before stamina regeneration begins after general exertion." } } },
+			{ "StaminaCooldownAttack", new() { { "Stamina Cooldown After Attack", "Delay before stamina regeneration begins after performing an attack." } } },
+			{ "StaminaCooldownDodge", new() { { "Stamina Cooldown After Dodge", "Delay before stamina regeneration begins after dodging." } } },
+			{ "StaminaCooldownHit", new() { { "Stamina Cooldown After Hit", "Delay before stamina regeneration begins after taking a hit." } } },
+			{ "StaminaCooldownBlock", new() { { "Stamina Cooldown After Block", "Delay before stamina regeneration begins after blocking an attack." } } },
+			{ "StaminaCooldownWeaponRaised", new() { { "Stamina Cooldown with Weapon Raised", "Delay before stamina regeneration begins while holding a weapon in raised stance." } } },
+			{ "Sprint", new() { { "Sprint Speed Modifier", "Affects the character's sprinting speed." } } },
+			{ "src", new() { { "Combat Stamina Regen Reduction", "Reduces the default stamina regeneration rate during combat." } } },
 		};
 
 		public static string ToAttributeString(IEnumerable<BuffParam> parameters)

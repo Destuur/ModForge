@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<PackageReference Include="MudBlazor" Version="8.6.0" />
 		<PackageReference Include="SharpCompress" Version="0.40.0" />
+		<PackageReference Include="Z.Blazor.Diagrams" Version="3.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>

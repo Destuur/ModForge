@@ -1,6 +1,6 @@
 ﻿@page "/stormfile/{Id}"
 
-<MudGrid Style="height: 100%; margin: 0px; overflow: hidden;" Spacing="0">
+<MudGrid Style="height: 100vh; margin: 0px; overflow: hidden;" Spacing="0">
 	<MudItem md="12" Style="height: 7%; width: 100%; align-content: center;" Class="pl-4">
 		<MudText Class="header-primary pr-2" Typo="Typo.h4"><b>Category: @(Storm.Category is null ? L[MessageKeys.Miscellaneous].Value : Storm.Category.CapitalizeFirstLetterOnly())</b></MudText>
 	</MudItem>
