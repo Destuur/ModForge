@@ -385,6 +385,7 @@ namespace ModForge.Shared.Models.Attributes
 			{ "StaminaCooldownWeaponRaised", new() { { "Stamina Cooldown with Weapon Raised", "Delay before stamina regeneration begins while holding a weapon in raised stance." } } },
 			{ "Sprint", new() { { "Sprint Speed Modifier", "Affects the character's sprinting speed." } } },
 			{ "src", new() { { "Combat Stamina Regen Reduction", "Reduces the default stamina regeneration rate during combat." } } },
+			// fba
 		};
 
 		public static string ToAttributeString(IEnumerable<BuffParam> parameters)

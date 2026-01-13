@@ -89,6 +89,7 @@ namespace ModForge.Shared
 						{ "perk__combat", Path.Combine("Data", "Tables.pak")},
 						{ "perk__hardcore", Path.Combine("Data", "Tables.pak")},
 						{ "perk__kcd2", Path.Combine("Data", "Tables.pak")},
+						{ "perk__dlc2", Path.Combine("Data", "Tables.pak")},
 					}
 				},
 				{
@@ -99,6 +100,10 @@ namespace ModForge.Shared
 						{  "buff__perk", Path.Combine("Data", "Tables.pak")},
 						{  "buff__perk_hardcore", Path.Combine("Data", "Tables.pak")},
 						{  "buff__perk_kcd1", Path.Combine("Data", "Tables.pak")},
+						{  "buff__dlc", Path.Combine("Data", "Tables.pak")},
+						{  "buff__dlc2_beds", Path.Combine("Data", "Tables.pak")},
+						{  "buff__dlc2_others", Path.Combine("Data", "Tables.pak")},
+						{  "buff__dlc2_tables", Path.Combine("Data", "Tables.pak")},
 					}
 				},
 				{
