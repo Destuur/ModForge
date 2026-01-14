@@ -385,7 +385,19 @@ namespace ModForge.Shared.Models.Attributes
 			{ "StaminaCooldownWeaponRaised", new() { { "Stamina Cooldown with Weapon Raised", "Delay before stamina regeneration begins while holding a weapon in raised stance." } } },
 			{ "Sprint", new() { { "Sprint Speed Modifier", "Affects the character's sprinting speed." } } },
 			{ "src", new() { { "Combat Stamina Regen Reduction", "Reduces the default stamina regeneration rate during combat." } } },
-			// fba
+			{ "fba", new() { { "Seasoned Drinker Safety", "Ensures that when the character loses consciousness due to alcohol, they will always wake up in their own bedroom. This parameter is a boolean-style flag; a value of +1 enables the effect." } } },
+			{ "skv", new() { { "Dialogue Skill Check Modifier", "Scales the effectiveness of dialogue skill checks. The value represents a maximum multiplier (e.g., skv*1.16 = up to +16%). When used with AdjustableFadingWorldTimeTimed, the bonus scales dynamically—typically based on sleep duration—up to the defined maximum." } } },
+			{ "fvh", new() { { "Food Health Regeneration Bonus", "Increases health regeneration for a limited duration after consuming fruit or vegetables. The value defines the flat amount of additional health restored over the buff's lifetime (e.g., fvh+10 restores 10 extra health)." } } },
+			{ "lip", new() { { "Bone Fracture Prevention", "Prevents bone fractures by consuming charges of this buff. Each +1 negates one incoming fracture while the buff is active, though it is unclear whether multiple charges can stack to block multiple fractures." } } },
+			{ "sxm", new() { { "Trainer Experience Multiplier", "Multiplies experience gained from trainers. The value acts as a multiplier (e.g., sxm*1.2 grants +20% experience) and applies only to training-based skill progression during the buff's duration." } } },
+
+			// fba - Seasoned Drinker - Wenn du es mit dem Alkohol übertreibst und ohnmächtig wirst, wachst du immer im Bett in deinem Schlafzimmer auf - fba+1 => skill aktiviert
+			// skv - Smooth Talker - Fúr jede Stunde Schlaf in deinem Schlafzimmer (bis zu 8 Stunden) verringert sich die Schwierigkeit von Fertigkeitenproben in Dialogen fúr die
+			// nächsten 24 Stunden um 2% - skv*1.16 => 16% maximale Verbesserung. Stündliches Upgrade wird vermutlich im Hintergrund errechnet mittels Cpp:AdjustableFadingWorldTimeTimed
+			// fvh - Carnival - Der Verzehr von Obst und Gemüse stellt in den nächsten 24 Stunden 10 Gesundheit mehr her => fvh+10
+			// lip - Boneshield - Verhindert den ersten Knochenbruch, den du in den nächsten 24 Stunden erleiden würdest => lip+1 (können hier mehrere Brüche negiert werden?)
+			// sxm - Apprentice - Du erhältst in den nächsten 24 Stunden einen Erfahrungsbonus von 20% bei Lehrmeistern => sxm*1.2
+
 		};
 
 		public static string ToAttributeString(IEnumerable<BuffParam> parameters)
@@ -418,7 +430,15 @@ namespace ModForge.Shared.Models.Attributes
 
 		public static string GetName(string key)
 		{
-			return buffParamMap[key].Keys.FirstOrDefault() ?? $"Name to '{key}' not found";
+			try
+			{
+				return buffParamMap[key].Keys.FirstOrDefault() ?? $"Name to '{key}' not found";
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"{e} - Error getting name for key '{key}'");
+				return $"Name to '{key}' not found";
+			}
 		}
 
 		public static string GetDescription(string key)

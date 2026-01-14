@@ -1,0 +1,27 @@
+﻿<MudTooltip Text="Show modded items">
+<MudImage Class="@($"{(IsEnabled ? "pulse-icon" : "")} pl-4")"
+		  Src="@(IsEnabled ? "/images/Icons/forgeicon2.png" : "/images/Icons/forgeicon.png")"
+			  Height="48"
+			  Style="cursor: pointer;"
+			  onclick="@(() => Toggle())" />
+</MudTooltip>
+
+<style>
+	.pulse-icon {
+		animation: pulseBrightness 2.4s ease-in-out infinite;
+	}
+
+	@@keyframes pulseBrightness {
+		0% {
+			filter: brightness(0.8);
+		}
+
+		50% {
+			filter: brightness(1.45);
+		}
+
+		100% {
+			filter: brightness(0.8);
+		}
+	}
+</style>
