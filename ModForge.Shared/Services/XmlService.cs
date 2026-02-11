@@ -45,8 +45,8 @@ namespace ModForge.Shared.Services
 		}
 
 		#region Properties
-		public IList<IModItem> Perks { get; private set; }
-		public IList<IModItem> Buffs { get; private set; }
+		public IList<IModItem> Perks { get; private set; } = new List<IModItem>();
+		public IList<IModItem> Buffs { get; private set; } = new List<IModItem>();
 		public IList<IModItem> Weapons { get; private set; } = new List<IModItem>();
 		public IList<IModItem> Armors { get; private set; } = new List<IModItem>();
 		public IList<IModItem> Consumeables { get; private set; } = new List<IModItem>();

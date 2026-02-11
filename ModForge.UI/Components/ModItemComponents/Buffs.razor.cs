@@ -214,7 +214,7 @@ namespace ModForge.UI.Components.ModItemComponents
 		{
 			SetLanguage();
 			ModService.TryGetModFromCollection(ModId);
-			buffs = await Task.Run(() => XmlService.Buffs.ToList());
+			buffs = await Task.Run(() => XmlService.Buffs?.ToList() ?? new List<IModItem>());
 			isLoaded = true;
 		}
 	}

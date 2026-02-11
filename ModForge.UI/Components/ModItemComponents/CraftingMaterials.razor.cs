@@ -223,7 +223,7 @@ namespace ModForge.UI.Components.ModItemComponents
 		{
 			SetLanguage();
 			ModService.TryGetModFromCollection(ModId);
-			craftingMaterials = await Task.Run(() => XmlService.CraftingMaterials.ToList());
+			craftingMaterials = await Task.Run(() => XmlService.CraftingMaterials?.ToList() ?? new List<IModItem>());
 			isLoaded = true;
 		}
 	}

@@ -107,6 +107,13 @@ namespace ModForge.UI.Components.MenuComponents
 				return;
 			}
 
+			if (string.IsNullOrEmpty(UserConfigurationService?.Current?.GameDirectory))
+			{
+				Logger?.LogWarning("Game directory is not configured. Cannot start modding.");
+				Snackbar?.Add("Please configure your game directory in Settings before starting a mod.", Severity.Error);
+				return;
+			}
+
 			var mod = ModService.CreateNewMod(name, description, author, version, createdOn, modId, modifiesLevel, supportedGameVersions);
 
 			if (mod is null)
