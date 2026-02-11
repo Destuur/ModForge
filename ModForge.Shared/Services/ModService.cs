@@ -72,6 +72,13 @@ namespace ModForge.Shared.Services
 			}
 
 			var modFolder = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods");
+
+			if (!Directory.Exists(modFolder))
+			{
+				Directory.CreateDirectory(modFolder);
+				logger.LogInformation("Created Mods folder at: {ModFolder}", modFolder);
+			}
+
 			var modDirectories = Directory.EnumerateDirectories(modFolder);
 
 			ModCollection.Clear();
@@ -229,6 +236,12 @@ namespace ModForge.Shared.Services
 			}
 
 			var modFolder = Path.Combine(userConfigurationService.Current.GameDirectory, "Mods");
+
+			if (!Directory.Exists(modFolder))
+			{
+				return; // Nothing to delete if Mods folder doesn't exist
+			}
+
 			var modDirectories = Directory.EnumerateDirectories(modFolder);
 
 			foreach (var modPath in modDirectories)
