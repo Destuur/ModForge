@@ -206,7 +206,7 @@ namespace ModForge.UI.Components.ModItemComponents
 		{
 			SetLanguage();
 			ModService.TryGetModFromCollection(ModId);
-			armors = await Task.Run(() => XmlService.Armors.ToList());
+			armors = await Task.Run(() => XmlService.Armors?.ToList() ?? new List<IModItem>());
 			isLoaded = true;
 		}
 

@@ -45,7 +45,20 @@ namespace ModForge.Shared.Services
 
 		public string? GetBase64Icon(string iconId, string matchingFolder = null!)
 		{
+			if (string.IsNullOrEmpty(configService.Current.GameDirectory))
+			{
+				logger.LogWarning("Game directory is not configured. Cannot load icon: {IconId}", iconId);
+				return null;
+			}
+
 			string pakPath = Path.Combine(configService.Current.GameDirectory, "Data", "IPL_GameData.pak");
+
+			if (!File.Exists(pakPath))
+			{
+				logger.LogWarning("Game data file not found at: {PakPath}", pakPath);
+				return null;
+			}
+
 			string targetFilename = $"{iconId}";
 
 			using FileStream zipStream = new(pakPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
